@@ -40,7 +40,7 @@ typedef struct
     pthread_mutex_t     gki_timer_mutex;
     pthread_cond_t      gki_timer_cond;
     int                 gki_timer_wake_lock_on;
-#if (GKI_DEBUG == TRUE)
+#if (GKI_DEBUG == true)
     pthread_mutex_t     GKI_trace_mutex;
 #endif
 } tGKI_OS;
@@ -50,7 +50,7 @@ typedef struct
 #define GKI_TIMER_TICK_STOP_COND 0
 #define GKI_TIMER_TICK_EXIT_COND 2
 
-extern void gki_system_tick_start_stop_cback(BOOLEAN start);
+extern void gki_system_tick_start_stop_cback(bool    start);
 
 /* Contains common control block as well as OS specific variables */
 typedef struct

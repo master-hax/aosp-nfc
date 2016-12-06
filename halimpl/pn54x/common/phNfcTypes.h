@@ -23,11 +23,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#ifndef TRUE
-#define TRUE            (0x01)            /* Logical True Value */
+#ifndef true
+#define true            (0x01)            /* Logical True Value */
 #endif
-#ifndef FALSE
-#define FALSE           (0x00)            /* Logical False Value */
+#ifndef false
+#define false           (0x00)            /* Logical False Value */
 #endif
 typedef uint8_t             utf8_t;       /* UTF8 Character String */
 typedef uint8_t             bool_t;       /* boolean data type */
@@ -138,7 +138,7 @@ typedef struct phNfc_sSupProtocol
     unsigned int Felica      : 1;  /* Protocol Felica. */
     unsigned int NFC         : 1;  /* Protocol NFC. */
     unsigned int Jewel       : 1;  /* Protocol Innovision Jewel Tag. or Any T1T*/
-    unsigned int Desfire     : 1;  /*TRUE indicates specified feature (mapping
+    unsigned int Desfire     : 1;  /*true indicates specified feature (mapping
                                    or formatting)for DESFire tag supported else not supported.*/
     unsigned int Kovio       : 1;   /* Protocol Kovio Tag*/
     unsigned int HID         : 1;   /* Protocol HID(Picopass) Tag*/

@@ -40,13 +40,13 @@
 #define NFC_HAL_PRM_SPD_POWER_MODE_FPM     1
 
 /* Version string for BCM20791B3 */
-const UINT8 NFC_HAL_PRM_BCM20791B3_STR[]   = "20791B3";
+const uint8_t NFC_HAL_PRM_BCM20791B3_STR[]   = "20791B3";
 #define NFC_HAL_PRM_BCM20791B3_STR_LEN     (sizeof (NFC_HAL_PRM_BCM20791B3_STR)-1)
 
 #define NFC_HAL_PRM_SPD_TOUT                   (6000)  /* timeout for SPD events (in ms)   */
 #define NFC_HAL_PRM_END_DELAY                  (250)   /* delay before sending any new command (ms)*/
 
-#if (NFC_HAL_PRM_DEBUG == TRUE)
+#if (NFC_HAL_PRM_DEBUG == true)
 #define NFC_HAL_PRM_STATE(str)  HAL_TRACE_DEBUG2 ("%s st: %d", str, nfc_hal_cb.prm.state)
 #else
 #define NFC_HAL_PRM_STATE(str)
@@ -55,8 +55,8 @@ const UINT8 NFC_HAL_PRM_BCM20791B3_STR[]   = "20791B3";
 void nfc_hal_prm_post_baud_update (tHAL_NFC_STATUS status);
 typedef struct
 {
-    UINT16              offset;
-    UINT8               len;
+    uint16_t            offset;
+    uint8_t             len;
 } tNFC_HAL_PRM_RM_RF;
 
 const tNFC_HAL_PRM_RM_RF nfc_hal_prm_rm_rf_20795a1 [] =
@@ -66,7 +66,7 @@ const tNFC_HAL_PRM_RM_RF nfc_hal_prm_rm_rf_20795a1 [] =
     {0x05E8,    0xFB},
     {0,         0}
 };
-static BOOLEAN nfc_hal_prm_nvm_rw_cmd(void);
+static bool    nfc_hal_prm_nvm_rw_cmd(void);
 
 /*****************************************************************************
 ** Extern variable from nfc_hal_dm_cfg.c
@@ -82,7 +82,7 @@ extern tNFC_HAL_CFG *p_nfc_hal_cfg;
 ** Returns          void
 **
 *******************************************************************************/
-void nfc_hal_prm_spd_handle_download_complete (UINT8 event)
+void nfc_hal_prm_spd_handle_download_complete (uint8_t event)
 {
     nfc_hal_cb.prm.state = NFC_HAL_PRM_ST_IDLE;
 
@@ -102,12 +102,12 @@ void nfc_hal_prm_spd_handle_download_complete (UINT8 event)
 *******************************************************************************/
 void nfc_hal_prm_spd_send_next_segment (void)
 {
-    UINT8   *p_src;
-    UINT16  len, offset = nfc_hal_cb.prm.cur_patch_offset;
-    UINT8   hcit, oid, hdr0, type;
-    UINT8   chipverlen;
-    UINT8   chipverstr[NCI_SPD_HEADER_CHIPVER_LEN];
-    UINT8   patch_hdr_size = NCI_MSG_HDR_SIZE + 1; /* 1 is for HCIT */
+    uint8_t *p_src;
+    uint16_t  len, offset = nfc_hal_cb.prm.cur_patch_offset;
+    uint8_t hcit, oid, hdr0, type;
+    uint8_t chipverlen;
+    uint8_t chipverstr[NCI_SPD_HEADER_CHIPVER_LEN];
+    uint8_t patch_hdr_size = NCI_MSG_HDR_SIZE + 1; /* 1 is for HCIT */
 
     /* Validate that segment is at least big enought to have NCI_MSG_HDR_SIZE + 1 (hcit) */
     if (nfc_hal_cb.prm.cur_patch_len_remaining < patch_hdr_size)
@@ -118,7 +118,7 @@ void nfc_hal_prm_spd_send_next_segment (void)
     }
 
     /* Parse NCI command header */
-    p_src = (UINT8*) (nfc_hal_cb.prm.p_cur_patch_data + offset);
+    p_src = (uint8_t*) (nfc_hal_cb.prm.p_cur_patch_data + offset);
     STREAM_TO_UINT8 (hcit, p_src);
     STREAM_TO_UINT8 (hdr0, p_src);
     STREAM_TO_UINT8 (oid,  p_src);
@@ -164,7 +164,7 @@ void nfc_hal_prm_spd_send_next_segment (void)
     }
 
     /* Send the command (not including HCIT here) */
-    nfc_hal_dm_send_nci_cmd ((UINT8*) (nfc_hal_cb.prm.p_cur_patch_data + offset + 1), (UINT8) (len + NCI_MSG_HDR_SIZE),
+    nfc_hal_dm_send_nci_cmd ((uint8_t*) (nfc_hal_cb.prm.p_cur_patch_data + offset + 1), (uint8_t) (len + NCI_MSG_HDR_SIZE),
                              nfc_hal_prm_nci_command_complete_cback);
 }
 
@@ -179,9 +179,9 @@ void nfc_hal_prm_spd_send_next_segment (void)
 *******************************************************************************/
 void nfc_hal_prm_spd_handle_next_patch_start (void)
 {
-    UINT32  cur_patch_mask;
-    UINT32  cur_patch_len;
-    BOOLEAN found_patch_to_download = FALSE;
+    uint32_t  cur_patch_mask;
+    uint32_t  cur_patch_len;
+    bool    found_patch_to_download = false;
 
     while (!found_patch_to_download)
     {
@@ -189,10 +189,10 @@ void nfc_hal_prm_spd_handle_next_patch_start (void)
         cur_patch_len = nfc_hal_cb.prm.spd_patch_desc[nfc_hal_cb.prm.spd_cur_patch_idx].len;
 
         /* Check if this is a patch we need to download */
-        cur_patch_mask = ((UINT32) 1 << nfc_hal_cb.prm.spd_patch_desc[nfc_hal_cb.prm.spd_cur_patch_idx].power_mode);
+        cur_patch_mask = ((uint32_t) 1 << nfc_hal_cb.prm.spd_patch_desc[nfc_hal_cb.prm.spd_cur_patch_idx].power_mode);
         if (nfc_hal_cb.prm.spd_patch_needed_mask & cur_patch_mask)
         {
-            found_patch_to_download = TRUE;
+            found_patch_to_download = true;
         }
         else
         {
@@ -215,8 +215,8 @@ void nfc_hal_prm_spd_handle_next_patch_start (void)
             else
             {
                 /* Patch in buffer. Skip over current patch. Check next patch */
-                nfc_hal_cb.prm.cur_patch_len_remaining -= (UINT16) cur_patch_len;
-                nfc_hal_cb.prm.cur_patch_offset += (UINT16) cur_patch_len;
+                nfc_hal_cb.prm.cur_patch_len_remaining -= (uint16_t) cur_patch_len;
+                nfc_hal_cb.prm.cur_patch_offset += (uint16_t) cur_patch_len;
             }
         }
     }
@@ -228,7 +228,7 @@ void nfc_hal_prm_spd_handle_next_patch_start (void)
     nfc_hal_prm_spd_send_next_segment ();
 }
 
-#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == TRUE))
+#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == true))
 /*******************************************************************************
 **
 ** Function         nfc_hal_prm_spd_download_i2c_fix
@@ -240,12 +240,12 @@ void nfc_hal_prm_spd_handle_next_patch_start (void)
 *******************************************************************************/
 void nfc_hal_prm_spd_download_i2c_fix (void)
 {
-    UINT8 *p, *p_start;
-    UINT16 patchfile_project_id;
-    UINT16 patchfile_ver_major;
-    UINT16 patchfile_ver_minor;
-    UINT16 patchfile_patchsize;
-    UINT8 u8;
+    uint8_t *p, *p_start;
+    uint16_t patchfile_project_id;
+    uint16_t patchfile_ver_major;
+    uint16_t patchfile_ver_minor;
+    uint16_t patchfile_patchsize;
+    uint8_t u8;
 
     HAL_TRACE_DEBUG0 ("Downloading I2C fix...");
 
@@ -262,7 +262,7 @@ void nfc_hal_prm_spd_download_i2c_fix (void)
     if (nfc_hal_cb.prm.cur_patch_len_remaining >= NFC_HAL_PRM_NCD_PATCHFILE_HDR_LEN)
     {
         /* Parse patchfile header */
-        p = (UINT8 *) nfc_hal_cb.prm.p_cur_patch_data;
+        p = (uint8_t *) nfc_hal_cb.prm.p_cur_patch_data;
         p_start = p;
         STREAM_TO_UINT16 (patchfile_project_id, p);
         STREAM_TO_UINT16 (patchfile_ver_major, p);
@@ -291,8 +291,8 @@ void nfc_hal_prm_spd_download_i2c_fix (void)
         p += 5;
 
         /* Adjust length to exclude patchfiloe header */
-        nfc_hal_cb.prm.cur_patch_len_remaining -= (UINT16) (p - p_start);       /* Adjust size of patchfile                        */
-        nfc_hal_cb.prm.cur_patch_offset += (UINT16) (p - p_start);              /* Bytes of patchfile transmitted/processed so far */
+        nfc_hal_cb.prm.cur_patch_len_remaining -= (uint16_t) (p - p_start);       /* Adjust size of patchfile                        */
+        nfc_hal_cb.prm.cur_patch_offset += (uint16_t) (p - p_start);              /* Bytes of patchfile transmitted/processed so far */
 
         /* Begin sending patch to the NFCC */
         nfc_hal_prm_spd_send_next_segment ();
@@ -328,7 +328,7 @@ static void nfc_hal_prm_spd_check_version_continue (void)
             return;
         }
     }
-#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == TRUE))
+#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == true))
     if (nfc_hal_cb.prm.flags & NFC_HAL_PRM_FLAGS_I2C_FIX_REQUIRED)
     {
         HAL_TRACE_DEBUG0 ("I2C patch fix required.");
@@ -362,15 +362,15 @@ static void nfc_hal_prm_spd_check_version_continue (void)
 *******************************************************************************/
 void nfc_hal_prm_spd_check_version (void)
 {
-    UINT8 *p, *p_start, i;
-    UINT32 nvm_patch_present_mask = 0;
-    UINT32 patchfile_patch_present_mask;
-    UINT16 patchfile_project_id = 0;
-    UINT16 patchfile_ver_major = 0;
-    UINT16 patchfile_ver_minor = 0;
-    UINT16 patchfile_patchsize;
+    uint8_t *p, *p_start, i;
+    uint32_t nvm_patch_present_mask = 0;
+    uint32_t patchfile_patch_present_mask;
+    uint16_t patchfile_project_id = 0;
+    uint16_t patchfile_ver_major = 0;
+    uint16_t patchfile_ver_minor = 0;
+    uint16_t patchfile_patchsize;
 
-    UINT8  return_code = NFC_HAL_PRM_COMPLETE_EVT;
+    uint8_t  return_code = NFC_HAL_PRM_COMPLETE_EVT;
 
     /* Initialize patchfile offset pointers */
     p = p_start = NULL;
@@ -387,7 +387,7 @@ void nfc_hal_prm_spd_check_version (void)
     if (nfc_hal_cb.prm.cur_patch_len_remaining >= NFC_HAL_PRM_NCD_PATCHFILE_HDR_LEN)
     {
         /* Parse patchfile header */
-        p       = (UINT8 *) nfc_hal_cb.prm.p_cur_patch_data;
+        p       = (uint8_t *) nfc_hal_cb.prm.p_cur_patch_data;
         p_start = p;
         STREAM_TO_UINT16 (patchfile_project_id, p);
         STREAM_TO_UINT16 (patchfile_ver_major, p);
@@ -415,7 +415,7 @@ void nfc_hal_prm_spd_check_version (void)
             STREAM_TO_UINT8 (nfc_hal_cb.prm.spd_patch_desc[i].power_mode, p);
 
             /* Update mask of power-modes present in the patchfile */
-            patchfile_patch_present_mask |= ((UINT32) 1 << nfc_hal_cb.prm.spd_patch_desc[i].power_mode);
+            patchfile_patch_present_mask |= ((uint32_t) 1 << nfc_hal_cb.prm.spd_patch_desc[i].power_mode);
 
             /* Get length of patch */
             STREAM_TO_UINT16 (nfc_hal_cb.prm.spd_patch_desc[i].len, p);
@@ -428,8 +428,8 @@ void nfc_hal_prm_spd_check_version (void)
         }
 
         /* Adjust offset to after the patch file header */
-        nfc_hal_cb.prm.cur_patch_offset += (UINT16) (p - p_start);              /* Bytes of patchfile transmitted/processed so far */
-        nfc_hal_cb.prm.cur_patch_len_remaining -= (UINT16) (p - p_start);       /* Adjust size of patchfile                        */
+        nfc_hal_cb.prm.cur_patch_offset += (uint16_t) (p - p_start);              /* Bytes of patchfile transmitted/processed so far */
+        nfc_hal_cb.prm.cur_patch_len_remaining -= (uint16_t) (p - p_start);       /* Adjust size of patchfile                        */
 
 
         HAL_TRACE_DEBUG4 ("NVM Patch info: flags=0x%04x,   Ver=%i.%i, PatchMask=0x%08x",
@@ -501,7 +501,7 @@ void nfc_hal_prm_spd_check_version (void)
         HAL_TRACE_ERROR4 ("Downloading patch version: %i.%i (previous version in NVM: %i.%i)...",
                             patchfile_ver_major, patchfile_ver_minor,
                             nfc_hal_cb.nvm_cb.ver_major, nfc_hal_cb.nvm_cb.ver_minor);
-#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == TRUE))
+#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == true))
         /* Check if I2C patch is needed: if                                     */
         /*      - I2C patch file was provided using HAL_NfcPrmSetI2cPatch, and        */
         /*      -   current patch in NVM has ProjectID=0, or                    */
@@ -523,19 +523,19 @@ void nfc_hal_prm_spd_check_version (void)
     }
     else
     {
-        static BOOLEAN firstTime = TRUE;
+        static bool    firstTime = true;
         if (firstTime)
         {
             HAL_TRACE_ERROR2 ("NVM patch version is %d.%d",
                               nfc_hal_cb.nvm_cb.ver_major, nfc_hal_cb.nvm_cb.ver_minor);
-            firstTime = FALSE;
+            firstTime = false;
         }
         /* Download complete */
         nfc_hal_prm_spd_handle_download_complete (return_code);
     }
 }
 
-#if (NFC_HAL_TRACE_VERBOSE == TRUE)
+#if (NFC_HAL_TRACE_VERBOSE == true)
 /*******************************************************************************
 **
 ** Function         nfc_hal_prm_spd_status_str
@@ -545,7 +545,7 @@ void nfc_hal_prm_spd_check_version (void)
 ** Returns          Status string
 **
 *******************************************************************************/
-UINT8 *nfc_hal_prm_spd_status_str (UINT8 spd_status_code)
+uint8_t *nfc_hal_prm_spd_status_str (uint8_t spd_status_code)
 {
     char *p_str;
 
@@ -597,55 +597,55 @@ UINT8 *nfc_hal_prm_spd_status_str (UINT8 spd_status_code)
 
     }
 
-    return ((UINT8*) p_str);
+    return ((uint8_t*) p_str);
 }
-#endif  /* (NFC_HAL_TRACE_VERBOSE == TRUE) */
+#endif  /* (NFC_HAL_TRACE_VERBOSE == true) */
 /*******************************************************************************
 **
 ** Function         nfc_hal_prm_nvm_rw_cmd
 **
 ** Description      Non Volatile Read Write Command; for now only write zeros
 **
-** Returns          TRUE if done.
+** Returns          true if done.
 **
 *******************************************************************************/
-static BOOLEAN nfc_hal_prm_nvm_rw_cmd(void)
+static bool    nfc_hal_prm_nvm_rw_cmd(void)
 {
     tNFC_HAL_PRM_RM_RF  *p_param = (tNFC_HAL_PRM_RM_RF *)(nfc_hal_cb.prm.p_param);
-    UINT8   *p_buff, *p, *p_end;
-    UINT8   len = 0;
-    UINT16  cmd_len;
+    uint8_t *p_buff, *p, *p_end;
+    uint8_t len = 0;
+    uint16_t  cmd_len;
 
     if (p_param)
         len     = p_param[nfc_hal_cb.prm.param_idx].len;
     HAL_TRACE_DEBUG2 ("nfc_hal_prm_nvm_rw_cmd: %d/%d", nfc_hal_cb.prm.param_idx, len);
     if (len == 0)
     {
-        return TRUE;
+        return true;
     }
     cmd_len = len + 7;
 
-    if ((p_buff = (UINT8 *) GKI_getbuf(cmd_len)) == NULL)
+    if ((p_buff = (uint8_t *) GKI_getbuf(cmd_len)) == NULL)
     {
         HAL_TRACE_ERROR0 ("NVM No buffer");
         nfc_hal_prm_spd_handle_download_complete (NFC_HAL_PRM_ABORT_EVT);
-        return TRUE;
+        return true;
     }
 
     p = p_buff;
 
-    UINT8_TO_STREAM  (p, (NCI_MTS_CMD|NCI_GID_PROP));
-    UINT8_TO_STREAM  (p, NCI_MSG_EEPROM_RW);
-    UINT8_TO_STREAM  (p, (len+4));
-    UINT8_TO_STREAM  (p, 1); /* 1=write 0=read */
-    UINT16_TO_STREAM  (p, p_param[nfc_hal_cb.prm.param_idx].offset);
-    UINT8_TO_STREAM  (p, len);
+    uint8_t_TO_STREAM  (p, (NCI_MTS_CMD|NCI_GID_PROP));
+    uint8_t_TO_STREAM  (p, NCI_MSG_EEPROM_RW);
+    uint8_t_TO_STREAM  (p, (len+4));
+    uint8_t_TO_STREAM  (p, 1); /* 1=write 0=read */
+    uint16_t_TO_STREAM  (p, p_param[nfc_hal_cb.prm.param_idx].offset);
+    uint8_t_TO_STREAM  (p, len);
     memset (p, 0, len); /* Fill remaining bytes with zeros*/
 
     nfc_hal_cb.prm.param_idx++;
     nfc_hal_dm_send_nci_cmd(p_buff, cmd_len, nfc_hal_prm_nci_command_complete_cback);
     GKI_freebuf (p_buff);
-    return FALSE;
+    return false;
 }
 
 /*******************************************************************************
@@ -658,11 +658,11 @@ static BOOLEAN nfc_hal_prm_nvm_rw_cmd(void)
 ** Returns          void
 **
 *******************************************************************************/
-void nfc_hal_prm_nci_command_complete_cback (tNFC_HAL_NCI_EVT event, UINT16 data_len, UINT8 *p_data)
+void nfc_hal_prm_nci_command_complete_cback (tNFC_HAL_NCI_EVT event, uint16_t data_len, uint8_t *p_data)
 {
-    UINT8 status, u8;
-    UINT8 *p;
-    UINT32 post_signature_delay;
+    uint8_t status, u8;
+    uint8_t *p;
+    uint32_t post_signature_delay;
 
     NFC_HAL_PRM_STATE ("nfc_hal_prm_nci_command_complete_cback");
 
@@ -681,7 +681,7 @@ void nfc_hal_prm_nci_command_complete_cback (tNFC_HAL_NCI_EVT event, UINT16 data
 
         if (status != NCI_STATUS_OK)
         {
-#if (NFC_HAL_TRACE_VERBOSE == TRUE)
+#if (NFC_HAL_TRACE_VERBOSE == true)
             HAL_TRACE_ERROR2 ("Patch download failed, reason code=0x%X (%s)", status, nfc_hal_prm_spd_status_str (status));
 #else
             HAL_TRACE_ERROR1 ("Patch download failed, reason code=0x%X", status);
@@ -731,7 +731,7 @@ void nfc_hal_prm_nci_command_complete_cback (tNFC_HAL_NCI_EVT event, UINT16 data
                 return;
             }
 
-#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == TRUE))
+#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == true))
             if (nfc_hal_cb.prm.flags & NFC_HAL_PRM_FLAGS_I2C_FIX_REQUIRED)
             {
                 HAL_TRACE_DEBUG1 ("PreI2C patch downloaded...waiting %i ms for NFCC to reboot.", nfc_hal_cb.prm_i2c.prei2c_delay);
@@ -830,7 +830,7 @@ void nfc_hal_prm_nci_command_complete_cback (tNFC_HAL_NCI_EVT event, UINT16 data
 *******************************************************************************/
 void nfc_hal_prm_nfcc_ready_to_continue (void)
 {
-    UINT8 get_patch_version_cmd [NCI_MSG_HDR_SIZE] =
+    uint8_t get_patch_version_cmd [NCI_MSG_HDR_SIZE] =
     {
         NCI_MTS_CMD|NCI_GID_PROP,
         NCI_MSG_GET_PATCH_VERSION,
@@ -838,7 +838,7 @@ void nfc_hal_prm_nfcc_ready_to_continue (void)
     };
 
     /* Clear the bit for the patch we just downloaded */
-    nfc_hal_cb.prm.spd_patch_needed_mask &= ~ ((UINT32) 1 << nfc_hal_cb.prm.spd_patch_desc[nfc_hal_cb.prm.spd_cur_patch_idx].power_mode);
+    nfc_hal_cb.prm.spd_patch_needed_mask &= ~ ((uint32_t) 1 << nfc_hal_cb.prm.spd_patch_desc[nfc_hal_cb.prm.spd_cur_patch_idx].power_mode);
 
     /* Check if another patch to download */
     nfc_hal_cb.prm.spd_cur_patch_idx++;
@@ -879,7 +879,7 @@ void nfc_hal_prm_nfcc_ready_to_continue (void)
 ** Returns          void
 **
 *******************************************************************************/
-void nfc_hal_prm_spd_reset_ntf (UINT8 reset_reason, UINT8 reset_type)
+void nfc_hal_prm_spd_reset_ntf (uint8_t reset_reason, uint8_t reset_type)
 {
     /* Check if we were expecting a RESET NTF */
     if (nfc_hal_cb.prm.state == NFC_HAL_PRM_ST_SPD_AUTH_DONE)
@@ -1002,15 +1002,15 @@ void nfc_hal_prm_process_timeout (void *p_tle)
 **                  p_cback         callback for download status
 **
 **
-** Returns          TRUE if successful, otherwise FALSE
+** Returns          true if successful, otherwise false
 **
 **
 *******************************************************************************/
-BOOLEAN HAL_NfcPrmDownloadStart (tNFC_HAL_PRM_FORMAT format_type,
-                                 UINT32              dest_address,
-                                 UINT8               *p_patchram_buf,
-                                 UINT32              patchram_len,
-                                 UINT32              patchram_delay,
+bool    HAL_NfcPrmDownloadStart (tNFC_HAL_PRM_FORMAT format_type,
+                                 uint32_t            dest_address,
+                                 uint8_t             *p_patchram_buf,
+                                 uint32_t            patchram_len,
+                                 uint32_t            patchram_delay,
                                  tNFC_HAL_PRM_CBACK  *p_cback)
 {
     HAL_TRACE_API0 ("HAL_NfcPrmDownloadStart ()");
@@ -1021,11 +1021,11 @@ BOOLEAN HAL_NfcPrmDownloadStart (tNFC_HAL_PRM_FORMAT format_type,
     {
         nfc_hal_cb.prm.p_cur_patch_data = p_patchram_buf;
         nfc_hal_cb.prm.cur_patch_offset = 0;
-        nfc_hal_cb.prm.cur_patch_len_remaining = (UINT16) patchram_len;
+        nfc_hal_cb.prm.cur_patch_len_remaining = (uint16_t) patchram_len;
         nfc_hal_cb.prm.flags |= NFC_HAL_PRM_FLAGS_USE_PATCHRAM_BUF;
 
         if (patchram_len == 0)
-            return FALSE;
+            return false;
     }
 
     nfc_hal_cb.prm.p_cback          = p_cback;
@@ -1039,7 +1039,7 @@ BOOLEAN HAL_NfcPrmDownloadStart (tNFC_HAL_PRM_FORMAT format_type,
     {
         /* Store patch buffer pointer and length */
         nfc_hal_cb.prm.p_spd_patch             = p_patchram_buf;
-        nfc_hal_cb.prm.spd_patch_len_remaining = (UINT16)patchram_len;
+        nfc_hal_cb.prm.spd_patch_len_remaining = (uint16_t)patchram_len;
         nfc_hal_cb.prm.spd_patch_offset        = 0;
 
         /* If patch download is required, but no NVM is available, then abort */
@@ -1047,7 +1047,7 @@ BOOLEAN HAL_NfcPrmDownloadStart (tNFC_HAL_PRM_FORMAT format_type,
         {
             HAL_TRACE_ERROR0 ("This platform requires NVM and the NVM is not available - Abort");
             nfc_hal_prm_spd_handle_download_complete (NFC_HAL_PRM_ABORT_NO_NVM_EVT);
-            return FALSE;
+            return false;
         }
 
         /* Compare patch version in NVM with version in patchfile */
@@ -1066,10 +1066,10 @@ BOOLEAN HAL_NfcPrmDownloadStart (tNFC_HAL_PRM_FORMAT format_type,
     else
     {
         HAL_TRACE_ERROR0 ("Unexpected patch format.");
-        return FALSE;
+        return false;
     }
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1085,11 +1085,11 @@ BOOLEAN HAL_NfcPrmDownloadStart (tNFC_HAL_PRM_FORMAT format_type,
 ** Input Params     p_patch_data    pointer to patch data
 **                  patch_data_len  patch data len
 **
-** Returns          TRUE if successful, otherwise FALSE
+** Returns          true if successful, otherwise false
 **
 *******************************************************************************/
-BOOLEAN HAL_NfcPrmDownloadContinue (UINT8 *p_patch_data,
-                                    UINT16 patch_data_len)
+bool    HAL_NfcPrmDownloadContinue (uint8_t *p_patch_data,
+                                    uint16_t patch_data_len)
 {
     HAL_TRACE_API2 ("HAL_NfcPrmDownloadContinue ():state = %d, patch_data_len=%d",
                      nfc_hal_cb.prm.state, patch_data_len);
@@ -1098,10 +1098,10 @@ BOOLEAN HAL_NfcPrmDownloadContinue (UINT8 *p_patch_data,
     if (  (nfc_hal_cb.prm.state != NFC_HAL_PRM_ST_SPD_COMPARE_VERSION)
         &&(nfc_hal_cb.prm.state != NFC_HAL_PRM_ST_SPD_GET_PATCH_HEADER)
         &&(nfc_hal_cb.prm.state != NFC_HAL_PRM_ST_SPD_DOWNLOADING)  )
-        return FALSE;
+        return false;
 
     if (patch_data_len == 0)
-        return FALSE;
+        return false;
 
     nfc_hal_cb.prm.cur_patch_offset = 0;
     nfc_hal_cb.prm.p_cur_patch_data = p_patch_data;
@@ -1125,7 +1125,7 @@ BOOLEAN HAL_NfcPrmDownloadContinue (UINT8 *p_patch_data,
         HAL_TRACE_ERROR1 ("Unexpected patch state:%d.", nfc_hal_cb.prm.state);
     }
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1145,9 +1145,9 @@ BOOLEAN HAL_NfcPrmDownloadContinue (UINT8 *p_patch_data,
 **
 **
 *******************************************************************************/
-void HAL_NfcPrmSetI2cPatch (UINT8 *p_i2c_patchfile_buf, UINT16 i2c_patchfile_len, UINT32 prei2c_delay)
+void HAL_NfcPrmSetI2cPatch (uint8_t *p_i2c_patchfile_buf, uint16_t i2c_patchfile_len, uint32_t prei2c_delay)
 {
-#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == TRUE))
+#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == true))
     HAL_TRACE_API0 ("HAL_NfcPrmSetI2cPatch ()");
 
     nfc_hal_cb.prm_i2c.prei2c_delay    = NFC_HAL_PRM_POST_I2C_FIX_DELAY;
@@ -1178,7 +1178,7 @@ void HAL_NfcPrmSetI2cPatch (UINT8 *p_i2c_patchfile_buf, UINT16 i2c_patchfile_len
 **
 **
 *******************************************************************************/
-tHAL_NFC_STATUS HAL_NfcPrmSetSpdNciCmdPayloadSize (UINT8 max_payload_size)
+tHAL_NFC_STATUS HAL_NfcPrmSetSpdNciCmdPayloadSize (uint8_t max_payload_size)
 {
     /* Validate: minimum size is NFC_HAL_PRM_MIN_NCI_CMD_PAYLOAD_SIZE */
     if (max_payload_size < NFC_HAL_PRM_MIN_NCI_CMD_PAYLOAD_SIZE)

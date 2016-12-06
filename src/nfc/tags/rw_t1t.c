@@ -26,7 +26,7 @@
 #include <string.h>
 #include "nfc_target.h"
 
-#if (NFC_INCLUDED == TRUE)
+#if (NFC_INCLUDED == true)
 #include "nfc_api.h"
 #include "nci_hmsgs.h"
 #include "rw_api.h"
@@ -36,14 +36,14 @@
 
 /* Local Functions */
 static tRW_EVENT rw_t1t_handle_rid_rsp (BT_HDR *p_pkt);
-static void rw_t1t_data_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data);
+static void rw_t1t_data_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data);
 static void rw_t1t_process_frame_error (void);
 static void rw_t1t_process_error (void);
 static void rw_t1t_handle_presence_check_rsp (tNFC_STATUS status);
-#if (BT_TRACE_VERBOSE == TRUE)
-static char *rw_t1t_get_state_name (UINT8 state);
-static char *rw_t1t_get_sub_state_name (UINT8 sub_state);
-static char *rw_t1t_get_event_name (UINT8 event);
+#if (BT_TRACE_VERBOSE == true)
+static char *rw_t1t_get_state_name (uint8_t state);
+static char *rw_t1t_get_sub_state_name (uint8_t sub_state);
+static char *rw_t1t_get_event_name (uint8_t event);
 #endif
 
 /*******************************************************************************
@@ -55,26 +55,26 @@ static char *rw_t1t_get_event_name (UINT8 event);
 ** Returns          none
 **
 *******************************************************************************/
-static void rw_t1t_data_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
+static void rw_t1t_data_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
 {
     tRW_T1T_CB              *p_t1t      = &rw_cb.tcb.t1t;
     tRW_EVENT               rw_event    = RW_RAW_FRAME_EVT;
-    BOOLEAN                 b_notify    = TRUE;
+    bool                    b_notify    = true;
     tRW_DATA                evt_data;
     BT_HDR                  *p_pkt;
-    UINT8                   *p;
+    uint8_t                 *p;
     tT1T_CMD_RSP_INFO       *p_cmd_rsp_info     = (tT1T_CMD_RSP_INFO *) rw_cb.tcb.t1t.p_cmd_rsp_info;
-#if (BT_TRACE_VERBOSE == TRUE)
-    UINT8                   begin_state         = p_t1t->state;
+#if (BT_TRACE_VERBOSE == true)
+    uint8_t                 begin_state         = p_t1t->state;
 #endif
 
     p_pkt = (BT_HDR *) (p_data->data.p_data);
     if (p_pkt == NULL)
         return;
     /* Assume the data is just the response byte sequence */
-    p = (UINT8 *) (p_pkt + 1) + p_pkt->offset;
+    p = (uint8_t *) (p_pkt + 1) + p_pkt->offset;
 
-#if (BT_TRACE_VERBOSE == TRUE)
+#if (BT_TRACE_VERBOSE == true)
     RW_TRACE_DEBUG2 ("rw_t1t_data_cback (): state:%s (%d)", rw_t1t_get_state_name (p_t1t->state), p_t1t->state);
 #else
     RW_TRACE_DEBUG1 ("rw_t1t_data_cback (): state=%d", p_t1t->state);
@@ -107,7 +107,7 @@ static void rw_t1t_data_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_
         return;
     }
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == TRUE))
+#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
     /* Update rx stats */
     rw_main_update_rx_stats (p_pkt->len);
 #endif  /* RW_STATS_INCLUDED */
@@ -133,7 +133,7 @@ static void rw_t1t_data_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_
             /* Stop timer as some response to current command is received */
             nfc_stop_quick_timer (&p_t1t->timer);
             /* Retrasmit the last sent command if retry-count < max retry */
-#if (BT_TRACE_VERBOSE == TRUE)
+#if (BT_TRACE_VERBOSE == true)
             RW_TRACE_ERROR2 ("T1T Frame error. state=%s command (opcode) = 0x%02x", rw_t1t_get_state_name (p_t1t->state), p_cmd_rsp_info->opcode);
 #else
             RW_TRACE_ERROR2 ("T1T Frame error. state=0x%02x command = 0x%02x ", p_t1t->state, p_cmd_rsp_info->opcode);
@@ -163,7 +163,7 @@ static void rw_t1t_data_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_
         p_t1t->prev_cmd_rsp_info.addr          = ((p_cmd_rsp_info->opcode != T1T_CMD_RALL) && (p_cmd_rsp_info->opcode != T1T_CMD_RID))? p_t1t->addr:0;
         p_t1t->prev_cmd_rsp_info.rsp_len       = p_cmd_rsp_info->rsp_len;
         p_t1t->prev_cmd_rsp_info.op_code       = p_cmd_rsp_info->opcode;
-        p_t1t->prev_cmd_rsp_info.pend_retx_rsp = (UINT8) rw_cb.cur_retry;
+        p_t1t->prev_cmd_rsp_info.pend_retx_rsp = (uint8_t) rw_cb.cur_retry;
     }
 
     rw_cb.cur_retry = 0;
@@ -195,7 +195,7 @@ static void rw_t1t_data_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_
     else
         GKI_freebuf (p_pkt);
 
-#if (BT_TRACE_VERBOSE == TRUE)
+#if (BT_TRACE_VERBOSE == true)
     if (begin_state != p_t1t->state)
     {
         RW_TRACE_DEBUG2 ("RW T1T state changed:<%s> -> <%s>",
@@ -214,7 +214,7 @@ static void rw_t1t_data_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_
 ** Returns          none
 **
 *******************************************************************************/
-void rw_t1t_conn_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
+void rw_t1t_conn_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
 {
     tRW_T1T_CB          *p_t1t  = &rw_cb.tcb.t1t;
     tRW_READ_DATA       evt_data;
@@ -234,7 +234,7 @@ void rw_t1t_conn_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
         break;
 
     case NFC_DEACTIVATE_CEVT:
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == TRUE))
+#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
         /* Display stats */
         rw_main_log_stats ();
 #endif  /* RW_STATS_INCLUDED */
@@ -274,12 +274,12 @@ void rw_t1t_conn_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
         if (  (p_t1t->state == RW_T1T_STATE_NOT_ACTIVATED)
             ||(p_t1t->state == RW_T1T_STATE_IDLE)  )
         {
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == TRUE))
+#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
             rw_main_update_trans_error_stats ();
 #endif  /* RW_STATS_INCLUDED */
 
             if (event == NFC_ERROR_CEVT)
-                evt_data.status = (tNFC_STATUS) (*(UINT8*) p_data);
+                evt_data.status = (tNFC_STATUS) (*(uint8_t*) p_data);
             else if (p_data)
                 evt_data.status = p_data->status;
             else
@@ -291,7 +291,7 @@ void rw_t1t_conn_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
         }
         nfc_stop_quick_timer (&p_t1t->timer);
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == TRUE))
+#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
         rw_main_update_trans_error_stats ();
 #endif  /* RW_STATS_INCLUDED */
 
@@ -322,13 +322,13 @@ void rw_t1t_conn_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
 **                  otherwise, error status
 **
 *******************************************************************************/
-tNFC_STATUS rw_t1t_send_static_cmd (UINT8 opcode, UINT8 add, UINT8 dat)
+tNFC_STATUS rw_t1t_send_static_cmd (uint8_t opcode, uint8_t add, uint8_t dat)
 {
     tNFC_STATUS             status  = NFC_STATUS_FAILED;
     tRW_T1T_CB              *p_t1t  = &rw_cb.tcb.t1t;
     const tT1T_CMD_RSP_INFO *p_cmd_rsp_info = t1t_cmd_to_rsp_info (opcode);
     BT_HDR                  *p_data;
-    UINT8                   *p;
+    uint8_t                 *p;
 
     if (p_cmd_rsp_info)
     {
@@ -339,7 +339,7 @@ tNFC_STATUS rw_t1t_send_static_cmd (UINT8 opcode, UINT8 add, UINT8 dat)
             p_t1t->p_cmd_rsp_info   = (tT1T_CMD_RSP_INFO *) p_cmd_rsp_info;
             p_t1t->addr             = add;
             p_data->offset          = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
-            p                       = (UINT8 *) (p_data + 1) + p_data->offset;
+            p                       = (uint8_t *) (p_data + 1) + p_data->offset;
             UINT8_TO_BE_STREAM (p, opcode);
             UINT8_TO_BE_STREAM (p, add);
             UINT8_TO_BE_STREAM (p, dat);
@@ -351,9 +351,9 @@ tNFC_STATUS rw_t1t_send_static_cmd (UINT8 opcode, UINT8 add, UINT8 dat)
             rw_cb.cur_retry = 0;
             memcpy (p_t1t->p_cur_cmd_buf, p_data, sizeof (BT_HDR) + p_data->offset + p_data->len);
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == TRUE))
+#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
             /* Update stats */
-            rw_main_update_tx_stats (p_data->len, FALSE);
+            rw_main_update_tx_stats (p_data->len, false);
 #endif  /* RW_STATS_INCLUDED */
 
             RW_TRACE_EVENT2 ("RW SENT [%s]:0x%x CMD", t1t_info_to_str (p_cmd_rsp_info), p_cmd_rsp_info->opcode);
@@ -382,13 +382,13 @@ tNFC_STATUS rw_t1t_send_static_cmd (UINT8 opcode, UINT8 add, UINT8 dat)
 **                  otherwise, error status
 **
 *******************************************************************************/
-tNFC_STATUS rw_t1t_send_dyn_cmd (UINT8 opcode, UINT8 add, UINT8 *p_dat)
+tNFC_STATUS rw_t1t_send_dyn_cmd (uint8_t opcode, uint8_t add, uint8_t *p_dat)
 {
     tNFC_STATUS             status  = NFC_STATUS_FAILED;
     tRW_T1T_CB              *p_t1t  = &rw_cb.tcb.t1t;
     const tT1T_CMD_RSP_INFO *p_cmd_rsp_info = t1t_cmd_to_rsp_info (opcode);
     BT_HDR                  *p_data;
-    UINT8                   *p;
+    uint8_t                 *p;
 
     if (p_cmd_rsp_info)
     {
@@ -399,7 +399,7 @@ tNFC_STATUS rw_t1t_send_dyn_cmd (UINT8 opcode, UINT8 add, UINT8 *p_dat)
             p_t1t->p_cmd_rsp_info   = (tT1T_CMD_RSP_INFO *) p_cmd_rsp_info;
             p_t1t->addr             = add;
             p_data->offset          = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
-            p                       = (UINT8 *) (p_data + 1) + p_data->offset;
+            p                       = (uint8_t *) (p_data + 1) + p_data->offset;
             UINT8_TO_BE_STREAM (p, opcode);
             UINT8_TO_BE_STREAM (p, add);
 
@@ -419,9 +419,9 @@ tNFC_STATUS rw_t1t_send_dyn_cmd (UINT8 opcode, UINT8 add, UINT8 *p_dat)
             rw_cb.cur_retry = 0;
             memcpy (p_t1t->p_cur_cmd_buf, p_data, sizeof (BT_HDR) + p_data->offset + p_data->len);
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == TRUE))
+#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
             /* Update stats */
-            rw_main_update_tx_stats (p_data->len, FALSE);
+            rw_main_update_tx_stats (p_data->len, false);
 #endif  /* RW_STATS_INCLUDED */
 
             RW_TRACE_EVENT2 ("RW SENT [%s]:0x%x CMD", t1t_info_to_str (p_cmd_rsp_info), p_cmd_rsp_info->opcode);
@@ -454,13 +454,13 @@ static tRW_EVENT rw_t1t_handle_rid_rsp (BT_HDR *p_pkt)
 {
     tRW_T1T_CB  *p_t1t   = &rw_cb.tcb.t1t;
     tRW_DATA    evt_data;
-    UINT8       *p_rid_rsp;
+    uint8_t     *p_rid_rsp;
 
     evt_data.status      = NFC_STATUS_OK;
     evt_data.data.p_data = p_pkt;
 
     /* Assume the data is just the response byte sequence */
-    p_rid_rsp = (UINT8 *) (p_pkt + 1) + p_pkt->offset;
+    p_rid_rsp = (uint8_t *) (p_pkt + 1) + p_pkt->offset;
 
     /* Response indicates tag is present */
     if (p_t1t->state == RW_T1T_STATE_CHECK_PRESENCE)
@@ -472,7 +472,7 @@ static tRW_EVENT rw_t1t_handle_rid_rsp (BT_HDR *p_pkt)
     /* Extract HR and UID from response */
     STREAM_TO_ARRAY (p_t1t->hr,  p_rid_rsp, T1T_HR_LEN);
 
-#if (BT_TRACE_VERBOSE == TRUE)
+#if (BT_TRACE_VERBOSE == true)
     RW_TRACE_DEBUG2 ("hr0:0x%x, hr1:0x%x", p_t1t->hr[0], p_t1t->hr[1]);
     RW_TRACE_DEBUG4 ("rw_t1t_handle_rid_rsp (): UID0-3=%02x%02x%02x%02x", p_rid_rsp[0], p_rid_rsp[1], p_rid_rsp[2], p_rid_rsp[3]);
 #else
@@ -496,7 +496,7 @@ static tRW_EVENT rw_t1t_handle_rid_rsp (BT_HDR *p_pkt)
 ** Returns          none
 **
 *******************************************************************************/
-tNFC_STATUS rw_t1t_select (UINT8 hr[T1T_HR_LEN], UINT8 uid[T1T_CMD_UID_LEN])
+tNFC_STATUS rw_t1t_select (uint8_t hr[T1T_HR_LEN], uint8_t uid[T1T_CMD_UID_LEN])
 {
     tNFC_STATUS status  = NFC_STATUS_FAILED;
     tRW_T1T_CB  *p_t1t  = &rw_cb.tcb.t1t;
@@ -536,7 +536,7 @@ void rw_t1t_process_timeout (TIMER_LIST_ENT *p_tle)
 {
     tRW_T1T_CB        *p_t1t  = &rw_cb.tcb.t1t;
 
-#if (BT_TRACE_VERBOSE == TRUE)
+#if (BT_TRACE_VERBOSE == true)
     RW_TRACE_ERROR2 ("T1T timeout. state=%s command (opcode)=0x%02x ", rw_t1t_get_state_name (p_t1t->state), (rw_cb.tcb.t1t.p_cmd_rsp_info)->opcode);
 #else
     RW_TRACE_ERROR2 ("T1T timeout. state=0x%02x command=0x%02x ", p_t1t->state, (rw_cb.tcb.t1t.p_cmd_rsp_info)->opcode);
@@ -565,7 +565,7 @@ void rw_t1t_process_timeout (TIMER_LIST_ENT *p_tle)
 *******************************************************************************/
 static void rw_t1t_process_frame_error (void)
 {
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == TRUE))
+#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
     /* Update stats */
     rw_main_update_crc_error_stats ();
 #endif  /* RW_STATS_INCLUDED */
@@ -607,9 +607,9 @@ static void rw_t1t_process_error (void)
         {
             memcpy (p_cmd_buf, p_t1t->p_cur_cmd_buf, sizeof (BT_HDR) + p_t1t->p_cur_cmd_buf->offset + p_t1t->p_cur_cmd_buf->len);
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == TRUE))
+#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
             /* Update stats */
-            rw_main_update_tx_stats (p_cmd_buf->len, TRUE);
+            rw_main_update_tx_stats (p_cmd_buf->len, true);
 #endif  /* RW_STATS_INCLUDED */
 
             if (NFC_SendData (NFC_RF_CONN_ID, p_cmd_buf) == NFC_STATUS_OK)
@@ -633,7 +633,7 @@ static void rw_t1t_process_error (void)
         p_t1t->prev_cmd_rsp_info.pend_retx_rsp = RW_MAX_RETRIES;
     }
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == TRUE))
+#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
     /* update failure count */
     rw_main_update_fail_stats ();
 #endif  /* RW_STATS_INCLUDED */
@@ -693,11 +693,11 @@ void rw_t1t_handle_op_complete (void)
     tRW_T1T_CB      *p_t1t  = &rw_cb.tcb.t1t;
 
     p_t1t->state    = RW_T1T_STATE_IDLE;
-#if (defined (RW_NDEF_INCLUDED) && (RW_NDEF_INCLUDED == TRUE))
+#if (defined (RW_NDEF_INCLUDED) && (RW_NDEF_INCLUDED == true))
     if (p_t1t->state != RW_T1T_STATE_READ_NDEF)
     {
-        p_t1t->b_update = FALSE;
-        p_t1t->b_rseg   = FALSE;
+        p_t1t->b_update = false;
+        p_t1t->b_rseg   = false;
     }
     p_t1t->substate = RW_T1T_SUBSTATE_NONE;
 #endif
@@ -832,11 +832,11 @@ tNFC_STATUS RW_T1tReadAll (void)
 ** Returns          tNFC_STATUS
 **
 *******************************************************************************/
-tNFC_STATUS RW_T1tRead (UINT8 block, UINT8 byte)
+tNFC_STATUS RW_T1tRead (uint8_t block, uint8_t byte)
 {
     tNFC_STATUS status  = NFC_STATUS_FAILED;
     tRW_T1T_CB  *p_t1t  = &rw_cb.tcb.t1t;
-    UINT8       addr;
+    uint8_t     addr;
 
     if (p_t1t->state != RW_T1T_STATE_IDLE)
     {
@@ -862,11 +862,11 @@ tNFC_STATUS RW_T1tRead (UINT8 block, UINT8 byte)
 ** Returns          tNFC_STATUS
 **
 *******************************************************************************/
-tNFC_STATUS RW_T1tWriteErase (UINT8 block, UINT8 byte, UINT8 new_byte)
+tNFC_STATUS RW_T1tWriteErase (uint8_t block, uint8_t byte, uint8_t new_byte)
 {
     tNFC_STATUS status  = NFC_STATUS_FAILED;
     tRW_T1T_CB  *p_t1t  = &rw_cb.tcb.t1t;
-    UINT8       addr;
+    uint8_t     addr;
 
     if (p_t1t->state != RW_T1T_STATE_IDLE)
     {
@@ -899,8 +899,8 @@ tNFC_STATUS RW_T1tWriteErase (UINT8 block, UINT8 byte, UINT8 new_byte)
         p_t1t->state = RW_T1T_STATE_WRITE;
         if (block < T1T_BLOCKS_PER_SEGMENT)
         {
-            p_t1t->b_update = FALSE;
-            p_t1t->b_rseg   = FALSE;
+            p_t1t->b_update = false;
+            p_t1t->b_rseg   = false;
         }
     }
     return status;
@@ -915,11 +915,11 @@ tNFC_STATUS RW_T1tWriteErase (UINT8 block, UINT8 byte, UINT8 new_byte)
 ** Returns          tNFC_STATUS
 **
 *******************************************************************************/
-tNFC_STATUS RW_T1tWriteNoErase (UINT8 block, UINT8 byte, UINT8 new_byte)
+tNFC_STATUS RW_T1tWriteNoErase (uint8_t block, uint8_t byte, uint8_t new_byte)
 {
     tNFC_STATUS status  = NFC_STATUS_FAILED;
     tRW_T1T_CB  *p_t1t  = &rw_cb.tcb.t1t;
-    UINT8       addr;
+    uint8_t     addr;
 
     if (p_t1t->state != RW_T1T_STATE_IDLE)
     {
@@ -952,8 +952,8 @@ tNFC_STATUS RW_T1tWriteNoErase (UINT8 block, UINT8 byte, UINT8 new_byte)
         p_t1t->state = RW_T1T_STATE_WRITE;
         if (block < T1T_BLOCKS_PER_SEGMENT)
         {
-            p_t1t->b_update = FALSE;
-            p_t1t->b_rseg   = FALSE;
+            p_t1t->b_update = false;
+            p_t1t->b_rseg   = false;
         }
     }
     return status;
@@ -968,11 +968,11 @@ tNFC_STATUS RW_T1tWriteNoErase (UINT8 block, UINT8 byte, UINT8 new_byte)
 ** Returns          tNFC_STATUS
 **
 *******************************************************************************/
-tNFC_STATUS RW_T1tReadSeg (UINT8 segment)
+tNFC_STATUS RW_T1tReadSeg (uint8_t segment)
 {
     tNFC_STATUS status  = NFC_STATUS_FAILED;
     tRW_T1T_CB  *p_t1t  = &rw_cb.tcb.t1t;
-    UINT8       adds;
+    uint8_t     adds;
 
     if (p_t1t->state != RW_T1T_STATE_IDLE)
     {
@@ -1005,7 +1005,7 @@ tNFC_STATUS RW_T1tReadSeg (UINT8 segment)
 ** Returns          tNFC_STATUS
 **
 *******************************************************************************/
-tNFC_STATUS RW_T1tRead8 (UINT8 block)
+tNFC_STATUS RW_T1tRead8 (uint8_t block)
 {
     tNFC_STATUS status = NFC_STATUS_FAILED;
     tRW_T1T_CB  *p_t1t= &rw_cb.tcb.t1t;
@@ -1036,7 +1036,7 @@ tNFC_STATUS RW_T1tRead8 (UINT8 block)
 ** Returns          tNFC_STATUS
 **
 *******************************************************************************/
-tNFC_STATUS RW_T1tWriteErase8 (UINT8 block, UINT8 *p_new_dat)
+tNFC_STATUS RW_T1tWriteErase8 (uint8_t block, uint8_t *p_new_dat)
 {
     tRW_T1T_CB  *p_t1t= &rw_cb.tcb.t1t;
     tNFC_STATUS status = NFC_STATUS_FAILED;
@@ -1069,8 +1069,8 @@ tNFC_STATUS RW_T1tWriteErase8 (UINT8 block, UINT8 *p_new_dat)
             p_t1t->state = RW_T1T_STATE_WRITE;
             if (block < T1T_BLOCKS_PER_SEGMENT)
             {
-                p_t1t->b_update = FALSE;
-                p_t1t->b_rseg   = FALSE;
+                p_t1t->b_update = false;
+                p_t1t->b_rseg   = false;
             }
         }
     }
@@ -1086,7 +1086,7 @@ tNFC_STATUS RW_T1tWriteErase8 (UINT8 block, UINT8 *p_new_dat)
 ** Returns          tNFC_STATUS
 **
 *******************************************************************************/
-tNFC_STATUS RW_T1tWriteNoErase8 (UINT8 block, UINT8 *p_new_dat)
+tNFC_STATUS RW_T1tWriteNoErase8 (uint8_t block, uint8_t *p_new_dat)
 {
     tNFC_STATUS status = NFC_STATUS_FAILED;
     tRW_T1T_CB  *p_t1t= &rw_cb.tcb.t1t;
@@ -1119,15 +1119,15 @@ tNFC_STATUS RW_T1tWriteNoErase8 (UINT8 block, UINT8 *p_new_dat)
             p_t1t->state    = RW_T1T_STATE_WRITE;
             if (block < T1T_BLOCKS_PER_SEGMENT)
             {
-                p_t1t->b_update = FALSE;
-                p_t1t->b_rseg   = FALSE;
+                p_t1t->b_update = false;
+                p_t1t->b_rseg   = false;
             }
         }
     }
     return status;
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
+#if (BT_TRACE_VERBOSE == true)
 /*******************************************************************************
 **
 ** Function         rw_t1t_get_state_name
@@ -1139,7 +1139,7 @@ tNFC_STATUS RW_T1tWriteNoErase8 (UINT8 block, UINT8 *p_new_dat)
 ** Returns          pointer to the name
 **
 *******************************************************************************/
-static char *rw_t1t_get_state_name (UINT8 state)
+static char *rw_t1t_get_state_name (uint8_t state)
 {
     switch (state)
     {
@@ -1168,6 +1168,6 @@ static char *rw_t1t_get_state_name (UINT8 state)
     }
 }
 
-#endif /* (BT_TRACE_VERBOSE == TRUE) */
+#endif /* (BT_TRACE_VERBOSE == true) */
 
-#endif /* (NFC_INCLUDED == TRUE) */
+#endif /* (NFC_INCLUDED == true) */

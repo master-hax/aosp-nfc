@@ -40,23 +40,23 @@ static void nfa_hci_api_register (tNFA_HCI_EVENT_DATA *p_evt_data);
 static void nfa_hci_api_get_gate_pipe_list (tNFA_HCI_EVENT_DATA *p_evt_data);
 static void nfa_hci_api_alloc_gate (tNFA_HCI_EVENT_DATA *p_evt_data);
 static void nfa_hci_api_get_host_list (tNFA_HCI_EVENT_DATA *p_evt_data);
-static BOOLEAN nfa_hci_api_get_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data);
-static BOOLEAN nfa_hci_api_set_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data);
-static BOOLEAN nfa_hci_api_create_pipe (tNFA_HCI_EVENT_DATA *p_evt_data);
+static bool    nfa_hci_api_get_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data);
+static bool    nfa_hci_api_set_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data);
+static bool    nfa_hci_api_create_pipe (tNFA_HCI_EVENT_DATA *p_evt_data);
 static void nfa_hci_api_open_pipe (tNFA_HCI_EVENT_DATA *p_evt_data);
 static void nfa_hci_api_close_pipe (tNFA_HCI_EVENT_DATA *p_evt_data);
 static void nfa_hci_api_delete_pipe (tNFA_HCI_EVENT_DATA *p_evt_data);
-static BOOLEAN nfa_hci_api_send_event (tNFA_HCI_EVENT_DATA *p_evt_data);
-static BOOLEAN nfa_hci_api_send_cmd (tNFA_HCI_EVENT_DATA *p_evt_data);
+static bool    nfa_hci_api_send_event (tNFA_HCI_EVENT_DATA *p_evt_data);
+static bool    nfa_hci_api_send_cmd (tNFA_HCI_EVENT_DATA *p_evt_data);
 static void nfa_hci_api_send_rsp (tNFA_HCI_EVENT_DATA *p_evt_data);
 static void nfa_hci_api_add_static_pipe (tNFA_HCI_EVENT_DATA *p_evt_data);
 
-static void nfa_hci_handle_identity_mgmt_gate_pkt (UINT8 *p_data, tNFA_HCI_DYN_PIPE *p_pipe);
-static void nfa_hci_handle_loopback_gate_pkt (UINT8 *p_data, UINT16 data_len, tNFA_HCI_DYN_PIPE *p_pipe);
-static void nfa_hci_handle_connectivity_gate_pkt (UINT8 *p_data, UINT16 data_len, tNFA_HCI_DYN_PIPE *p_pipe);
-static void nfa_hci_handle_generic_gate_cmd (UINT8 *p_data, UINT8 data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe);
-static void nfa_hci_handle_generic_gate_rsp (UINT8 *p_data, UINT8 data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe);
-static void nfa_hci_handle_generic_gate_evt (UINT8 *p_data, UINT16 data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe);
+static void nfa_hci_handle_identity_mgmt_gate_pkt (uint8_t *p_data, tNFA_HCI_DYN_PIPE *p_pipe);
+static void nfa_hci_handle_loopback_gate_pkt (uint8_t *p_data, uint16_t data_len, tNFA_HCI_DYN_PIPE *p_pipe);
+static void nfa_hci_handle_connectivity_gate_pkt (uint8_t *p_data, uint16_t data_len, tNFA_HCI_DYN_PIPE *p_pipe);
+static void nfa_hci_handle_generic_gate_cmd (uint8_t *p_data, uint8_t data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe);
+static void nfa_hci_handle_generic_gate_rsp (uint8_t *p_data, uint8_t data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe);
+static void nfa_hci_handle_generic_gate_evt (uint8_t *p_data, uint16_t data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe);
 
 
 /*******************************************************************************
@@ -72,7 +72,7 @@ void nfa_hci_check_pending_api_requests (void)
 {
     BT_HDR              *p_msg;
     tNFA_HCI_EVENT_DATA *p_evt_data;
-    BOOLEAN             b_free;
+    bool                b_free;
 
     /* If busy, or API queue is empty, then exit */
     if (  (nfa_hci_cb.hci_state != NFA_HCI_STATE_IDLE)
@@ -85,31 +85,31 @@ void nfa_hci_check_pending_api_requests (void)
     /* Save the application handle */
     nfa_hci_cb.app_in_use = p_evt_data->comm.hci_handle;
 
-    b_free = TRUE;
+    b_free = true;
     switch (p_msg->event)
     {
     case NFA_HCI_API_CREATE_PIPE_EVT:
-        if (nfa_hci_api_create_pipe (p_evt_data) == FALSE)
-            b_free = FALSE;
+        if (nfa_hci_api_create_pipe (p_evt_data) == false)
+            b_free = false;
         break;
 
     case NFA_HCI_API_GET_REGISTRY_EVT:
-        if (nfa_hci_api_get_reg_value (p_evt_data) == FALSE)
-            b_free = FALSE;
+        if (nfa_hci_api_get_reg_value (p_evt_data) == false)
+            b_free = false;
         break;
 
     case NFA_HCI_API_SET_REGISTRY_EVT:
-        if (nfa_hci_api_set_reg_value (p_evt_data) == FALSE)
-            b_free = FALSE;
+        if (nfa_hci_api_set_reg_value (p_evt_data) == false)
+            b_free = false;
         break;
 
     case NFA_HCI_API_SEND_CMD_EVT:
-        if (nfa_hci_api_send_cmd (p_evt_data) == FALSE)
-            b_free = FALSE;
+        if (nfa_hci_api_send_cmd (p_evt_data) == false)
+            b_free = false;
         break;
     case NFA_HCI_API_SEND_EVENT_EVT:
-        if (nfa_hci_api_send_event (p_evt_data) == FALSE)
-            b_free = FALSE;
+        if (nfa_hci_api_send_event (p_evt_data) == false)
+            b_free = false;
         break;
     }
 
@@ -171,17 +171,17 @@ void nfa_hci_check_api_requests (void)
             break;
 
         case NFA_HCI_API_GET_REGISTRY_EVT:
-            if (nfa_hci_api_get_reg_value (p_evt_data) == FALSE)
+            if (nfa_hci_api_get_reg_value (p_evt_data) == false)
                 continue;
             break;
 
         case NFA_HCI_API_SET_REGISTRY_EVT:
-            if (nfa_hci_api_set_reg_value (p_evt_data) == FALSE)
+            if (nfa_hci_api_set_reg_value (p_evt_data) == false)
                 continue;
             break;
 
         case NFA_HCI_API_CREATE_PIPE_EVT:
-           if (nfa_hci_api_create_pipe (p_evt_data) == FALSE)
+           if (nfa_hci_api_create_pipe (p_evt_data) == false)
                continue;
             break;
 
@@ -198,7 +198,7 @@ void nfa_hci_check_api_requests (void)
             break;
 
         case NFA_HCI_API_SEND_CMD_EVT:
-            if (nfa_hci_api_send_cmd (p_evt_data) == FALSE)
+            if (nfa_hci_api_send_cmd (p_evt_data) == false)
                 continue;
             break;
 
@@ -207,7 +207,7 @@ void nfa_hci_check_api_requests (void)
             break;
 
         case NFA_HCI_API_SEND_EVENT_EVT:
-            if (nfa_hci_api_send_event (p_evt_data) == FALSE)
+            if (nfa_hci_api_send_event (p_evt_data) == false)
                 continue;
             break;
 
@@ -239,7 +239,7 @@ static void nfa_hci_api_register (tNFA_HCI_EVENT_DATA *p_evt_data)
     char                *p_app_name  = p_evt_data->app_info.app_name;
     tNFA_HCI_CBACK      *p_cback     = p_evt_data->app_info.p_cback;
     int                 xx,yy;
-    UINT8               num_gates    = 0,num_pipes = 0;
+    uint8_t             num_gates    = 0,num_pipes = 0;
     tNFA_HCI_DYN_GATE   *pg = nfa_hci_cb.cfg.dyn_gates;
 
     /* First, see if the application was already registered */
@@ -275,8 +275,8 @@ static void nfa_hci_api_register (tNFA_HCI_EVENT_DATA *p_evt_data)
             if (nfa_hci_cb.cfg.reg_app_names[xx][0] == 0)
             {
                 memset (&nfa_hci_cb.cfg.reg_app_names[xx][0], 0, sizeof (nfa_hci_cb.cfg.reg_app_names[xx]));
-                BCM_STRNCPY_S (&nfa_hci_cb.cfg.reg_app_names[xx][0], sizeof (nfa_hci_cb.cfg.reg_app_names[xx]), p_app_name, NFA_MAX_HCI_APP_NAME_LEN);
-                nfa_hci_cb.nv_write_needed = TRUE;
+                strncpy (&nfa_hci_cb.cfg.reg_app_names[xx][0], p_app_name, NFA_MAX_HCI_APP_NAME_LEN);
+                nfa_hci_cb.nv_write_needed = true;
                 NFA_TRACE_EVENT2 ("nfa_hci_api_register (%s)  Allocated: %u", p_app_name, xx);
                 break;
             }
@@ -361,7 +361,7 @@ void nfa_hci_api_deregister (tNFA_HCI_EVENT_DATA *p_evt_data)
         memset (&nfa_hci_cb.cfg.reg_app_names[nfa_hci_cb.app_in_use & NFA_HANDLE_MASK][0], 0, NFA_MAX_HCI_APP_NAME_LEN + 1);
         nfa_hci_cb.p_app_cback[nfa_hci_cb.app_in_use & NFA_HANDLE_MASK]  = NULL;
 
-        nfa_hci_cb.nv_write_needed = TRUE;
+        nfa_hci_cb.nv_write_needed = true;
 
         evt_data.hci_deregister.status = NFC_STATUS_OK;
 
@@ -380,7 +380,7 @@ void nfa_hci_api_deregister (tNFA_HCI_EVENT_DATA *p_evt_data)
 
         nfa_hci_cb.p_app_cback[nfa_hci_cb.app_in_use & NFA_HANDLE_MASK]  = NULL;
 
-        nfa_hci_cb.nv_write_needed = TRUE;
+        nfa_hci_cb.nv_write_needed = true;
 
         evt_data.hci_deregister.status = NFC_STATUS_FAILED;
 
@@ -521,7 +521,7 @@ static void nfa_hci_api_alloc_gate (tNFA_HCI_EVENT_DATA *p_evt_data)
 void nfa_hci_api_dealloc_gate (tNFA_HCI_EVENT_DATA *p_evt_data)
 {
     tNFA_HCI_EVT_DATA   evt_data;
-    UINT8               gate_id;
+    uint8_t             gate_id;
     tNFA_HCI_DYN_GATE   *p_gate;
     tNFA_HCI_DYN_PIPE   *p_pipe;
     tNFA_HANDLE         app_handle;
@@ -559,7 +559,7 @@ void nfa_hci_api_dealloc_gate (tNFA_HCI_EVENT_DATA *p_evt_data)
         {
             nfa_hciu_release_gate (p_gate->gate_id);
 
-            nfa_hci_cb.nv_write_needed  = TRUE;
+            nfa_hci_cb.nv_write_needed  = true;
             evt_data.deallocated.status = NFA_STATUS_OK;
 
             if (nfa_hci_cb.hci_state == NFA_HCI_STATE_REMOVE_GATE)
@@ -568,7 +568,7 @@ void nfa_hci_api_dealloc_gate (tNFA_HCI_EVENT_DATA *p_evt_data)
         else if ((p_pipe = nfa_hciu_find_active_pipe_on_gate (p_gate->gate_id)) == NULL)
         {
             /* UICC is not active at the moment and cannot delete the pipe */
-            nfa_hci_cb.nv_write_needed  = TRUE;
+            nfa_hci_cb.nv_write_needed  = true;
             evt_data.deallocated.status = NFA_STATUS_FAILED;
 
             if (nfa_hci_cb.hci_state == NFA_HCI_STATE_REMOVE_GATE)
@@ -600,7 +600,7 @@ void nfa_hci_api_dealloc_gate (tNFA_HCI_EVENT_DATA *p_evt_data)
 *******************************************************************************/
 static void nfa_hci_api_get_host_list (tNFA_HCI_EVENT_DATA *p_evt_data)
 {
-    UINT8               app_inx = p_evt_data->get_host_list.hci_handle & NFA_HANDLE_MASK;
+    uint8_t             app_inx = p_evt_data->get_host_list.hci_handle & NFA_HANDLE_MASK;
 
     nfa_hci_cb.app_in_use = p_evt_data->get_host_list.hci_handle;
 
@@ -618,26 +618,26 @@ static void nfa_hci_api_get_host_list (tNFA_HCI_EVENT_DATA *p_evt_data)
 **
 ** Description      action function to create a pipe
 **
-** Returns          TRUE, if the command is processed
-**                  FALSE, if command is queued for processing later
+** Returns          true, if the command is processed
+**                  false, if command is queued for processing later
 **
 *******************************************************************************/
-static BOOLEAN nfa_hci_api_create_pipe (tNFA_HCI_EVENT_DATA *p_evt_data)
+static bool    nfa_hci_api_create_pipe (tNFA_HCI_EVENT_DATA *p_evt_data)
 {
     tNFA_HCI_DYN_GATE   *p_gate = nfa_hciu_find_gate_by_gid (p_evt_data->create_pipe.source_gate);
     tNFA_HCI_EVT_DATA   evt_data;
-    BOOLEAN             report_failed = FALSE;
+    bool                report_failed = false;
 
     /* Verify that the app owns the gate that the pipe is being created on */
     if (  (p_gate == NULL)
         ||(p_gate->gate_owner != p_evt_data->create_pipe.hci_handle)  )
     {
-        report_failed = TRUE;
+        report_failed = true;
         NFA_TRACE_ERROR2 ("nfa_hci_api_create_pipe Cannot create pipe! APP: 0x%02x does not own the gate:0x%x", p_evt_data->create_pipe.hci_handle, p_evt_data->create_pipe.source_gate);
     }
     else if (nfa_hciu_check_pipe_between_gates (p_evt_data->create_pipe.source_gate, p_evt_data->create_pipe.dest_host, p_evt_data->create_pipe.dest_gate))
     {
-        report_failed = TRUE;
+        report_failed = true;
         NFA_TRACE_ERROR0 ("nfa_hci_api_create_pipe : Cannot create multiple pipe between the same two gates!");
     }
 
@@ -653,7 +653,7 @@ static BOOLEAN nfa_hci_api_create_pipe (tNFA_HCI_EVENT_DATA *p_evt_data)
         if (nfa_hciu_is_host_reseting (p_evt_data->create_pipe.dest_gate))
         {
             GKI_enqueue (&nfa_hci_cb.hci_host_reset_api_q, (BT_HDR *) p_evt_data);
-            return FALSE;
+            return false;
         }
 
         nfa_hci_cb.local_gate_in_use  = p_evt_data->create_pipe.source_gate;
@@ -663,7 +663,7 @@ static BOOLEAN nfa_hci_api_create_pipe (tNFA_HCI_EVENT_DATA *p_evt_data)
 
         nfa_hciu_send_create_pipe_cmd (p_evt_data->create_pipe.source_gate, p_evt_data->create_pipe.dest_host, p_evt_data->create_pipe.dest_gate);
     }
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -716,11 +716,11 @@ static void nfa_hci_api_open_pipe (tNFA_HCI_EVENT_DATA *p_evt_data)
 **
 ** Description      action function to get the reg value of the specified index
 **
-** Returns          TRUE, if the command is processed
-**                  FALSE, if command is queued for processing later
+** Returns          true, if the command is processed
+**                  false, if command is queued for processing later
 **
 *******************************************************************************/
-static BOOLEAN nfa_hci_api_get_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
+static bool    nfa_hci_api_get_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
 {
     tNFA_HCI_DYN_PIPE   *p_pipe = nfa_hciu_find_pipe_by_pid (p_evt_data->get_registry.pipe);
     tNFA_HCI_DYN_GATE   *p_gate;
@@ -738,7 +738,7 @@ static BOOLEAN nfa_hci_api_get_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
             if (nfa_hciu_is_host_reseting (p_pipe->dest_host))
             {
                 GKI_enqueue (&nfa_hci_cb.hci_host_reset_api_q, (BT_HDR *) p_evt_data);
-                return FALSE;
+                return false;
             }
 
             if (p_pipe->pipe_state == NFA_HCI_PIPE_CLOSED)
@@ -748,7 +748,7 @@ static BOOLEAN nfa_hci_api_get_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
             else
             {
                 if ((status = nfa_hciu_send_get_param_cmd (p_evt_data->get_registry.pipe, p_evt_data->get_registry.reg_inx)) == NFA_STATUS_OK)
-                    return TRUE;
+                    return true;
             }
         }
     }
@@ -757,7 +757,7 @@ static BOOLEAN nfa_hci_api_get_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
 
     /* Send NFA_HCI_CMD_SENT_EVT to notify failure */
     nfa_hciu_send_to_app (NFA_HCI_CMD_SENT_EVT, &evt_data, p_evt_data->get_registry.hci_handle);
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -766,11 +766,11 @@ static BOOLEAN nfa_hci_api_get_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
 **
 ** Description      action function to set the reg value at specified index
 **
-** Returns          TRUE, if the command is processed
-**                  FALSE, if command is queued for processing later
+** Returns          true, if the command is processed
+**                  false, if command is queued for processing later
 **
 *******************************************************************************/
-static BOOLEAN nfa_hci_api_set_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
+static bool    nfa_hci_api_set_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
 {
     tNFA_HCI_DYN_PIPE   *p_pipe = nfa_hciu_find_pipe_by_pid (p_evt_data->set_registry.pipe);
     tNFA_HCI_DYN_GATE   *p_gate;
@@ -788,7 +788,7 @@ static BOOLEAN nfa_hci_api_set_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
             if (nfa_hciu_is_host_reseting (p_pipe->dest_host))
             {
                 GKI_enqueue (&nfa_hci_cb.hci_host_reset_api_q, (BT_HDR *) p_evt_data);
-                return FALSE;
+                return false;
             }
 
             if (p_pipe->pipe_state == NFA_HCI_PIPE_CLOSED)
@@ -798,7 +798,7 @@ static BOOLEAN nfa_hci_api_set_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
             else
             {
                 if ((status = nfa_hciu_send_set_param_cmd (p_evt_data->set_registry.pipe, p_evt_data->set_registry.reg_inx, p_evt_data->set_registry.size, p_evt_data->set_registry.data)) == NFA_STATUS_OK)
-                    return TRUE;
+                    return true;
             }
         }
     }
@@ -806,7 +806,7 @@ static BOOLEAN nfa_hci_api_set_reg_value (tNFA_HCI_EVENT_DATA *p_evt_data)
 
     /* Send NFA_HCI_CMD_SENT_EVT to notify failure */
     nfa_hciu_send_to_app (NFA_HCI_CMD_SENT_EVT, &evt_data, p_evt_data->set_registry.hci_handle);
-    return TRUE;
+    return true;
 
 }
 
@@ -892,11 +892,11 @@ static void nfa_hci_api_delete_pipe (tNFA_HCI_EVENT_DATA *p_evt_data)
 **
 ** Description      action function to send command on the given pipe
 **
-** Returns          TRUE, if the command is processed
-**                  FALSE, if command is queued for processing later
+** Returns          true, if the command is processed
+**                  false, if command is queued for processing later
 **
 *******************************************************************************/
-static BOOLEAN nfa_hci_api_send_cmd (tNFA_HCI_EVENT_DATA *p_evt_data)
+static bool    nfa_hci_api_send_cmd (tNFA_HCI_EVENT_DATA *p_evt_data)
 {
     tNFA_STATUS         status = NFA_STATUS_FAILED;
     tNFA_HCI_DYN_PIPE   *p_pipe;
@@ -913,7 +913,7 @@ static BOOLEAN nfa_hci_api_send_cmd (tNFA_HCI_EVENT_DATA *p_evt_data)
             if (nfa_hciu_is_host_reseting (p_pipe->dest_host))
             {
                 GKI_enqueue (&nfa_hci_cb.hci_host_reset_api_q, (BT_HDR *) p_evt_data);
-                return FALSE;
+                return false;
             }
 
             if (p_pipe->pipe_state == NFA_HCI_PIPE_OPENED)
@@ -921,7 +921,7 @@ static BOOLEAN nfa_hci_api_send_cmd (tNFA_HCI_EVENT_DATA *p_evt_data)
                 nfa_hci_cb.pipe_in_use = p_evt_data->send_cmd.pipe;
                 if ((status = nfa_hciu_send_msg (p_pipe->pipe_id, NFA_HCI_COMMAND_TYPE, p_evt_data->send_cmd.cmd_code,
                                             p_evt_data->send_cmd.cmd_len, p_evt_data->send_cmd.data)) == NFA_STATUS_OK)
-                    return TRUE;
+                    return true;
             }
             else
             {
@@ -943,7 +943,7 @@ static BOOLEAN nfa_hci_api_send_cmd (tNFA_HCI_EVENT_DATA *p_evt_data)
 
     /* Send NFA_HCI_CMD_SENT_EVT to notify failure */
     nfa_hciu_send_to_app (NFA_HCI_CMD_SENT_EVT, &evt_data, p_evt_data->send_cmd.hci_handle);
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1003,11 +1003,11 @@ static void nfa_hci_api_send_rsp (tNFA_HCI_EVENT_DATA *p_evt_data)
 **
 ** Description      action function to send an event to the given pipe
 **
-** Returns          TRUE, if the event is processed
-**                  FALSE, if event is queued for processing later
+** Returns          true, if the event is processed
+**                  false, if event is queued for processing later
 **
 *******************************************************************************/
-static BOOLEAN nfa_hci_api_send_event (tNFA_HCI_EVENT_DATA *p_evt_data)
+static bool    nfa_hci_api_send_event (tNFA_HCI_EVENT_DATA *p_evt_data)
 {
     tNFA_STATUS         status = NFA_STATUS_FAILED;
     tNFA_HCI_DYN_PIPE   *p_pipe;
@@ -1024,7 +1024,7 @@ static BOOLEAN nfa_hci_api_send_event (tNFA_HCI_EVENT_DATA *p_evt_data)
             if (nfa_hciu_is_host_reseting (p_pipe->dest_host))
             {
                 GKI_enqueue (&nfa_hci_cb.hci_host_reset_api_q, (BT_HDR *) p_evt_data);
-                return FALSE;
+                return false;
             }
 
             if (p_pipe->pipe_state == NFA_HCI_PIPE_OPENED)
@@ -1036,7 +1036,7 @@ static BOOLEAN nfa_hci_api_send_event (tNFA_HCI_EVENT_DATA *p_evt_data)
                 {
                     if (p_pipe->local_gate == NFA_HCI_LOOP_BACK_GATE)
                     {
-                        nfa_hci_cb.w4_rsp_evt   = TRUE;
+                        nfa_hci_cb.w4_rsp_evt   = true;
                         nfa_hci_cb.hci_state    = NFA_HCI_STATE_WAIT_RSP;
                     }
 
@@ -1047,7 +1047,7 @@ static BOOLEAN nfa_hci_api_send_event (tNFA_HCI_EVENT_DATA *p_evt_data)
                         nfa_hci_cb.p_rsp_buf    = p_evt_data->send_evt.p_rsp_buf;
                         if (p_evt_data->send_evt.rsp_timeout)
                         {
-                            nfa_hci_cb.w4_rsp_evt   = TRUE;
+                            nfa_hci_cb.w4_rsp_evt   = true;
                             nfa_hci_cb.hci_state    = NFA_HCI_STATE_WAIT_RSP;
                             nfa_sys_start_timer (&nfa_hci_cb.timer, NFA_HCI_RSP_TIMEOUT_EVT, p_evt_data->send_evt.rsp_timeout);
                         }
@@ -1088,7 +1088,7 @@ static BOOLEAN nfa_hci_api_send_event (tNFA_HCI_EVENT_DATA *p_evt_data)
 
     /* Send NFC_HCI_EVENT_SENT_EVT to notify status */
     nfa_hciu_send_to_app (NFA_HCI_EVENT_SENT_EVT, &evt_data, p_evt_data->send_evt.hci_handle);
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1146,12 +1146,12 @@ static void nfa_hci_api_add_static_pipe (tNFA_HCI_EVENT_DATA *p_evt_data)
 ** Returns          none
 **
 *******************************************************************************/
-void nfa_hci_handle_link_mgm_gate_cmd (UINT8 *p_data)
+void nfa_hci_handle_link_mgm_gate_cmd (uint8_t *p_data)
 {
-    UINT8       index;
-    UINT8       data[2];
-    UINT8       rsp_len = 0;
-    UINT8       response = NFA_HCI_ANY_OK;
+    uint8_t     index;
+    uint8_t     data[2];
+    uint8_t     rsp_len = 0;
+    uint8_t     response = NFA_HCI_ANY_OK;
 
     if (  (nfa_hci_cb.cfg.link_mgmt_gate.pipe00_state != NFA_HCI_PIPE_OPENED)
         &&(nfa_hci_cb.inst != NFA_HCI_ANY_OPEN_PIPE) )
@@ -1177,8 +1177,8 @@ void nfa_hci_handle_link_mgm_gate_cmd (UINT8 *p_data)
         STREAM_TO_UINT8 (index, p_data);
         if (index == 1)
         {
-            data[0] = (UINT8) ((nfa_hci_cb.cfg.link_mgmt_gate.rec_errors >> 8) & 0x00FF);
-            data[1] = (UINT8) (nfa_hci_cb.cfg.link_mgmt_gate.rec_errors & 0x000F);
+            data[0] = (uint8_t) ((nfa_hci_cb.cfg.link_mgmt_gate.rec_errors >> 8) & 0x00FF);
+            data[1] = (uint8_t) (nfa_hci_cb.cfg.link_mgmt_gate.rec_errors & 0x000F);
             rsp_len = 2;
         }
         else
@@ -1217,8 +1217,8 @@ void nfa_hci_handle_link_mgm_gate_cmd (UINT8 *p_data)
 *******************************************************************************/
 void nfa_hci_handle_pipe_open_close_cmd (tNFA_HCI_DYN_PIPE *p_pipe)
 {
-    UINT8               data[1];
-    UINT8               rsp_len = 0;
+    uint8_t             data[1];
+    uint8_t             rsp_len = 0;
     tNFA_HCI_RESPONSE   response = NFA_HCI_ANY_OK;
     tNFA_HCI_DYN_GATE   *p_gate;
 
@@ -1249,11 +1249,11 @@ void nfa_hci_handle_pipe_open_close_cmd (tNFA_HCI_DYN_PIPE *p_pipe)
 ** Returns          none
 **
 *******************************************************************************/
-void nfa_hci_handle_admin_gate_cmd (UINT8 *p_data)
+void nfa_hci_handle_admin_gate_cmd (uint8_t *p_data)
 {
-    UINT8               source_host, source_gate, dest_host, dest_gate, pipe;
-    UINT8               data = 0;
-    UINT8               rsp_len = 0;
+    uint8_t             source_host, source_gate, dest_host, dest_gate, pipe;
+    uint8_t             data = 0;
+    uint8_t             rsp_len = 0;
     tNFA_HCI_RESPONSE   response = NFA_HCI_ANY_OK;
     tNFA_HCI_DYN_GATE   *pgate;
     tNFA_HCI_EVT_DATA   evt_data;
@@ -1369,21 +1369,21 @@ void nfa_hci_handle_admin_gate_cmd (UINT8 *p_data)
 ** Returns          none
 **
 *******************************************************************************/
-void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
+void nfa_hci_handle_admin_gate_rsp (uint8_t *p_data, uint8_t data_len)
 {
-    UINT8               source_host;
-    UINT8               source_gate = nfa_hci_cb.local_gate_in_use;
-    UINT8               dest_host   = nfa_hci_cb.remote_host_in_use;
-    UINT8               dest_gate   = nfa_hci_cb.remote_gate_in_use;
-    UINT8               pipe        = 0;
+    uint8_t             source_host;
+    uint8_t             source_gate = nfa_hci_cb.local_gate_in_use;
+    uint8_t             dest_host   = nfa_hci_cb.remote_host_in_use;
+    uint8_t             dest_gate   = nfa_hci_cb.remote_gate_in_use;
+    uint8_t             pipe        = 0;
     tNFA_STATUS         status;
     tNFA_HCI_EVT_DATA   evt_data;
-    UINT8               default_session[NFA_HCI_SESSION_ID_LEN] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-    UINT8               host_count  = 0;
-    UINT8               host_id     = 0;
-    UINT32              os_tick;
+    uint8_t             default_session[NFA_HCI_SESSION_ID_LEN] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+    uint8_t             host_count  = 0;
+    uint8_t             host_id     = 0;
+    uint32_t            os_tick;
 
-#if (BT_TRACE_VERBOSE == TRUE)
+#if (BT_TRACE_VERBOSE == true)
     NFA_TRACE_DEBUG4 ("nfa_hci_handle_admin_gate_rsp - LastCmdSent: %s  App: 0x%04x  Gate: 0x%02x  Pipe: 0x%02x",
                        nfa_hciu_instr_2_str(nfa_hci_cb.cmd_sent), nfa_hci_cb.app_in_use, nfa_hci_cb.local_gate_in_use, nfa_hci_cb.pipe_in_use);
 #else
@@ -1440,7 +1440,7 @@ void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
                 /* Collect active host in the Host Network */
                 while (host_count < data_len)
                 {
-                    host_id = (UINT8) *p_data++;
+                    host_id = (uint8_t) *p_data++;
 
                     if (  (host_id >= NFA_HCI_HOST_ID_UICC0)
                         &&(host_id < NFA_HCI_HOST_ID_UICC0 + NFA_HCI_MAX_HOST_IN_NETWORK)  )
@@ -1456,7 +1456,7 @@ void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
             else if (nfa_hci_cb.param_in_use == NFA_HCI_SESSION_IDENTITY_INDEX)
             {
                 /* The only parameter we get when initializing is the session ID. Check for match. */
-                if (!memcmp ((UINT8 *) nfa_hci_cb.cfg.admin_gate.session_id, p_data, NFA_HCI_SESSION_ID_LEN) )
+                if (!memcmp ((uint8_t *) nfa_hci_cb.cfg.admin_gate.session_id, p_data, NFA_HCI_SESSION_ID_LEN) )
                 {
                     /* Session has not changed, Set WHITELIST */
                     nfa_hciu_send_set_param_cmd (NFA_HCI_ADMIN_PIPE, NFA_HCI_WHITELIST_INDEX, p_nfa_hci_cfg->num_whitelist_host, p_nfa_hci_cfg->p_whitelist);
@@ -1465,7 +1465,7 @@ void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
                 {
                     /* Something wrong, NVRAM data could be corrupt or first start with default session id */
                     nfa_hciu_send_clear_all_pipe_cmd ();
-                    nfa_hci_cb.b_hci_netwk_reset = TRUE;
+                    nfa_hci_cb.b_hci_netwk_reset = true;
                 }
             }
             break;
@@ -1475,12 +1475,12 @@ void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
 
             if (nfa_hci_cb.b_hci_netwk_reset)
             {
-                nfa_hci_cb.b_hci_netwk_reset = FALSE;
+                nfa_hci_cb.b_hci_netwk_reset = false;
                /* Session ID is reset, Set New session id */
                 memcpy (&nfa_hci_cb.cfg.admin_gate.session_id[NFA_HCI_SESSION_ID_LEN / 2], nfa_hci_cb.cfg.admin_gate.session_id, (NFA_HCI_SESSION_ID_LEN / 2));
                 os_tick = GKI_get_os_tick_count ();
-                memcpy (nfa_hci_cb.cfg.admin_gate.session_id, (UINT8 *)&os_tick, (NFA_HCI_SESSION_ID_LEN / 2));
-                nfa_hciu_send_set_param_cmd (NFA_HCI_ADMIN_PIPE, NFA_HCI_SESSION_IDENTITY_INDEX, NFA_HCI_SESSION_ID_LEN, (UINT8 *) nfa_hci_cb.cfg.admin_gate.session_id);
+                memcpy (nfa_hci_cb.cfg.admin_gate.session_id, (uint8_t *)&os_tick, (NFA_HCI_SESSION_ID_LEN / 2));
+                nfa_hciu_send_set_param_cmd (NFA_HCI_ADMIN_PIPE, NFA_HCI_SESSION_IDENTITY_INDEX, NFA_HCI_SESSION_ID_LEN, (uint8_t *) nfa_hci_cb.cfg.admin_gate.session_id);
             }
             else
             {
@@ -1493,7 +1493,7 @@ void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
             nfa_hciu_remove_all_pipes_from_host (0);
             nfa_hci_cb.cfg.admin_gate.pipe01_state = NFA_HCI_PIPE_CLOSED;
             nfa_hci_cb.cfg.link_mgmt_gate.pipe00_state = NFA_HCI_PIPE_CLOSED;
-            nfa_hci_cb.nv_write_needed = TRUE;
+            nfa_hci_cb.nv_write_needed = true;
 
             /* Open admin */
             nfa_hciu_send_open_pipe_cmd (NFA_HCI_ADMIN_PIPE);
@@ -1516,13 +1516,13 @@ void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
         case NFA_HCI_ANY_GET_PARAMETER:
             if (nfa_hci_cb.param_in_use == NFA_HCI_SESSION_IDENTITY_INDEX)
             {
-                if (!memcmp ((UINT8 *) default_session, p_data , NFA_HCI_SESSION_ID_LEN))
+                if (!memcmp ((uint8_t *) default_session, p_data , NFA_HCI_SESSION_ID_LEN))
                 {
                     memcpy (&nfa_hci_cb.cfg.admin_gate.session_id[(NFA_HCI_SESSION_ID_LEN / 2)], nfa_hci_cb.cfg.admin_gate.session_id, (NFA_HCI_SESSION_ID_LEN / 2));
                     os_tick = GKI_get_os_tick_count ();
-                    memcpy (nfa_hci_cb.cfg.admin_gate.session_id, (UINT8 *) &os_tick, (NFA_HCI_SESSION_ID_LEN / 2));
-                    nfa_hci_cb.nv_write_needed = TRUE;
-                    nfa_hciu_send_set_param_cmd (NFA_HCI_ADMIN_PIPE, NFA_HCI_SESSION_IDENTITY_INDEX, NFA_HCI_SESSION_ID_LEN, (UINT8 *) nfa_hci_cb.cfg.admin_gate.session_id);
+                    memcpy (nfa_hci_cb.cfg.admin_gate.session_id, (uint8_t *) &os_tick, (NFA_HCI_SESSION_ID_LEN / 2));
+                    nfa_hci_cb.nv_write_needed = true;
+                    nfa_hciu_send_set_param_cmd (NFA_HCI_ADMIN_PIPE, NFA_HCI_SESSION_IDENTITY_INDEX, NFA_HCI_SESSION_ID_LEN, (uint8_t *) nfa_hci_cb.cfg.admin_gate.session_id);
                 }
                 else
                 {
@@ -1549,7 +1549,7 @@ void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
                 /* Collect active host in the Host Network */
                 while (host_count < data_len)
                 {
-                    host_id = (UINT8) *p_data++;
+                    host_id = (uint8_t) *p_data++;
 
                     if (  (host_id >= NFA_HCI_HOST_ID_UICC0)
                         &&(host_id < NFA_HCI_HOST_ID_UICC0 + NFA_HCI_MAX_HOST_IN_NETWORK)  )
@@ -1639,7 +1639,7 @@ void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
 
         case NFA_HCI_ANY_OPEN_PIPE:
             nfa_hci_cb.cfg.admin_gate.pipe01_state = status ? NFA_HCI_PIPE_CLOSED:NFA_HCI_PIPE_OPENED;
-            nfa_hci_cb.nv_write_needed = TRUE;
+            nfa_hci_cb.nv_write_needed = true;
             if (nfa_hci_cb.cfg.admin_gate.pipe01_state == NFA_HCI_PIPE_OPENED)
             {
                 /* First thing is to get the session ID */
@@ -1651,7 +1651,7 @@ void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
             nfa_hciu_remove_all_pipes_from_host (0);
             nfa_hci_cb.cfg.admin_gate.pipe01_state = NFA_HCI_PIPE_CLOSED;
             nfa_hci_cb.cfg.link_mgmt_gate.pipe00_state = NFA_HCI_PIPE_CLOSED;
-            nfa_hci_cb.nv_write_needed = TRUE;
+            nfa_hci_cb.nv_write_needed = true;
             /* Open admin */
             nfa_hciu_send_open_pipe_cmd (NFA_HCI_ADMIN_PIPE);
             break;
@@ -1669,7 +1669,7 @@ void nfa_hci_handle_admin_gate_rsp (UINT8 *p_data, UINT8 data_len)
 ** Returns          none
 **
 *******************************************************************************/
-void nfa_hci_handle_admin_gate_evt (UINT8 *p_data)
+void nfa_hci_handle_admin_gate_evt (uint8_t *p_data)
 {
     tNFA_HCI_EVT_DATA           evt_data;
     tNFA_HCI_API_GET_HOST_LIST  *p_msg;
@@ -1706,7 +1706,7 @@ void nfa_hci_handle_admin_gate_evt (UINT8 *p_data)
             &&(nfa_hci_cb.num_ee_dis_req_ntf < (nfa_hci_cb.num_nfcee - 1))  )
         {
             /* Received expected number of Hot Plug event(s) before as many number of EE DISC REQ Ntf(s) are received */
-            nfa_hci_cb.w4_hci_netwk_init = FALSE;
+            nfa_hci_cb.w4_hci_netwk_init = false;
         }
     }
     else
@@ -1737,7 +1737,7 @@ void nfa_hci_handle_admin_gate_evt (UINT8 *p_data)
 ** Returns          none
 **
 *******************************************************************************/
-void nfa_hci_handle_dyn_pipe_pkt (UINT8 pipe_id, UINT8 *p_data, UINT16 data_len)
+void nfa_hci_handle_dyn_pipe_pkt (uint8_t pipe_id, uint8_t *p_data, uint16_t data_len)
 {
     tNFA_HCI_DYN_PIPE   *p_pipe = nfa_hciu_find_pipe_by_pid (pipe_id);
     tNFA_HCI_DYN_GATE   *p_gate;
@@ -1778,11 +1778,11 @@ void nfa_hci_handle_dyn_pipe_pkt (UINT8 pipe_id, UINT8 *p_data, UINT16 data_len)
         switch (nfa_hci_cb.type)
         {
         case NFA_HCI_COMMAND_TYPE:
-            nfa_hci_handle_generic_gate_cmd (p_data, (UINT8) data_len, p_gate, p_pipe);
+            nfa_hci_handle_generic_gate_cmd (p_data, (uint8_t) data_len, p_gate, p_pipe);
             break;
 
         case NFA_HCI_RESPONSE_TYPE:
-            nfa_hci_handle_generic_gate_rsp (p_data, (UINT8) data_len, p_gate, p_pipe);
+            nfa_hci_handle_generic_gate_rsp (p_data, (uint8_t) data_len, p_gate, p_pipe);
             break;
 
         case NFA_HCI_EVENT_TYPE:
@@ -1802,13 +1802,13 @@ void nfa_hci_handle_dyn_pipe_pkt (UINT8 pipe_id, UINT8 *p_data, UINT16 data_len)
 ** Returns          none
 **
 *******************************************************************************/
-static void nfa_hci_handle_identity_mgmt_gate_pkt (UINT8 *p_data, tNFA_HCI_DYN_PIPE *p_pipe)
+static void nfa_hci_handle_identity_mgmt_gate_pkt (uint8_t *p_data, tNFA_HCI_DYN_PIPE *p_pipe)
 {
-    UINT8       data[20];
-    UINT8       index;
-    UINT8       gate_rsp[3 + NFA_HCI_MAX_GATE_CB], num_gates;
-    UINT16      rsp_len = 0;
-    UINT8       *p_rsp = data;
+    uint8_t     data[20];
+    uint8_t     index;
+    uint8_t     gate_rsp[3 + NFA_HCI_MAX_GATE_CB], num_gates;
+    uint16_t    rsp_len = 0;
+    uint8_t     *p_rsp = data;
     tNFA_HCI_RESPONSE response = NFA_HCI_ANY_OK;
 
     /* We never send commands on a pipe where the local gate is the identity management
@@ -1826,9 +1826,9 @@ static void nfa_hci_handle_identity_mgmt_gate_pkt (UINT8 *p_data, tNFA_HCI_DYN_P
             switch (index)
             {
             case NFA_HCI_VERSION_SW_INDEX:
-                data[0] = (UINT8) ((NFA_HCI_VERSION_SW >> 16 ) & 0xFF);
-                data[1] = (UINT8) ((NFA_HCI_VERSION_SW >> 8 ) & 0xFF);
-                data[2] = (UINT8) ((NFA_HCI_VERSION_SW ) & 0xFF);
+                data[0] = (uint8_t) ((NFA_HCI_VERSION_SW >> 16 ) & 0xFF);
+                data[1] = (uint8_t) ((NFA_HCI_VERSION_SW >> 8 ) & 0xFF);
+                data[2] = (uint8_t) ((NFA_HCI_VERSION_SW ) & 0xFF);
                 rsp_len = 3;
                 break;
 
@@ -1838,15 +1838,15 @@ static void nfa_hci_handle_identity_mgmt_gate_pkt (UINT8 *p_data, tNFA_HCI_DYN_P
                 break;
 
             case NFA_HCI_VERSION_HW_INDEX:
-                data[0] = (UINT8) ((NFA_HCI_VERSION_HW >> 16 ) & 0xFF);
-                data[1] = (UINT8) ((NFA_HCI_VERSION_HW >> 8 ) & 0xFF);
-                data[2] = (UINT8) ((NFA_HCI_VERSION_HW ) & 0xFF);
+                data[0] = (uint8_t) ((NFA_HCI_VERSION_HW >> 16 ) & 0xFF);
+                data[1] = (uint8_t) ((NFA_HCI_VERSION_HW >> 8 ) & 0xFF);
+                data[2] = (uint8_t) ((NFA_HCI_VERSION_HW ) & 0xFF);
                 rsp_len = 3;
                 break;
 
             case NFA_HCI_VENDOR_NAME_INDEX:
                 memcpy (data,NFA_HCI_VENDOR_NAME,strlen (NFA_HCI_VENDOR_NAME));
-                rsp_len = (UINT8) strlen (NFA_HCI_VENDOR_NAME);
+                rsp_len = (uint8_t) strlen (NFA_HCI_VENDOR_NAME);
                 break;
 
             case NFA_HCI_MODEL_ID_INDEX:
@@ -1902,7 +1902,7 @@ static void nfa_hci_handle_identity_mgmt_gate_pkt (UINT8 *p_data, tNFA_HCI_DYN_P
 ** Returns          none
 **
 *******************************************************************************/
-static void nfa_hci_handle_generic_gate_cmd (UINT8 *p_data, UINT8 data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe)
+static void nfa_hci_handle_generic_gate_cmd (uint8_t *p_data, uint8_t data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe)
 {
     tNFA_HCI_EVT_DATA   evt_data;
     tNFA_HANDLE         app_handle = nfa_hciu_get_pipe_owner (p_pipe->pipe_id);
@@ -1972,7 +1972,7 @@ static void nfa_hci_handle_generic_gate_cmd (UINT8 *p_data, UINT8 data_len, tNFA
 ** Returns          none
 **
 *******************************************************************************/
-static void nfa_hci_handle_generic_gate_rsp (UINT8 *p_data, UINT8 data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe)
+static void nfa_hci_handle_generic_gate_rsp (uint8_t *p_data, uint8_t data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe)
 {
     tNFA_HCI_EVT_DATA   evt_data;
     tNFA_STATUS         status = NFA_STATUS_OK;
@@ -1985,7 +1985,7 @@ static void nfa_hci_handle_generic_gate_rsp (UINT8 *p_data, UINT8 data_len, tNFA
         if (status == NFA_STATUS_OK)
             p_pipe->pipe_state = NFA_HCI_PIPE_OPENED;
 
-        nfa_hci_cb.nv_write_needed = TRUE;
+        nfa_hci_cb.nv_write_needed = true;
         /* Tell application */
         evt_data.opened.status  = status;
         evt_data.opened.pipe    = p_pipe->pipe_id;
@@ -1996,7 +1996,7 @@ static void nfa_hci_handle_generic_gate_rsp (UINT8 *p_data, UINT8 data_len, tNFA
     {
         p_pipe->pipe_state = NFA_HCI_PIPE_CLOSED;
 
-        nfa_hci_cb.nv_write_needed = TRUE;
+        nfa_hci_cb.nv_write_needed = true;
         /* Tell application */
         evt_data.opened.status = status;;
         evt_data.opened.pipe   = p_pipe->pipe_id;
@@ -2048,7 +2048,7 @@ static void nfa_hci_handle_generic_gate_rsp (UINT8 *p_data, UINT8 data_len, tNFA
 ** Returns          none
 **
 *******************************************************************************/
-static void nfa_hci_handle_connectivity_gate_pkt (UINT8 *p_data, UINT16 data_len, tNFA_HCI_DYN_PIPE *p_pipe)
+static void nfa_hci_handle_connectivity_gate_pkt (uint8_t *p_data, uint16_t data_len, tNFA_HCI_DYN_PIPE *p_pipe)
 {
     tNFA_HCI_EVT_DATA   evt_data;
 
@@ -2111,10 +2111,10 @@ static void nfa_hci_handle_connectivity_gate_pkt (UINT8 *p_data, UINT16 data_len
 ** Returns          none
 **
 *******************************************************************************/
-static void nfa_hci_handle_loopback_gate_pkt (UINT8 *p_data, UINT16 data_len, tNFA_HCI_DYN_PIPE *p_pipe)
+static void nfa_hci_handle_loopback_gate_pkt (uint8_t *p_data, uint16_t data_len, tNFA_HCI_DYN_PIPE *p_pipe)
 {
-    UINT8               data[1];
-    UINT8               rsp_len = 0;
+    uint8_t             data[1];
+    uint8_t             rsp_len = 0;
     tNFA_HCI_RESPONSE   response = NFA_HCI_ANY_OK;
     tNFA_HCI_EVT_DATA   evt_data;
 
@@ -2182,7 +2182,7 @@ static void nfa_hci_handle_loopback_gate_pkt (UINT8 *p_data, UINT16 data_len, tN
 ** Returns          none
 **
 *******************************************************************************/
-static void nfa_hci_handle_generic_gate_evt (UINT8 *p_data, UINT16 data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe)
+static void nfa_hci_handle_generic_gate_evt (uint8_t *p_data, uint16_t data_len, tNFA_HCI_DYN_GATE *p_gate, tNFA_HCI_DYN_PIPE *p_pipe)
 {
     tNFA_HCI_EVT_DATA   evt_data;
 
