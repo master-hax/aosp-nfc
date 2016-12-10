@@ -27,20 +27,20 @@
 #include "nfc_target.h"
 #include "bt_types.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nfc_hal_api.h"
 #include "nfc_int.h"
 #include "nci_hmsgs.h"
 #include "rw_int.h"
 #include "ce_int.h"
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
 #include "llcp_int.h"
 #else
 #define llcp_cleanup()
 #endif
 
-#if (defined (NFA_INCLUDED) && NFA_INCLUDED == true)
+#if (NFA_INCLUDED == TRUE)
 #include "nfa_sys.h"
 #include "nfa_dm_int.h"
 #endif
@@ -255,7 +255,7 @@ void nfc_process_quick_timer_evt (void)
 
         switch (p_tle->event)
         {
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
         case NFC_TTYPE_LLCP_LINK_MANAGER:
         case NFC_TTYPE_LLCP_LINK_INACT:
         case NFC_TTYPE_LLCP_DATA_LINK:
@@ -284,7 +284,7 @@ void nfc_process_quick_timer_evt (void)
         case NFC_TTYPE_P2P_PRIO_LOGIC_CLEANUP:
             nfa_dm_p2p_prio_logic_cleanup ();
             break;
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
         case NFC_TTYPE_CE_T4T_UPDATE:
             ce_t4t_process_timeout (p_tle);
             break;
@@ -344,7 +344,7 @@ void nfc_task_shutdown_nfcc (void)
         /* Stop the timers */
         GKI_stop_timer (NFC_TIMER_ID);
         GKI_stop_timer (NFC_QUICK_TIMER_ID);
-#if (defined (NFA_INCLUDED) && NFA_INCLUDED == true)
+#if (NFA_INCLUDED == TRUE)
         GKI_stop_timer (NFA_TIMER_ID);
 #endif
     }
@@ -438,7 +438,7 @@ uint32_t nfc_task (uint32_t param)
             nfc_process_quick_timer_evt ();
         }
 
-#if (defined (NFA_INCLUDED) && NFA_INCLUDED == true)
+#if (NFA_INCLUDED == TRUE)
         if (event & NFA_MBOX_EVT_MASK)
         {
             while ((p_msg = (BT_HDR *) GKI_read_mbox (NFA_MBOX_ID)) != NULL)
@@ -462,4 +462,4 @@ uint32_t nfc_task (uint32_t param)
     return 0;
 }
 
-#endif /* NFC_INCLUDED == true */
+#endif /* NFC_INCLUDED == TRUE */

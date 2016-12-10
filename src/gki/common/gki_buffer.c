@@ -22,12 +22,12 @@
 #error Number of pools out of range (16 Max)!
 #endif
 
-#if (!defined(BTU_STACK_LITE_ENABLED) || BTU_STACK_LITE_ENABLED == false)
+#if (BTU_STACK_LITE_ENABLED == FALSE)
 static void gki_add_to_pool_list(uint8_t pool_id);
 static void gki_remove_from_pool_list(uint8_t pool_id);
-#endif /*  BTU_STACK_LITE_ENABLED == false */
+#endif /*  BTU_STACK_LITE_ENABLED == FALSE */
 
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
 #define LOG_TAG "GKI_DEBUG"
 #include <android/log.h>
 #include <cutils/log.h>
@@ -71,7 +71,7 @@ static void gki_init_free_queue (uint8_t id, uint16_t size, uint16_t total, void
     p_cb->freeq[id].cur_cnt   = 0;
     p_cb->freeq[id].max_cnt   = 0;
 
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
     LOGD("gki_init_free_queue() init pool=%d, size=%d (aligned=%d) total=%d start=%p", id, size, tempsize, total, p_mem);
 #endif
 
@@ -97,12 +97,12 @@ static void gki_init_free_queue (uint8_t id, uint16_t size, uint16_t total, void
     return;
 }
 
-#ifdef GKI_USE_DEFERED_ALLOC_BUF_POOLS
+#if (GKI_USE_DEFERED_ALLOC_BUF_POOLS == TRUE)
 static bool    gki_alloc_free_queue(uint8_t id)
 {
     FREE_QUEUE_T  *Q;
     tGKI_COM_CB *p_cb = &gki_cb.com;
-    #if GKI_BUFFER_DEBUG
+    #if (GKI_BUFFER_DEBUG == TRUE)
         ALOGD("\ngki_alloc_free_queue in, id:%d \n", id);
     #endif
 
@@ -114,18 +114,18 @@ static bool    gki_alloc_free_queue(uint8_t id)
         if(p_mem)
         {
             //re-initialize the queue with allocated memory
-            #if GKI_BUFFER_DEBUG
+            #if (GKI_BUFFER_DEBUG == TRUE)
                 ALOGD("\ngki_alloc_free_queue calling  gki_init_free_queue, id:%d  size:%d, totol:%d\n", id, Q->size, Q->total);
             #endif
             gki_init_free_queue(id, Q->size, Q->total, p_mem);
-            #if GKI_BUFFER_DEBUG
+            #if (GKI_BUFFER_DEBUG == TRUE)
                 ALOGD("\ngki_alloc_free_queue ret OK, id:%d  size:%d, totol:%d\n", id, Q->size, Q->total);
             #endif
             return true;
         }
         GKI_exception (GKI_ERROR_BUF_SIZE_TOOBIG, "gki_alloc_free_queue: Not enough memory");
     }
-    #if GKI_BUFFER_DEBUG
+    #if (GKI_BUFFER_DEBUG == TRUE)
         ALOGD("\ngki_alloc_free_queue out failed, id:%d\n", id);
     #endif
     return false;
@@ -174,7 +174,7 @@ void gki_buffer_init(void)
     /* Use default from target.h */
     p_cb->pool_access_mask = GKI_DEF_BUFPOOL_PERM_MASK;
 
-#if (!defined GKI_USE_DEFERED_ALLOC_BUF_POOLS && (GKI_USE_DYNAMIC_BUFFERS == true))
+#if (GKI_USE_DEFERED_ALLOC_BUF_POOLS == FALSE && GKI_USE_DYNAMIC_BUFFERS == TRUE)
 
 #if (GKI_NUM_FIXED_BUF_POOLS > 0)
     p_cb->bufpool0 = (uint8_t *)GKI_os_malloc ((GKI_BUF0_SIZE + BUFFER_PADDING_SIZE) * GKI_BUF0_MAX);
@@ -353,7 +353,7 @@ void GKI_init_q (BUFFER_Q *p_q)
 ** Returns          A pointer to the buffer, or NULL if none available
 **
 *******************************************************************************/
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
 void *GKI_getbuf_debug (uint16_t size, const char * _function_, int _line_)
 #else
 void *GKI_getbuf (uint16_t size)
@@ -363,7 +363,7 @@ void *GKI_getbuf (uint16_t size)
     FREE_QUEUE_T  *Q;
     BUFFER_HDR_T  *p_hdr;
     tGKI_COM_CB *p_cb = &gki_cb.com;
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
     uint8_t       x;
 #endif
 
@@ -373,7 +373,7 @@ void *GKI_getbuf (uint16_t size)
         return (NULL);
     }
 
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
     LOGD("GKI_getbuf() requesting %d func:%s(line=%d)", size, _function_, _line_);
 #endif
     /* Find the first buffer pool that is public that can hold the desired size */
@@ -403,7 +403,7 @@ void *GKI_getbuf (uint16_t size)
         Q = &p_cb->freeq[p_cb->pool_list[i]];
         if(Q->cur_cnt < Q->total)
         {
-        #ifdef GKI_USE_DEFERED_ALLOC_BUF_POOLS
+        #if (GKI_USE_DEFERED_ALLOC_BUF_POOLS == TRUE)
             if(Q->p_first == 0 && gki_alloc_free_queue(i) != true)
             {
                 GKI_TRACE_ERROR_0("GKI_getbuf() out of buffer");
@@ -436,7 +436,7 @@ void *GKI_getbuf (uint16_t size)
             p_hdr->status  = BUF_STATUS_UNLINKED;
             p_hdr->p_next  = NULL;
             p_hdr->Type    = 0;
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
             LOGD("GKI_getbuf() allocated, %x, %x (%d of %d used) %d", (uint8_t*)p_hdr + BUFFER_HDR_SIZE, p_hdr, Q->cur_cnt, Q->total, p_cb->freeq[i].total);
 
             strncpy(p_hdr->_function, _function_, _GKI_MAX_FUNCTION_NAME_LEN);
@@ -448,7 +448,7 @@ void *GKI_getbuf (uint16_t size)
     }
 
     GKI_TRACE_ERROR_0("GKI_getbuf() unable to allocate buffer!!!!!");
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
     LOGD("GKI_getbuf() unable to allocate buffer!!!!!");
     LOGD("******************** GKI Memory Pool Dump ********************");
 
@@ -498,7 +498,7 @@ void *GKI_getbuf (uint16_t size)
 ** Returns          A pointer to the buffer, or NULL if none available
 **
 *******************************************************************************/
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
 void *GKI_getpoolbuf_debug (uint8_t pool_id, const char * _function_, int _line_)
 #else
 void *GKI_getpoolbuf (uint8_t pool_id)
@@ -511,7 +511,7 @@ void *GKI_getpoolbuf (uint8_t pool_id)
     if (pool_id >= GKI_NUM_TOTAL_BUF_POOLS)
         return (NULL);
 
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
     LOGD("GKI_getpoolbuf() requesting from %d func:%s(line=%d)", pool_id, _function_, _line_);
 #endif
     /* Make sure the buffers aren't disturbed til finished with allocation */
@@ -520,7 +520,7 @@ void *GKI_getpoolbuf (uint8_t pool_id)
     Q = &p_cb->freeq[pool_id];
     if(Q->cur_cnt < Q->total)
     {
-#ifdef GKI_USE_DEFERED_ALLOC_BUF_POOLS
+#if (GKI_USE_DEFERED_ALLOC_BUF_POOLS == TRUE)
         if(Q->p_first == 0 && gki_alloc_free_queue(pool_id) != true)
             return NULL;
 #endif
@@ -550,7 +550,7 @@ void *GKI_getpoolbuf (uint8_t pool_id)
         p_hdr->p_next  = NULL;
         p_hdr->Type    = 0;
 
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
         LOGD("GKI_getpoolbuf() allocated, %x, %x (%d of %d used) %d", (uint8_t*)p_hdr + BUFFER_HDR_SIZE, p_hdr, Q->cur_cnt, Q->total, p_cb->freeq[pool_id].total);
 
         strncpy(p_hdr->_function, _function_, _GKI_MAX_FUNCTION_NAME_LEN);
@@ -563,7 +563,7 @@ void *GKI_getpoolbuf (uint8_t pool_id)
     /* If here, no buffers in the specified pool */
     GKI_enable();
 
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
     /* try for free buffers in public pools */
     return (GKI_getbuf_debug(p_cb->freeq[pool_id].size, _function_, _line_));
 #else
@@ -588,7 +588,7 @@ void GKI_freebuf (void *p_buf)
     FREE_QUEUE_T    *Q;
     BUFFER_HDR_T    *p_hdr;
 
-#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == true)
+#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == TRUE)
     if (!p_buf || gki_chk_buf_damage(p_buf))
     {
         GKI_exception(GKI_ERROR_BUF_CORRUPTED, "Free - Buf Corrupted");
@@ -598,7 +598,7 @@ void GKI_freebuf (void *p_buf)
 
     p_hdr = (BUFFER_HDR_T *) ((uint8_t *)p_buf - BUFFER_HDR_SIZE);
 
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
     LOGD("GKI_freebuf() freeing, %x, %x, func:%s(line=%d)", p_buf, p_hdr, p_hdr->_function, p_hdr->_line);
 #endif
 
@@ -677,7 +677,7 @@ uint16_t GKI_get_buf_size (void *p_buf)
 *******************************************************************************/
 bool    gki_chk_buf_damage(void *p_buf)
 {
-#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == true)
+#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == TRUE)
 
     uint32_t *magic;
     magic  = (uint32_t *)((uint8_t *) p_buf + GKI_get_buf_size(p_buf));
@@ -719,7 +719,7 @@ void GKI_send_msg (uint8_t task_id, uint8_t mbox, void *msg)
         return;
     }
 
-#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == true)
+#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == TRUE)
     if (gki_chk_buf_damage(msg))
     {
         GKI_exception(GKI_ERROR_BUF_CORRUPTED, "Send - Buffer corrupted");
@@ -813,7 +813,7 @@ void GKI_enqueue (BUFFER_Q *p_q, void *p_buf)
 {
     BUFFER_HDR_T    *p_hdr;
 
-#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == true)
+#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == TRUE)
     if (gki_chk_buf_damage(p_buf))
     {
         GKI_exception(GKI_ERROR_BUF_CORRUPTED, "Enqueue - Buffer corrupted");
@@ -868,7 +868,7 @@ void GKI_enqueue_head (BUFFER_Q *p_q, void *p_buf)
 {
     BUFFER_HDR_T    *p_hdr;
 
-#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == true)
+#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == TRUE)
     if (gki_chk_buf_damage(p_buf))
     {
         GKI_exception(GKI_ERROR_BUF_CORRUPTED, "Enqueue - Buffer corrupted");
@@ -1127,7 +1127,7 @@ void *GKI_find_buf_start (void *p_user_area)
 /********************************************************
 * The following functions are not needed for light stack
 *********************************************************/
-#if (!defined(BTU_STACK_LITE_ENABLED) || BTU_STACK_LITE_ENABLED == false)
+#if (BTU_STACK_LITE_ENABLED == FALSE)
 
 /*******************************************************************************
 **
@@ -1335,7 +1335,7 @@ void GKI_change_buf_owner (void *p_buf, uint8_t task_id)
     return;
 }
 
-#if (defined(GKI_SEND_MSG_FROM_ISR) &&  GKI_SEND_MSG_FROM_ISR == true)
+#if (GKI_SEND_MSG_FROM_ISR == TRUE)
 /*******************************************************************************
 **
 ** Function         GKI_isend_msg
@@ -1358,7 +1358,7 @@ void GKI_isend_msg (uint8_t task_id, uint8_t mbox, void *msg)
         return;
     }
 
-#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == true)
+#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == TRUE)
     if (gki_chk_buf_damage(msg))
     {
         GKI_exception(GKI_ERROR_BUF_CORRUPTED, "Send - Buffer corrupted");
@@ -1366,7 +1366,7 @@ void GKI_isend_msg (uint8_t task_id, uint8_t mbox, void *msg)
     }
 #endif
 
-#if (GKI_ENABLE_OWNER_CHECK == true)
+#if (GKI_ENABLE_OWNER_CHECK == TRUE)
     if (gki_chk_buf_owner(msg))
     {
         GKI_exception(GKI_ERROR_NOT_BUF_OWNER, "Send by non-owner");
@@ -1509,7 +1509,7 @@ void GKI_delete_pool (uint8_t pool_id)
     return;
 }
 
-#endif /*  BTU_STACK_LITE_ENABLED == false */
+#endif /*  BTU_STACK_LITE_ENABLED == FALSE */
 
 /*******************************************************************************
 **

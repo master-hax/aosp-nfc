@@ -73,7 +73,7 @@ extern "C" {
 
 typedef uint8_t tNFC_HAL_WAIT_RSP;
 
-#if (defined(NFC_HAL_HCI_INCLUDED) && (NFC_HAL_HCI_INCLUDED == true))
+#if (NFC_HAL_HCI_INCLUDED == TRUE)
 
 typedef uint16_t tNFC_HAL_HCI_EVT;
 
@@ -193,10 +193,10 @@ typedef uint8_t tNFC_HAL_LP_EVT;
 #define NFC_HAL_SAVED_CMD_SIZE          (2)
 
 #ifndef NFC_HAL_DEBUG
-#define NFC_HAL_DEBUG  true
+#define NFC_HAL_DEBUG  TRUE
 #endif
 
-#if (NFC_HAL_DEBUG == true)
+#if (NFC_HAL_DEBUG == TRUE)
 extern const char * const nfc_hal_init_state_str[];
 #define NFC_HAL_SET_INIT_STATE(state)  HAL_TRACE_DEBUG3 ("init state: %d->%d(%s)", nfc_hal_cb.dev_cb.initializing_state, state, nfc_hal_init_state_str[state]); nfc_hal_cb.dev_cb.initializing_state = state;
 #else
@@ -245,7 +245,7 @@ typedef struct
 
 typedef void (tNFC_HAL_BTVSC_CPLT_CBACK) (tNFC_HAL_BTVSC_CPLT *p1);
 
-#if (defined(NFC_HAL_HCI_INCLUDED) && (NFC_HAL_HCI_INCLUDED == true))
+#if (NFC_HAL_HCI_INCLUDED == TRUE)
 
 /* data type for NFC_HAL_HCI_RSP_NV_READ_EVT */
 typedef struct
@@ -393,7 +393,7 @@ typedef struct
     tHAL_NFC_STATUS_CBACK   *p_prop_cback;          /* callback to notify complete of proprietary update */
 } tNFC_HAL_DEV_CB;
 
-#if (defined(NFC_HAL_HCI_INCLUDED) && (NFC_HAL_HCI_INCLUDED == true))
+#if (NFC_HAL_HCI_INCLUDED == TRUE)
 
 /* data members for NFC_HAL-HCI */
 typedef struct
@@ -432,7 +432,7 @@ typedef struct
     tNFC_HAL_PRM_CB         prm;
     tNFC_HAL_PRM_I2C_FIX_CB prm_i2c;
 
-#if (defined(NFC_HAL_HCI_INCLUDED) && (NFC_HAL_HCI_INCLUDED == true))
+#if (NFC_HAL_HCI_INCLUDED == TRUE)
     /* data members for NFC_HAL-HCI */
     tNFC_HAL_HCI_CB         hci_cb;
 #endif
@@ -500,7 +500,7 @@ void nfc_hal_prm_spd_reset_ntf (uint8_t reset_reason, uint8_t reset_type);
 void nfc_hal_prm_nci_command_complete_cback (tNFC_HAL_NCI_EVT event, uint16_t data_len, uint8_t *p_data);
 void nfc_hal_prm_process_timeout (void *p_tle);
 
-#if (defined(NFC_HAL_HCI_INCLUDED) && (NFC_HAL_HCI_INCLUDED == true))
+#if (NFC_HAL_HCI_INCLUDED == TRUE)
 /* nfc_hal_hci.c */
 void nfc_hal_hci_enable (void);
 void nfc_hal_hci_evt_hdlr (tNFC_HAL_HCI_EVENT_DATA *p_evt_data);
@@ -518,7 +518,7 @@ void nfc_hal_hci_handle_build_info (uint8_t chipverlen, uint8_t *p_chipverstr);
 
 
 /* Define default NCI protocol trace function (if protocol tracing is enabled) */
-#if (defined(NFC_HAL_TRACE_PROTOCOL) && (NFC_HAL_TRACE_PROTOCOL == true))
+#if (NFC_HAL_TRACE_PROTOCOL == TRUE)
 #if !defined (DISP_NCI)
 #define DISP_NCI    (DispNci)
 void DispNci (uint8_t *p, uint16_t len, bool    is_recv);

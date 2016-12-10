@@ -28,7 +28,7 @@
 #include "bt_types.h"
 #include "trace_api.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nfc_int.h"
 #include "ce_api.h"
@@ -36,7 +36,7 @@
 #include "tags_int.h"
 #include "gki.h"
 
-#if (CE_TEST_INCLUDED == true) /* test only */
+#if (CE_TEST_INCLUDED == TRUE)
 bool    mapping_aid_test_enabled = false;
 uint8_t ce_test_tag_app_id[T4T_V20_NDEF_TAG_AID_LEN] = {0xD2, 0x76, 0x00, 0x00, 0x85, 0x01, 0x01};
 #endif
@@ -52,7 +52,7 @@ uint8_t ce_test_tag_app_id[T4T_V20_NDEF_TAG_AID_LEN] = {0xD2, 0x76, 0x00, 0x00, 
 *******************************************************************************/
 static bool    ce_t4t_send_to_lower (BT_HDR *p_r_apdu)
 {
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
     DispCET4Tags (p_r_apdu, false);
 #endif
 
@@ -431,7 +431,7 @@ static void ce_t4t_process_select_app_cmd (uint8_t *p_cmd, BT_HDR *p_c_apdu)
     /* Lc Byte */
     BE_STREAM_TO_UINT8 (data_len, p_cmd);
 
-#if (CE_TEST_INCLUDED == true)
+#if (CE_TEST_INCLUDED == TRUE)
     if (mapping_aid_test_enabled)
     {
         if (  (data_len == T4T_V20_NDEF_TAG_AID_LEN)
@@ -615,7 +615,7 @@ static void ce_t4t_data_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *
 
     p_c_apdu = (BT_HDR *) p_data->data.p_data;
 
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
     DispCET4Tags (p_c_apdu, true);
 #endif
 
@@ -883,7 +883,7 @@ tNFC_STATUS CE_T4tSetLocalNDEFMsg (bool       read_only,
         return NFC_STATUS_FAILED;
     }
 
-#if (CE_TEST_INCLUDED == true)
+#if (CE_TEST_INCLUDED == TRUE)
     mapping_aid_test_enabled = false;
 #endif
 
@@ -1070,7 +1070,7 @@ tNFC_STATUS CE_T4TTestSetCC (uint16_t cc_len,
                              uint16_t max_le,
                              uint16_t max_lc)
 {
-#if (CE_TEST_INCLUDED == true)
+#if (CE_TEST_INCLUDED == TRUE) /* test only */
     tCE_T4T_MEM *p_t4t = &ce_cb.mem.t4t;
     uint8_t     *p;
 
@@ -1141,7 +1141,7 @@ tNFC_STATUS CE_T4TTestSetNDEFCtrlTLV (uint8_t  type,
                                       uint8_t  read_access,
                                       uint8_t  write_access)
 {
-#if (CE_TEST_INCLUDED == true)
+#if (CE_TEST_INCLUDED == TRUE)
     tCE_T4T_MEM *p_t4t = &ce_cb.mem.t4t;
     uint8_t     *p;
 
@@ -1198,4 +1198,4 @@ tNFC_STATUS CE_T4TTestSetNDEFCtrlTLV (uint8_t  type,
     return NFC_STATUS_FAILED;
 #endif
 }
-#endif /* NFC_INCLUDED == true */
+#endif /* NFC_INCLUDED == TRUE */

@@ -28,7 +28,7 @@
 #include "gki.h"
 #include "nfc_target.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_int.h"
 
 /****************************************************************************
@@ -144,4 +144,4 @@ tNFC_STATUS NFC_SendVsCommand (uint8_t        oid,
 
 
 
-#endif /* NFC_INCLUDED == true */
+#endif /* NFC_INCLUDED == TRUE */

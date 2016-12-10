@@ -22,8 +22,8 @@
 #define NULL     0
 #endif
 
-#ifndef false
-#define false  0
+#ifndef FALSE
+#define FALSE  0
 #endif
 
 typedef unsigned char   uint8_t;
@@ -37,8 +37,8 @@ typedef unsigned char   bool   ;
 typedef uint32_t        UINTPTR;
 typedef uint32_t        TIME_STAMP;
 
-#ifndef true
-#define true   (!false)
+#ifndef TRUE
+#define TRUE   (!FALSE)
 #endif
 
 typedef unsigned char   UBYTE;
@@ -52,7 +52,7 @@ typedef unsigned char   UBYTE;
 #endif
 
 #ifndef BIG_ENDIAN
-#define BIG_ENDIAN false
+#define BIG_ENDIAN FALSE
 #endif
 
 #define uint16_t_LOW_BYTE(x)      ((x) & 0xff)

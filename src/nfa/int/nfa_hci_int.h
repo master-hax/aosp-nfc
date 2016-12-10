@@ -497,7 +497,7 @@ extern tNFA_STATUS nfa_hciu_send_msg (uint8_t pipe_id, uint8_t type, uint8_t ins
 
 
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 extern char *nfa_hciu_type_2_str (uint8_t type);
 extern char *nfa_hciu_instr_2_str (uint8_t type);
 extern char *nfa_hciu_get_event_name (uint16_t event);

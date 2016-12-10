@@ -114,7 +114,7 @@ enum
     RW_T3T_SRO_SST_UPDATE_MC_BLK            /* Waiting for Felica-Lite MC (MemoryControl) block-write to complete */
 };
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 static char *rw_t3t_cmd_str (uint8_t cmd_id);
 static char *rw_t3t_state_str (uint8_t state_id);
 #endif
@@ -271,7 +271,7 @@ void rw_t3t_process_error (tNFC_STATUS status)
             RW_TRACE_DEBUG1 ("T3T maximum retransmission attempts reached (%i)", RW_MAX_RETRIES);
         }
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
         /* update failure count */
         rw_main_update_fail_stats ();
 #endif  /* RW_STATS_INCLUDED */
@@ -486,7 +486,7 @@ void rw_t3t_process_timeout (TIMER_LIST_ENT *p_tle)
     if (p_tle == &p_cb->timer)
     {
         /* UPDATE/CHECK response timeout */
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
         RW_TRACE_ERROR3 ("T3T timeout. state=%s cur_cmd=0x%02X (%s)", rw_t3t_state_str (rw_cb.tcb.t3t.rw_state), rw_cb.tcb.t3t.cur_cmd, rw_t3t_cmd_str (rw_cb.tcb.t3t.cur_cmd));
 #else
         RW_TRACE_ERROR2 ("T3T timeout. state=0x%02X cur_cmd=0x%02X", rw_cb.tcb.t3t.rw_state, rw_cb.tcb.t3t.cur_cmd);
@@ -555,13 +555,13 @@ void rw_t3t_process_timeout (TIMER_LIST_ENT *p_tle)
 *******************************************************************************/
 void rw_t3t_process_frame_error (void)
 {
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     RW_TRACE_ERROR3 ("T3T frame error. state=%s cur_cmd=0x%02X (%s)", rw_t3t_state_str (rw_cb.tcb.t3t.rw_state), rw_cb.tcb.t3t.cur_cmd, rw_t3t_cmd_str (rw_cb.tcb.t3t.cur_cmd));
 #else
     RW_TRACE_ERROR2 ("T3T frame error. state=0x%02X cur_cmd=0x%02X", rw_cb.tcb.t3t.rw_state, rw_cb.tcb.t3t.cur_cmd);
 #endif
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
     /* Update stats */
     rw_main_update_crc_error_stats ();
 #endif  /* RW_STATS_INCLUDED */
@@ -583,7 +583,7 @@ tNFC_STATUS rw_t3t_send_to_lower (BT_HDR *p_msg)
 {
     uint8_t *p;
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
     bool    is_retry;
     /* Update stats */
     rw_main_update_tx_stats (p_msg->len, ((rw_cb.cur_retry==0) ? false : true));
@@ -595,7 +595,7 @@ tNFC_STATUS rw_t3t_send_to_lower (BT_HDR *p_msg)
     uint8_t_TO_STREAM (p, (p_msg->len+1));
     p_msg->len += 1;            /* Increment len to include SoD */
 
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
     DispT3TagMessage (p_msg, false);
 #endif
 
@@ -1467,7 +1467,7 @@ void rw_t3t_act_handle_raw_senddata_rsp (tRW_T3T_CB *p_cb, tNFC_DATA_CEVT *p_dat
     tRW_READ_DATA evt_data;
     BT_HDR        *p_pkt = p_data->p_data;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
         RW_TRACE_DEBUG2 ("RW T3T Raw Frame: Len [0x%X] Status [%s]", p_pkt->len, NFC_GetStatusName (p_data->status));
 #else
         RW_TRACE_DEBUG2 ("RW T3T Raw Frame: Len [0x%X] Status [0x%X]", p_pkt->len, p_data->status);
@@ -2239,7 +2239,7 @@ void rw_t3t_data_cback (uint8_t conn_id, tNFC_DATA_CEVT *p_data)
     /* Stop rsponse timer */
     nfc_stop_quick_timer (&p_cb->timer);
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
     /* Update rx stats */
     rw_main_update_rx_stats (p_msg->len);
 #endif  /* RW_STATS_INCLUDED */
@@ -2275,7 +2275,7 @@ void rw_t3t_data_cback (uint8_t conn_id, tNFC_DATA_CEVT *p_data)
             return;
         }
 
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
         DispT3TagMessage (p_msg, true);
 #endif
 
@@ -2382,7 +2382,7 @@ void rw_t3t_conn_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
     case NFC_ERROR_CEVT:
         nfc_stop_quick_timer (&p_cb->timer);
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
         rw_main_update_trans_error_stats ();
 #endif  /* RW_STATS_INCLUDED */
 
@@ -2477,7 +2477,7 @@ static tNFC_STATUS rw_t3t_unselect (uint8_t peer_nfcid2[])
 {
     tRW_T3T_CB *p_cb = &rw_cb.tcb.t3t;
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
     /* Display stats */
     rw_main_log_stats ();
 #endif  /* RW_STATS_INCLUDED */
@@ -2523,7 +2523,7 @@ static void rw_t3t_update_ndef_flag (uint8_t *p_flag)
     }
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         rw_t3t_cmd_str

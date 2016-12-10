@@ -102,7 +102,7 @@ static void nfa_rw_send_data_to_upper (tRW_DATA *p_rw_data)
         ||(p_rw_data->data.p_data == NULL) )
         return;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
         NFA_TRACE_DEBUG2 ("nfa_rw_send_data_to_upper: Len [0x%X] Status [%s]", p_rw_data->data.p_data->len, NFC_GetStatusName (p_rw_data->data.status));
 #else
         NFA_TRACE_DEBUG2 ("nfa_rw_send_data_to_upper: Len [0x%X] Status [0x%X]", p_rw_data->data.p_data->len, p_rw_data->data.status);

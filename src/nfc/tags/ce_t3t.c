@@ -28,7 +28,7 @@
 #include "bt_types.h"
 #include "trace_api.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nfc_int.h"
 #include "ce_api.h"
@@ -105,7 +105,7 @@ void ce_t3t_send_to_lower (BT_HDR *p_msg)
     uint8_t_TO_STREAM (p, (p_msg->len+1));
     p_msg->len += 1;            /* Increment len to include SoD */
 
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
     DispT3TagMessage (p_msg, false);
 #endif
 
@@ -687,7 +687,7 @@ void ce_t3t_data_cback (uint8_t conn_id, tNFC_DATA_CEVT *p_data)
     uint8_t sod;
     uint8_t cmd_type;
 
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
     DispT3TagMessage (p_msg, true);
 #endif
 
@@ -1070,4 +1070,4 @@ tNFC_STATUS CE_T3tSendUpdateRsp (uint8_t status1, uint8_t status2)
     return (retval);
 }
 
-#endif /* NFC_INCLUDED == true */
+#endif /* NFC_INCLUDED == TRUE */

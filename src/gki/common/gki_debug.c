@@ -17,7 +17,7 @@
  ******************************************************************************/
 #include "gki_int.h"
 
-#if (GKI_DEBUG == true)
+#if (GKI_DEBUG == TRUE)
 
 const int8_t * const OSTaskStates[] =
 {

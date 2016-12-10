@@ -29,7 +29,7 @@
 
 #include "ce_api.h"
 
-#if (CE_TEST_INCLUDED == false)
+#if (CE_TEST_INCLUDED == FALSE)
 #define CE_MIN_SUP_PROTO    NCI_PROTOCOL_FELICA
 #define CE_MAX_SUP_PROTO    NCI_PROTOCOL_ISO4
 #else

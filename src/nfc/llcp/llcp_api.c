@@ -31,7 +31,7 @@
 #include "llcp_int.h"
 #include "llcp_defs.h"
 
-#if (LLCP_TEST_INCLUDED == true) /* this is for LLCP testing */
+#if (LLCP_TEST_INCLUDED == TRUE) /* this is for LLCP testing */
 
 tLLCP_TEST_PARAMS llcp_test_params =
 {
@@ -233,7 +233,7 @@ void LLCP_GetDiscoveryConfig (uint8_t *p_wt,
     uint8_t_TO_BE_STREAM (p, LLCP_MAGIC_NUMBER_BYTE1);
     uint8_t_TO_BE_STREAM (p, LLCP_MAGIC_NUMBER_BYTE2);
 
-#if (LLCP_TEST_INCLUDED == true) /* this is for LLCP testing */
+#if (LLCP_TEST_INCLUDED == TRUE) /* this is for LLCP testing */
     uint8_t_TO_BE_STREAM (p, LLCP_VERSION_TYPE);
     uint8_t_TO_BE_STREAM (p, LLCP_VERSION_LEN);
     uint8_t_TO_BE_STREAM (p, llcp_test_params.version);

@@ -28,7 +28,7 @@
 #include <string.h>
 #include "nfc_target.h"
 
-#if NFC_INCLUDED == true
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_hal_api.h"
 #include "nfc_api.h"
 #include "nci_defs.h"
@@ -39,7 +39,7 @@
 #include "hcidefs.h"
 #include "nfc_hal_api.h"
 
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
 static const uint8_t nfc_mpl_code_to_size[] =
 {64, 128, 192, 254};
 
@@ -406,8 +406,8 @@ bool    nfc_ncif_process_event (BT_HDR *p_msg)
         case NCI_GID_RF_MANAGE:   /* 0001b NCI Discovery group */
             nci_proc_rf_management_rsp (p_msg);
             break;
-#if (NFC_NFCEE_INCLUDED == true)
-#if (NFC_RW_ONLY == false)
+#if (NFC_NFCEE_INCLUDED == TRUE)
+#if (NFC_RW_ONLY == FALSE)
         case NCI_GID_EE_MANAGE:  /* 0x02 0010b NFCEE Discovery group */
             nci_proc_ee_management_rsp (p_msg);
             break;
@@ -434,8 +434,8 @@ bool    nfc_ncif_process_event (BT_HDR *p_msg)
         case NCI_GID_RF_MANAGE:   /* 0001b NCI Discovery group */
             nci_proc_rf_management_ntf (p_msg);
             break;
-#if (NFC_NFCEE_INCLUDED == true)
-#if (NFC_RW_ONLY == false)
+#if (NFC_NFCEE_INCLUDED == TRUE)
+#if (NFC_RW_ONLY == FALSE)
         case NCI_GID_EE_MANAGE:  /* 0x02 0010b NFCEE Discovery group */
             nci_proc_ee_management_ntf (p_msg);
             break;
@@ -549,7 +549,7 @@ void nfc_ncif_error_status (uint8_t conn_id, uint8_t status)
 ** Returns          void
 **
 *******************************************************************************/
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
 void nfc_ncif_proc_rf_field_ntf (uint8_t rf_status)
 {
     tNFC_RESPONSE   evt_data;
@@ -583,7 +583,7 @@ void nfc_ncif_proc_credits(uint8_t *p, uint16_t plen)
         if (p_cb && p_cb->num_buff != NFC_CONN_NO_FC)
         {
             p_cb->num_buff += (*p);
-#if (BT_USE_TRACES == true)
+#if (BT_USE_TRACES == TRUE)
             if (p_cb->num_buff > p_cb->init_credits)
             {
                 if (nfc_cb.nfc_state == NFC_STATE_OPEN)
@@ -763,7 +763,7 @@ void nfc_ncif_proc_activate (uint8_t *p, uint8_t len)
     tNFC_INTF_PA_ISO_DEP    *p_pa_iso;
     tNFC_INTF_LB_ISO_DEP    *p_lb_iso;
     tNFC_INTF_PB_ISO_DEP    *p_pb_iso;
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
     tNFC_INTF_PA_NFC_DEP    *p_pa_nfc;
     int                     mpl_idx = 0;
     uint8_t                 gb_idx = 0, mpl;
@@ -898,7 +898,7 @@ void nfc_ncif_proc_activate (uint8_t *p, uint8_t len)
         }
 
     }
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
     else if (evt_data.activate.intf_param.type == NCI_INTERFACE_NFC_DEP)
     {
         /* Make max payload of NCI aligned to max payload of NFC-DEP for better performance */
@@ -1021,7 +1021,7 @@ void nfc_ncif_proc_deactivate (uint8_t status, uint8_t deact_type, bool    is_nt
 ** Returns          void
 **
 *******************************************************************************/
-#if ((NFC_NFCEE_INCLUDED == true) && (NFC_RW_ONLY == false))
+#if (NFC_NFCEE_INCLUDED == TRUE && NFC_RW_ONLY == FALSE)
 void nfc_ncif_proc_ee_action (uint8_t *p, uint16_t plen)
 {
     tNFC_EE_ACTION_REVT evt_data;
@@ -1579,4 +1579,4 @@ void nfc_ncif_proc_data (BT_HDR *p_msg)
     GKI_freebuf (p_msg);
 }
 
-#endif /* NFC_INCLUDED == true*/
+#endif /* NFC_INCLUDED == TRUE*/

@@ -26,7 +26,7 @@
 #include <string.h>
 #include "nfc_target.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nci_hmsgs.h"
 #include "rw_api.h"
@@ -34,7 +34,7 @@
 #include "nfc_int.h"
 #include "gki.h"
 
-#if (defined (RW_NDEF_INCLUDED) && (RW_NDEF_INCLUDED == true))
+#if (RW_NDEF_INCLUDED == TRUE)
 
 /* Local static functions */
 static void rw_t2t_handle_cc_read_rsp (void);
@@ -3171,6 +3171,6 @@ tNFC_STATUS RW_T2tSetTagReadOnly (bool    b_hard_lock)
     return status;
 }
 
-#endif /* (defined ((RW_NDEF_INCLUDED) && (RW_NDEF_INCLUDED == true)) */
+#endif /* RW_NDEF_INCLUDED == TRUE) */
 
-#endif /* (NFC_INCLUDED == true) */
+#endif /* (NFC_INCLUDED == TRUE) */

@@ -61,7 +61,7 @@ const tNFA_CE_ACTION nfa_ce_action_tbl[] =
 /*****************************************************************************
 ** Local function prototypes
 *****************************************************************************/
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 static char *nfa_ce_evt_2_str (uint16_t event);
 #endif
 
@@ -178,7 +178,7 @@ bool    nfa_ce_hdl_event (BT_HDR *p_msg)
     uint16_t act_idx;
     bool    freebuf = true;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_EVENT3 ("nfa_ce_handle_event event: %s (0x%02x), flags: %08x", nfa_ce_evt_2_str (p_msg->event), p_msg->event, nfa_ce_cb.flags);
 #else
     NFA_TRACE_EVENT2 ("nfa_ce_handle_event event: 0x%x, flags: %08x",p_msg->event, nfa_ce_cb.flags);
@@ -199,7 +199,7 @@ bool    nfa_ce_hdl_event (BT_HDR *p_msg)
     return freebuf;
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_ce_evt_2_str

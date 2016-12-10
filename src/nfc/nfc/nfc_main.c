@@ -30,7 +30,7 @@
 #include "bt_types.h"
 #include "hcidefs.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_hal_api.h"
 #include "nfc_api.h"
 #include "nfc_int.h"
@@ -39,7 +39,7 @@
 #include "ce_int.h"
 
 
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
 #include "ce_api.h"
 #include "ce_int.h"
 #include "llcp_int.h"
@@ -60,7 +60,7 @@
 ****************************************************************************/
 tNFC_CB nfc_cb;
 
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
 #define NFC_NUM_INTERFACE_MAP   2
 #else
 #define NFC_NUM_INTERFACE_MAP   1
@@ -74,7 +74,7 @@ static const tNCI_DISCOVER_MAPS nfc_interface_mapping[NFC_NUM_INTERFACE_MAP] =
         NCI_INTERFACE_MODE_POLL_N_LISTEN,
         NCI_INTERFACE_ISO_DEP
     }
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
     ,
     /* this can not be set here due to 2079xB0 NFCC issues */
     {
@@ -86,7 +86,7 @@ static const tNCI_DISCOVER_MAPS nfc_interface_mapping[NFC_NUM_INTERFACE_MAP] =
 };
 
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfc_state_name
@@ -165,7 +165,7 @@ static char *nfc_hal_event_name (uint8_t event)
         return ("???? UNKNOWN EVENT");
     }
 }
-#endif /* BT_TRACE_VERBOSE == true */
+#endif /* BT_TRACE_VERBOSE == TRUE */
 
 /*******************************************************************************
 **
@@ -247,7 +247,7 @@ void nfc_enabled (tNFC_STATUS nfc_status, BT_HDR *p_init_rsp_msg)
         memcpy (evt_data.enable.vs_interface, nfc_cb.vs_interface, NFC_NFCC_MAX_NUM_VS_INTERFACE);
         evt_data.enable.max_conn = *p++;
         STREAM_TO_UINT16 (evt_data.enable.max_ce_table, p);
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
         nfc_cb.max_ce_table          = evt_data.enable.max_ce_table;
         nfc_cb.nci_features          = evt_data.enable.nci_features;
         nfc_cb.max_conn              = evt_data.enable.max_conn;
@@ -297,7 +297,7 @@ void nfc_enabled (tNFC_STATUS nfc_status, BT_HDR *p_init_rsp_msg)
 *******************************************************************************/
 void nfc_set_state (tNFC_STATE nfc_state)
 {
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFC_TRACE_DEBUG4 ("nfc_set_state %d (%s)->%d (%s)", nfc_cb.nfc_state, nfc_state_name (nfc_cb.nfc_state), nfc_state, nfc_state_name (nfc_state));
 #else
     NFC_TRACE_DEBUG2 ("nfc_set_state %d->%d", nfc_cb.nfc_state, nfc_state);
@@ -562,7 +562,7 @@ void nfc_main_post_hal_evt (uint8_t hal_evt, tHAL_NFC_STATUS status)
 *******************************************************************************/
 static void nfc_main_hal_cback(uint8_t event, tHAL_NFC_STATUS status)
 {
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFC_TRACE_DEBUG3 ("nfc_main_hal_cback event: %s(0x%x), status=%d",
                        nfc_hal_event_name (event), event, status);
 #else
@@ -769,7 +769,7 @@ void NFC_Init (tHAL_NFC_ENTRY *p_hal_entry_tbl)
 uint16_t NFC_GetLmrtSize (void)
 {
     uint16_t size = 0;
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
     size = nfc_cb.max_ce_table;
 #endif
     return size;
@@ -1165,7 +1165,7 @@ tNFC_STATUS NFC_Deactivate (tNFC_DEACT_TYPE deactivate_type)
     tNFC_CONN_CB * p_cb = &nfc_cb.conn_cb[NFC_RF_CONN_ID];
     tNFC_STATUS  status = NFC_STATUS_OK;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFC_TRACE_API3 ("NFC_Deactivate %d (%s) deactivate_type:%d", nfc_cb.nfc_state, nfc_state_name (nfc_cb.nfc_state), deactivate_type);
 #else
     NFC_TRACE_API2 ("NFC_Deactivate %d deactivate_type:%d", nfc_cb.nfc_state, deactivate_type);
@@ -1349,7 +1349,7 @@ uint8_t NFC_SetTraceLevel (uint8_t new_level)
     return (nfc_cb.trace_level);
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         NFC_GetStatusName
@@ -1441,4 +1441,4 @@ char *NFC_GetStatusName (tNFC_STATUS status)
 }
 #endif
 
-#endif /* NFC_INCLUDED == true */
+#endif /* NFC_INCLUDED == TRUE */

@@ -548,19 +548,19 @@ extern tNFA_DM_CB nfa_dm_cb;
 
 void nfa_dm_init (void);
 void nfa_p2p_init (void);
-#if (defined (NFA_CHO_INCLUDED) && (NFA_CHO_INCLUDED==true))
+#if (NFA_CHO_INCLUDED == TRUE)
 void nfa_cho_init (void);
 #else
 #define nfa_cho_init()
-#endif /* (defined (NFA_CHO_INCLUDED) && (NFA_CHO_INCLUDED==true)) */
-#if (defined (NFA_SNEP_INCLUDED) && (NFA_SNEP_INCLUDED==true))
+#endif /* (defined (NFA_CHO_INCLUDED) && (NFA_CHO_INCLUDED==TRUE)) */
+#if (NFA_SNEP_INCLUDED == TRUE)
 void nfa_snep_init (bool    is_dta_mode);
 #else
 #define nfa_snep_init(is_dta_mode)
 #endif
 
 void nfa_dta_init (void);
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
 void nfa_ee_init (void);
 void nfa_hci_init (void);
 #else
@@ -631,11 +631,11 @@ bool    nfa_dm_is_raw_frame_session (void);
 bool    nfa_dm_is_p2p_paused (void);
 
 
-#if (NFC_NFCEE_INCLUDED == false)
+#if (NFC_NFCEE_INCLUDED == FALSE)
 #define nfa_ee_get_tech_route(ps, ha) memset(ha, NFC_DH_ID, NFA_DM_MAX_TECH_ROUTE);
 #endif
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 char *nfa_dm_nfc_revt_2_str (tNFC_RESPONSE_EVT event);
 #endif
 

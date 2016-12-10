@@ -1174,7 +1174,7 @@ retry_core_init:
 
 #ifdef PN547C2_CLOCK_SETTING
     if (isNxpConfigModified() || (fw_download_success == 1) || (phNxpNciClock.issetConfig)
-#if(NFC_NXP_HFO_SETTINGS == true)
+#if(NFC_NXP_HFO_SETTINGS == TRUE)
         || temp_fix == 1
 #endif
         )
@@ -1182,7 +1182,7 @@ retry_core_init:
         //phNxpNciHal_get_clk_freq();
         phNxpNciHal_set_clock();
         phNxpNciClock.issetConfig = false;
-#if(NFC_NXP_HFO_SETTINGS == true)
+#if(NFC_NXP_HFO_SETTINGS == TRUE)
         if (temp_fix == 1 )
         {
             NXPLOG_NCIHAL_D("Applying Default Clock setting and DPLL register at power on");

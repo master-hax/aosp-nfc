@@ -31,9 +31,9 @@
 #ifdef BT_TRACE_VERBOSE
 #undef BT_TRACE_VERBOSE
 #endif
-#define BT_TRACE_VERBOSE      true
+#define BT_TRACE_VERBOSE      TRUE
 
-#define TRACE_TASK_INCLUDED   true
+#define TRACE_TASK_INCLUDED   TRUE
 
 #define GKI_BUF1_MAX            0
 // 2 is in use

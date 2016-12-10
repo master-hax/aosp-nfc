@@ -26,7 +26,7 @@
 #include <string.h>
 #include "nfc_target.h"
 
-#if NFC_INCLUDED == true
+#if (NFC_INCLUDED == TRUE)
 #include "nci_defs.h"
 #include "nci_hmsgs.h"
 #include "nfc_api.h"
@@ -253,8 +253,8 @@ uint8_t nci_snd_core_conn_close (uint8_t conn_id)
 }
 
 
-#if (NFC_NFCEE_INCLUDED == true)
-#if (NFC_RW_ONLY == false)
+#if (NFC_NFCEE_INCLUDED == TRUE)
+#if (NFC_RW_ONLY == FALSE)
 /*******************************************************************************
 **
 ** Function         nci_snd_nfcee_discover
@@ -570,8 +570,8 @@ uint8_t nci_snd_parameter_update_cmd (uint8_t *p_param_tlvs, uint8_t tlv_size)
     return (NCI_STATUS_OK);
 }
 
-#if (NFC_NFCEE_INCLUDED == true)
-#if (NFC_RW_ONLY == false)
+#if (NFC_NFCEE_INCLUDED == TRUE)
+#if (NFC_RW_ONLY == FALSE)
 /*******************************************************************************
 **
 ** Function         nci_snd_set_routing_cmd
@@ -658,4 +658,4 @@ uint8_t nci_snd_get_routing_cmd (void)
 #endif
 
 
-#endif /* NFC_INCLUDED == true*/
+#endif /* NFC_INCLUDED == TRUE*/

@@ -21,7 +21,7 @@
 #include "gki.h"
 
 #ifndef GKI_DEBUG
-#define GKI_DEBUG	false
+#define GKI_DEBUG	FALSE
 #endif
 
 /* Task States: (For OSRdyTbl) */
@@ -67,7 +67,7 @@ typedef struct _buffer_hdr
     uint8_t status;               /* FREE, UNLINKED or QUEUED */
     uint8_t Type;
 
-#if GKI_BUFFER_DEBUG
+#if (GKI_BUFFER_DEBUG == TRUE)
     /* for tracking who allocated the buffer */
     #define _GKI_MAX_FUNCTION_NAME_LEN   (50)
     char    _function[_GKI_MAX_FUNCTION_NAME_LEN+1];
@@ -99,11 +99,11 @@ typedef struct _free_queue
 #define BUF_STATUS_UNLINKED 1
 #define BUF_STATUS_QUEUED   2
 
-#define GKI_USE_DEFERED_ALLOC_BUF_POOLS
+#define GKI_USE_DEFERED_ALLOC_BUF_POOLS TRUE
 
 /* Exception related structures (Used in debug mode only)
 */
-#if (GKI_DEBUG == true)
+#if (GKI_DEBUG == TRUE)
 typedef struct
 {
     uint16_t  type;
@@ -121,7 +121,7 @@ typedef struct
     */
     /* The stack and stack size are not used on Windows
     */
-#if (!defined GKI_USE_DEFERED_ALLOC_BUF_POOLS && (GKI_USE_DYNAMIC_BUFFERS == false))
+#if (GKI_USE_DYNAMIC_BUFFERS == FALSE)
 
 #if (GKI_NUM_FIXED_BUF_POOLS > 0)
     uint8_t bufpool0[(ALIGN_POOL(GKI_BUF0_SIZE) + BUFFER_PADDING_SIZE) * GKI_BUF0_MAX];
@@ -337,7 +337,7 @@ typedef struct
     SYSTEM_TICK_CBACK *p_tick_cb;
     bool        system_tick_running;                /* true if system tick is running. Valid only if p_tick_cb is not NULL */
 
-#if (GKI_DEBUG == true)
+#if (GKI_DEBUG == TRUE)
     uint16_t    ExceptionCnt;                       /* number of GKI exceptions that have happened */
     EXCEPTION_T Exception[GKI_MAX_EXCEPTION];
 #endif
@@ -369,7 +369,7 @@ extern void    OSIntExit(void);
 */
 typedef void  (*FP_PRINT)(char *, ...);
 
-#if (GKI_DEBUG == true)
+#if (GKI_DEBUG == TRUE)
 
 typedef void  (*PKT_PRINT)(uint8_t *, uint16_t);
 

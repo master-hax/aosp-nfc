@@ -28,7 +28,7 @@
 #include "nfc_target.h"
 #include "bt_types.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nci_hmsgs.h"
 #include "rw_api.h"
@@ -44,7 +44,7 @@ void rw_init (void)
 
 }
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
 /*******************************************************************************
 * Internal functions for statistics
 *******************************************************************************/
@@ -221,7 +221,7 @@ tNFC_STATUS RW_SetActivatedTagType (tNFC_ACTIVATE_DEVT *p_activate_params, tRW_C
     /* Reset tag-specific area of control block */
     memset (&rw_cb.tcb, 0, sizeof (tRW_TCB));
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
     /* Reset RW stats */
     rw_main_reset_stats ();
 #endif  /* RW_STATS_INCLUDED */
@@ -303,4 +303,4 @@ uint8_t RW_SetTraceLevel (uint8_t new_level)
     return (rw_cb.trace_level);
 }
 
-#endif /* NFC_INCLUDED == true */
+#endif /* NFC_INCLUDED == TRUE */
