@@ -1383,7 +1383,7 @@ void nfa_hci_handle_admin_gate_rsp (uint8_t *p_data, uint8_t data_len)
     uint8_t             host_id     = 0;
     uint32_t            os_tick;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_DEBUG4 ("nfa_hci_handle_admin_gate_rsp - LastCmdSent: %s  App: 0x%04x  Gate: 0x%02x  Pipe: 0x%02x",
                        nfa_hciu_instr_2_str(nfa_hci_cb.cmd_sent), nfa_hci_cb.app_in_use, nfa_hci_cb.local_gate_in_use, nfa_hci_cb.pipe_in_use);
 #else

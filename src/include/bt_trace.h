@@ -51,12 +51,12 @@ extern void LogMsg_6 (uint32_t trace_set_mask, const char *fmt_str, uintptr_t p1
 
 /* Enables or disables verbose trace information. */
 #ifndef BT_TRACE_VERBOSE
-#define BT_TRACE_VERBOSE    false
+#define BT_TRACE_VERBOSE    FALSE
 #endif
 
 /* Enables or disables protocol trace information. */
 #ifndef BT_TRACE_PROTOCOL
-#define BT_TRACE_PROTOCOL   true  /* Android requires true */
+#define BT_TRACE_PROTOCOL   TRUE  /* Android requires TRUE */
 #endif
 
 /******************************************************************************

@@ -663,7 +663,7 @@ static void nfa_hci_conn_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN 
     uint8_t chaining_bit;
     uint8_t pipe;
     uint16_t  pkt_len;
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     char    buff[100];
 #endif
 
@@ -712,7 +712,7 @@ static void nfa_hci_conn_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN 
     p       = (uint8_t *) (p_pkt + 1) + p_pkt->offset;
     pkt_len = p_pkt->len;
 
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
     DispHcp (p, pkt_len, true, (bool   ) !nfa_hci_cb.assembling);
 #endif
 
@@ -769,7 +769,7 @@ static void nfa_hci_conn_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN 
         }
     }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_EVENT5 ("nfa_hci_conn_cback Recvd data pipe:%d  %s  chain:%d  assmbl:%d  len:%d",
                       (uint8_t)pipe, nfa_hciu_get_type_inst_names (pipe, nfa_hci_cb.type, nfa_hci_cb.inst, buff),
                       (uint8_t)chaining_bit, (uint8_t)nfa_hci_cb.assembling, p_pkt->len);
@@ -1114,7 +1114,7 @@ static bool    nfa_hci_evt_hdlr (BT_HDR *p_msg)
 {
     tNFA_HCI_EVENT_DATA *p_evt_data = (tNFA_HCI_EVENT_DATA *)p_msg;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_EVENT4 ("nfa_hci_evt_hdlr state: %s (%d) event: %s (0x%04x)",
                       nfa_hciu_get_state_name (nfa_hci_cb.hci_state), nfa_hci_cb.hci_state,
                       nfa_hciu_get_event_name (p_evt_data->hdr.event), p_evt_data->hdr.event);

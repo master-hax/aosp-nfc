@@ -105,7 +105,7 @@ enum
 #define NFC_CONN_NO_FC                 0xFF /* set num_buff to this for no flow control */
 #define NFC_NCI_CONN_NO_FC             0xFF
 
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
 /* only allow the entries that the NFCC can support */
 #define NFC_CHECK_MAX_CONN()    {if (max > nfc_cb.max_conn) max = nfc_cb.max_conn;}
 #else
@@ -163,7 +163,7 @@ typedef struct
     tNFC_TEST_CBACK     *p_test_cback;
     tNFC_VS_CBACK       *p_vs_cb[NFC_NUM_VS_CBACKS];/* Register for vendor specific events  */
 
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
     /* NFCC information at init rsp */
     uint32_t            nci_features;               /* the NCI features supported by NFCC */
     uint16_t            max_ce_table;               /* the max routing table size       */
@@ -240,7 +240,7 @@ NFC_API extern void nfc_ncif_error_status (uint8_t conn_id, uint8_t status);
 NFC_API extern void nfc_ncif_proc_credits(uint8_t *p, uint16_t plen);
 NFC_API extern void nfc_ncif_proc_activate (uint8_t *p, uint8_t len);
 NFC_API extern void nfc_ncif_proc_deactivate (uint8_t status, uint8_t deact_type, bool    is_ntf);
-#if ((NFC_NFCEE_INCLUDED == true) && (NFC_RW_ONLY == false))
+#if (NFC_NFCEE_INCLUDED == TRUE && NFC_RW_ONLY == FALSE)
 NFC_API extern void nfc_ncif_proc_ee_action (uint8_t *p, uint16_t plen);
 NFC_API extern void nfc_ncif_proc_ee_discover_req (uint8_t *p, uint16_t plen);
 NFC_API extern void nfc_ncif_proc_get_routing (uint8_t *p, uint8_t len);
@@ -256,7 +256,7 @@ NFC_API extern bool    nfa_dm_p2p_prio_logic(uint8_t event, uint8_t *p, uint8_t 
 NFC_API extern void nfa_dm_p2p_timer_event ();
 NFC_API extern void nfa_dm_p2p_prio_logic_cleanup ();
 
-#if (NFC_RW_ONLY == false)
+#if (NFC_RW_ONLY == FALSE)
 NFC_API extern void nfc_ncif_proc_rf_field_ntf (uint8_t rf_status);
 #else
 #define nfc_ncif_proc_rf_field_ntf(rf_status)

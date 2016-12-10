@@ -38,7 +38,7 @@ extern "C" {
 #endif
 BT_API extern void bte_ncisu_send (BT_HDR *p_pkt, uint16_t event);
 BT_API extern void bte_hcisu_send (BT_HDR *p_msg, uint16_t event);
-#if (HCISU_H4_INCLUDED == true)
+#if (HCISU_H4_INCLUDED == TRUE)
 BT_API extern void bte_hcisu_lp_allow_bt_device_sleep (void);
 BT_API extern void bte_hcisu_lp_wakeup_host (void);
 BT_API extern void bte_hcisu_lp_h4ibss_evt(uint8_t *p, uint8_t evt_len);
@@ -89,7 +89,7 @@ BT_API extern void HCILL_RegState( tHCILL_STATE_CBACK *p_cback);
 
 /* Send HCISU a message to allow BT sleep */
 #ifndef HCI_LP_ALLOW_BT_DEVICE_SLEEP
-#if (HCISU_H4_INCLUDED == true)
+#if (HCISU_H4_INCLUDED == TRUE)
 #define HCI_LP_ALLOW_BT_DEVICE_SLEEP()       bte_hcisu_lp_allow_bt_device_sleep()
 #else
 #define HCI_LP_ALLOW_BT_DEVICE_SLEEP()       HCILP_AllowBTDeviceSleep()
@@ -98,7 +98,7 @@ BT_API extern void HCILL_RegState( tHCILL_STATE_CBACK *p_cback);
 
 /* Send HCISU a message to wakeup host */
 #ifndef HCI_LP_WAKEUP_HOST
-#if (HCISU_H4_INCLUDED == true)
+#if (HCISU_H4_INCLUDED == TRUE)
 #define HCI_LP_WAKEUP_HOST()        bte_hcisu_lp_wakeup_host()
 #else
 #define HCI_LP_WAKEUP_HOST()        HCILP_WakeupHost()
@@ -107,7 +107,7 @@ BT_API extern void HCILL_RegState( tHCILL_STATE_CBACK *p_cback);
 
 /* Send HCISU the received H4IBSS event from controller */
 #ifndef HCI_LP_RCV_H4IBSS_EVT
-#if (HCISU_H4_INCLUDED == true)
+#if (HCISU_H4_INCLUDED == TRUE)
 #define HCI_LP_RCV_H4IBSS_EVT(p1, p2)  bte_hcisu_lp_h4ibss_evt((uint8_t*)(p1), (uint8_t)(p2))
 #else
 #define HCI_LP_RCV_H4IBSS_EVT(p1, p2)  h4ibss_sleep_mode_evt((uint8_t*)(p1), (uint8_t)(p2))

@@ -20,7 +20,7 @@
 #include <stdarg.h>
 #include <errno.h>
 
-#define GKI_DEBUG   false
+#define GKI_DEBUG   FALSE
 
 #include <pthread.h>  /* must be 1st header defined  */
 #include <time.h>
@@ -163,7 +163,7 @@ void GKI_init(void)
     p_os = &gki_cb.os;
     pthread_mutex_init(&p_os->GKI_mutex, &attr);
     /* pthread_mutex_init(&GKI_sched_mutex, NULL); */
-#if (GKI_DEBUG == true)
+#if (GKI_DEBUG == TRUE)
     pthread_mutex_init(&p_os->GKI_trace_mutex, NULL);
 #endif
     /* pthread_mutex_init(&thread_delay_mutex, NULL); */  /* used in GKI_delay */
@@ -246,7 +246,7 @@ uint8_t GKI_create_task (TASKPTR task_entry, uint8_t task_id, int8_t *taskname, 
 
     pthread_attr_init(&attr1);
     /* by default, pthread creates a joinable thread */
-#if ( false == GKI_PTHREAD_JOINABLE )
+#if ( FALSE == GKI_PTHREAD_JOINABLE )
     pthread_attr_setdetachstate(&attr1, PTHREAD_CREATE_DETACHED);
 
     GKI_TRACE_3("GKI creating task %i, pCond/pMutex=%x/%x", task_id, pCondVar, pMutex);
@@ -320,7 +320,7 @@ void GKI_shutdown(void)
     uint8_t task_id;
     volatile int    *p_run_cond = &gki_cb.os.no_timer_suspend;
     int     oldCOnd = 0;
-#if ( false == GKI_PTHREAD_JOINABLE )
+#if ( FALSE == GKI_PTHREAD_JOINABLE )
     int i = 0;
 #else
     int result;
@@ -339,7 +339,7 @@ void GKI_shutdown(void)
                                                 TASK_MBOX_2_EVT_MASK|TASK_MBOX_3_EVT_MASK);
             GKI_send_event(task_id - 1, EVENT_MASK(GKI_SHUTDOWN_EVT));
 
-#if ( false == GKI_PTHREAD_JOINABLE )
+#if ( FALSE == GKI_PTHREAD_JOINABLE )
             i = 0;
 
             while ((gki_cb.com.OSWaitEvt[task_id - 1] != 0) && (++i < 10))
@@ -360,12 +360,12 @@ void GKI_shutdown(void)
     /* Destroy mutex and condition variable objects */
     pthread_mutex_destroy(&gki_cb.os.GKI_mutex);
     /*    pthread_mutex_destroy(&GKI_sched_mutex); */
-#if (GKI_DEBUG == true)
+#if (GKI_DEBUG == TRUE)
     pthread_mutex_destroy(&gki_cb.os.GKI_trace_mutex);
 #endif
     /*    pthread_mutex_destroy(&thread_delay_mutex);
      pthread_cond_destroy (&thread_delay_cond); */
-#if ( false == GKI_PTHREAD_JOINABLE )
+#if ( FALSE == GKI_PTHREAD_JOINABLE )
     i = 0;
 #endif
 
@@ -1011,7 +1011,7 @@ void GKI_exception (uint16_t code, char *msg)
     GKI_TRACE_ERROR_2( "* GKI_exception(): %d %s", code, msg);
     GKI_TRACE_ERROR_0( "********************************************************************");
 
-#if (GKI_DEBUG == true)
+#if (GKI_DEBUG == TRUE)
     GKI_disable();
 
     if (gki_cb.com.ExceptionCnt < GKI_MAX_EXCEPTION)

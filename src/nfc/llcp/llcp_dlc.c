@@ -37,7 +37,7 @@ static tLLCP_STATUS llcp_dlsm_w4_local_resp (tLLCP_DLCB *p_dlcb, tLLCP_DLC_EVENT
 static tLLCP_STATUS llcp_dlsm_connected (tLLCP_DLCB *p_dlcb, tLLCP_DLC_EVENT event, void *p_data);
 static tLLCP_STATUS llcp_dlsm_w4_remote_dm (tLLCP_DLCB *p_dlcb, tLLCP_DLC_EVENT event, void *p_data);
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 static char *llcp_dlsm_get_state_name (tLLCP_DLC_STATE state);
 static char *llcp_dlsm_get_event_name (tLLCP_DLC_EVENT event);
 #endif
@@ -55,7 +55,7 @@ tLLCP_STATUS llcp_dlsm_execute (tLLCP_DLCB *p_dlcb, tLLCP_DLC_EVENT event, void 
 {
     tLLCP_STATUS status;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     LLCP_TRACE_EVENT3 ("DLC (0x%02X) - state: %s, evt: %s",
                         p_dlcb->local_sap,
                         llcp_dlsm_get_state_name (p_dlcb->state),
@@ -899,7 +899,7 @@ void llcp_dlc_proc_i_pdu (uint8_t dsap, uint8_t ssap, uint16_t i_pdu_length, uin
         send_seq = LLCP_GET_NS (*p);
         rcv_seq  = LLCP_GET_NR (*p);
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
         LLCP_TRACE_DEBUG6 ("LLCP RX I PDU - N(S,R):(%d,%d) V(S,SA,R,RA):(%d,%d,%d,%d)",
                             send_seq, rcv_seq,
                             p_dlcb->next_tx_seq, p_dlcb->rcvd_ack_seq,
@@ -1113,7 +1113,7 @@ static void llcp_dlc_proc_rr_rnr_pdu (uint8_t dsap, uint8_t ptype, uint8_t ssap,
         {
             p_dlcb->rcvd_ack_seq = rcv_seq;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
             LLCP_TRACE_DEBUG5 ("LLCP RX - N(S,R):(NA,%d) V(S,SA,R,RA):(%d,%d,%d,%d)",
                                 rcv_seq,
                                 p_dlcb->next_tx_seq, p_dlcb->rcvd_ack_seq,
@@ -1331,7 +1331,7 @@ BT_HDR* llcp_dlc_get_next_pdu (tLLCP_DLCB *p_dlcb)
     bool    flush = true;
     tLLCP_SAP_CBACK_DATA data;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     uint8_t send_seq = p_dlcb->next_tx_seq;
 #endif
 
@@ -1350,7 +1350,7 @@ BT_HDR* llcp_dlc_get_next_pdu (tLLCP_DLCB *p_dlcb)
 
             p_dlcb->next_tx_seq  = (p_dlcb->next_tx_seq + 1) % LLCP_SEQ_MODULO;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
             LLCP_TRACE_DEBUG6 ("LLCP TX - N(S,R):(%d,%d) V(S,SA,R,RA):(%d,%d,%d,%d)",
                                 send_seq, p_dlcb->next_rx_seq,
                                 p_dlcb->next_tx_seq, p_dlcb->rcvd_ack_seq,
@@ -1419,7 +1419,7 @@ uint16_t llcp_dlc_get_next_pdu_length (tLLCP_DLCB *p_dlcb)
     return 0;
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         llcp_dlsm_get_state_name
@@ -1496,6 +1496,6 @@ static char *llcp_dlsm_get_event_name (tLLCP_DLC_EVENT event)
         return ("???? UNKNOWN EVENT");
     }
 }
-#endif /* (BT_TRACE_VERBOSE == true) */
+#endif /* (BT_TRACE_VERBOSE == TRUE) */
 
 

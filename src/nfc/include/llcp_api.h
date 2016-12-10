@@ -667,7 +667,7 @@ LLCP_API extern tLLCP_STATUS LLCP_DiscoverService (char            *p_name,
 *******************************************************************************/
 LLCP_API extern uint8_t LLCP_SetTraceLevel (uint8_t new_level);
 
-#if (LLCP_TEST_INCLUDED == true)
+#if (LLCP_TEST_INCLUDED == TRUE)
 /*******************************************************************************
 **
 ** Function         LLCP_SetTestParams

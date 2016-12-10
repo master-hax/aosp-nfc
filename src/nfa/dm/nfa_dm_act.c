@@ -35,16 +35,16 @@
 #include "nfa_p2p_int.h"
 #include "nci_hmsgs.h"
 
-#if (defined (NFA_CHO_INCLUDED) && (NFA_CHO_INCLUDED==true))
+#if (NFA_CHO_INCLUDED == TRUE)
 #include "nfa_cho_int.h"
 #endif
 
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
 #include "nfa_ee_int.h"
 #include "nfa_hci_int.h"
 #endif
 
-#if (defined (NFA_SNEP_INCLUDED) && (NFA_SNEP_INCLUDED==true))
+#if (NFA_SNEP_INCLUDED == TRUE)
 #include "nfa_snep_int.h"
 #endif
 
@@ -257,7 +257,7 @@ static void nfa_dm_nfc_response_cback (tNFC_RESPONSE_EVT event, tNFC_RESPONSE *p
     uint8_t dm_cback_evt;
     uint8_t max_ee = 0;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_DEBUG2 ("nfa_dm_nfc_response_cback () %s(0x%x)", nfa_dm_nfc_revt_2_str (event), event);
 #else
     NFA_TRACE_DEBUG1 ("nfa_dm_nfc_response_cback () event=0x%x", event);
@@ -344,7 +344,7 @@ static void nfa_dm_nfc_response_cback (tNFC_RESPONSE_EVT event, tNFC_RESPONSE *p
         (*nfa_dm_cb.p_dm_cback) (NFA_DM_GET_CONFIG_EVT, &dm_cback_data);
         break;
 
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
     case NFC_NFCEE_DISCOVER_REVT:                /* NFCEE Discover response */
     case NFC_NFCEE_INFO_REVT:                    /* NFCEE Discover Notification */
     case NFC_EE_ACTION_REVT:                     /* EE Action notification */
@@ -1896,7 +1896,7 @@ void nfa_dm_notify_activation_status (tNFA_STATUS status, tNFA_TAG_PARAMS *p_par
     nfa_dm_cb.p_activate_ntf = NULL;
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_dm_nfc_revt_2_str

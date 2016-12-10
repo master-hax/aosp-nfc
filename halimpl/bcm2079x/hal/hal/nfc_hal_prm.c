@@ -46,7 +46,7 @@ const uint8_t NFC_HAL_PRM_BCM20791B3_STR[]   = "20791B3";
 #define NFC_HAL_PRM_SPD_TOUT                   (6000)  /* timeout for SPD events (in ms)   */
 #define NFC_HAL_PRM_END_DELAY                  (250)   /* delay before sending any new command (ms)*/
 
-#if (NFC_HAL_PRM_DEBUG == true)
+#if (NFC_HAL_PRM_DEBUG == TRUE)
 #define NFC_HAL_PRM_STATE(str)  HAL_TRACE_DEBUG2 ("%s st: %d", str, nfc_hal_cb.prm.state)
 #else
 #define NFC_HAL_PRM_STATE(str)
@@ -228,7 +228,7 @@ void nfc_hal_prm_spd_handle_next_patch_start (void)
     nfc_hal_prm_spd_send_next_segment ();
 }
 
-#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == true))
+#if (NFC_HAL_PRE_I2C_PATCH_INCLUDED == TRUE)
 /*******************************************************************************
 **
 ** Function         nfc_hal_prm_spd_download_i2c_fix
@@ -328,7 +328,7 @@ static void nfc_hal_prm_spd_check_version_continue (void)
             return;
         }
     }
-#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == true))
+#if (NFC_HAL_PRE_I2C_PATCH_INCLUDED == TRUE)
     if (nfc_hal_cb.prm.flags & NFC_HAL_PRM_FLAGS_I2C_FIX_REQUIRED)
     {
         HAL_TRACE_DEBUG0 ("I2C patch fix required.");
@@ -501,7 +501,7 @@ void nfc_hal_prm_spd_check_version (void)
         HAL_TRACE_ERROR4 ("Downloading patch version: %i.%i (previous version in NVM: %i.%i)...",
                             patchfile_ver_major, patchfile_ver_minor,
                             nfc_hal_cb.nvm_cb.ver_major, nfc_hal_cb.nvm_cb.ver_minor);
-#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == true))
+#if (NFC_HAL_PRE_I2C_PATCH_INCLUDED == TRUE)
         /* Check if I2C patch is needed: if                                     */
         /*      - I2C patch file was provided using HAL_NfcPrmSetI2cPatch, and        */
         /*      -   current patch in NVM has ProjectID=0, or                    */
@@ -535,7 +535,7 @@ void nfc_hal_prm_spd_check_version (void)
     }
 }
 
-#if (NFC_HAL_TRACE_VERBOSE == true)
+#if (NFC_HAL_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfc_hal_prm_spd_status_str
@@ -599,7 +599,7 @@ uint8_t *nfc_hal_prm_spd_status_str (uint8_t spd_status_code)
 
     return ((uint8_t*) p_str);
 }
-#endif  /* (NFC_HAL_TRACE_VERBOSE == true) */
+#endif  /* (NFC_HAL_TRACE_VERBOSE == TRUE) */
 /*******************************************************************************
 **
 ** Function         nfc_hal_prm_nvm_rw_cmd
@@ -681,7 +681,7 @@ void nfc_hal_prm_nci_command_complete_cback (tNFC_HAL_NCI_EVT event, uint16_t da
 
         if (status != NCI_STATUS_OK)
         {
-#if (NFC_HAL_TRACE_VERBOSE == true)
+#if (NFC_HAL_TRACE_VERBOSE == TRUE)
             HAL_TRACE_ERROR2 ("Patch download failed, reason code=0x%X (%s)", status, nfc_hal_prm_spd_status_str (status));
 #else
             HAL_TRACE_ERROR1 ("Patch download failed, reason code=0x%X", status);
@@ -731,7 +731,7 @@ void nfc_hal_prm_nci_command_complete_cback (tNFC_HAL_NCI_EVT event, uint16_t da
                 return;
             }
 
-#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == true))
+#if (NFC_HAL_PRE_I2C_PATCH_INCLUDED == TRUE)
             if (nfc_hal_cb.prm.flags & NFC_HAL_PRM_FLAGS_I2C_FIX_REQUIRED)
             {
                 HAL_TRACE_DEBUG1 ("PreI2C patch downloaded...waiting %i ms for NFCC to reboot.", nfc_hal_cb.prm_i2c.prei2c_delay);
@@ -1147,7 +1147,7 @@ bool    HAL_NfcPrmDownloadContinue (uint8_t *p_patch_data,
 *******************************************************************************/
 void HAL_NfcPrmSetI2cPatch (uint8_t *p_i2c_patchfile_buf, uint16_t i2c_patchfile_len, uint32_t prei2c_delay)
 {
-#if (defined (NFC_HAL_PRE_I2C_PATCH_INCLUDED) && (NFC_HAL_PRE_I2C_PATCH_INCLUDED == true))
+#if (NFC_HAL_PRE_I2C_PATCH_INCLUDED == TRUE)
     HAL_TRACE_API0 ("HAL_NfcPrmSetI2cPatch ()");
 
     nfc_hal_cb.prm_i2c.prei2c_delay    = NFC_HAL_PRM_POST_I2C_FIX_DELAY;

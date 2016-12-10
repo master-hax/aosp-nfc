@@ -85,7 +85,7 @@ const tNFA_DM_ACTION nfa_dm_action[] =
 /*****************************************************************************
 ** Local function prototypes
 *****************************************************************************/
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 static char *nfa_dm_evt_2_str (uint16_t event);
 #endif
 /*******************************************************************************
@@ -124,7 +124,7 @@ bool    nfa_dm_evt_hdlr (BT_HDR *p_msg)
     bool    freebuf = true;
     uint16_t  event = p_msg->event & 0x00ff;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_EVENT2 ("nfa_dm_evt_hdlr event: %s (0x%02x)", nfa_dm_evt_2_str (event), event);
 #else
     NFA_TRACE_EVENT1 ("nfa_dm_evt_hdlr event: 0x%x", event);
@@ -451,7 +451,7 @@ tNFA_STATUS nfa_dm_check_set_config (uint8_t tlv_list_len, uint8_t *p_tlv_list, 
     }
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_dm_nfc_revt_2_str

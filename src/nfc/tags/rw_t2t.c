@@ -27,7 +27,7 @@
 #include "nfc_target.h"
 #include "bt_types.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nci_hmsgs.h"
 #include "rw_api.h"
@@ -43,7 +43,7 @@ static void rw_t2t_process_frame_error (void);
 static void rw_t2t_handle_presence_check_rsp (tNFC_STATUS status);
 static void rw_t2t_resume_op (void);
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 static char *rw_t2t_get_state_name (uint8_t state);
 static char *rw_t2t_get_substate_name (uint8_t substate);
 #endif
@@ -68,7 +68,7 @@ static void rw_t2t_proc_data (uint8_t conn_id, tNFC_DATA_CEVT *p_data)
     tRW_READ_DATA           evt_data = {0, };
     tT2T_CMD_RSP_INFO       *p_cmd_rsp_info = (tT2T_CMD_RSP_INFO *) rw_cb.tcb.t2t.p_cmd_rsp_info;
     tRW_DETECT_NDEF_DATA    ndef_data;
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     uint8_t                 begin_state     = p_t2t->state;
 #endif
 
@@ -76,7 +76,7 @@ static void rw_t2t_proc_data (uint8_t conn_id, tNFC_DATA_CEVT *p_data)
         ||(p_cmd_rsp_info == NULL)  )
     {
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
         RW_TRACE_DEBUG2 ("RW T2T Raw Frame: Len [0x%X] Status [%s]", p_pkt->len, NFC_GetStatusName (p_data->status));
 #else
         RW_TRACE_DEBUG2 ("RW T2T Raw Frame: Len [0x%X] Status [0x%X]", p_pkt->len, p_data->status);
@@ -86,7 +86,7 @@ static void rw_t2t_proc_data (uint8_t conn_id, tNFC_DATA_CEVT *p_data)
         (*rw_cb.p_cback) (RW_T2T_RAW_FRAME_EVT, (tRW_DATA *)&evt_data);
         return;
     }
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
     /* Update rx stats */
     rw_main_update_rx_stats (p_pkt->len);
 #endif
@@ -100,7 +100,7 @@ static void rw_t2t_proc_data (uint8_t conn_id, tNFC_DATA_CEVT *p_data)
            &&(p_t2t->substate != RW_T2T_SUBSTATE_WAIT_SELECT_SECTOR)  )
         ||(p_t2t->state == RW_T2T_STATE_HALT)  )
     {
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
         RW_TRACE_ERROR1 ("T2T Frame error. state=%s ", rw_t2t_get_state_name (p_t2t->state));
 #else
         RW_TRACE_ERROR1 ("T2T Frame error. state=0x%02X command=0x%02X ", p_t2t->state);
@@ -234,7 +234,7 @@ static void rw_t2t_proc_data (uint8_t conn_id, tNFC_DATA_CEVT *p_data)
     if (b_release)
         GKI_freebuf (p_pkt);
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     if (begin_state != p_t2t->state)
     {
         RW_TRACE_DEBUG2 ("RW T2T state changed:<%s> -> <%s>",
@@ -272,7 +272,7 @@ void rw_t2t_conn_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
         break;
 
     case NFC_DEACTIVATE_CEVT:
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
         /* Display stats */
         rw_main_log_stats ();
 #endif
@@ -319,7 +319,7 @@ void rw_t2t_conn_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
             ||(p_t2t->state == RW_T2T_STATE_IDLE)
             ||(p_t2t->state == RW_T2T_STATE_HALT)  )
         {
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
             rw_main_update_trans_error_stats ();
 #endif  /* RW_STATS_INCLUDED */
             if (event == NFC_ERROR_CEVT)
@@ -334,7 +334,7 @@ void rw_t2t_conn_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
             break;
         }
         nfc_stop_quick_timer (&p_t2t->t2_timer);
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
         rw_main_update_trans_error_stats ();
 #endif
         if (p_t2t->state == RW_T2T_STATE_CHECK_PRESENCE)
@@ -404,7 +404,7 @@ tNFC_STATUS rw_t2t_send_cmd (uint8_t opcode, uint8_t *p_dat)
             rw_cb.cur_retry = 0;
             memcpy (p_t2t->p_cur_cmd_buf, p_data, sizeof (BT_HDR) + p_data->offset + p_data->len);
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
             /* Update stats */
             rw_main_update_tx_stats (p_data->len, false);
 #endif
@@ -417,7 +417,7 @@ tNFC_STATUS rw_t2t_send_cmd (uint8_t opcode, uint8_t *p_dat)
             }
             else
             {
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
                 RW_TRACE_ERROR2 ("T2T NFC Send data failed. state=%s substate=%s ", rw_t2t_get_state_name (p_t2t->state), rw_t2t_get_substate_name (p_t2t->substate));
 #else
                 RW_TRACE_ERROR2 ("T2T NFC Send data failed. state=0x%02X substate=0x%02X ", p_t2t->state, p_t2t->substate);
@@ -481,7 +481,7 @@ void rw_t2t_process_timeout (TIMER_LIST_ENT *p_tle)
     }
     else if (p_t2t->state != RW_T2T_STATE_IDLE)
     {
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
         RW_TRACE_ERROR1 ("T2T timeout. state=%s ", rw_t2t_get_state_name (p_t2t->state));
 #else
         RW_TRACE_ERROR1 ("T2T timeout. state=0x%02X ", p_t2t->state);
@@ -502,7 +502,7 @@ void rw_t2t_process_timeout (TIMER_LIST_ENT *p_tle)
 *******************************************************************************/
 static void rw_t2t_process_frame_error (void)
 {
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
     /* Update stats */
     rw_main_update_crc_error_stats ();
 #endif
@@ -545,7 +545,7 @@ static void rw_t2t_process_error (void)
         if ((p_cmd_buf = (BT_HDR *) GKI_getpoolbuf (NFC_RW_POOL_ID)) != NULL)
         {
             memcpy (p_cmd_buf, p_t2t->p_cur_cmd_buf, sizeof (BT_HDR) + p_t2t->p_cur_cmd_buf->offset + p_t2t->p_cur_cmd_buf->len);
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
             /* Update stats */
             rw_main_update_tx_stats (p_cmd_buf->len, true);
 #endif
@@ -571,7 +571,7 @@ static void rw_t2t_process_error (void)
         }
     }
     rw_event = rw_t2t_info_to_event (p_cmd_rsp_info);
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
     /* update failure count */
     rw_main_update_fail_stats ();
 #endif
@@ -663,7 +663,7 @@ static void rw_t2t_resume_op (void)
         memcpy (p_cmd_buf, p_t2t->p_sec_cmd_buf, sizeof (BT_HDR) + p_t2t->p_sec_cmd_buf->offset + p_t2t->p_sec_cmd_buf->len);
         memcpy (p_t2t->p_cur_cmd_buf, p_t2t->p_sec_cmd_buf, sizeof (BT_HDR) + p_t2t->p_sec_cmd_buf->offset + p_t2t->p_sec_cmd_buf->len);
 
-#if (defined (RW_STATS_INCLUDED) && (RW_STATS_INCLUDED == true))
+#if (RW_STATS_INCLUDED == TRUE)
         /* Update stats */
          rw_main_update_tx_stats (p_cmd_buf->len, true);
 #endif
@@ -1090,7 +1090,7 @@ tNFC_STATUS RW_T2tSectorSelect (uint8_t sector)
     return status;
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         rw_t2t_get_state_name
@@ -1191,6 +1191,6 @@ static char *rw_t2t_get_substate_name (uint8_t substate)
     }
 }
 
-#endif /* (BT_TRACE_VERBOSE == true) */
+#endif /* (BT_TRACE_VERBOSE == TRUE) */
 
-#endif /* NFC_INCLUDED == true*/
+#endif /* NFC_INCLUDED == TRUE*/

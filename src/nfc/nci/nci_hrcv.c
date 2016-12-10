@@ -28,7 +28,7 @@
 #include "bt_types.h"
 #include "gki.h"
 
-#if NFC_INCLUDED == true
+#if (NFC_INCLUDED == TRUE)
 #include "nci_defs.h"
 #include "nci_hmsgs.h"
 #include "nfc_api.h"
@@ -192,8 +192,8 @@ void nci_proc_rf_management_rsp (BT_HDR *p_msg)
         nfc_ncif_proc_deactivate (*pp, *p_old, false);
         break;
 
-#if (NFC_NFCEE_INCLUDED == true)
-#if (NFC_RW_ONLY == false)
+#if (NFC_NFCEE_INCLUDED == TRUE)
+#if (NFC_RW_ONLY == FALSE)
 
     case NCI_MSG_RF_SET_ROUTING:
         nfc_ncif_event_status (NFC_SET_ROUTING_REVT, *pp);
@@ -266,8 +266,8 @@ void nci_proc_rf_management_ntf (BT_HDR *p_msg)
         nfc_ncif_proc_t3t_polling_ntf (pp, len);
         break;
 
-#if (NFC_NFCEE_INCLUDED == true)
-#if (NFC_RW_ONLY == false)
+#if (NFC_NFCEE_INCLUDED == TRUE)
+#if (NFC_RW_ONLY == FALSE)
 
     case NCI_MSG_RF_GET_ROUTING:
         nfc_ncif_proc_get_routing (pp, len);
@@ -289,8 +289,8 @@ void nci_proc_rf_management_ntf (BT_HDR *p_msg)
     }
 }
 
-#if (NFC_NFCEE_INCLUDED == true)
-#if (NFC_RW_ONLY == false)
+#if (NFC_NFCEE_INCLUDED == TRUE)
+#if (NFC_RW_ONLY == FALSE)
 
 /*******************************************************************************
 **
@@ -492,4 +492,4 @@ void nci_proc_prop_ntf (BT_HDR *p_msg)
     }
 }
 
-#endif /* NFC_INCLUDED == true*/
+#endif /* NFC_INCLUDED == TRUE*/

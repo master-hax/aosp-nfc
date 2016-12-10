@@ -27,7 +27,7 @@
 #include "nfc_target.h"
 #include "bt_types.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nfc_int.h"
 #include "nci_hmsgs.h"
@@ -122,4 +122,4 @@ tNFC_STATUS NFC_GetRouting (void)
 }
 
 
-#endif /* NFC_INCLUDED == true */
+#endif /* NFC_INCLUDED == TRUE */

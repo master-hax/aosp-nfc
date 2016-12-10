@@ -26,7 +26,7 @@
 #include <string.h>
 #include "nfc_target.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nci_hmsgs.h"
 #include "rw_api.h"
@@ -34,7 +34,7 @@
 #include "nfc_int.h"
 #include "gki.h"
 
-#if (defined (RW_NDEF_INCLUDED) && (RW_NDEF_INCLUDED == true))
+#if (RW_NDEF_INCLUDED == TRUE)
 
 /* Local Functions */
 static tNFC_STATUS rw_t1t_handle_rall_rsp (bool    *p_notify,uint8_t *p_data);
@@ -2751,7 +2751,7 @@ tNFC_STATUS RW_T1tSetTagReadOnly (bool    b_hard_lock)
     return status;
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         rw_t1t_get_sub_state_name
@@ -2794,8 +2794,8 @@ static char *rw_t1t_get_sub_state_name (uint8_t sub_state)
         return ("???? UNKNOWN SUBSTATE");
     }
 }
-#endif /* (BT_TRACE_VERBOSE == true) */
+#endif /* (BT_TRACE_VERBOSE == TRUE) */
 
-#endif /* (defined ((RW_NDEF_INCLUDED) && (RW_NDEF_INCLUDED == true)) */
+#endif /* (defined ((RW_NDEF_INCLUDED) && (RW_NDEF_INCLUDED == TRUE)) */
 
-#endif /* (NFC_INCLUDED == true) */
+#endif /* (NFC_INCLUDED == TRUE) */
