@@ -865,7 +865,7 @@ void llcp_util_send_rr_rnr (tLLCP_DLCB *p_dlcb)
 
         uint8_t_TO_BE_STREAM (p, rcv_seq);
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
         LLCP_TRACE_DEBUG5 ("LLCP TX - N(S,R):(NA,%d) V(S,SA,R,RA):(%d,%d,%d,%d)",
                             p_dlcb->next_rx_seq,
                             p_dlcb->next_tx_seq, p_dlcb->rcvd_ack_seq,

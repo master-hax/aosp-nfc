@@ -143,9 +143,9 @@
 **
 ******************************************************************************/
 
-/* true if GKI uses dynamic buffers. */
+/* TRUE if GKI uses dynamic buffers. */
 #ifndef GKI_USE_DYNAMIC_BUFFERS
-#define GKI_USE_DYNAMIC_BUFFERS     false
+#define GKI_USE_DYNAMIC_BUFFERS     FALSE
 #endif
 
 /* The size of the buffers in pool 0. */
@@ -241,10 +241,10 @@ Devices with small amount of RAM should limit the number of active obex objects.
 #endif
 
 /* The number of fixed GKI buffer pools.
-If L2CAP_FCR_INCLUDED is false, Pool ID 5 is unnecessary
-If BTM_SCO_HCI_INCLUDED is false, Pool ID 6 is unnecessary, otherwise set to 7
-If BTA_HL_INCLUDED is false then Pool ID 7 is uncessary and set the following to 7, otherwise set to 8
-If GATT_SERVER_ENABLED is false then Pool ID 8 is uncessary and set the following to 8, otherwise set to 9
+If L2CAP_FCR_INCLUDED is FALSE, Pool ID 5 is unnecessary
+If BTM_SCO_HCI_INCLUDED is FALSE, Pool ID 6 is unnecessary, otherwise set to 7
+If BTA_HL_INCLUDED is FALSE then Pool ID 7 is uncessary and set the following to 7, otherwise set to 8
+If GATT_SERVER_ENABLED is FALSE then Pool ID 8 is uncessary and set the following to 8, otherwise set to 9
 */
 #ifndef GKI_NUM_FIXED_BUF_POOLS
 #define GKI_NUM_FIXED_BUF_POOLS     9
@@ -256,7 +256,7 @@ If GATT_SERVER_ENABLED is false then Pool ID 8 is uncessary and set the followin
 #endif
 
 /* The number of fixed and dynamic buffer pools.
-If L2CAP_FCR_INCLUDED is false, Pool ID 4 is unnecessary */
+If L2CAP_FCR_INCLUDED is FALSE, Pool ID 4 is unnecessary */
 #ifndef GKI_NUM_TOTAL_BUF_POOLS
 #define GKI_NUM_TOTAL_BUF_POOLS     10
 #endif
@@ -287,7 +287,7 @@ of order */
 
 /* The buffer corruption check flag. */
 #ifndef GKI_ENABLE_BUF_CORRUPTION_CHECK
-#define GKI_ENABLE_BUF_CORRUPTION_CHECK true
+#define GKI_ENABLE_BUF_CORRUPTION_CHECK TRUE
 #endif
 
 /* The GKI severe error macro. */
@@ -295,9 +295,9 @@ of order */
 #define GKI_SEVERE(code)
 #endif
 
-/* true if GKI includes debug functionality. */
+/* TRUE if GKI includes debug functionality. */
 #ifndef GKI_DEBUG
-#define GKI_DEBUG                   false
+#define GKI_DEBUG                   FALSE
 #endif
 
 /* Maximum number of exceptions logged. */
@@ -311,7 +311,7 @@ of order */
 #endif
 
 #ifndef GKI_SEND_MSG_FROM_ISR
-#define GKI_SEND_MSG_FROM_ISR    false
+#define GKI_SEND_MSG_FROM_ISR    FALSE
 #endif
 
 
@@ -381,7 +381,7 @@ over HCI data and intentionally kept out of order */
 #define GKI_BUF8_MAX                30
 #endif
 
-#if defined(GKI_DEBUG) && (GKI_DEBUG == true)
+#if (GKI_DEBUG == TRUE)
 #ifdef LOG_TAG
 #undef LOG_TAG
 #endif

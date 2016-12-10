@@ -32,7 +32,7 @@
 #include "rw_api.h"
 #include "ce_api.h"
 
-#if (NFA_DTA_INCLUDED == true)
+#if (NFA_DTA_INCLUDED == TRUE)
 
 /*****************************************************************************
 **  DTA definitions
@@ -417,6 +417,6 @@ extern uint8_t *p_nfa_dta_brcm_start_up_cfg;
 extern uint8_t nfa_dta_brcm_start_up_cfg_len;
 extern uint8_t *p_nfa_dta_start_up_vsc_cfg;
 
-#endif /* (NFA_DTA_INCLUDED == true) */
+#endif /* (NFA_DTA_INCLUDED == TRUE) */
 #endif /* NFA_DTA_INT_H */
 

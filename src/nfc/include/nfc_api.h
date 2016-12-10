@@ -1274,7 +1274,7 @@ NFC_API extern tNFC_STATUS NFC_TestLoopback(BT_HDR *p_data);
 *******************************************************************************/
 NFC_API extern uint8_t NFC_SetTraceLevel (uint8_t new_level);
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         NFC_GetStatusName

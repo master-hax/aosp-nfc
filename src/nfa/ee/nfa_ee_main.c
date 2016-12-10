@@ -550,7 +550,7 @@ void nfa_ee_reg_cback_enable_done (tNFA_EE_ENABLE_DONE_CBACK *p_cback)
     nfa_ee_cb.p_enable_cback = p_cback;
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_ee_sm_st_2_str
@@ -663,7 +663,7 @@ bool    nfa_ee_evt_hdlr (BT_HDR *p_msg)
     uint16_t  event = p_msg->event & 0x00ff;
     bool    act = false;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_DEBUG4 ("nfa_ee_evt_hdlr (): Event %s(0x%02x), State: %s(%d)",
         nfa_ee_sm_evt_2_str (p_evt_data->hdr.event), p_evt_data->hdr.event,
         nfa_ee_sm_st_2_str (nfa_ee_cb.em_state), nfa_ee_cb.em_state);

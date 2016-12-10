@@ -67,12 +67,12 @@ static BT_HDR *llcp_link_get_next_pdu (bool    length_only, uint16_t *p_next_pdu
 static BT_HDR *llcp_link_build_next_pdu (BT_HDR *p_agf);
 static void    llcp_link_send_to_lower (BT_HDR *p_msg);
 
-#if (LLCP_TEST_INCLUDED == true) /* this is for LLCP testing */
+#if (LLCP_TEST_INCLUDED == TRUE)
 extern tLLCP_TEST_PARAMS llcp_test_params;
 #endif
 
 /* debug functions type */
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 static char *llcp_pdu_type (uint8_t ptype);
 #endif
 
@@ -1195,7 +1195,7 @@ static void llcp_link_proc_agf_pdu (BT_HDR *p_agf)
         ptype = (uint8_t) (LLCP_GET_PTYPE (pdu_hdr));
         ssap  = LLCP_GET_SSAP (pdu_hdr);
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
         LLCP_TRACE_DEBUG4 ("llcp_link_proc_agf_pdu (): Rx DSAP:0x%x, PTYPE:%s (0x%x), SSAP:0x%x in AGF",
                            dsap, llcp_pdu_type (ptype), ptype, ssap);
 #endif
@@ -1381,7 +1381,7 @@ static void llcp_link_proc_rx_data (BT_HDR *p_msg)
                 }
                 else
                 {
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
                     LLCP_TRACE_DEBUG4 ("llcp_link_proc_rx_data (): DSAP:0x%x, PTYPE:%s (0x%x), SSAP:0x%x",
                                        dsap, llcp_pdu_type (ptype), ptype, ssap);
 #endif
@@ -1686,7 +1686,7 @@ static BT_HDR *llcp_link_build_next_pdu (BT_HDR *p_pdu)
 *******************************************************************************/
 static void llcp_link_send_to_lower (BT_HDR *p_pdu)
 {
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
     DispLLCP (p_pdu, false);
 #endif
 
@@ -1708,7 +1708,7 @@ void llcp_link_connection_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN
 {
     if (event == NFC_DATA_CEVT)
     {
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
         DispLLCP ((BT_HDR *)p_data->data.p_data, true);
 #endif
         if (llcp_cb.lcb.link_state == LLCP_LINK_STATE_DEACTIVATED)
@@ -1774,7 +1774,7 @@ void llcp_link_connection_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN
     */
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         llcp_pdu_type

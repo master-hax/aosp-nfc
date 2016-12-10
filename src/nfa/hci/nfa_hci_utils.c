@@ -322,7 +322,7 @@ tNFA_STATUS nfa_hciu_send_msg (uint8_t pipe_id, uint8_t type, uint8_t instructio
     tNFA_STATUS     status = NFA_STATUS_OK;
     uint16_t        max_seg_hcp_pkt_size = nfa_hci_cb.buff_size - NCI_DATA_HDR_SIZE;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     char    buff[100];
 
     NFA_TRACE_DEBUG3 ("nfa_hciu_send_msg pipe_id:%d   %s  len:%d",
@@ -377,7 +377,7 @@ tNFA_STATUS nfa_hciu_send_msg (uint8_t pipe_id, uint8_t type, uint8_t instructio
                     p_msg      += data_len;
             }
 
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
             DispHcp (((uint8_t *) (p_buf + 1) + p_buf->offset), p_buf->len, false, (bool   ) ((p_buf->len - data_len) == 2));
 #endif
 
@@ -1159,7 +1159,7 @@ void nfa_hciu_send_to_apps_handling_connectivity_evts (tNFA_HCI_EVT event, tNFA_
 
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_hciu_get_response_name

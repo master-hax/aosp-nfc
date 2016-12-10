@@ -51,7 +51,7 @@ static void nfa_p2p_sys_disable (void);
 static void nfa_p2p_update_active_listen (void);
 
 /* debug functions type */
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 static char *nfa_p2p_llcp_state_code (tNFA_P2P_LLCP_STATE state_code);
 #endif
 
@@ -713,7 +713,7 @@ static bool    nfa_p2p_evt_hdlr (BT_HDR *p_hdr)
 
     tNFA_P2P_MSG *p_msg = (tNFA_P2P_MSG *)p_hdr;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     P2P_TRACE_DEBUG2 ("nfa_p2p_evt_hdlr (): LLCP State [%s], Event [%s]",
                        nfa_p2p_llcp_state_code (nfa_p2p_cb.llcp_state),
                        nfa_p2p_evt_code (p_msg->hdr.event));
@@ -738,7 +738,7 @@ static bool    nfa_p2p_evt_hdlr (BT_HDR *p_hdr)
 }
 
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_p2p_llcp_state_code

@@ -28,7 +28,7 @@
 #include "bt_types.h"
 #include "trace_api.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 
 #include "nfc_api.h"
 #include "nfc_int.h"
@@ -79,7 +79,7 @@ enum
     RW_I93_SUBSTATE_WAIT_LOCK_CC            /* lock block of CC                     */
 };
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 static char *rw_i93_get_state_name (uint8_t state);
 static char *rw_i93_get_sub_state_name (uint8_t sub_state);
 static char *rw_i93_get_tag_name (uint8_t product_version);
@@ -174,7 +174,7 @@ void rw_i93_get_product_version (uint8_t *p_uid)
         p_i93->product_version = RW_I93_UNKNOWN_PRODUCT;
     }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     RW_TRACE_DEBUG1 ("product_version = <%s>", rw_i93_get_tag_name(p_i93->product_version));
 #else
     RW_TRACE_DEBUG1 ("product_version = %d", p_i93->product_version);
@@ -495,7 +495,7 @@ void rw_i93_send_to_upper (BT_HDR *p_resp)
 *******************************************************************************/
 bool    rw_i93_send_to_lower (BT_HDR *p_msg)
 {
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
     DispRWI93Tag (p_msg, false, 0x00);
 #endif
 
@@ -1499,7 +1499,7 @@ void rw_i93_sm_detect_ndef (BT_HDR *p_resp)
     tRW_DATA    rw_data;
     tNFC_STATUS status = NFC_STATUS_FAILED;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     RW_TRACE_DEBUG2 ("rw_i93_sm_detect_ndef () sub_state:%s (0x%x)",
                       rw_i93_get_sub_state_name (p_i93->sub_state), p_i93->sub_state);
 #else
@@ -2060,7 +2060,7 @@ void rw_i93_sm_update_ndef (BT_HDR *p_resp)
     tRW_I93_CB *p_i93 = &rw_cb.tcb.i93;
     tRW_DATA    rw_data;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     RW_TRACE_DEBUG2 ("rw_i93_sm_update_ndef () sub_state:%s (0x%x)",
                       rw_i93_get_sub_state_name (p_i93->sub_state), p_i93->sub_state);
 #else
@@ -2358,7 +2358,7 @@ void rw_i93_sm_format (BT_HDR *p_resp)
     tRW_DATA    rw_data;
     tNFC_STATUS status = NFC_STATUS_FAILED;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     RW_TRACE_DEBUG2 ("rw_i93_sm_format () sub_state:%s (0x%x)",
                       rw_i93_get_sub_state_name (p_i93->sub_state), p_i93->sub_state);
 #else
@@ -2766,7 +2766,7 @@ void rw_i93_sm_set_read_only (BT_HDR *p_resp)
     tRW_I93_CB *p_i93 = &rw_cb.tcb.i93;
     tRW_DATA    rw_data;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     RW_TRACE_DEBUG2 ("rw_i93_sm_set_read_only () sub_state:%s (0x%x)",
                       rw_i93_get_sub_state_name (p_i93->sub_state), p_i93->sub_state);
 #else
@@ -3048,7 +3048,7 @@ static void rw_i93_data_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *
     BT_HDR     *p_resp;
     tRW_DATA    rw_data;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     uint8_t  begin_state   = p_i93->state;
 #endif
 
@@ -3118,11 +3118,11 @@ static void rw_i93_data_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *
         p_i93->retry_count = 0;
     }
 
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
     DispRWI93Tag (p_resp, true, p_i93->sent_cmd);
 #endif
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     RW_TRACE_DEBUG2 ("RW I93 state: <%s (%d)>",
                         rw_i93_get_state_name (p_i93->state), p_i93->state);
 #else
@@ -3194,7 +3194,7 @@ static void rw_i93_data_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *
         break;
     }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     if (begin_state != p_i93->state)
     {
         RW_TRACE_DEBUG2 ("RW I93 state changed:<%s> -> <%s>",
@@ -4153,7 +4153,7 @@ tNFC_STATUS RW_I93PresenceCheck (void)
     return (status);
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         rw_i93_get_state_name
@@ -4295,4 +4295,4 @@ static char *rw_i93_get_tag_name (uint8_t product_version)
 
 #endif
 
-#endif /* (NFC_INCLUDED == true) */
+#endif /* (NFC_INCLUDED == TRUE) */

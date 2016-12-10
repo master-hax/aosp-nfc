@@ -268,7 +268,7 @@ typedef struct
     bool            overall_rx_congested;           /* true if overall rx link is congested         */
 } tLLCP_CB;
 
-#if (LLCP_TEST_INCLUDED == true) /* this is for LLCP testing */
+#if (LLCP_TEST_INCLUDED == TRUE)
 
 typedef struct {
     uint8_t  version;

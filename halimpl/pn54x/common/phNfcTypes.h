@@ -23,11 +23,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#ifndef true
-#define true            (0x01)            /* Logical True Value */
+#ifndef TRUE
+#define TRUE            (0x01)            /* Logical TRUE Value */
 #endif
-#ifndef false
-#define false           (0x00)            /* Logical False Value */
+#ifndef FALSE
+#define FALSE           (0x00)            /* Logical FALSE Value */
 #endif
 typedef uint8_t             utf8_t;       /* UTF8 Character String */
 typedef uint8_t             bool_t;       /* boolean data type */

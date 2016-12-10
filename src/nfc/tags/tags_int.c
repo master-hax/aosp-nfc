@@ -26,7 +26,7 @@
 #include "nfc_target.h"
 #include "bt_types.h"
 
-#if (NFC_INCLUDED == true)
+#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "rw_api.h"
 #include "rw_int.h"
@@ -88,7 +88,7 @@ const tT2T_INIT_TAG t2t_init_content[] =
 const uint8_t t4t_v10_ndef_tag_aid[T4T_V10_NDEF_TAG_AID_LEN] = {0xD2, 0x76, 0x00, 0x00, 0x85, 0x01, 0x00};
 const uint8_t t4t_v20_ndef_tag_aid[T4T_V20_NDEF_TAG_AID_LEN] = {0xD2, 0x76, 0x00, 0x00, 0x85, 0x01, 0x01};
 
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
 const char * const t1t_cmd_str[] = {
     "T1T_RID",
     "T1T_RALL",
@@ -250,7 +250,7 @@ uint8_t t2t_info_to_evt (const tT2T_CMD_RSP_INFO * p_info)
     return ((uint8_t) (p_info - t2t_cmd_rsp_infos) + RW_T2T_FIRST_EVT);
 }
 
-#if (BT_TRACE_PROTOCOL == true)
+#if (BT_TRACE_PROTOCOL == TRUE)
 /*******************************************************************************
 **
 ** Function         t1t_info_to_str
@@ -351,4 +351,4 @@ unsigned int tags_log2 (register unsigned int x)
         return (tags_ones32 (x) - 1);
 }
 
-#endif /* NFC_INCLUDED == true*/
+#endif /* NFC_INCLUDED == TRUE*/

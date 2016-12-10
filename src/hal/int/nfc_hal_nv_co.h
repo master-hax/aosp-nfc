@@ -25,7 +25,7 @@
 #ifndef NFC_HAL_NV_CO_H
 #define NFC_HAL_NV_CO_H
 
-#if (NFC_HAL_HCI_INCLUDED == true)
+#if (NFC_HAL_HCI_INCLUDED == TRUE)
 
 #include <time.h>
 

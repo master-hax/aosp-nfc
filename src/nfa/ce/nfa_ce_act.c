@@ -29,7 +29,7 @@
 #include "nfa_mem_co.h"
 #include "ndef_utils.h"
 #include "ce_api.h"
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
 #include "nfa_ee_int.h"
 #endif
 
@@ -431,7 +431,7 @@ tNFA_STATUS nfa_ce_start_listening (void)
                 else
                     p_cb->listen_info[listen_info_idx].rf_disc_handle = disc_handle;
             }
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
             else if (p_cb->listen_info[listen_info_idx].flags & NFA_CE_LISTEN_INFO_UICC)
             {
                 listen_mask = 0;
@@ -547,7 +547,7 @@ void nfa_ce_remove_listen_info_entry (uint8_t listen_info_idx, bool    notify_ap
             conn_evt.status = NFA_STATUS_OK;
             (*p_cb->listen_info[listen_info_idx].p_conn_cback) (NFA_CE_LOCAL_TAG_CONFIGURED_EVT, &conn_evt);
         }
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
         else if (p_cb->listen_info[listen_info_idx].flags & NFA_CE_LISTEN_INFO_UICC)
         {
             conn_evt.status = NFA_STATUS_OK;
@@ -827,7 +827,7 @@ bool    nfa_ce_activate_ntf (tNFA_CE_MSG *p_ce_msg)
                     t4t_activate_pending = true;
                 }
 
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
                 /* Check if entry is for ISO_DEP UICC */
                 if (p_cb->listen_info[i].flags & NFA_CE_LISTEN_INFO_UICC)
                 {
@@ -1262,7 +1262,7 @@ bool    nfa_ce_api_reg_listen (tNFA_CE_MSG *p_ce_msg)
             memcpy (p_cb->listen_info[listen_info_idx].t3t_nfcid2, p_ce_msg->reg_listen.nfcid2, NCI_RF_F_UID_LEN);
             break;
 
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
         case NFA_CE_REG_TYPE_UICC:
             p_cb->listen_info[listen_info_idx].flags |= NFA_CE_LISTEN_INFO_UICC;
             p_cb->listen_info[listen_info_idx].p_conn_cback = &nfa_dm_conn_cback_event_notify;
@@ -1312,7 +1312,7 @@ bool    nfa_ce_api_dereg_listen (tNFA_CE_MSG *p_ce_msg)
     uint8_t listen_info_idx;
     tNFA_CONN_EVT_DATA conn_evt;
 
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
     /* Check if deregistering UICC , or virtual secure element listen */
     if (p_ce_msg->dereg_listen.listen_info == NFA_CE_LISTEN_INFO_UICC)
     {

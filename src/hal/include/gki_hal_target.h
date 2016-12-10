@@ -135,7 +135,7 @@
 
 /* Option to guarantee no preemption during timer expiration (most system don't need this) */
 #ifndef GKI_TIMER_LIST_NOPREEMPT
-#define GKI_TIMER_LIST_NOPREEMPT    false
+#define GKI_TIMER_LIST_NOPREEMPT    FALSE
 #endif
 
 /******************************************************************************
@@ -144,9 +144,9 @@
 **
 ******************************************************************************/
 
-/* true if GKI uses dynamic buffers. */
+/* TRUE if GKI uses dynamic buffers. */
 #ifndef GKI_USE_DYNAMIC_BUFFERS
-#define GKI_USE_DYNAMIC_BUFFERS     false
+#define GKI_USE_DYNAMIC_BUFFERS     FALSE
 #endif
 
 /* The size of the buffers in pool 0. */
@@ -215,7 +215,7 @@
 
 /* The buffer corruption check flag. */
 #ifndef GKI_ENABLE_BUF_CORRUPTION_CHECK
-#define GKI_ENABLE_BUF_CORRUPTION_CHECK true
+#define GKI_ENABLE_BUF_CORRUPTION_CHECK TRUE
 #endif
 
 /* The GKI severe error macro. */
@@ -223,9 +223,9 @@
 #define GKI_SEVERE(code)
 #endif
 
-/* true if GKI includes debug functionality. */
+/* TRUE if GKI includes debug functionality. */
 #ifndef GKI_DEBUG
-#define GKI_DEBUG                   false
+#define GKI_DEBUG                   FALSE
 #endif
 
 /* Maximum number of exceptions logged. */
@@ -239,11 +239,11 @@
 #endif
 
 #ifndef GKI_SEND_MSG_FROM_ISR
-#define GKI_SEND_MSG_FROM_ISR    false
+#define GKI_SEND_MSG_FROM_ISR    FALSE
 #endif
 
 
-#if defined(GKI_DEBUG) && (GKI_DEBUG == true)
+#if (GKI_DEBUG == TRUE)
 #ifdef LOG_TAG
 #undef LOG_TAG
 #endif

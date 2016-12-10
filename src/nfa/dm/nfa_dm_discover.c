@@ -30,7 +30,7 @@
 #include "nfa_p2p_int.h"
 #include "nfa_sys_int.h"
 #include "nci_hmsgs.h"
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
 #include "nfa_ee_api.h"
 #include "nfa_ee_int.h"
 #endif
@@ -55,7 +55,7 @@ static void nfa_dm_disc_data_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_C
 static void nfa_dm_disc_kovio_timeout_cback (TIMER_LIST_ENT *p_tle);
 static void nfa_dm_disc_report_kovio_presence_check (tNFC_STATUS status);
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 static char *nfa_dm_disc_state_2_str (uint8_t state);
 static char *nfa_dm_disc_event_2_str (uint8_t event);
 #endif
@@ -1798,7 +1798,7 @@ void nfa_dm_disc_new_state (tNFA_DM_RF_DISC_STATE new_state)
     tNFA_CONN_EVT_DATA      evt_data;
     tNFA_DM_RF_DISC_STATE   old_state = nfa_dm_cb.disc_cb.disc_state;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_DEBUG5 ("nfa_dm_disc_new_state (): old_state: %s (%d), new_state: %s (%d) disc_flags: 0x%x",
                        nfa_dm_disc_state_2_str (nfa_dm_cb.disc_cb.disc_state), nfa_dm_cb.disc_cb.disc_state,
                        nfa_dm_disc_state_2_str (new_state), new_state, nfa_dm_cb.disc_cb.disc_flags);
@@ -2623,7 +2623,7 @@ static void nfa_dm_disc_sm_lp_active (tNFA_DM_RF_DISC_SM_EVENT event,
 *******************************************************************************/
 void nfa_dm_disc_sm_execute (tNFA_DM_RF_DISC_SM_EVENT event, tNFA_DM_RF_DISC_DATA *p_data)
 {
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_DEBUG5 ("nfa_dm_disc_sm_execute (): state: %s (%d), event: %s(%d) disc_flags: 0x%x",
                        nfa_dm_disc_state_2_str (nfa_dm_cb.disc_cb.disc_state), nfa_dm_cb.disc_cb.disc_state,
                        nfa_dm_disc_event_2_str (event), event, nfa_dm_cb.disc_cb.disc_flags);
@@ -2679,7 +2679,7 @@ void nfa_dm_disc_sm_execute (tNFA_DM_RF_DISC_SM_EVENT event, tNFA_DM_RF_DISC_DAT
         nfa_dm_disc_sm_lp_active (event, p_data);
         break;
     }
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_DEBUG3 ("nfa_dm_disc_sm_execute (): new state: %s (%d), disc_flags: 0x%x",
                        nfa_dm_disc_state_2_str (nfa_dm_cb.disc_cb.disc_state), nfa_dm_cb.disc_cb.disc_state,
                        nfa_dm_cb.disc_cb.disc_flags);
@@ -2929,7 +2929,7 @@ tNFA_STATUS nfa_dm_rf_deactivate (tNFA_DEACTIVATE_TYPE deactivate_type)
     }
 }
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_dm_disc_state_2_str

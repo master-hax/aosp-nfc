@@ -199,7 +199,7 @@ tNFA_STATUS NFA_CeConfigureLocalTag (tNFA_PROTOCOL_MASK protocol_mask,
 tNFA_STATUS NFA_CeConfigureUiccListenTech (tNFA_HANDLE ee_handle,
                                            tNFA_TECHNOLOGY_MASK tech_mask)
 {
-#if (NFC_NFCEE_INCLUDED == true)
+#if (NFC_NFCEE_INCLUDED == TRUE)
     tNFA_CE_MSG *p_msg;
 
     NFA_TRACE_API1 ("NFA_CeConfigureUiccListenTech () ee_handle = 0x%x", ee_handle);

@@ -44,7 +44,7 @@ enum {
     NFA_ID_RW,          /* Reader/writer sub-system            */
     NFA_ID_CE,          /* Card-emulation sub-system           */
     NFA_ID_HCI,         /* Host controller interface sub-system*/
-#if (NFA_DTA_INCLUDED == true)
+#if (NFA_DTA_INCLUDED == TRUE)
     NFA_ID_DTA,         /* Device Test Application sub-system  */
 #endif
     NFA_ID_MAX

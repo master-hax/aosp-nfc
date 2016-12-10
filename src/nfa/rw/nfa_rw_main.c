@@ -57,7 +57,7 @@ const tNFA_RW_ACTION nfa_rw_action_tbl[] =
 /*****************************************************************************
 ** Local function prototypes
 *****************************************************************************/
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 static char *nfa_rw_evt_2_str (uint16_t event);
 #endif
 
@@ -187,7 +187,7 @@ bool    nfa_rw_handle_event(BT_HDR *p_msg)
 {
     uint16_t act_idx;
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
     NFA_TRACE_EVENT3 ("nfa_rw_handle_event event: %s (0x%02x), flags: %08x", nfa_rw_evt_2_str (p_msg->event), p_msg->event, nfa_rw_cb.flags);
 #else
     NFA_TRACE_EVENT2 ("nfa_rw_handle_event event: 0x%x, flags: %08x",p_msg->event, nfa_rw_cb.flags);
@@ -206,7 +206,7 @@ bool    nfa_rw_handle_event(BT_HDR *p_msg)
 }
 
 
-#if (BT_TRACE_VERBOSE == true)
+#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_rw_evt_2_str

@@ -469,7 +469,7 @@ void GKI_timer_update (int32_t ticks_since_last_update)
             if (gki_cb.com.OSTaskTmr0[task_id] <= 0)
             {
                 /* Set Timer 0 Expired event mask and reload timer */
-#if (defined(GKI_TIMER_UPDATES_FROM_ISR) &&  GKI_TIMER_UPDATES_FROM_ISR == true)
+#if (GKI_TIMER_UPDATES_FROM_ISR == TRUE)
                 GKI_isend_event (task_id, TIMER_0_EVT_MASK);
 #else
                 GKI_send_event (task_id, TIMER_0_EVT_MASK);
@@ -492,7 +492,7 @@ void GKI_timer_update (int32_t ticks_since_last_update)
             if (gki_cb.com.OSTaskTmr1[task_id] <= 0)
             {
                 /* Set Timer 1 Expired event mask and reload timer */
-#if (defined(GKI_TIMER_UPDATES_FROM_ISR) &&  GKI_TIMER_UPDATES_FROM_ISR == true)
+#if (GKI_TIMER_UPDATES_FROM_ISR == TRUE)
                 GKI_isend_event (task_id, TIMER_1_EVT_MASK);
 #else
                 GKI_send_event (task_id, TIMER_1_EVT_MASK);
@@ -515,7 +515,7 @@ void GKI_timer_update (int32_t ticks_since_last_update)
             if (gki_cb.com.OSTaskTmr2[task_id] <= 0)
             {
                 /* Set Timer 2 Expired event mask and reload timer */
-#if (defined(GKI_TIMER_UPDATES_FROM_ISR) &&  GKI_TIMER_UPDATES_FROM_ISR == true)
+#if (GKI_TIMER_UPDATES_FROM_ISR == TRUE)
                 GKI_isend_event (task_id, TIMER_2_EVT_MASK);
 #else
                 GKI_send_event (task_id, TIMER_2_EVT_MASK);
@@ -538,7 +538,7 @@ void GKI_timer_update (int32_t ticks_since_last_update)
             if (gki_cb.com.OSTaskTmr3[task_id] <= 0)
             {
                 /* Set Timer 3 Expired event mask and reload timer */
-#if (defined(GKI_TIMER_UPDATES_FROM_ISR) &&  GKI_TIMER_UPDATES_FROM_ISR == true)
+#if (GKI_TIMER_UPDATES_FROM_ISR == TRUE)
                 GKI_isend_event (task_id, TIMER_3_EVT_MASK);
 #else
                 GKI_send_event (task_id, TIMER_3_EVT_MASK);
