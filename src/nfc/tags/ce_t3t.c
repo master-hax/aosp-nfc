@@ -28,7 +28,7 @@
 #include "bt_types.h"
 #include "trace_api.h"
 
-#if (NFC_INCLUDED == TRUE)
+#if (NFC_INCLUDED == true)
 #include "nfc_api.h"
 #include "nfc_int.h"
 #include "ce_api.h"
@@ -58,7 +58,7 @@ enum {
 * Static constant definitions
 *******************************************************************************/
 /* Default PMm param */
-static const UINT8 CE_DEFAULT_LF_PMM[NCI_T3T_PMM_LEN] =
+static const uint8_t CE_DEFAULT_LF_PMM[NCI_T3T_PMM_LEN] =
 {
     0x01,    /* This PAD0 is used to identify HCE-F on Android */
     0xFE,    /* This PAD0 is used to identify HCE-F on Android */
@@ -97,16 +97,16 @@ void ce_t3t_init (void)
 *******************************************************************************/
 void ce_t3t_send_to_lower (BT_HDR *p_msg)
 {
-    UINT8 *p;
+    uint8_t *p;
 
     /* Set NFC-F SoD field (payload len + 1) */
     p_msg->offset -= 1;         /* Point to SoD field */
-    p = (UINT8 *) (p_msg+1) + p_msg->offset;
-    UINT8_TO_STREAM (p, (p_msg->len+1));
+    p = (uint8_t *) (p_msg+1) + p_msg->offset;
+    uint8_t_TO_STREAM (p, (p_msg->len+1));
     p_msg->len += 1;            /* Increment len to include SoD */
 
-#if (BT_TRACE_PROTOCOL == TRUE)
-    DispT3TagMessage (p_msg, FALSE);
+#if (BT_TRACE_PROTOCOL == true)
+    DispT3TagMessage (p_msg, false);
 #endif
 
     if (NFC_SendData (NFC_RF_CONN_ID, p_msg) != NFC_STATUS_OK)
@@ -124,9 +124,9 @@ void ce_t3t_send_to_lower (BT_HDR *p_msg)
 ** Returns          Type of command
 **
 *******************************************************************************/
-UINT8 ce_t3t_is_valid_opcode (UINT8 cmd_id)
+uint8_t ce_t3t_is_valid_opcode (uint8_t cmd_id)
 {
-    UINT8 retval = CE_T3T_COMMAND_INVALID;
+    uint8_t retval = CE_T3T_COMMAND_INVALID;
 
     if (  (cmd_id == T3T_MSG_OPC_CHECK_CMD)
         ||(cmd_id == T3T_MSG_OPC_UPDATE_CMD)  )
@@ -176,11 +176,11 @@ BT_HDR *ce_t3t_get_rsp_buf (void)
 ** Returns          none
 **
 *******************************************************************************/
-void ce_t3t_send_rsp (tCE_CB *p_ce_cb, UINT8 *p_nfcid2, UINT8 opcode, UINT8 status1, UINT8 status2)
+void ce_t3t_send_rsp (tCE_CB *p_ce_cb, uint8_t *p_nfcid2, uint8_t opcode, uint8_t status1, uint8_t status2)
 {
     tCE_T3T_MEM *p_cb = &p_ce_cb->mem.t3t;
     BT_HDR *p_rsp_msg;
-    UINT8 *p_dst, *p_rsp_start;
+    uint8_t *p_dst, *p_rsp_start;
 
     /* If p_nfcid2 is NULL, then used activated NFCID2 */
     if (p_nfcid2 == NULL)
@@ -190,19 +190,19 @@ void ce_t3t_send_rsp (tCE_CB *p_ce_cb, UINT8 *p_nfcid2, UINT8 opcode, UINT8 stat
 
     if ((p_rsp_msg = ce_t3t_get_rsp_buf ()) != NULL)
     {
-        p_dst = p_rsp_start = (UINT8 *) (p_rsp_msg+1) + p_rsp_msg->offset;
+        p_dst = p_rsp_start = (uint8_t *) (p_rsp_msg+1) + p_rsp_msg->offset;
 
         /* Response Code */
-        UINT8_TO_STREAM (p_dst, opcode);
+        uint8_t_TO_STREAM (p_dst, opcode);
 
         /* Manufacturer ID */
         ARRAY_TO_STREAM (p_dst, p_nfcid2, NCI_RF_F_UID_LEN);
 
         /* Status1 and Status2 */
-        UINT8_TO_STREAM (p_dst, status1);
-        UINT8_TO_STREAM (p_dst, status2);
+        uint8_t_TO_STREAM (p_dst, status1);
+        uint8_t_TO_STREAM (p_dst, status2);
 
-        p_rsp_msg->len = (UINT16) (p_dst - p_rsp_start);
+        p_rsp_msg->len = (uint16_t) (p_dst - p_rsp_start);
         ce_t3t_send_to_lower (p_rsp_msg);
     }
     else
@@ -223,15 +223,15 @@ void ce_t3t_send_rsp (tCE_CB *p_ce_cb, UINT8 *p_nfcid2, UINT8 opcode, UINT8 stat
 void ce_t3t_handle_update_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
 {
     tCE_T3T_MEM *p_cb = &p_ce_cb->mem.t3t;
-    UINT8 *p_temp;
-    UINT8 *p_block_list = p_cb->cur_cmd.p_block_list_start;
-    UINT8 *p_block_data = p_cb->cur_cmd.p_block_data_start;
-    UINT8 i, j, bl0;
-    UINT16 block_number, service_code, checksum, checksum_rx;
-    UINT32 newlen_hiword;
+    uint8_t *p_temp;
+    uint8_t *p_block_list = p_cb->cur_cmd.p_block_list_start;
+    uint8_t *p_block_data = p_cb->cur_cmd.p_block_data_start;
+    uint8_t i, j, bl0;
+    uint16_t block_number, service_code, checksum, checksum_rx;
+    uint32_t newlen_hiword;
     tCE_T3T_NDEF_INFO ndef_info;
     tNFC_STATUS nfc_status = NFC_STATUS_OK;
-    UINT8 update_flags = 0;
+    uint8_t update_flags = 0;
     tCE_UPDATE_INFO update_info;
 
     /* If in idle state, notify app that update is starting */
@@ -372,7 +372,7 @@ void ce_t3t_handle_update_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
     /* Notify the app of what got updated */
     if (update_flags & CE_T3T_UPDATE_FL_NDEF_UPDATE_START)
     {
-        /* NDEF attribute got updated with WriteF=TRUE */
+        /* NDEF attribute got updated with WriteF=true */
         p_ce_cb->p_cback (CE_T3T_NDEF_UPDATE_START_EVT, NULL);
     }
 
@@ -385,7 +385,7 @@ void ce_t3t_handle_update_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
 
     if (update_flags & CE_T3T_UPDATE_FL_NDEF_UPDATE_CPLT)
     {
-        /* NDEF attribute got updated with WriteF=FALSE */
+        /* NDEF attribute got updated with WriteF=false */
         update_info.status = nfc_status;
         update_info.p_data = p_cb->ndef_info.p_scratch_buf;
         update_info.length = p_cb->ndef_info.scratch_ln;
@@ -409,20 +409,20 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
 {
     tCE_T3T_MEM *p_cb = &p_ce_cb->mem.t3t;
     BT_HDR *p_rsp_msg;
-    UINT8 *p_rsp_start;
-    UINT8 *p_dst, *p_temp, *p_status;
-    UINT8 *p_src = p_cb->cur_cmd.p_block_list_start;
-    UINT8 i, bl0;
-    UINT8 ndef_writef;
-    UINT32 ndef_len;
-    UINT16 block_number, service_code, checksum;
+    uint8_t *p_rsp_start;
+    uint8_t *p_dst, *p_temp, *p_status;
+    uint8_t *p_src = p_cb->cur_cmd.p_block_list_start;
+    uint8_t i, bl0;
+    uint8_t ndef_writef;
+    uint32_t ndef_len;
+    uint16_t block_number, service_code, checksum;
 
     if ((p_rsp_msg = ce_t3t_get_rsp_buf ()) != NULL)
     {
-        p_dst = p_rsp_start = (UINT8 *) (p_rsp_msg+1) + p_rsp_msg->offset;
+        p_dst = p_rsp_start = (uint8_t *) (p_rsp_msg+1) + p_rsp_msg->offset;
 
         /* Response Code */
-        UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_CHECK_RSP);
+        uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_CHECK_RSP);
 
         /* Manufacturer ID */
         ARRAY_TO_STREAM (p_dst, p_cb->local_nfcid2, NCI_RF_F_UID_LEN);
@@ -431,9 +431,9 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
         p_status = p_dst;
 
         /* Status1 and Status2 (assume success initially */
-        UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_OK);
-        UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_OK);
-        UINT8_TO_STREAM (p_dst, p_cb->cur_cmd.num_blocks);
+        uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_OK);
+        uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_OK);
+        uint8_t_TO_STREAM (p_dst, p_cb->cur_cmd.num_blocks);
 
         for (i = 0; i < p_cb->cur_cmd.num_blocks; i++)
         {
@@ -462,8 +462,8 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
                     CE_TRACE_ERROR2 ("CE: Requested too many blocks to check (requested: %i, max: %i)", p_cb->cur_cmd.num_blocks, p_cb->ndef_info.nbr);
 
                     p_dst = p_status;
-                    UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
-                    UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
+                    uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
+                    uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
                     break;
                 }
                 else if (block_number == 0)
@@ -483,22 +483,22 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
                         ndef_len    = p_cb->ndef_info.ln;
                     }
 
-                    UINT8_TO_STREAM (p_dst, p_cb->ndef_info.version);
-                    UINT8_TO_STREAM (p_dst, p_cb->ndef_info.nbr);
-                    UINT8_TO_STREAM (p_dst, p_cb->ndef_info.nbw);
-                    UINT16_TO_BE_STREAM (p_dst, p_cb->ndef_info.nmaxb);
-                    UINT32_TO_STREAM (p_dst, 0);
-                    UINT8_TO_STREAM (p_dst, ndef_writef);
-                    UINT8_TO_STREAM (p_dst, p_cb->ndef_info.rwflag);
-                    UINT8_TO_STREAM (p_dst, (ndef_len >> 16 & 0xFF));
-                    UINT16_TO_BE_STREAM (p_dst, (ndef_len & 0xFFFF));
+                    uint8_t_TO_STREAM (p_dst, p_cb->ndef_info.version);
+                    uint8_t_TO_STREAM (p_dst, p_cb->ndef_info.nbr);
+                    uint8_t_TO_STREAM (p_dst, p_cb->ndef_info.nbw);
+                    uint16_t_TO_BE_STREAM (p_dst, p_cb->ndef_info.nmaxb);
+                    uint32_t_TO_STREAM (p_dst, 0);
+                    uint8_t_TO_STREAM (p_dst, ndef_writef);
+                    uint8_t_TO_STREAM (p_dst, p_cb->ndef_info.rwflag);
+                    uint8_t_TO_STREAM (p_dst, (ndef_len >> 16 & 0xFF));
+                    uint16_t_TO_BE_STREAM (p_dst, (ndef_len & 0xFFFF));
 
                     checksum = 0;
                     for (i = 0; i < T3T_MSG_NDEF_ATTR_INFO_SIZE; i++)
                     {
                         checksum+=p_temp[i];
                     }
-                    UINT16_TO_BE_STREAM (p_dst, checksum);
+                    uint16_t_TO_BE_STREAM (p_dst, checksum);
                 }
                 else
                 {
@@ -511,8 +511,8 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
                         CE_TRACE_ERROR1 ("CE: Requested block number to check %i.", block_number);
 
                         /* Error: invalid number of blocks to check */
-                        UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
-                        UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
+                        uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
+                        uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
                         break;
                     }
                     else
@@ -535,13 +535,13 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
                 CE_TRACE_ERROR1 ("CE: Requested invalid service code: 0x%04x.", service_code);
 
                 p_dst = p_status;
-                UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
-                UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
+                uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
+                uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
                 break;
             }
         }
 
-        p_rsp_msg->len = (UINT16) (p_dst - p_rsp_start);
+        p_rsp_msg->len = (uint16_t) (p_dst - p_rsp_start);
         ce_t3t_send_to_lower (p_rsp_msg);
     }
     else
@@ -562,20 +562,20 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
 ** Returns          Nothing
 **
 *******************************************************************************/
-void ce_t3t_handle_non_nfc_forum_cmd (tCE_CB *p_mem_cb, UINT8 cmd_id, BT_HDR *p_cmd_msg)
+void ce_t3t_handle_non_nfc_forum_cmd (tCE_CB *p_mem_cb, uint8_t cmd_id, BT_HDR *p_cmd_msg)
 {
     tCE_T3T_MEM *p_cb = &p_mem_cb->mem.t3t;
     BT_HDR *p_rsp_msg;
-    UINT8 *p_rsp_start;
-    UINT8 *p_dst;
-    UINT8 *p = (UINT8 *) (p_cmd_msg +1) + p_cmd_msg->offset;
-    UINT16 sc;
-    UINT8 rc;
-    BOOLEAN send_response = TRUE;
+    uint8_t *p_rsp_start;
+    uint8_t *p_dst;
+    uint8_t *p = (uint8_t *) (p_cmd_msg +1) + p_cmd_msg->offset;
+    uint16_t sc;
+    uint8_t rc;
+    bool    send_response = true;
 
     if ((p_rsp_msg = ce_t3t_get_rsp_buf ()) != NULL)
     {
-        p_dst = p_rsp_start = (UINT8 *) (p_rsp_msg+1) + p_rsp_msg->offset;
+        p_dst = p_rsp_start = (uint8_t *) (p_rsp_msg+1) + p_rsp_msg->offset;
 
         switch (cmd_id)
         {
@@ -590,7 +590,7 @@ void ce_t3t_handle_non_nfc_forum_cmd (tCE_CB *p_mem_cb, UINT8 cmd_id, BT_HDR *p_
             if ((sc == 0xFFFF) || (sc == p_cb->system_code))
             {
                 /* Response Code */
-                UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_POLL_RSP);
+                uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_POLL_RSP);
 
                 /* Manufacturer ID */
                 ARRAY_TO_STREAM (p_dst, p_cb->local_nfcid2, NCI_RF_F_UID_LEN);
@@ -601,39 +601,39 @@ void ce_t3t_handle_non_nfc_forum_cmd (tCE_CB *p_mem_cb, UINT8 cmd_id, BT_HDR *p_
                 /* If requesting system code */
                 if (rc == T3T_POLL_RC_SC)
                 {
-                    UINT16_TO_BE_STREAM (p_dst, p_cb->system_code);
+                    uint16_t_TO_BE_STREAM (p_dst, p_cb->system_code);
                 }
             }
             else
             {
-                send_response = FALSE;
+                send_response = false;
             }
             break;
 
 
         case T3T_MSG_OPC_REQ_RESPONSE_CMD:
             /* Response Code */
-            UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_REQ_RESPONSE_RSP);
+            uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_REQ_RESPONSE_RSP);
 
             /* Manufacturer ID */
             ARRAY_TO_STREAM (p_dst, p_cb->local_nfcid2, NCI_RF_F_UID_LEN);
 
             /* Mode */
-            UINT8_TO_STREAM (p_dst, 0);
+            uint8_t_TO_STREAM (p_dst, 0);
             break;
 
         case T3T_MSG_OPC_REQ_SYSTEMCODE_CMD:
             /* Response Code */
-            UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_REQ_SYSTEMCODE_RSP);
+            uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_REQ_SYSTEMCODE_RSP);
 
             /* Manufacturer ID */
             ARRAY_TO_STREAM (p_dst, p_cb->local_nfcid2, NCI_RF_F_UID_LEN);
 
             /* Number of system codes */
-            UINT8_TO_STREAM (p_dst, 1);
+            uint8_t_TO_STREAM (p_dst, 1);
 
             /* system codes */
-            UINT16_TO_BE_STREAM (p_dst, T3T_SYSTEM_CODE_NDEF);
+            uint16_t_TO_BE_STREAM (p_dst, T3T_SYSTEM_CODE_NDEF);
             break;
 
 
@@ -641,13 +641,13 @@ void ce_t3t_handle_non_nfc_forum_cmd (tCE_CB *p_mem_cb, UINT8 cmd_id, BT_HDR *p_
         default:
             /* Unhandled command */
             CE_TRACE_ERROR1 ("Unhandled CE opcode: %02x", cmd_id);
-            send_response = FALSE;
+            send_response = false;
             break;
         }
 
         if (send_response)
         {
-            p_rsp_msg->len = (UINT16) (p_dst - p_rsp_start);
+            p_rsp_msg->len = (uint16_t) (p_dst - p_rsp_start);
             ce_t3t_send_to_lower (p_rsp_msg);
         }
         else
@@ -671,24 +671,24 @@ void ce_t3t_handle_non_nfc_forum_cmd (tCE_CB *p_mem_cb, UINT8 cmd_id, BT_HDR *p_
 ** Returns          none
 **
 *******************************************************************************/
-void ce_t3t_data_cback (UINT8 conn_id, tNFC_DATA_CEVT *p_data)
+void ce_t3t_data_cback (uint8_t conn_id, tNFC_DATA_CEVT *p_data)
 {
     tCE_CB *p_ce_cb = &ce_cb;
     tCE_T3T_MEM *p_cb = &p_ce_cb->mem.t3t;
     BT_HDR *p_msg = p_data->p_data;
     tCE_DATA     ce_data;
-    UINT8 cmd_id, bl0, entry_len, i;
-    UINT8 *p_nfcid2 = NULL;
-    UINT8 *p = (UINT8 *) (p_msg +1) + p_msg->offset;
-    UINT8 cmd_nfcid2[NCI_RF_F_UID_LEN];
-    UINT16 block_list_start_offset, remaining;
-    BOOLEAN msg_processed = FALSE;
-    BOOLEAN block_list_ok;
-    UINT8 sod;
-    UINT8 cmd_type;
+    uint8_t cmd_id, bl0, entry_len, i;
+    uint8_t *p_nfcid2 = NULL;
+    uint8_t *p = (uint8_t *) (p_msg +1) + p_msg->offset;
+    uint8_t cmd_nfcid2[NCI_RF_F_UID_LEN];
+    uint16_t block_list_start_offset, remaining;
+    bool    msg_processed = false;
+    bool    block_list_ok;
+    uint8_t sod;
+    uint8_t cmd_type;
 
-#if (BT_TRACE_PROTOCOL == TRUE)
-    DispT3TagMessage (p_msg, TRUE);
+#if (BT_TRACE_PROTOCOL == true)
+    DispT3TagMessage (p_msg, true);
 #endif
 
     /* If activate system code is not NDEF, or if no local NDEF contents was set, then pass data up to the app */
@@ -721,7 +721,7 @@ void ce_t3t_data_cback (UINT8 conn_id, tNFC_DATA_CEVT *p_data)
         else if (cmd_type == CE_T3T_COMMAND_FELICA)
         {
             ce_t3t_handle_non_nfc_forum_cmd (p_ce_cb, cmd_id, p_msg);
-            msg_processed = TRUE;
+            msg_processed = true;
         }
         else
         {
@@ -762,7 +762,7 @@ void ce_t3t_data_cback (UINT8 conn_id, tNFC_DATA_CEVT *p_data)
                     }
 
                     /* Verify that block list */
-                    block_list_ok = TRUE;
+                    block_list_ok = true;
                     STREAM_TO_UINT8 (p_cb->cur_cmd.num_blocks, p);
                     remaining = p_msg->len - block_list_start_offset;
                     p_cb->cur_cmd.p_block_list_start = p;
@@ -773,7 +773,7 @@ void ce_t3t_data_cback (UINT8 conn_id, tNFC_DATA_CEVT *p_data)
                         {
                             /* Unexpected end of message (while reading block-list) */
                             CE_TRACE_ERROR0 ("CE: received invalid T3t message (unexpected end of block-list)");
-                            block_list_ok = FALSE;
+                            block_list_ok = false;
                             break;
                         }
 
@@ -785,14 +785,14 @@ void ce_t3t_data_cback (UINT8 conn_id, tNFC_DATA_CEVT *p_data)
                         {
                             /* Invalid service code */
                             CE_TRACE_ERROR1 ("CE: received invalid T3t message (invalid service index: %i)", (bl0 & T3T_MSG_SERVICE_LIST_MASK));
-                            block_list_ok = FALSE;
+                            block_list_ok = false;
                             break;
                         }
                         else if ((!(bl0 & T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT)) && (remaining < 3))
                         {
                             /* Unexpected end of message (while reading 3-byte entry) */
                             CE_TRACE_ERROR0 ("CE: received invalid T3t message (unexpected end of block-list)");
-                            block_list_ok = FALSE;
+                            block_list_ok = false;
                             break;
                         }
 
@@ -814,7 +814,7 @@ void ce_t3t_data_cback (UINT8 conn_id, tNFC_DATA_CEVT *p_data)
                                 CE_TRACE_ERROR1 ("CE: unexpected data after after CHECK command (#i bytes)", remaining);
                             }
                             ce_t3t_handle_check_cmd (p_ce_cb, p_msg);
-                            msg_processed = TRUE;
+                            msg_processed = true;
                         }
                         else
                         {
@@ -826,7 +826,7 @@ void ce_t3t_data_cback (UINT8 conn_id, tNFC_DATA_CEVT *p_data)
                             else
                             {
                                 ce_t3t_handle_update_cmd (p_ce_cb, p_msg);
-                                msg_processed = TRUE;
+                                msg_processed = true;
                             }
                         }
                     }
@@ -853,7 +853,7 @@ void ce_t3t_data_cback (UINT8 conn_id, tNFC_DATA_CEVT *p_data)
 ** Returns          none
 **
 *******************************************************************************/
-void ce_t3t_conn_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
+void ce_t3t_conn_cback (uint8_t conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
 {
     tCE_T3T_MEM *p_cb = &ce_cb.mem.t3t;
 
@@ -895,7 +895,7 @@ void ce_t3t_conn_cback (UINT8 conn_id, tNFC_CONN_EVT event, tNFC_CONN *p_data)
 ** Returns          NFC_STATUS_OK if success
 **
 *******************************************************************************/
-tNFC_STATUS ce_select_t3t (UINT16 system_code, UINT8 nfcid2[NCI_RF_F_UID_LEN])
+tNFC_STATUS ce_select_t3t (uint16_t system_code, uint8_t nfcid2[NCI_RF_F_UID_LEN])
 {
     tCE_T3T_MEM *p_cb = &ce_cb.mem.t3t;
 
@@ -919,11 +919,11 @@ tNFC_STATUS ce_select_t3t (UINT16 system_code, UINT8 nfcid2[NCI_RF_F_UID_LEN])
 ** Returns          NFC_STATUS_OK if success
 **
 *******************************************************************************/
-tNFC_STATUS CE_T3tSetLocalNDEFMsg (BOOLEAN read_only,
-                                   UINT32  size_max,
-                                   UINT32  size_current,
-                                   UINT8   *p_buf,
-                                   UINT8   *p_scratch_buf)
+tNFC_STATUS CE_T3tSetLocalNDEFMsg (bool    read_only,
+                                   uint32_t  size_max,
+                                   uint32_t  size_current,
+                                   uint8_t *p_buf,
+                                   uint8_t *p_scratch_buf)
 {
     tCE_T3T_MEM *p_cb = &ce_cb.mem.t3t;
 
@@ -939,14 +939,14 @@ tNFC_STATUS CE_T3tSetLocalNDEFMsg (BOOLEAN read_only,
     /* Check if disabling the local NDEF */
     if (!p_buf)
     {
-        p_cb->ndef_info.initialized = FALSE;
+        p_cb->ndef_info.initialized = false;
     }
     /* Save ndef attributes */
     else
     {
-        p_cb->ndef_info.initialized = TRUE;
+        p_cb->ndef_info.initialized = true;
         p_cb->ndef_info.ln = size_current;                          /* Current length */
-        p_cb->ndef_info.nmaxb = (UINT16) ((size_max + 15) / T3T_MSG_BLOCKSIZE);  /* Max length (in blocks) */
+        p_cb->ndef_info.nmaxb = (uint16_t) ((size_max + 15) / T3T_MSG_BLOCKSIZE);  /* Max length (in blocks) */
         p_cb->ndef_info.rwflag = (read_only) ? T3T_MSG_NDEF_RWFLAG_RO : T3T_MSG_NDEF_RWFLAG_RW;
         p_cb->ndef_info.writef = T3T_MSG_NDEF_WRITEF_OFF;
         p_cb->ndef_info.version = 0x10;
@@ -975,7 +975,7 @@ tNFC_STATUS CE_T3tSetLocalNDEFMsg (BOOLEAN read_only,
 ** Returns          NFC_STATUS_OK if success
 **
 *******************************************************************************/
-tNFC_STATUS CE_T3tSetLocalNDefParams (UINT8 nbr, UINT8 nbw)
+tNFC_STATUS CE_T3tSetLocalNDefParams (uint8_t nbr, uint8_t nbw)
 {
     tCE_T3T_MEM *p_cb = &ce_cb.mem.t3t;
 
@@ -1003,12 +1003,12 @@ tNFC_STATUS CE_T3tSetLocalNDefParams (UINT8 nbr, UINT8 nbw)
 ** Returns          NFC_STATUS_OK if success
 **
 *******************************************************************************/
-tNFC_STATUS CE_T3tSendCheckRsp (UINT8 status1, UINT8 status2, UINT8 num_blocks, UINT8 *p_block_data)
+tNFC_STATUS CE_T3tSendCheckRsp (uint8_t status1, uint8_t status2, uint8_t num_blocks, uint8_t *p_block_data)
 {
     tCE_T3T_MEM *p_cb = &ce_cb.mem.t3t;
     tNFC_STATUS retval = NFC_STATUS_OK;
     BT_HDR *p_rsp_msg;
-    UINT8 *p_dst, *p_rsp_start;
+    uint8_t *p_dst, *p_rsp_start;
 
     CE_TRACE_API3 ("CE_T3tCheckRsp: status1=0x%02X, status2=0x%02X, num_blocks=%i", status1, status2, num_blocks);
 
@@ -1021,25 +1021,25 @@ tNFC_STATUS CE_T3tSendCheckRsp (UINT8 status1, UINT8 status2, UINT8 num_blocks, 
 
     if ((p_rsp_msg = ce_t3t_get_rsp_buf ()) != NULL)
     {
-        p_dst = p_rsp_start = (UINT8 *) (p_rsp_msg+1) + p_rsp_msg->offset;
+        p_dst = p_rsp_start = (uint8_t *) (p_rsp_msg+1) + p_rsp_msg->offset;
 
         /* Response Code */
-        UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_CHECK_RSP);
+        uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_CHECK_RSP);
 
         /* Manufacturer ID */
         ARRAY_TO_STREAM (p_dst, p_cb->local_nfcid2, NCI_RF_F_UID_LEN);
 
         /* Status1 and Status2 */
-        UINT8_TO_STREAM (p_dst, status1);
-        UINT8_TO_STREAM (p_dst, status2);
+        uint8_t_TO_STREAM (p_dst, status1);
+        uint8_t_TO_STREAM (p_dst, status2);
 
         if (status1 == T3T_MSG_RSP_STATUS_OK)
         {
-            UINT8_TO_STREAM (p_dst, num_blocks);
+            uint8_t_TO_STREAM (p_dst, num_blocks);
             ARRAY_TO_STREAM (p_dst, p_block_data, (num_blocks * T3T_MSG_BLOCKSIZE));
         }
 
-        p_rsp_msg->len = (UINT16) (p_dst - p_rsp_start);
+        p_rsp_msg->len = (uint16_t) (p_dst - p_rsp_start);
         ce_t3t_send_to_lower (p_rsp_msg);
     }
     else
@@ -1059,7 +1059,7 @@ tNFC_STATUS CE_T3tSendCheckRsp (UINT8 status1, UINT8 status2, UINT8 num_blocks, 
 ** Returns          NFC_STATUS_OK if success
 **
 *******************************************************************************/
-tNFC_STATUS CE_T3tSendUpdateRsp (UINT8 status1, UINT8 status2)
+tNFC_STATUS CE_T3tSendUpdateRsp (uint8_t status1, uint8_t status2)
 {
     tNFC_STATUS retval = NFC_STATUS_OK;
     tCE_CB *p_ce_cb = &ce_cb;
@@ -1070,4 +1070,4 @@ tNFC_STATUS CE_T3tSendUpdateRsp (UINT8 status1, UINT8 status2)
     return (retval);
 }
 
-#endif /* NFC_INCLUDED == TRUE */
+#endif /* NFC_INCLUDED == true */

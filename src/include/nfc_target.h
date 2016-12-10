@@ -150,7 +150,7 @@
 
 /* Restore NFCC baud rate to default on shutdown if NFC_UpdateBaudRate was called */
 #ifndef NFC_RESTORE_BAUD_ON_SHUTDOWN
-#define NFC_RESTORE_BAUD_ON_SHUTDOWN    TRUE
+#define NFC_RESTORE_BAUD_ON_SHUTDOWN    true
 #endif
 
 /******************************************************************************
@@ -166,9 +166,9 @@
 #define NCI_VERSION                 NCI_VERSION_1_0
 #endif
 
-/* TRUE I2C patch is needed */
+/* true I2C patch is needed */
 #ifndef NFC_I2C_PATCH_INCLUDED
-#define NFC_I2C_PATCH_INCLUDED          TRUE     /* NFC-Android uses this!!! */
+#define NFC_I2C_PATCH_INCLUDED          true     /* NFC-Android uses this!!! */
 #endif
 
 /******************************************************************************
@@ -177,17 +177,17 @@
 **
 ******************************************************************************/
 #ifndef NFC_INCLUDED
-#define NFC_INCLUDED            TRUE
+#define NFC_INCLUDED            true
 #endif
 
-/* Define to TRUE to include Broadcom Vendor Specific implementation */
+/* Define to true to include Broadcom Vendor Specific implementation */
 #ifndef NFC_BRCM_VS_INCLUDED
-#define NFC_BRCM_VS_INCLUDED    TRUE
+#define NFC_BRCM_VS_INCLUDED    true
 #endif
 
-/* Define to TRUE if compling for NFC Reader/Writer Only mode */
+/* Define to true if compling for NFC Reader/Writer Only mode */
 #ifndef NFC_RW_ONLY
-#define NFC_RW_ONLY         FALSE
+#define NFC_RW_ONLY         false
 #endif
 
 /* Timeout for receiving response to NCI command */
@@ -215,9 +215,9 @@
 #define NCI_MAX_CMD_WINDOW      1
 #endif
 
-/* Define to TRUE to include the NFCEE related functionalities */
+/* Define to true to include the NFCEE related functionalities */
 #ifndef NFC_NFCEE_INCLUDED
-#define NFC_NFCEE_INCLUDED          TRUE
+#define NFC_NFCEE_INCLUDED          true
 #endif
 
 /* the maximum number of NFCEE interface supported */
@@ -252,7 +252,7 @@
 
 /* RW NDEF Support */
 #ifndef RW_NDEF_INCLUDED
-#define RW_NDEF_INCLUDED            TRUE
+#define RW_NDEF_INCLUDED            true
 #endif
 
 /* RW Type 1 Tag timeout for each API call, in ms */
@@ -332,9 +332,9 @@
 #define RW_I93_FLAG_DATA_RATE       I93_FLAG_DATA_RATE_HIGH
 #endif
 
-/* TRUE, to include Card Emulation related test commands */
+/* true, to include Card Emulation related test commands */
 #ifndef CE_TEST_INCLUDED
-#define CE_TEST_INCLUDED            FALSE
+#define CE_TEST_INCLUDED            false
 #endif
 
 
@@ -351,7 +351,7 @@
 ******************************************************************************/
 
 #ifndef LLCP_TEST_INCLUDED
-#define LLCP_TEST_INCLUDED          FALSE
+#define LLCP_TEST_INCLUDED          false
 #endif
 
 #ifndef LLCP_POOL_ID
@@ -498,11 +498,11 @@
 ******************************************************************************/
 
 #ifndef NFA_INCLUDED
-#define NFA_INCLUDED                TRUE
+#define NFA_INCLUDED                true
 #endif
 
 #ifndef NFA_P2P_INCLUDED
-#define NFA_P2P_INCLUDED            TRUE
+#define NFA_P2P_INCLUDED            true
 #endif
 
 /* Maximum Idle time (no hcp) to wait for EE DISC REQ Ntf(s) */
@@ -541,17 +541,17 @@
 
 /* Automatic NDEF detection (when not in exclusive RF mode) */
 #ifndef NFA_DM_AUTO_DETECT_NDEF
-#define NFA_DM_AUTO_DETECT_NDEF      FALSE  /* !!!!! NFC-Android needs FALSE */
+#define NFA_DM_AUTO_DETECT_NDEF      false  /* !!!!! NFC-Android needs false */
 #endif
 
 /* Automatic NDEF read (when not in exclusive RF mode) */
 #ifndef NFA_DM_AUTO_READ_NDEF
-#define NFA_DM_AUTO_READ_NDEF        FALSE  /* !!!!! NFC-Android needs FALSE */
+#define NFA_DM_AUTO_READ_NDEF        false  /* !!!!! NFC-Android needs false */
 #endif
 
 /* Automatic NDEF presence check (when not in exclusive RF mode) */
 #ifndef NFA_DM_AUTO_PRESENCE_CHECK
-#define NFA_DM_AUTO_PRESENCE_CHECK   FALSE  /* Android requires FALSE */
+#define NFA_DM_AUTO_PRESENCE_CHECK   false  /* Android requires false */
 #endif
 
 /* Presence check option: 0x01: use sleep/wake for none-NDEF ISO-DEP tags */
@@ -586,7 +586,7 @@
 #endif
 
 #ifndef NFA_CHO_INCLUDED
-#define NFA_CHO_INCLUDED            FALSE /* Anddroid must use FALSE to exclude CHO */
+#define NFA_CHO_INCLUDED            false /* Anddroid must use false to exclude CHO */
 #endif
 
 /* MIU for CHO              */
@@ -615,11 +615,11 @@
 #endif
 
 #ifndef NFA_CHO_TEST_INCLUDED
-#define NFA_CHO_TEST_INCLUDED           FALSE
+#define NFA_CHO_TEST_INCLUDED           false
 #endif
 
 #ifndef NFA_SNEP_INCLUDED
-#define NFA_SNEP_INCLUDED               FALSE /* Android must use FALSE to exclude SNEP */
+#define NFA_SNEP_INCLUDED               false /* Android must use false to exclude SNEP */
 #endif
 
 /* Max acceptable length */
@@ -663,7 +663,7 @@
 #endif
 
 #ifndef NFA_DTA_INCLUDED
-#define NFA_DTA_INCLUDED            TRUE
+#define NFA_DTA_INCLUDED            true
 #endif
 
 
@@ -672,22 +672,22 @@
 **  as the NFC stack.
 *****************************************************************************/
 #ifndef HAL_WRITE
-#define HAL_WRITE(p)    {nfc_cb.p_hal->write(p->len, (UINT8 *)(p+1) + p->offset); GKI_freebuf(p);}
+#define HAL_WRITE(p)    {nfc_cb.p_hal->write(p->len, (uint8_t *)(p+1) + p->offset); GKI_freebuf(p);}
 
 #ifdef NFC_HAL_SHARED_GKI
 
 /* NFC HAL Included if NFC_NFCEE_INCLUDED */
-#if (NFC_NFCEE_INCLUDED == TRUE)
+#if (NFC_NFCEE_INCLUDED == true)
 
 #ifndef NFC_HAL_HCI_INCLUDED
-#define NFC_HAL_HCI_INCLUDED    TRUE
+#define NFC_HAL_HCI_INCLUDED    true
 #endif
-#else /* NFC_NFCEE_INCLUDED == TRUE */
+#else /* NFC_NFCEE_INCLUDED == true */
 #ifndef NFC_HAL_HCI_INCLUDED
-#define NFC_HAL_HCI_INCLUDED    FALSE
+#define NFC_HAL_HCI_INCLUDED    false
 #endif
 
-#endif /* NFC_NFCEE_INCLUDED == FALSE */
+#endif /* NFC_NFCEE_INCLUDED == false */
 
 #endif /* NFC_HAL_SHARED_GKI */
 

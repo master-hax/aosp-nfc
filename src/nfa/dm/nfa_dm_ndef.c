@@ -33,45 +33,45 @@
 /*******************************************************************************
 * URI Well-known-type prefixes
 *******************************************************************************/
-const UINT8 *nfa_dm_ndef_wkt_uri_str_tbl[] = {
+const uint8_t *nfa_dm_ndef_wkt_uri_str_tbl[] = {
     NULL,           /* 0x00 */
-    (const UINT8*) "http://www.",  /* 0x01 */
-    (const UINT8*) "https://www.", /* 0x02 */
-    (const UINT8*) "http://",      /* 0x03 */
-    (const UINT8*) "https://",     /* 0x04 */
-    (const UINT8*) "tel:",         /* 0x05 */
-    (const UINT8*) "mailto:",      /* 0x06 */
-    (const UINT8*) "ftp://anonymous:anonymous@",   /* 0x07 */
-    (const UINT8*) "ftp://ftp.",   /* 0x08 */
-    (const UINT8*) "ftps://",      /* 0x09 */
-    (const UINT8*) "sftp://",      /* 0x0A */
-    (const UINT8*) "smb://",       /* 0x0B */
-    (const UINT8*) "nfs://",       /* 0x0C */
-    (const UINT8*) "ftp://",       /* 0x0D */
-    (const UINT8*) "dav://",       /* 0x0E */
-    (const UINT8*) "news:",        /* 0x0F */
-    (const UINT8*) "telnet://",    /* 0x10 */
-    (const UINT8*) "imap:",        /* 0x11 */
-    (const UINT8*) "rtsp://",      /* 0x12 */
-    (const UINT8*) "urn:",         /* 0x13 */
-    (const UINT8*) "pop:",         /* 0x14 */
-    (const UINT8*) "sip:",         /* 0x15 */
-    (const UINT8*) "sips:",        /* 0x16 */
-    (const UINT8*) "tftp:",        /* 0x17 */
-    (const UINT8*) "btspp://",     /* 0x18 */
-    (const UINT8*) "btl2cap://",   /* 0x19 */
-    (const UINT8*) "btgoep://",    /* 0x1A */
-    (const UINT8*) "tcpobex://",   /* 0x1B */
-    (const UINT8*) "irdaobex://",  /* 0x1C */
-    (const UINT8*) "file://",      /* 0x1D */
-    (const UINT8*) "urn:epc:id:",  /* 0x1E */
-    (const UINT8*) "urn:epc:tag:", /* 0x1F */
-    (const UINT8*) "urn:epc:pat:", /* 0x20 */
-    (const UINT8*) "urn:epc:raw:", /* 0x21 */
-    (const UINT8*) "urn:epc:",     /* 0x22 */
-    (const UINT8*) "urn:nfc:"      /* 0x23 */
+    (const uint8_t*) "http://www.",  /* 0x01 */
+    (const uint8_t*) "https://www.", /* 0x02 */
+    (const uint8_t*) "http://",      /* 0x03 */
+    (const uint8_t*) "https://",     /* 0x04 */
+    (const uint8_t*) "tel:",         /* 0x05 */
+    (const uint8_t*) "mailto:",      /* 0x06 */
+    (const uint8_t*) "ftp://anonymous:anonymous@",   /* 0x07 */
+    (const uint8_t*) "ftp://ftp.",   /* 0x08 */
+    (const uint8_t*) "ftps://",      /* 0x09 */
+    (const uint8_t*) "sftp://",      /* 0x0A */
+    (const uint8_t*) "smb://",       /* 0x0B */
+    (const uint8_t*) "nfs://",       /* 0x0C */
+    (const uint8_t*) "ftp://",       /* 0x0D */
+    (const uint8_t*) "dav://",       /* 0x0E */
+    (const uint8_t*) "news:",        /* 0x0F */
+    (const uint8_t*) "telnet://",    /* 0x10 */
+    (const uint8_t*) "imap:",        /* 0x11 */
+    (const uint8_t*) "rtsp://",      /* 0x12 */
+    (const uint8_t*) "urn:",         /* 0x13 */
+    (const uint8_t*) "pop:",         /* 0x14 */
+    (const uint8_t*) "sip:",         /* 0x15 */
+    (const uint8_t*) "sips:",        /* 0x16 */
+    (const uint8_t*) "tftp:",        /* 0x17 */
+    (const uint8_t*) "btspp://",     /* 0x18 */
+    (const uint8_t*) "btl2cap://",   /* 0x19 */
+    (const uint8_t*) "btgoep://",    /* 0x1A */
+    (const uint8_t*) "tcpobex://",   /* 0x1B */
+    (const uint8_t*) "irdaobex://",  /* 0x1C */
+    (const uint8_t*) "file://",      /* 0x1D */
+    (const uint8_t*) "urn:epc:id:",  /* 0x1E */
+    (const uint8_t*) "urn:epc:tag:", /* 0x1F */
+    (const uint8_t*) "urn:epc:pat:", /* 0x20 */
+    (const uint8_t*) "urn:epc:raw:", /* 0x21 */
+    (const uint8_t*) "urn:epc:",     /* 0x22 */
+    (const uint8_t*) "urn:nfc:"      /* 0x23 */
 };
-#define NFA_DM_NDEF_WKT_URI_STR_TBL_SIZE (sizeof (nfa_dm_ndef_wkt_uri_str_tbl) / sizeof (UINT8 *))
+#define NFA_DM_NDEF_WKT_URI_STR_TBL_SIZE (sizeof (nfa_dm_ndef_wkt_uri_str_tbl) / sizeof (uint8_t *))
 
 /*******************************************************************************
 **
@@ -79,14 +79,14 @@ const UINT8 *nfa_dm_ndef_wkt_uri_str_tbl[] = {
 **
 ** Description      Deregister NDEF record type handler
 **
-** Returns          TRUE (message buffer to be freed by caller)
+** Returns          true (message buffer to be freed by caller)
 **
 *******************************************************************************/
 void nfa_dm_ndef_dereg_hdlr_by_handle (tNFA_HANDLE ndef_type_handle)
 {
     tNFA_DM_CB *p_cb = &nfa_dm_cb;
-    UINT16 hdlr_idx;
-    hdlr_idx = (UINT16) (ndef_type_handle & NFA_HANDLE_MASK);
+    uint16_t hdlr_idx;
+    hdlr_idx = (uint16_t) (ndef_type_handle & NFA_HANDLE_MASK);
 
     if (p_cb->p_ndef_handler[hdlr_idx])
     {
@@ -108,7 +108,7 @@ void nfa_dm_ndef_dereg_hdlr_by_handle (tNFA_HANDLE ndef_type_handle)
 void nfa_dm_ndef_dereg_all (void)
 {
     tNFA_DM_CB *p_cb = &nfa_dm_cb;
-    UINT32 i;
+    uint32_t i;
 
     for (i = 0; i < NFA_NDEF_MAX_HANDLERS; i++)
     {
@@ -128,13 +128,13 @@ void nfa_dm_ndef_dereg_all (void)
 **
 ** Description      Register NDEF record type handler
 **
-** Returns          TRUE if message buffer is to be freed by caller
+** Returns          true if message buffer is to be freed by caller
 **
 *******************************************************************************/
-BOOLEAN nfa_dm_ndef_reg_hdlr (tNFA_DM_MSG *p_data)
+bool    nfa_dm_ndef_reg_hdlr (tNFA_DM_MSG *p_data)
 {
     tNFA_DM_CB *p_cb = &nfa_dm_cb;
-    UINT32 hdlr_idx, i;
+    uint32_t hdlr_idx, i;
     tNFA_DM_API_REG_NDEF_HDLR *p_reg_info = (tNFA_DM_API_REG_NDEF_HDLR *) p_data;
     tNFA_NDEF_REGISTER ndef_register;
 
@@ -182,7 +182,7 @@ BOOLEAN nfa_dm_ndef_reg_hdlr (tNFA_DM_MSG *p_data)
         NFA_TRACE_DEBUG1 ("NDEF handler successfully registered. Handle=0x%08x", p_reg_info->ndef_type_handle);
         (*(p_reg_info->p_ndef_cback)) (NFA_NDEF_REGISTER_EVT, (tNFA_NDEF_EVT_DATA *) &ndef_register);
 
-        return FALSE;       /* indicate that we will free message buffer when type_handler is deregistered */
+        return false;       /* indicate that we will free message buffer when type_handler is deregistered */
     }
     else
     {
@@ -192,7 +192,7 @@ BOOLEAN nfa_dm_ndef_reg_hdlr (tNFA_DM_MSG *p_data)
         ndef_register.status = NFA_STATUS_FAILED;
         (*(p_reg_info->p_ndef_cback)) (NFA_NDEF_REGISTER_EVT, (tNFA_NDEF_EVT_DATA *) &ndef_register);
 
-        return TRUE;
+        return true;
     }
 }
 
@@ -202,10 +202,10 @@ BOOLEAN nfa_dm_ndef_reg_hdlr (tNFA_DM_MSG *p_data)
 **
 ** Description      Deregister NDEF record type handler
 **
-** Returns          TRUE (message buffer to be freed by caller)
+** Returns          true (message buffer to be freed by caller)
 **
 *******************************************************************************/
-BOOLEAN nfa_dm_ndef_dereg_hdlr (tNFA_DM_MSG *p_data)
+bool    nfa_dm_ndef_dereg_hdlr (tNFA_DM_MSG *p_data)
 {
     tNFA_DM_API_DEREG_NDEF_HDLR *p_dereginfo = (tNFA_DM_API_DEREG_NDEF_HDLR *) p_data;
 
@@ -221,7 +221,7 @@ BOOLEAN nfa_dm_ndef_dereg_hdlr (tNFA_DM_MSG *p_data)
     }
 
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -234,14 +234,14 @@ BOOLEAN nfa_dm_ndef_dereg_hdlr (tNFA_DM_MSG *p_data)
 **
 *******************************************************************************/
 tNFA_DM_API_REG_NDEF_HDLR *nfa_dm_ndef_find_next_handler (tNFA_DM_API_REG_NDEF_HDLR *p_init_handler,
-                                                          UINT8                     tnf,
-                                                          UINT8                     *p_type_name,
-                                                          UINT8                     type_name_len,
-                                                          UINT8                     *p_payload,
-                                                          UINT32                    payload_len)
+                                                          uint8_t                   tnf,
+                                                          uint8_t                   *p_type_name,
+                                                          uint8_t                   type_name_len,
+                                                          uint8_t                   *p_payload,
+                                                          uint32_t                  payload_len)
 {
     tNFA_DM_CB *p_cb = &nfa_dm_cb;
-    UINT8 i;
+    uint8_t i;
 
     /* if init_handler is NULL, then start with the first non-default handler */
     if (!p_init_handler)
@@ -340,7 +340,7 @@ tNFA_DM_API_REG_NDEF_HDLR *nfa_dm_ndef_find_next_handler (tNFA_DM_API_REG_NDEF_H
 void nfa_dm_ndef_clear_notified_flag (void)
 {
     tNFA_DM_CB *p_cb = &nfa_dm_cb;
-    UINT8 i;
+    uint8_t i;
 
     for (i = 0; i < NFA_NDEF_MAX_HANDLERS; i++)
     {
@@ -362,17 +362,17 @@ void nfa_dm_ndef_clear_notified_flag (void)
 ** Returns          void
 **
 *******************************************************************************/
-void nfa_dm_ndef_handle_message (tNFA_STATUS status, UINT8 *p_msg_buf, UINT32 len)
+void nfa_dm_ndef_handle_message (tNFA_STATUS status, uint8_t *p_msg_buf, uint32_t len)
 {
     tNFA_DM_CB *p_cb = &nfa_dm_cb;
     tNDEF_STATUS ndef_status;
-    UINT8 *p_rec, *p_ndef_start, *p_type, *p_payload, *p_rec_end;
-    UINT32 payload_len;
-    UINT8 tnf, type_len, rec_hdr_flags, id_len;
+    uint8_t *p_rec, *p_ndef_start, *p_type, *p_payload, *p_rec_end;
+    uint32_t payload_len;
+    uint8_t tnf, type_len, rec_hdr_flags, id_len;
     tNFA_DM_API_REG_NDEF_HDLR *p_handler;
     tNFA_NDEF_DATA ndef_data;
-    UINT8 rec_count = 0;
-    BOOLEAN record_handled, entire_message_handled;
+    uint8_t rec_count = 0;
+    bool    record_handled, entire_message_handled;
 
     NFA_TRACE_DEBUG3 ("nfa_dm_ndef_handle_message status=%i, msgbuf=%08x, len=%i", status, p_msg_buf, len);
 
@@ -407,7 +407,7 @@ void nfa_dm_ndef_handle_message (tNFA_STATUS status, UINT8 *p_msg_buf, UINT32 le
     }
 
     /* Validate the NDEF message */
-    if ((ndef_status = NDEF_MsgValidate (p_msg_buf, len, TRUE)) != NDEF_OK)
+    if ((ndef_status = NDEF_MsgValidate (p_msg_buf, len, true)) != NDEF_OK)
     {
         NFA_TRACE_ERROR1 ("Received invalid NDEF message. NDEF status=0x%x", ndef_status);
         return;
@@ -419,7 +419,7 @@ void nfa_dm_ndef_handle_message (tNFA_STATUS status, UINT8 *p_msg_buf, UINT32 le
     nfa_dm_ndef_clear_notified_flag ();
 
     /* Indicate that no handler has handled this entire NDEF message (e.g. connection-handover handler *) */
-    entire_message_handled = FALSE;
+    entire_message_handled = false;
 
     /* Get first record in message */
     p_rec = p_ndef_start = p_msg_buf;
@@ -431,7 +431,7 @@ void nfa_dm_ndef_handle_message (tNFA_STATUS status, UINT8 *p_msg_buf, UINT32 le
         p_type = NDEF_RecGetType (p_rec, &tnf, &type_len);
 
         /* Indicate record not handled yet */
-        record_handled = FALSE;
+        record_handled = false;
 
         /* Get pointer to record payload */
         p_payload = NDEF_RecGetPayload (p_rec, &payload_len);
@@ -464,7 +464,7 @@ void nfa_dm_ndef_handle_message (tNFA_STATUS status, UINT8 *p_msg_buf, UINT32 le
 
             /* Calculate length of NDEF record */
             if (p_payload != NULL)
-                ndef_data.len = payload_len + (UINT32) (p_payload - p_rec);
+                ndef_data.len = payload_len + (uint32_t) (p_payload - p_rec);
             else
             {
                 /* If no payload, calculate length of ndef record header */
@@ -493,7 +493,7 @@ void nfa_dm_ndef_handle_message (tNFA_STATUS status, UINT8 *p_msg_buf, UINT32 le
                     id_len = 0;
                 p_rec_end+=id_len;
 
-                ndef_data.len = (UINT32) (p_rec_end - p_rec);
+                ndef_data.len = (uint32_t) (p_rec_end - p_rec);
             }
 
             /* If handler wants entire ndef message, then pass pointer to start of message and  */
@@ -506,14 +506,14 @@ void nfa_dm_ndef_handle_message (tNFA_STATUS status, UINT8 *p_msg_buf, UINT32 le
                 p_handler->flags |= NFA_NDEF_FLAGS_WHOLE_MESSAGE_NOTIFIED;
 
                 /* Indicate that at least one handler has received entire NDEF message */
-                entire_message_handled = TRUE;
+                entire_message_handled = true;
             }
 
             /* Notify NDEF type handler */
             (*p_handler->p_ndef_cback) (NFA_NDEF_DATA_EVT, (tNFA_NDEF_EVT_DATA *) &ndef_data);
 
             /* Indicate that at lease one handler has received this record */
-            record_handled = TRUE;
+            record_handled = true;
 
             /* Look for next handler */
             p_handler = nfa_dm_ndef_find_next_handler (p_handler, tnf, p_type, type_len, p_payload, payload_len);

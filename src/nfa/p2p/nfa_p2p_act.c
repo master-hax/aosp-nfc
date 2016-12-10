@@ -52,12 +52,12 @@
 ** Description      Allocate data link connection control block
 **
 **
-** Returns          UINT8
+** Returns          uint8_t
 **
 *******************************************************************************/
-static UINT8 nfa_p2p_allocate_conn_cb (UINT8 local_sap)
+static uint8_t nfa_p2p_allocate_conn_cb (uint8_t local_sap)
 {
-    UINT8 xx;
+    uint8_t xx;
 
     for (xx = 0; xx < LLCP_MAX_DATA_LINK; xx++)
     {
@@ -85,7 +85,7 @@ static UINT8 nfa_p2p_allocate_conn_cb (UINT8 local_sap)
 ** Returns          void
 **
 *******************************************************************************/
-static void nfa_p2p_deallocate_conn_cb (UINT8 xx)
+static void nfa_p2p_deallocate_conn_cb (uint8_t xx)
 {
     if (xx < LLCP_MAX_DATA_LINK)
     {
@@ -104,12 +104,12 @@ static void nfa_p2p_deallocate_conn_cb (UINT8 xx)
 ** Description      Find data link connection control block by local/remote SAP
 **
 **
-** Returns          UINT8
+** Returns          uint8_t
 **
 *******************************************************************************/
-static UINT8 nfa_p2p_find_conn_cb (UINT8 local_sap, UINT8 remote_sap)
+static uint8_t nfa_p2p_find_conn_cb (uint8_t local_sap, uint8_t remote_sap)
 {
-    UINT8 xx;
+    uint8_t xx;
 
     for (xx = 0; xx < LLCP_MAX_DATA_LINK; xx++)
     {
@@ -184,10 +184,10 @@ static void nfa_p2p_llcp_cback (tLLCP_SAP_CBACK_DATA *p_data)
 ** Returns          None
 **
 *******************************************************************************/
-void nfa_p2p_sdp_cback (UINT8 tid, UINT8 remote_sap)
+void nfa_p2p_sdp_cback (uint8_t tid, uint8_t remote_sap)
 {
-    UINT8             local_sap;
-    UINT8             xx;
+    uint8_t           local_sap;
+    uint8_t           xx;
     tNFA_P2P_EVT_DATA evt_data;
 
     P2P_TRACE_DEBUG2 ("nfa_p2p_sdp_cback (): tid:0x%02X, remote_sap:0x%02X", tid, remote_sap);
@@ -217,10 +217,10 @@ void nfa_p2p_sdp_cback (UINT8 tid, UINT8 remote_sap)
 ** Description      Initiate SDP
 **
 **
-** Returns          TRUE if success
+** Returns          true if success
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_start_sdp (char *p_service_name, UINT8 local_sap)
+bool    nfa_p2p_start_sdp (char *p_service_name, uint8_t local_sap)
 {
     int xx;
 
@@ -236,16 +236,16 @@ BOOLEAN nfa_p2p_start_sdp (char *p_service_name, UINT8 local_sap)
                                       &(nfa_p2p_cb.sdp_cb[xx].tid)) == LLCP_STATUS_SUCCESS)
             {
                 nfa_p2p_cb.sdp_cb[xx].local_sap    = local_sap;
-                return TRUE;
+                return true;
             }
             else
             {
                 /* failure of SDP */
-                return FALSE;
+                return false;
             }
         }
     }
-    return FALSE;
+    return false;
 }
 
 /*******************************************************************************
@@ -260,7 +260,7 @@ BOOLEAN nfa_p2p_start_sdp (char *p_service_name, UINT8 local_sap)
 *******************************************************************************/
 void nfa_p2p_proc_llcp_data_ind (tLLCP_SAP_CBACK_DATA  *p_data)
 {
-    UINT8             local_sap, xx;
+    uint8_t           local_sap, xx;
     tNFA_P2P_EVT_DATA evt_data;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_proc_llcp_data_ind ()");
@@ -306,9 +306,9 @@ void nfa_p2p_proc_llcp_data_ind (tLLCP_SAP_CBACK_DATA  *p_data)
 *******************************************************************************/
 void nfa_p2p_proc_llcp_connect_ind (tLLCP_SAP_CBACK_DATA  *p_data)
 {
-    UINT8             server_sap, local_sap;
+    uint8_t           server_sap, local_sap;
     tNFA_P2P_EVT_DATA evt_data;
-    UINT8             xx;
+    uint8_t           xx;
 
     P2P_TRACE_DEBUG1 ("nfa_p2p_proc_llcp_connect_ind () server_sap:0x%x",
                        p_data->connect_ind.server_sap);
@@ -356,7 +356,7 @@ void nfa_p2p_proc_llcp_connect_ind (tLLCP_SAP_CBACK_DATA  *p_data)
 *******************************************************************************/
 void nfa_p2p_proc_llcp_connect_resp (tLLCP_SAP_CBACK_DATA  *p_data)
 {
-    UINT8             local_sap, xx;
+    uint8_t           local_sap, xx;
     tNFA_P2P_EVT_DATA evt_data;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_proc_llcp_connect_resp ()");
@@ -399,7 +399,7 @@ void nfa_p2p_proc_llcp_connect_resp (tLLCP_SAP_CBACK_DATA  *p_data)
 *******************************************************************************/
 void nfa_p2p_proc_llcp_disconnect_ind (tLLCP_SAP_CBACK_DATA  *p_data)
 {
-    UINT8             local_sap, xx;
+    uint8_t           local_sap, xx;
     tNFA_P2P_EVT_DATA evt_data;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_proc_llcp_disconnect_ind ()");
@@ -449,7 +449,7 @@ void nfa_p2p_proc_llcp_disconnect_ind (tLLCP_SAP_CBACK_DATA  *p_data)
 *******************************************************************************/
 void nfa_p2p_proc_llcp_disconnect_resp (tLLCP_SAP_CBACK_DATA  *p_data)
 {
-    UINT8             local_sap, xx;
+    uint8_t           local_sap, xx;
     tNFA_P2P_EVT_DATA evt_data;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_proc_llcp_disconnect_resp ()");
@@ -521,7 +521,7 @@ void nfa_p2p_proc_llcp_disconnect_resp (tLLCP_SAP_CBACK_DATA  *p_data)
 *******************************************************************************/
 void nfa_p2p_proc_llcp_congestion (tLLCP_SAP_CBACK_DATA  *p_data)
 {
-    UINT8             local_sap, remote_sap, xx;
+    uint8_t           local_sap, remote_sap, xx;
     tNFA_P2P_EVT_DATA evt_data;
 
     local_sap  = p_data->congest.local_sap;
@@ -548,13 +548,13 @@ void nfa_p2p_proc_llcp_congestion (tLLCP_SAP_CBACK_DATA  *p_data)
         {
             evt_data.congest.handle = (NFA_HANDLE_GROUP_P2P | local_sap);
 
-            if (  (evt_data.congest.is_congested == FALSE)
+            if (  (evt_data.congest.is_congested == false)
                 &&(nfa_p2p_cb.sap_cb[local_sap].flags & NFA_P2P_SAP_FLAG_LLINK_CONGESTED)  )
             {
                 nfa_p2p_cb.sap_cb[local_sap].flags &= ~NFA_P2P_SAP_FLAG_LLINK_CONGESTED;
                 nfa_p2p_cb.sap_cb[local_sap].p_cback (NFA_P2P_CONGEST_EVT, &evt_data);
             }
-            else if (  (evt_data.congest.is_congested == TRUE)
+            else if (  (evt_data.congest.is_congested == true)
                      &&(!(nfa_p2p_cb.sap_cb[local_sap].flags & NFA_P2P_SAP_FLAG_LLINK_CONGESTED))  )
             {
                 /* this is overall congestion due to high usage of buffer pool */
@@ -570,13 +570,13 @@ void nfa_p2p_proc_llcp_congestion (tLLCP_SAP_CBACK_DATA  *p_data)
             {
                 evt_data.congest.handle = (NFA_HANDLE_GROUP_P2P | NFA_P2P_HANDLE_FLAG_CONN | xx);
 
-                if (  (evt_data.congest.is_congested == FALSE)
+                if (  (evt_data.congest.is_congested == false)
                     &&(nfa_p2p_cb.conn_cb[xx].flags & NFA_P2P_CONN_FLAG_CONGESTED)  )
                 {
                     nfa_p2p_cb.conn_cb[xx].flags &= ~NFA_P2P_CONN_FLAG_CONGESTED;
                     nfa_p2p_cb.sap_cb[local_sap].p_cback (NFA_P2P_CONGEST_EVT, &evt_data);
                 }
-                else if (  (evt_data.congest.is_congested == TRUE)
+                else if (  (evt_data.congest.is_congested == true)
                          &&(!(nfa_p2p_cb.conn_cb[xx].flags & NFA_P2P_CONN_FLAG_CONGESTED))  )
                 {
                     /* this is overall congestion due to high usage of buffer pool */
@@ -604,7 +604,7 @@ void nfa_p2p_proc_llcp_congestion (tLLCP_SAP_CBACK_DATA  *p_data)
 *******************************************************************************/
 void nfa_p2p_proc_llcp_link_status (tLLCP_SAP_CBACK_DATA  *p_data)
 {
-    UINT8             local_sap, xx;
+    uint8_t           local_sap, xx;
     tNFA_P2P_EVT_DATA evt_data;
 
     P2P_TRACE_DEBUG1 ("nfa_p2p_proc_llcp_link_status () is_activated:%d",
@@ -668,13 +668,13 @@ void nfa_p2p_proc_llcp_link_status (tLLCP_SAP_CBACK_DATA  *p_data)
 ** Description      Allocate a service as server and register to LLCP
 **
 **
-** Returns          FALSE if need to keep buffer
+** Returns          false if need to keep buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_reg_server (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_reg_server (tNFA_P2P_MSG *p_msg)
 {
     tNFA_P2P_EVT_DATA  evt_data;
-    UINT8              server_sap;
+    uint8_t            server_sap;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_reg_server ()");
 
@@ -693,17 +693,17 @@ BOOLEAN nfa_p2p_reg_server (tNFA_P2P_MSG *p_msg)
 
         p_msg->api_reg_server.p_cback (NFA_P2P_REG_SERVER_EVT, &evt_data);
 
-        return TRUE;
+        return true;
     }
 
     /* if need to update WKS in LLCP Gen bytes */
     if (server_sap <= LLCP_UPPER_BOUND_WK_SAP)
     {
-        nfa_p2p_enable_listening (NFA_ID_P2P, TRUE);
+        nfa_p2p_enable_listening (NFA_ID_P2P, true);
     }
     else if (!nfa_p2p_cb.is_p2p_listening)
     {
-        nfa_p2p_enable_listening (NFA_ID_P2P, FALSE);
+        nfa_p2p_enable_listening (NFA_ID_P2P, false);
     }
 
     nfa_p2p_cb.sap_cb[server_sap].p_cback    = p_msg->api_reg_server.p_cback;
@@ -729,7 +729,7 @@ BOOLEAN nfa_p2p_reg_server (tNFA_P2P_MSG *p_msg)
         nfa_p2p_cb.sap_cb[server_sap].p_cback (NFA_P2P_ACTIVATED_EVT, &evt_data);
     }
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -739,13 +739,13 @@ BOOLEAN nfa_p2p_reg_server (tNFA_P2P_MSG *p_msg)
 ** Description      Allocate a service as client and register to LLCP
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_reg_client (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_reg_client (tNFA_P2P_MSG *p_msg)
 {
     tNFA_P2P_EVT_DATA  evt_data;
-    UINT8              local_sap;
+    uint8_t            local_sap;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_reg_client ()");
 
@@ -756,7 +756,7 @@ BOOLEAN nfa_p2p_reg_client (tNFA_P2P_MSG *p_msg)
     {
         evt_data.reg_client.client_handle = NFA_HANDLE_INVALID;
         p_msg->api_reg_client.p_cback (NFA_P2P_REG_CLIENT_EVT, &evt_data);
-        return TRUE;
+        return true;
     }
 
     nfa_p2p_cb.sap_cb[local_sap].p_cback = p_msg->api_reg_client.p_cback;
@@ -776,7 +776,7 @@ BOOLEAN nfa_p2p_reg_client (tNFA_P2P_MSG *p_msg)
         nfa_p2p_cb.sap_cb[local_sap].p_cback (NFA_P2P_ACTIVATED_EVT, &evt_data);
     }
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -786,16 +786,16 @@ BOOLEAN nfa_p2p_reg_client (tNFA_P2P_MSG *p_msg)
 ** Description      Deallocate a service as server or client and deregister to LLCP
 **                  LLCP will deallocate data link connection created by this server
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_dereg (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_dereg (tNFA_P2P_MSG *p_msg)
 {
-    UINT8 local_sap, xx;
+    uint8_t local_sap, xx;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_dereg ()");
 
-    local_sap = (UINT8) (p_msg->api_dereg.handle & NFA_HANDLE_MASK);
+    local_sap = (uint8_t) (p_msg->api_dereg.handle & NFA_HANDLE_MASK);
 
     if (nfa_p2p_cb.sap_cb[local_sap].p_cback)
     {
@@ -828,18 +828,18 @@ BOOLEAN nfa_p2p_dereg (tNFA_P2P_MSG *p_msg)
         {
             /* if need to update WKS in LLCP Gen bytes */
             if (local_sap <= LLCP_UPPER_BOUND_WK_SAP)
-                nfa_p2p_disable_listening (NFA_ID_P2P, TRUE);
+                nfa_p2p_disable_listening (NFA_ID_P2P, true);
             else
-                nfa_p2p_disable_listening (NFA_ID_P2P, FALSE);
+                nfa_p2p_disable_listening (NFA_ID_P2P, false);
         }
         /* if need to update WKS in LLCP Gen bytes */
         else if (local_sap <= LLCP_UPPER_BOUND_WK_SAP)
         {
-            nfa_p2p_enable_listening (NFA_ID_P2P, TRUE);
+            nfa_p2p_enable_listening (NFA_ID_P2P, true);
         }
     }
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -849,17 +849,17 @@ BOOLEAN nfa_p2p_dereg (tNFA_P2P_MSG *p_msg)
 ** Description      Connection Confirm from local application
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_accept_connection (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_accept_connection (tNFA_P2P_MSG *p_msg)
 {
-    UINT8                   xx;
+    uint8_t                 xx;
     tLLCP_CONNECTION_PARAMS params;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_accept_connection ()");
 
-    xx  = (UINT8) (p_msg->api_accept.conn_handle & NFA_HANDLE_MASK);
+    xx  = (uint8_t) (p_msg->api_accept.conn_handle & NFA_HANDLE_MASK);
     xx &= ~NFA_P2P_HANDLE_FLAG_CONN;
 
     params.miu   = p_msg->api_accept.miu;
@@ -868,7 +868,7 @@ BOOLEAN nfa_p2p_accept_connection (tNFA_P2P_MSG *p_msg)
 
     LLCP_ConnectCfm (nfa_p2p_cb.conn_cb[xx].local_sap, nfa_p2p_cb.conn_cb[xx].remote_sap, &params);
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -878,16 +878,16 @@ BOOLEAN nfa_p2p_accept_connection (tNFA_P2P_MSG *p_msg)
 ** Description      Reject connection by local application
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_reject_connection (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_reject_connection (tNFA_P2P_MSG *p_msg)
 {
-    UINT8 xx;
+    uint8_t xx;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_reject_connection ()");
 
-    xx  = (UINT8) (p_msg->api_reject.conn_handle & NFA_HANDLE_MASK);
+    xx  = (uint8_t) (p_msg->api_reject.conn_handle & NFA_HANDLE_MASK);
     xx &= ~NFA_P2P_HANDLE_FLAG_CONN;
 
     LLCP_ConnectReject (nfa_p2p_cb.conn_cb[xx].local_sap, nfa_p2p_cb.conn_cb[xx].remote_sap,
@@ -896,7 +896,7 @@ BOOLEAN nfa_p2p_reject_connection (tNFA_P2P_MSG *p_msg)
     /* no need to deregister service on LLCP */
     nfa_p2p_deallocate_conn_cb (xx);
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -906,18 +906,18 @@ BOOLEAN nfa_p2p_reject_connection (tNFA_P2P_MSG *p_msg)
 ** Description      Disconnect data link connection by local application
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_disconnect (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_disconnect (tNFA_P2P_MSG *p_msg)
 {
-    UINT8             local_sap, xx;
+    uint8_t           local_sap, xx;
     tLLCP_STATUS      status;
     tNFA_P2P_EVT_DATA evt_data;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_disconnect ()");
 
-    xx = (UINT8) (p_msg->api_disconnect.conn_handle & NFA_HANDLE_MASK);
+    xx = (uint8_t) (p_msg->api_disconnect.conn_handle & NFA_HANDLE_MASK);
 
     /* if this is for data link connection */
     if (xx & NFA_P2P_HANDLE_FLAG_CONN)
@@ -930,7 +930,7 @@ BOOLEAN nfa_p2p_disconnect (tNFA_P2P_MSG *p_msg)
         if (status == LLCP_STATUS_SUCCESS)
         {
             /* wait for disconnect response if successful */
-            return TRUE;
+            return true;
         }
         else
         {
@@ -955,7 +955,7 @@ BOOLEAN nfa_p2p_disconnect (tNFA_P2P_MSG *p_msg)
         P2P_TRACE_ERROR0 ("Handle is not for Data link connection");
     }
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -965,19 +965,19 @@ BOOLEAN nfa_p2p_disconnect (tNFA_P2P_MSG *p_msg)
 ** Description      Create data link connection
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_create_data_link_connection (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_create_data_link_connection (tNFA_P2P_MSG *p_msg)
 {
-    UINT8                   local_sap;
+    uint8_t                 local_sap;
     tNFA_P2P_EVT_DATA       evt_data;
     tLLCP_CONNECTION_PARAMS conn_params;
     tLLCP_STATUS            status;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_create_data_link_connection ()");
 
-    local_sap = (UINT8) (p_msg->api_connect.client_handle & NFA_HANDLE_MASK);
+    local_sap = (uint8_t) (p_msg->api_connect.client_handle & NFA_HANDLE_MASK);
 
     conn_params.miu = p_msg->api_connect.miu;
     conn_params.rw  = p_msg->api_connect.rw;
@@ -1006,7 +1006,7 @@ BOOLEAN nfa_p2p_create_data_link_connection (tNFA_P2P_MSG *p_msg)
         nfa_p2p_cb.sap_cb[local_sap].p_cback (NFA_P2P_DISC_EVT, &evt_data);
     }
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1016,18 +1016,18 @@ BOOLEAN nfa_p2p_create_data_link_connection (tNFA_P2P_MSG *p_msg)
 ** Description      Send UI PDU
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_send_ui (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_send_ui (tNFA_P2P_MSG *p_msg)
 {
-    UINT8             local_sap;
+    uint8_t           local_sap;
     tLLCP_STATUS      status;
     tNFA_P2P_EVT_DATA evt_data;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_send_ui ()");
 
-    local_sap = (UINT8) (p_msg->api_send_ui.handle & NFA_HANDLE_MASK);
+    local_sap = (uint8_t) (p_msg->api_send_ui.handle & NFA_HANDLE_MASK);
 
     /* decrease number of tx UI PDU which is not processed by NFA for congestion control */
     if (nfa_p2p_cb.sap_cb[local_sap].num_pending_ui_pdu)
@@ -1049,13 +1049,13 @@ BOOLEAN nfa_p2p_send_ui (tNFA_P2P_MSG *p_msg)
             /* notify that this logical link is congested */
             evt_data.congest.link_type    = NFA_P2P_LLINK_TYPE;
             evt_data.congest.handle       = (NFA_HANDLE_GROUP_P2P | local_sap);
-            evt_data.congest.is_congested = TRUE;
+            evt_data.congest.is_congested = true;
 
             nfa_p2p_cb.sap_cb[local_sap].p_cback (NFA_P2P_CONGEST_EVT, &evt_data);
         }
     }
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1065,18 +1065,18 @@ BOOLEAN nfa_p2p_send_ui (tNFA_P2P_MSG *p_msg)
 ** Description      Send I PDU
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_send_data (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_send_data (tNFA_P2P_MSG *p_msg)
 {
     tNFA_P2P_EVT_DATA evt_data;
     tLLCP_STATUS      status;
-    UINT8             xx;
+    uint8_t           xx;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_send_data ()");
 
-    xx = (UINT8) (p_msg->api_send_data.conn_handle & NFA_HANDLE_MASK);
+    xx = (uint8_t) (p_msg->api_send_data.conn_handle & NFA_HANDLE_MASK);
     xx &= ~NFA_P2P_HANDLE_FLAG_CONN;
 
     /* decrease number of tx I PDU which is not processed by NFA for congestion control */
@@ -1099,13 +1099,13 @@ BOOLEAN nfa_p2p_send_data (tNFA_P2P_MSG *p_msg)
             /* notify that this data link is congested */
             evt_data.congest.link_type    = NFA_P2P_DLINK_TYPE;
             evt_data.congest.handle       = (NFA_HANDLE_GROUP_P2P | NFA_P2P_HANDLE_FLAG_CONN | xx);
-            evt_data.congest.is_congested = TRUE;
+            evt_data.congest.is_congested = true;
 
             nfa_p2p_cb.sap_cb[nfa_p2p_cb.conn_cb[xx].local_sap].p_cback (NFA_P2P_CONGEST_EVT, &evt_data);
         }
     }
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1115,23 +1115,23 @@ BOOLEAN nfa_p2p_send_data (tNFA_P2P_MSG *p_msg)
 ** Description      Set or reset local busy
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_set_local_busy (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_set_local_busy (tNFA_P2P_MSG *p_msg)
 {
-    UINT8 xx;
+    uint8_t xx;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_set_local_busy ()");
 
-    xx = (UINT8) (p_msg->api_local_busy.conn_handle & NFA_HANDLE_MASK);
+    xx = (uint8_t) (p_msg->api_local_busy.conn_handle & NFA_HANDLE_MASK);
     xx &= ~NFA_P2P_HANDLE_FLAG_CONN;
 
     LLCP_SetLocalBusyStatus (nfa_p2p_cb.conn_cb[xx].local_sap,
                              nfa_p2p_cb.conn_cb[xx].remote_sap,
                              p_msg->api_local_busy.is_busy);
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1141,13 +1141,13 @@ BOOLEAN nfa_p2p_set_local_busy (tNFA_P2P_MSG *p_msg)
 ** Description      Get WKS of remote and link MIU
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_get_link_info (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_get_link_info (tNFA_P2P_MSG *p_msg)
 {
     tNFA_P2P_EVT_DATA evt_data;
-    UINT8             local_sap;
+    uint8_t           local_sap;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_get_link_info ()");
 
@@ -1156,10 +1156,10 @@ BOOLEAN nfa_p2p_get_link_info (tNFA_P2P_MSG *p_msg)
     evt_data.link_info.local_link_miu  = nfa_p2p_cb.local_link_miu;
     evt_data.link_info.remote_link_miu = nfa_p2p_cb.remote_link_miu;
 
-    local_sap =  (UINT8) (p_msg->api_link_info.handle & NFA_HANDLE_MASK);
+    local_sap =  (uint8_t) (p_msg->api_link_info.handle & NFA_HANDLE_MASK);
     nfa_p2p_cb.sap_cb[local_sap].p_cback (NFA_P2P_LINK_INFO_EVT, &evt_data);
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1169,17 +1169,17 @@ BOOLEAN nfa_p2p_get_link_info (tNFA_P2P_MSG *p_msg)
 ** Description      Get remote SAP
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_get_remote_sap (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_get_remote_sap (tNFA_P2P_MSG *p_msg)
 {
     tNFA_P2P_EVT_DATA evt_data;
-    UINT8             local_sap;
+    uint8_t           local_sap;
 
     P2P_TRACE_DEBUG0 ("nfa_p2p_get_remote_sap ()");
 
-    local_sap =  (UINT8) (p_msg->api_remote_sap.handle & NFA_HANDLE_MASK);
+    local_sap =  (uint8_t) (p_msg->api_remote_sap.handle & NFA_HANDLE_MASK);
 
     if (!nfa_p2p_start_sdp (p_msg->api_remote_sap.service_name,
                             local_sap))
@@ -1189,7 +1189,7 @@ BOOLEAN nfa_p2p_get_remote_sap (tNFA_P2P_MSG *p_msg)
         nfa_p2p_cb.sap_cb[local_sap].p_cback (NFA_P2P_SDP_EVT, &evt_data);
     }
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1199,10 +1199,10 @@ BOOLEAN nfa_p2p_get_remote_sap (tNFA_P2P_MSG *p_msg)
 ** Description      Set LLCP configuration
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_set_llcp_cfg (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_set_llcp_cfg (tNFA_P2P_MSG *p_msg)
 {
     LLCP_SetConfig (p_msg->api_set_llcp_cfg.link_miu,
                     p_msg->api_set_llcp_cfg.opt,
@@ -1214,7 +1214,7 @@ BOOLEAN nfa_p2p_set_llcp_cfg (tNFA_P2P_MSG *p_msg)
                     p_msg->api_set_llcp_cfg.data_link_timeout,
                     p_msg->api_set_llcp_cfg.delay_first_pdu_timeout);
 
-    return TRUE;
+    return true;
 }
 
 /*******************************************************************************
@@ -1224,14 +1224,14 @@ BOOLEAN nfa_p2p_set_llcp_cfg (tNFA_P2P_MSG *p_msg)
 ** Description      Restart RF discovery by deactivating to IDLE
 **
 **
-** Returns          TRUE to deallocate buffer
+** Returns          true to deallocate buffer
 **
 *******************************************************************************/
-BOOLEAN nfa_p2p_restart_rf_discovery (tNFA_P2P_MSG *p_msg)
+bool    nfa_p2p_restart_rf_discovery (tNFA_P2P_MSG *p_msg)
 {
     P2P_TRACE_DEBUG0 ("nfa_p2p_restart_rf_discovery ()");
 
     nfa_dm_rf_deactivate (NFA_DEACTIVATE_TYPE_IDLE);
 
-    return TRUE;
+    return true;
 }

@@ -22,23 +22,23 @@
 #define NULL     0
 #endif
 
-#ifndef FALSE
-#define FALSE  0
+#ifndef false
+#define false  0
 #endif
 
-typedef unsigned char   UINT8;
-typedef unsigned short  UINT16;
-typedef unsigned long   UINT32;
-typedef unsigned long long int UINT64;
-typedef signed   long   INT32;
-typedef signed   char   INT8;
-typedef signed   short  INT16;
-typedef unsigned char   BOOLEAN;
-typedef UINT32          UINTPTR;
-typedef UINT32          TIME_STAMP;
+typedef unsigned char   uint8_t;
+typedef unsigned short  uint16_t;
+typedef unsigned long   uint32_t;
+typedef unsigned long long int uint64_t;
+typedef signed   long   int32_t;
+typedef signed   char   int8_t;
+typedef signed   short  int16_t;
+typedef unsigned char   bool   ;
+typedef uint32_t        UINTPTR;
+typedef uint32_t        TIME_STAMP;
 
-#ifndef TRUE
-#define TRUE   (!FALSE)
+#ifndef true
+#define true   (!false)
 #endif
 
 typedef unsigned char   UBYTE;
@@ -52,11 +52,11 @@ typedef unsigned char   UBYTE;
 #endif
 
 #ifndef BIG_ENDIAN
-#define BIG_ENDIAN FALSE
+#define BIG_ENDIAN false
 #endif
 
-#define UINT16_LOW_BYTE(x)      ((x) & 0xff)
-#define UINT16_HI_BYTE(x)       ((x) >> 8)
+#define uint16_t_LOW_BYTE(x)      ((x) & 0xff)
+#define uint16_t_HI_BYTE(x)       ((x) >> 8)
 
 /* MACRO definitions for safe string functions */
 /* Replace standard string functions with safe functions if available */

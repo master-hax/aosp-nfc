@@ -127,7 +127,7 @@ void nfa_ee_sys_enable (void)
     if (nfa_ee_max_ee_cfg)
     {
         /* collect NFCEE information */
-        NFC_NfceeDiscover (TRUE);
+        NFC_NfceeDiscover (true);
         nfa_sys_start_timer (&nfa_ee_cb.discv_timer, NFA_EE_DISCV_TIMEOUT_EVT, NFA_EE_DISCV_TIMEOUT_VAL);
     }
     else
@@ -149,7 +149,7 @@ void nfa_ee_sys_enable (void)
 *******************************************************************************/
 void nfa_ee_restore_one_ecb (tNFA_EE_ECB *p_cb)
 {
-    UINT8   mask;
+    uint8_t mask;
     tNFC_NFCEE_MODE_SET_REVT    rsp;
     tNFA_EE_NCI_MODE_SET        ee_msg;
 
@@ -208,11 +208,11 @@ void nfa_ee_restore_one_ecb (tNFA_EE_ECB *p_cb)
 ** Returns          None
 **
 *******************************************************************************/
-void nfa_ee_proc_nfcc_power_mode (UINT8 nfcc_power_mode)
+void nfa_ee_proc_nfcc_power_mode (uint8_t nfcc_power_mode)
 {
-    UINT32          xx;
+    uint32_t        xx;
     tNFA_EE_ECB     *p_cb;
-    BOOLEAN         proc_complete = TRUE;
+    bool            proc_complete = true;
 
     NFA_TRACE_DEBUG1 ("nfa_ee_proc_nfcc_power_mode (): nfcc_power_mode=%d", nfcc_power_mode);
     /* if NFCC power state is change to full power */
@@ -229,7 +229,7 @@ void nfa_ee_proc_nfcc_power_mode (UINT8 nfcc_power_mode)
 
                 if ((p_cb->nfcee_id != NFA_EE_INVALID) && (p_cb->ee_interface[0] != NFC_NFCEE_INTERFACE_HCI_ACCESS) && (p_cb->ee_status  != NFA_EE_STATUS_REMOVED))
                 {
-                    proc_complete       = FALSE;
+                    proc_complete       = false;
                     /* NFA_EE_STATUS_RESTORING bit makes sure the ee_status restore to ee_old_status
                      * NFA_EE_STATUS_RESTORING bit is cleared in ee_status at NFCEE_DISCOVER NTF.
                      * NFA_EE_STATUS_RESTORING bit is cleared in ee_old_status at restoring the activate/inactive status after NFCEE_DISCOVER NTF */
@@ -246,7 +246,7 @@ void nfa_ee_proc_nfcc_power_mode (UINT8 nfcc_power_mode)
                 nfa_ee_cb.ee_flags   |= NFA_EE_FLAG_WAIT_HCI;
                 nfa_ee_cb.ee_flags   |= NFA_EE_FLAG_NOTIFY_HCI;
             }
-            NFC_NfceeDiscover (TRUE);
+            NFC_NfceeDiscover (true);
             nfa_sys_start_timer (&nfa_ee_cb.discv_timer, NFA_EE_DISCV_TIMEOUT_EVT, NFA_EE_DISCV_TIMEOUT_VAL);
         }
     }
@@ -272,7 +272,7 @@ void nfa_ee_proc_nfcc_power_mode (UINT8 nfcc_power_mode)
 *******************************************************************************/
 void nfa_ee_proc_hci_info_cback (void)
 {
-    UINT32          xx;
+    uint32_t        xx;
     tNFA_EE_ECB     *p_cb;
     tNFA_EE_MSG     data;
 
@@ -373,12 +373,12 @@ void nfa_ee_proc_evt (tNFC_RESPONSE_EVT event, void *p_data)
 ** Returns          the bitmask for the given ecb.
 **
 *******************************************************************************/
-UINT8 nfa_ee_ecb_to_mask (tNFA_EE_ECB *p_cb)
+uint8_t nfa_ee_ecb_to_mask (tNFA_EE_ECB *p_cb)
 {
-    UINT8   mask;
-    UINT8   index;
+    uint8_t mask;
+    uint8_t index;
 
-    index = (UINT8) (p_cb - nfa_ee_cb.ecb);
+    index = (uint8_t) (p_cb - nfa_ee_cb.ecb);
     mask  = 1 << index;
 
     return mask;
@@ -393,9 +393,9 @@ UINT8 nfa_ee_ecb_to_mask (tNFA_EE_ECB *p_cb)
 ** Returns          tNFA_EE_ECB
 **
 *******************************************************************************/
-tNFA_EE_ECB * nfa_ee_find_ecb (UINT8 nfcee_id)
+tNFA_EE_ECB * nfa_ee_find_ecb (uint8_t nfcee_id)
 {
-    UINT32  xx;
+    uint32_t  xx;
     tNFA_EE_ECB *p_ret = NULL, *p_cb;
     NFA_TRACE_DEBUG0 ("nfa_ee_find_ecb ()");
 
@@ -428,9 +428,9 @@ tNFA_EE_ECB * nfa_ee_find_ecb (UINT8 nfcee_id)
 ** Returns          tNFA_EE_ECB
 **
 *******************************************************************************/
-tNFA_EE_ECB * nfa_ee_find_ecb_by_conn_id (UINT8 conn_id)
+tNFA_EE_ECB * nfa_ee_find_ecb_by_conn_id (uint8_t conn_id)
 {
-    UINT32  xx;
+    uint32_t  xx;
     tNFA_EE_ECB *p_ret = NULL, *p_cb;
     NFA_TRACE_DEBUG0 ("nfa_ee_find_ecb_by_conn_id ()");
 
@@ -459,7 +459,7 @@ tNFA_EE_ECB * nfa_ee_find_ecb_by_conn_id (UINT8 conn_id)
 *******************************************************************************/
 void nfa_ee_sys_disable (void)
 {
-    UINT32  xx;
+    uint32_t  xx;
     tNFA_EE_ECB *p_cb;
     tNFA_EE_MSG     msg;
 
@@ -510,7 +510,7 @@ void nfa_ee_sys_disable (void)
     nfa_sys_stop_timer (&nfa_ee_cb.discv_timer);
 
     /* If Application initiated NFCEE discovery, fake/report the event */
-    nfa_ee_report_disc_done (FALSE);
+    nfa_ee_report_disc_done (false);
 
     /* deregister message handler on NFA SYS */
     if (nfa_ee_cb.em_state == NFA_EE_EM_STATE_DISABLED)
@@ -550,7 +550,7 @@ void nfa_ee_reg_cback_enable_done (tNFA_EE_ENABLE_DONE_CBACK *p_cback)
     nfa_ee_cb.p_enable_cback = p_cback;
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
+#if (BT_TRACE_VERBOSE == true)
 /*******************************************************************************
 **
 ** Function         nfa_ee_sm_st_2_str
@@ -558,7 +558,7 @@ void nfa_ee_reg_cback_enable_done (tNFA_EE_ENABLE_DONE_CBACK *p_cback)
 ** Description      convert nfa-ee state to string
 **
 *******************************************************************************/
-static char *nfa_ee_sm_st_2_str (UINT8 state)
+static char *nfa_ee_sm_st_2_str (uint8_t state)
 {
     switch (state)
     {
@@ -589,7 +589,7 @@ static char *nfa_ee_sm_st_2_str (UINT8 state)
 ** Description      convert nfa-ee evt to string
 **
 *******************************************************************************/
-static char *nfa_ee_sm_evt_2_str (UINT16 event)
+static char *nfa_ee_sm_evt_2_str (uint16_t event)
 {
     switch (event)
     {
@@ -654,16 +654,16 @@ static char *nfa_ee_sm_evt_2_str (UINT16 event)
 ** Description      Processing event for NFA EE
 **
 **
-** Returns          TRUE if p_msg needs to be deallocated
+** Returns          true if p_msg needs to be deallocated
 **
 *******************************************************************************/
-BOOLEAN nfa_ee_evt_hdlr (BT_HDR *p_msg)
+bool    nfa_ee_evt_hdlr (BT_HDR *p_msg)
 {
     tNFA_EE_MSG *p_evt_data = (tNFA_EE_MSG *) p_msg;
-    UINT16  event = p_msg->event & 0x00ff;
-    BOOLEAN act = FALSE;
+    uint16_t  event = p_msg->event & 0x00ff;
+    bool    act = false;
 
-#if (BT_TRACE_VERBOSE == TRUE)
+#if (BT_TRACE_VERBOSE == true)
     NFA_TRACE_DEBUG4 ("nfa_ee_evt_hdlr (): Event %s(0x%02x), State: %s(%d)",
         nfa_ee_sm_evt_2_str (p_evt_data->hdr.event), p_evt_data->hdr.event,
         nfa_ee_sm_st_2_str (nfa_ee_cb.em_state), nfa_ee_cb.em_state);
@@ -675,15 +675,15 @@ BOOLEAN nfa_ee_evt_hdlr (BT_HDR *p_msg)
     {
     case NFA_EE_EM_STATE_INIT_DONE:
     case NFA_EE_EM_STATE_RESTORING:
-        act = TRUE;
+        act = true;
         break;
     case NFA_EE_EM_STATE_INIT:
         if ((p_msg->event == NFA_EE_NCI_DISC_NTF_EVT) || (p_msg->event == NFA_EE_NCI_DISC_RSP_EVT))
-            act = TRUE;
+            act = true;
         break;
     case NFA_EE_EM_STATE_DISABLING:
         if (p_msg->event == NFA_EE_NCI_CONN_EVT)
-            act = TRUE;
+            act = true;
         break;
     }
     if (act)
@@ -700,7 +700,7 @@ BOOLEAN nfa_ee_evt_hdlr (BT_HDR *p_msg)
             GKI_freebuf (p_evt_data->conn.p_data);
     }
 
-    return TRUE;
+    return true;
 }
 
 
