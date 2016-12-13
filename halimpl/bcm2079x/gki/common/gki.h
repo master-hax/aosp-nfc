@@ -327,7 +327,7 @@ typedef void (TIMER_CBACK)(void *p_tle);
 #ifdef  WIN2000
 #define TIMER_PARAM_TYPE    void *
 #else
-#define TIMER_PARAM_TYPE    uint32_t
+#define TIMER_PARAM_TYPE    uintptr_t
 #endif
 #endif
 /* Define a timer list entry
