@@ -102,7 +102,7 @@ void ce_t3t_send_to_lower (BT_HDR *p_msg)
     /* Set NFC-F SoD field (payload len + 1) */
     p_msg->offset -= 1;         /* Point to SoD field */
     p = (uint8_t *) (p_msg+1) + p_msg->offset;
-    uint8_t_TO_STREAM (p, (p_msg->len+1));
+    UINT8_TO_STREAM (p, (p_msg->len+1));
     p_msg->len += 1;            /* Increment len to include SoD */
 
 #if (BT_TRACE_PROTOCOL == TRUE)
@@ -193,14 +193,14 @@ void ce_t3t_send_rsp (tCE_CB *p_ce_cb, uint8_t *p_nfcid2, uint8_t opcode, uint8_
         p_dst = p_rsp_start = (uint8_t *) (p_rsp_msg+1) + p_rsp_msg->offset;
 
         /* Response Code */
-        uint8_t_TO_STREAM (p_dst, opcode);
+        UINT8_TO_STREAM (p_dst, opcode);
 
         /* Manufacturer ID */
         ARRAY_TO_STREAM (p_dst, p_nfcid2, NCI_RF_F_UID_LEN);
 
         /* Status1 and Status2 */
-        uint8_t_TO_STREAM (p_dst, status1);
-        uint8_t_TO_STREAM (p_dst, status2);
+        UINT8_TO_STREAM (p_dst, status1);
+        UINT8_TO_STREAM (p_dst, status2);
 
         p_rsp_msg->len = (uint16_t) (p_dst - p_rsp_start);
         ce_t3t_send_to_lower (p_rsp_msg);
@@ -422,7 +422,7 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
         p_dst = p_rsp_start = (uint8_t *) (p_rsp_msg+1) + p_rsp_msg->offset;
 
         /* Response Code */
-        uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_CHECK_RSP);
+        UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_CHECK_RSP);
 
         /* Manufacturer ID */
         ARRAY_TO_STREAM (p_dst, p_cb->local_nfcid2, NCI_RF_F_UID_LEN);
@@ -431,9 +431,9 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
         p_status = p_dst;
 
         /* Status1 and Status2 (assume success initially */
-        uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_OK);
-        uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_OK);
-        uint8_t_TO_STREAM (p_dst, p_cb->cur_cmd.num_blocks);
+        UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_OK);
+        UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_OK);
+        UINT8_TO_STREAM (p_dst, p_cb->cur_cmd.num_blocks);
 
         for (i = 0; i < p_cb->cur_cmd.num_blocks; i++)
         {
@@ -462,8 +462,8 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
                     CE_TRACE_ERROR2 ("CE: Requested too many blocks to check (requested: %i, max: %i)", p_cb->cur_cmd.num_blocks, p_cb->ndef_info.nbr);
 
                     p_dst = p_status;
-                    uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
-                    uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
+                    UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
+                    UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
                     break;
                 }
                 else if (block_number == 0)
@@ -483,22 +483,22 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
                         ndef_len    = p_cb->ndef_info.ln;
                     }
 
-                    uint8_t_TO_STREAM (p_dst, p_cb->ndef_info.version);
-                    uint8_t_TO_STREAM (p_dst, p_cb->ndef_info.nbr);
-                    uint8_t_TO_STREAM (p_dst, p_cb->ndef_info.nbw);
-                    uint16_t_TO_BE_STREAM (p_dst, p_cb->ndef_info.nmaxb);
-                    uint32_t_TO_STREAM (p_dst, 0);
-                    uint8_t_TO_STREAM (p_dst, ndef_writef);
-                    uint8_t_TO_STREAM (p_dst, p_cb->ndef_info.rwflag);
-                    uint8_t_TO_STREAM (p_dst, (ndef_len >> 16 & 0xFF));
-                    uint16_t_TO_BE_STREAM (p_dst, (ndef_len & 0xFFFF));
+                    UINT8_TO_STREAM (p_dst, p_cb->ndef_info.version);
+                    UINT8_TO_STREAM (p_dst, p_cb->ndef_info.nbr);
+                    UINT8_TO_STREAM (p_dst, p_cb->ndef_info.nbw);
+                    UINT16_TO_BE_STREAM (p_dst, p_cb->ndef_info.nmaxb);
+                    UINT32_TO_STREAM (p_dst, 0);
+                    UINT8_TO_STREAM (p_dst, ndef_writef);
+                    UINT8_TO_STREAM (p_dst, p_cb->ndef_info.rwflag);
+                    UINT8_TO_STREAM (p_dst, (ndef_len >> 16 & 0xFF));
+                    UINT16_TO_BE_STREAM (p_dst, (ndef_len & 0xFFFF));
 
                     checksum = 0;
                     for (i = 0; i < T3T_MSG_NDEF_ATTR_INFO_SIZE; i++)
                     {
                         checksum+=p_temp[i];
                     }
-                    uint16_t_TO_BE_STREAM (p_dst, checksum);
+                    UINT16_TO_BE_STREAM (p_dst, checksum);
                 }
                 else
                 {
@@ -511,8 +511,8 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
                         CE_TRACE_ERROR1 ("CE: Requested block number to check %i.", block_number);
 
                         /* Error: invalid number of blocks to check */
-                        uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
-                        uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
+                        UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
+                        UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
                         break;
                     }
                     else
@@ -535,8 +535,8 @@ void ce_t3t_handle_check_cmd (tCE_CB *p_ce_cb, BT_HDR *p_cmd_msg)
                 CE_TRACE_ERROR1 ("CE: Requested invalid service code: 0x%04x.", service_code);
 
                 p_dst = p_status;
-                uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
-                uint8_t_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
+                UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS_ERROR);
+                UINT8_TO_STREAM (p_dst, T3T_MSG_RSP_STATUS2_ERROR_MEMORY);
                 break;
             }
         }
@@ -590,7 +590,7 @@ void ce_t3t_handle_non_nfc_forum_cmd (tCE_CB *p_mem_cb, uint8_t cmd_id, BT_HDR *
             if ((sc == 0xFFFF) || (sc == p_cb->system_code))
             {
                 /* Response Code */
-                uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_POLL_RSP);
+                UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_POLL_RSP);
 
                 /* Manufacturer ID */
                 ARRAY_TO_STREAM (p_dst, p_cb->local_nfcid2, NCI_RF_F_UID_LEN);
@@ -601,7 +601,7 @@ void ce_t3t_handle_non_nfc_forum_cmd (tCE_CB *p_mem_cb, uint8_t cmd_id, BT_HDR *
                 /* If requesting system code */
                 if (rc == T3T_POLL_RC_SC)
                 {
-                    uint16_t_TO_BE_STREAM (p_dst, p_cb->system_code);
+                    UINT16_TO_BE_STREAM (p_dst, p_cb->system_code);
                 }
             }
             else
@@ -613,27 +613,27 @@ void ce_t3t_handle_non_nfc_forum_cmd (tCE_CB *p_mem_cb, uint8_t cmd_id, BT_HDR *
 
         case T3T_MSG_OPC_REQ_RESPONSE_CMD:
             /* Response Code */
-            uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_REQ_RESPONSE_RSP);
+            UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_REQ_RESPONSE_RSP);
 
             /* Manufacturer ID */
             ARRAY_TO_STREAM (p_dst, p_cb->local_nfcid2, NCI_RF_F_UID_LEN);
 
             /* Mode */
-            uint8_t_TO_STREAM (p_dst, 0);
+            UINT8_TO_STREAM (p_dst, 0);
             break;
 
         case T3T_MSG_OPC_REQ_SYSTEMCODE_CMD:
             /* Response Code */
-            uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_REQ_SYSTEMCODE_RSP);
+            UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_REQ_SYSTEMCODE_RSP);
 
             /* Manufacturer ID */
             ARRAY_TO_STREAM (p_dst, p_cb->local_nfcid2, NCI_RF_F_UID_LEN);
 
             /* Number of system codes */
-            uint8_t_TO_STREAM (p_dst, 1);
+            UINT8_TO_STREAM (p_dst, 1);
 
             /* system codes */
-            uint16_t_TO_BE_STREAM (p_dst, T3T_SYSTEM_CODE_NDEF);
+            UINT16_TO_BE_STREAM (p_dst, T3T_SYSTEM_CODE_NDEF);
             break;
 
 
@@ -1024,18 +1024,18 @@ tNFC_STATUS CE_T3tSendCheckRsp (uint8_t status1, uint8_t status2, uint8_t num_bl
         p_dst = p_rsp_start = (uint8_t *) (p_rsp_msg+1) + p_rsp_msg->offset;
 
         /* Response Code */
-        uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_CHECK_RSP);
+        UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_CHECK_RSP);
 
         /* Manufacturer ID */
         ARRAY_TO_STREAM (p_dst, p_cb->local_nfcid2, NCI_RF_F_UID_LEN);
 
         /* Status1 and Status2 */
-        uint8_t_TO_STREAM (p_dst, status1);
-        uint8_t_TO_STREAM (p_dst, status2);
+        UINT8_TO_STREAM (p_dst, status1);
+        UINT8_TO_STREAM (p_dst, status2);
 
         if (status1 == T3T_MSG_RSP_STATUS_OK)
         {
-            uint8_t_TO_STREAM (p_dst, num_blocks);
+            UINT8_TO_STREAM (p_dst, num_blocks);
             ARRAY_TO_STREAM (p_dst, p_block_data, (num_blocks * T3T_MSG_BLOCKSIZE));
         }
 

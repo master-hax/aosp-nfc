@@ -2337,28 +2337,28 @@ tNFC_STATUS RW_T1tFormatNDef (void)
     p = p_t1t->ndef_first_block;
 
     /* Prepare Capability Container */
-    uint8_t_TO_BE_STREAM (p, T1T_CC_NMN);
-    uint8_t_TO_BE_STREAM (p, T1T_CC_VNO);
-    uint8_t_TO_BE_STREAM (p, p_ret->tms);
-    uint8_t_TO_BE_STREAM (p, T1T_CC_RWA_RW);
+    UINT8_TO_BE_STREAM (p, T1T_CC_NMN);
+    UINT8_TO_BE_STREAM (p, T1T_CC_VNO);
+    UINT8_TO_BE_STREAM (p, p_ret->tms);
+    UINT8_TO_BE_STREAM (p, T1T_CC_RWA_RW);
     if (p_ret->b_dynamic)
     {
         /* Prepare Lock and Memory TLV */
-        uint8_t_TO_BE_STREAM (p, TAG_LOCK_CTRL_TLV);
-        uint8_t_TO_BE_STREAM (p, T1T_DEFAULT_TLV_LEN);
-        uint8_t_TO_BE_STREAM (p, p_ret->lock_tlv[0]);
-        uint8_t_TO_BE_STREAM (p, p_ret->lock_tlv[1]);
+        UINT8_TO_BE_STREAM (p, TAG_LOCK_CTRL_TLV);
+        UINT8_TO_BE_STREAM (p, T1T_DEFAULT_TLV_LEN);
+        UINT8_TO_BE_STREAM (p, p_ret->lock_tlv[0]);
+        UINT8_TO_BE_STREAM (p, p_ret->lock_tlv[1]);
         p = p_t1t->ndef_final_block;
-        uint8_t_TO_BE_STREAM (p, p_ret->lock_tlv[2]);
-        uint8_t_TO_BE_STREAM (p, TAG_MEM_CTRL_TLV);
-        uint8_t_TO_BE_STREAM (p, T1T_DEFAULT_TLV_LEN);
-        uint8_t_TO_BE_STREAM (p, p_ret->mem_tlv[0]);
-        uint8_t_TO_BE_STREAM (p, p_ret->mem_tlv[1]);
-        uint8_t_TO_BE_STREAM (p, p_ret->mem_tlv[2]);
+        UINT8_TO_BE_STREAM (p, p_ret->lock_tlv[2]);
+        UINT8_TO_BE_STREAM (p, TAG_MEM_CTRL_TLV);
+        UINT8_TO_BE_STREAM (p, T1T_DEFAULT_TLV_LEN);
+        UINT8_TO_BE_STREAM (p, p_ret->mem_tlv[0]);
+        UINT8_TO_BE_STREAM (p, p_ret->mem_tlv[1]);
+        UINT8_TO_BE_STREAM (p, p_ret->mem_tlv[2]);
     }
     /* Prepare NULL NDEF TLV */
-    uint8_t_TO_BE_STREAM (p, TAG_NDEF_TLV);
-    uint8_t_TO_BE_STREAM (p, 0);
+    UINT8_TO_BE_STREAM (p, TAG_NDEF_TLV);
+    UINT8_TO_BE_STREAM (p, 0);
 
     if (rw_cb.tcb.t1t.hr[0] != T1T_STATIC_HR0 || rw_cb.tcb.t1t.hr[1] >= RW_T1T_HR1_MIN)
     {

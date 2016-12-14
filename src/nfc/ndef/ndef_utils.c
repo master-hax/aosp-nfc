@@ -885,7 +885,7 @@ extern tNDEF_STATUS  NDEF_MsgAddRec (uint8_t *p_msg, uint32_t max_size, uint32_t
     if (plen == 1)
         *p_rec++ = (uint8_t)payload_len;
     else
-         uint32_t_TO_BE_STREAM (p_rec, payload_len);
+         UINT32_TO_BE_STREAM (p_rec, payload_len);
 
     /* ID field Length (optional) */
     if (ilen > 0)
@@ -981,7 +981,7 @@ extern tNDEF_STATUS NDEF_MsgInsertRec (uint8_t *p_msg, uint32_t max_size, uint32
     if (plen == 1)
         *p_rec++ = (uint8_t)payload_len;
     else
-         uint32_t_TO_BE_STREAM (p_rec, payload_len);
+         UINT32_TO_BE_STREAM (p_rec, payload_len);
 
     /* ID field Length (optional) */
     if (ilen != 0)
@@ -1128,7 +1128,7 @@ tNDEF_STATUS NDEF_MsgAppendPayload (uint8_t *p_msg, uint32_t max_size, uint32_t 
     if (new_paylen > 255)
     {
         *p_rec &= ~NDEF_SR_MASK;
-        uint32_t_TO_BE_STREAM (pp, new_paylen);
+        UINT32_TO_BE_STREAM (pp, new_paylen);
     }
     else
         *pp = (uint8_t)new_paylen;
@@ -1213,7 +1213,7 @@ tNDEF_STATUS NDEF_MsgReplacePayload (uint8_t *p_msg, uint32_t max_size, uint32_t
         /* Store in the new length */
         if (new_pl_len > 255)
         {
-            uint32_t_TO_BE_STREAM (pp, new_pl_len);
+            UINT32_TO_BE_STREAM (pp, new_pl_len);
         }
         else
             *pp = (uint8_t)new_pl_len;
@@ -1245,7 +1245,7 @@ tNDEF_STATUS NDEF_MsgReplacePayload (uint8_t *p_msg, uint32_t max_size, uint32_t
         /* Store in the new length */
         if (new_pl_len > 255)
         {
-            uint32_t_TO_BE_STREAM (pp, new_pl_len);
+            UINT32_TO_BE_STREAM (pp, new_pl_len);
         }
         else
             *pp = (uint8_t)new_pl_len;

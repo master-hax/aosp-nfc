@@ -634,12 +634,12 @@ static bool    nfc_hal_prm_nvm_rw_cmd(void)
 
     p = p_buff;
 
-    uint8_t_TO_STREAM  (p, (NCI_MTS_CMD|NCI_GID_PROP));
-    uint8_t_TO_STREAM  (p, NCI_MSG_EEPROM_RW);
-    uint8_t_TO_STREAM  (p, (len+4));
-    uint8_t_TO_STREAM  (p, 1); /* 1=write 0=read */
-    uint16_t_TO_STREAM  (p, p_param[nfc_hal_cb.prm.param_idx].offset);
-    uint8_t_TO_STREAM  (p, len);
+    UINT8_TO_STREAM  (p, (NCI_MTS_CMD|NCI_GID_PROP));
+    UINT8_TO_STREAM  (p, NCI_MSG_EEPROM_RW);
+    UINT8_TO_STREAM  (p, (len+4));
+    UINT8_TO_STREAM  (p, 1); /* 1=write 0=read */
+    UINT16_TO_STREAM  (p, p_param[nfc_hal_cb.prm.param_idx].offset);
+    UINT8_TO_STREAM  (p, len);
     memset (p, 0, len); /* Fill remaining bytes with zeros*/
 
     nfc_hal_cb.prm.param_idx++;

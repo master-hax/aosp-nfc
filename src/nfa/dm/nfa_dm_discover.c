@@ -330,70 +330,70 @@ static tNFA_STATUS nfa_dm_set_rf_listen_mode_config (tNFA_DM_DISC_TECH_PROTO_MAS
     */
     if (nfa_dm_cb.disc_cb.listen_RT[NFA_DM_DISC_LRT_NFC_A] == NFA_DM_DISC_HOST_ID_DH)
     {
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_BIT_FRAME_SDD);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LA_BIT_FRAME_SDD);
-        uint8_t_TO_STREAM (p, 0x04);
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_PLATFORM_CONFIG);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LA_PLATFORM_CONFIG);
-        uint8_t_TO_STREAM (p, platform);
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_SEL_INFO);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LA_SEL_INFO);
-        uint8_t_TO_STREAM (p, sens_info);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_BIT_FRAME_SDD);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LA_BIT_FRAME_SDD);
+        UINT8_TO_STREAM (p, 0x04);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_PLATFORM_CONFIG);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LA_PLATFORM_CONFIG);
+        UINT8_TO_STREAM (p, platform);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_SEL_INFO);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LA_SEL_INFO);
+        UINT8_TO_STREAM (p, sens_info);
     }
     else /* Let NFCC use UICC configuration by configuring with length = 0 */
     {
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_BIT_FRAME_SDD);
-        uint8_t_TO_STREAM (p, 0);
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_PLATFORM_CONFIG);
-        uint8_t_TO_STREAM (p, 0);
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_SEL_INFO);
-        uint8_t_TO_STREAM (p, 0);
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_NFCID1);
-        uint8_t_TO_STREAM (p, 0);
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_HIST_BY);
-        uint8_t_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_BIT_FRAME_SDD);
+        UINT8_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_PLATFORM_CONFIG);
+        UINT8_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_SEL_INFO);
+        UINT8_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_NFCID1);
+        UINT8_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_HIST_BY);
+        UINT8_TO_STREAM (p, 0);
     }
 
     /* for Listen B */
     if (nfa_dm_cb.disc_cb.listen_RT[NFA_DM_DISC_LRT_NFC_B] == NFA_DM_DISC_HOST_ID_DH)
     {
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_SENSB_INFO);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LB_SENSB_INFO);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_SENSB_INFO);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LB_SENSB_INFO);
         if (tech_proto_mask & NFA_DM_DISC_MASK_LB_ISO_DEP)
         {
-            uint8_t_TO_STREAM (p, NCI_LISTEN_PROTOCOL_ISO_DEP);
+            UINT8_TO_STREAM (p, NCI_LISTEN_PROTOCOL_ISO_DEP);
         }
         else
         {
-            uint8_t_TO_STREAM (p,  0x00);
+            UINT8_TO_STREAM (p,  0x00);
         }
     }
     else /* Let NFCC use UICC configuration by configuring with length = 0 */
     {
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_SENSB_INFO);
-        uint8_t_TO_STREAM (p, 0);
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_NFCID0);
-        uint8_t_TO_STREAM (p, 0);
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_APPDATA);
-        uint8_t_TO_STREAM (p, 0);
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_ADC_FO);
-        uint8_t_TO_STREAM (p, 0);
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_H_INFO);
-        uint8_t_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_SENSB_INFO);
+        UINT8_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_NFCID0);
+        UINT8_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_APPDATA);
+        UINT8_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_ADC_FO);
+        UINT8_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_H_INFO);
+        UINT8_TO_STREAM (p, 0);
     }
 
     /* for Listen F */
     /* NFCC can support NFC-DEP and T3T listening based on NFCID routing regardless of NFC-F tech routing */
-    uint8_t_TO_STREAM (p, NFC_PMID_LF_PROTOCOL);
-    uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LF_PROTOCOL);
+    UINT8_TO_STREAM (p, NFC_PMID_LF_PROTOCOL);
+    UINT8_TO_STREAM (p, NCI_PARAM_LEN_LF_PROTOCOL);
     if ((tech_proto_mask & NFA_DM_DISC_MASK_LF_NFC_DEP) &&
         !nfa_dm_is_p2p_paused() )
     {
-        uint8_t_TO_STREAM (p, NCI_LISTEN_PROTOCOL_NFC_DEP);
+        UINT8_TO_STREAM (p, NCI_LISTEN_PROTOCOL_NFC_DEP);
     }
     else
     {
-        uint8_t_TO_STREAM (p, 0x00);
+        UINT8_TO_STREAM (p, 0x00);
     }
 
     if (p > params)
@@ -422,9 +422,9 @@ static void nfa_dm_set_total_duration (void)
     p = params;
 
     /* for total duration */
-    uint8_t_TO_STREAM (p, NFC_PMID_TOTAL_DURATION);
-    uint8_t_TO_STREAM (p, NCI_PARAM_LEN_TOTAL_DURATION);
-    uint16_t_TO_STREAM (p, nfa_dm_cb.disc_cb.disc_duration);
+    UINT8_TO_STREAM (p, NFC_PMID_TOTAL_DURATION);
+    UINT8_TO_STREAM (p, NCI_PARAM_LEN_TOTAL_DURATION);
+    UINT16_TO_STREAM (p, nfa_dm_cb.disc_cb.disc_duration);
 
     if (p > params)
     {
@@ -457,17 +457,17 @@ static void nfa_dm_set_rf_listen_mode_raw_config (tNFA_DM_DISC_TECH_PROTO_MASK *
     {
         p = params;
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_BIT_FRAME_SDD);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LA_BIT_FRAME_SDD);
-        uint8_t_TO_STREAM (p, p_cfg->la_bit_frame_sdd);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_BIT_FRAME_SDD);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LA_BIT_FRAME_SDD);
+        UINT8_TO_STREAM (p, p_cfg->la_bit_frame_sdd);
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_PLATFORM_CONFIG);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LA_PLATFORM_CONFIG);
-        uint8_t_TO_STREAM (p, p_cfg->la_platform_config);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_PLATFORM_CONFIG);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LA_PLATFORM_CONFIG);
+        UINT8_TO_STREAM (p, p_cfg->la_platform_config);
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_SEL_INFO);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LA_SEL_INFO);
-        uint8_t_TO_STREAM (p, p_cfg->la_sel_info);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_SEL_INFO);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LA_SEL_INFO);
+        UINT8_TO_STREAM (p, p_cfg->la_sel_info);
 
         if (p_cfg->la_platform_config == NCI_PARAM_PLATFORM_T1T)
         {
@@ -493,8 +493,8 @@ static void nfa_dm_set_rf_listen_mode_raw_config (tNFA_DM_DISC_TECH_PROTO_MASK *
             }
         }
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LA_NFCID1);
-        uint8_t_TO_STREAM (p, p_cfg->la_nfcid1_len);
+        UINT8_TO_STREAM (p, NFC_PMID_LA_NFCID1);
+        UINT8_TO_STREAM (p, p_cfg->la_nfcid1_len);
         ARRAY_TO_STREAM (p, p_cfg->la_nfcid1, p_cfg->la_nfcid1_len);
 
         nfa_dm_check_set_config ((uint8_t) (p - params), params, FALSE);
@@ -508,25 +508,25 @@ static void nfa_dm_set_rf_listen_mode_raw_config (tNFA_DM_DISC_TECH_PROTO_MASK *
     {
         p = params;
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_SENSB_INFO);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LB_SENSB_INFO);
-        uint8_t_TO_STREAM (p, p_cfg->lb_sensb_info);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_SENSB_INFO);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LB_SENSB_INFO);
+        UINT8_TO_STREAM (p, p_cfg->lb_sensb_info);
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_NFCID0);
-        uint8_t_TO_STREAM (p, p_cfg->lb_nfcid0_len);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_NFCID0);
+        UINT8_TO_STREAM (p, p_cfg->lb_nfcid0_len);
         ARRAY_TO_STREAM (p, p_cfg->lb_nfcid0, p_cfg->lb_nfcid0_len);
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_APPDATA);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LB_APPDATA);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_APPDATA);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LB_APPDATA);
         ARRAY_TO_STREAM (p, p_cfg->lb_app_data, NCI_PARAM_LEN_LB_APPDATA);
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_SFGI);
-        uint8_t_TO_STREAM (p, 1);
-        uint8_t_TO_STREAM (p, p_cfg->lb_adc_fo);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_SFGI);
+        UINT8_TO_STREAM (p, 1);
+        UINT8_TO_STREAM (p, p_cfg->lb_adc_fo);
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LB_ADC_FO);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LB_ADC_FO);
-        uint8_t_TO_STREAM (p, p_cfg->lb_adc_fo);
+        UINT8_TO_STREAM (p, NFC_PMID_LB_ADC_FO);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LB_ADC_FO);
+        UINT8_TO_STREAM (p, p_cfg->lb_adc_fo);
 
         nfa_dm_check_set_config ((uint8_t) (p - params), params, FALSE);
 
@@ -544,31 +544,31 @@ static void nfa_dm_set_rf_listen_mode_raw_config (tNFA_DM_DISC_TECH_PROTO_MASK *
     {
         p = params;
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LF_CON_BITR_F);
-        uint8_t_TO_STREAM (p, 1);
-        uint8_t_TO_STREAM (p, p_cfg->lf_con_bitr_f);
+        UINT8_TO_STREAM (p, NFC_PMID_LF_CON_BITR_F);
+        UINT8_TO_STREAM (p, 1);
+        UINT8_TO_STREAM (p, p_cfg->lf_con_bitr_f);
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LF_PROTOCOL);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LF_PROTOCOL);
-        uint8_t_TO_STREAM (p, p_cfg->lf_protocol_type);
+        UINT8_TO_STREAM (p, NFC_PMID_LF_PROTOCOL);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LF_PROTOCOL);
+        UINT8_TO_STREAM (p, p_cfg->lf_protocol_type);
 
-        uint8_t_TO_STREAM (p, NFC_PMID_LF_T3T_FLAGS2);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_LF_T3T_FLAGS2);
-        uint16_t_TO_STREAM(p, p_cfg->lf_t3t_flags);
+        UINT8_TO_STREAM (p, NFC_PMID_LF_T3T_FLAGS2);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_LF_T3T_FLAGS2);
+        UINT16_TO_STREAM(p, p_cfg->lf_t3t_flags);
 
         /* if the bit at position X is set to 0, SC/NFCID2 with index X shall be ignored */
         for (xx = 0; xx < NFA_LF_MAX_SC_NFCID2; xx++)
         {
             if ((p_cfg->lf_t3t_flags & (0x0001 << xx)) != 0x0000)
             {
-                uint8_t_TO_STREAM (p, NFC_PMID_LF_T3T_ID1 + xx);
-                uint8_t_TO_STREAM (p, NCI_SYSTEMCODE_LEN + NCI_NFCID2_LEN);
+                UINT8_TO_STREAM (p, NFC_PMID_LF_T3T_ID1 + xx);
+                UINT8_TO_STREAM (p, NCI_SYSTEMCODE_LEN + NCI_NFCID2_LEN);
                 ARRAY_TO_STREAM (p, p_cfg->lf_t3t_identifier[xx], NCI_SYSTEMCODE_LEN + NCI_NFCID2_LEN);
             }
         }
 
-        uint8_t_TO_STREAM (p,  NFC_PMID_LF_T3T_PMM);
-        uint8_t_TO_STREAM (p,  NCI_PARAM_LEN_LF_T3T_PMM);
+        UINT8_TO_STREAM (p,  NFC_PMID_LF_T3T_PMM);
+        UINT8_TO_STREAM (p,  NCI_PARAM_LEN_LF_T3T_PMM);
         ARRAY_TO_STREAM (p,  p_cfg->lf_t3t_pmm, NCI_PARAM_LEN_LF_T3T_PMM);
 
         nfa_dm_check_set_config ((uint8_t) (p - params), params, FALSE);
@@ -591,21 +591,21 @@ static void nfa_dm_set_rf_listen_mode_raw_config (tNFA_DM_DISC_TECH_PROTO_MASK *
     {
         p = params;
 
-        uint8_t_TO_STREAM (p, NFC_PMID_FWI);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_FWI);
-        uint8_t_TO_STREAM (p, p_cfg->li_fwi);
+        UINT8_TO_STREAM (p, NFC_PMID_FWI);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_FWI);
+        UINT8_TO_STREAM (p, p_cfg->li_fwi);
 
         if (disc_mask & NFA_DM_DISC_MASK_LA_ISO_DEP)
         {
-            uint8_t_TO_STREAM (p, NFC_PMID_LA_HIST_BY);
-            uint8_t_TO_STREAM (p, p_cfg->la_hist_bytes_len);
+            UINT8_TO_STREAM (p, NFC_PMID_LA_HIST_BY);
+            UINT8_TO_STREAM (p, p_cfg->la_hist_bytes_len);
             ARRAY_TO_STREAM (p, p_cfg->la_hist_bytes, p_cfg->la_hist_bytes_len);
         }
 
         if (disc_mask & NFA_DM_DISC_MASK_LB_ISO_DEP)
         {
-            uint8_t_TO_STREAM (p, NFC_PMID_LB_H_INFO);
-            uint8_t_TO_STREAM (p, p_cfg->lb_h_info_resp_len);
+            UINT8_TO_STREAM (p, NFC_PMID_LB_H_INFO);
+            UINT8_TO_STREAM (p, p_cfg->lb_h_info_resp_len);
             ARRAY_TO_STREAM (p, p_cfg->lb_h_info_resp, p_cfg->lb_h_info_resp_len);
         }
 
@@ -620,17 +620,17 @@ static void nfa_dm_set_rf_listen_mode_raw_config (tNFA_DM_DISC_TECH_PROTO_MASK *
     {
         p = params;
 
-        uint8_t_TO_STREAM (p, NFC_PMID_WT);
-        uint8_t_TO_STREAM (p, NCI_PARAM_LEN_WT);
-        uint8_t_TO_STREAM (p, p_cfg->ln_wt);
+        UINT8_TO_STREAM (p, NFC_PMID_WT);
+        UINT8_TO_STREAM (p, NCI_PARAM_LEN_WT);
+        UINT8_TO_STREAM (p, p_cfg->ln_wt);
 
-        uint8_t_TO_STREAM (p, NFC_PMID_ATR_RES_GEN_BYTES);
-        uint8_t_TO_STREAM (p, p_cfg->ln_atr_res_gen_bytes_len);
+        UINT8_TO_STREAM (p, NFC_PMID_ATR_RES_GEN_BYTES);
+        UINT8_TO_STREAM (p, p_cfg->ln_atr_res_gen_bytes_len);
         ARRAY_TO_STREAM (p, p_cfg->ln_atr_res_gen_bytes, p_cfg->ln_atr_res_gen_bytes_len);
 
-        uint8_t_TO_STREAM (p, NFC_PMID_ATR_RSP_CONFIG);
-        uint8_t_TO_STREAM (p, 1);
-        uint8_t_TO_STREAM (p, p_cfg->ln_atr_res_config);
+        UINT8_TO_STREAM (p, NFC_PMID_ATR_RSP_CONFIG);
+        UINT8_TO_STREAM (p, 1);
+        UINT8_TO_STREAM (p, p_cfg->ln_atr_res_config);
 
         nfa_dm_check_set_config ((uint8_t) (p - params), params, FALSE);
     }
@@ -1105,15 +1105,15 @@ void nfa_dm_start_rf_discover (void)
              * in NFC-DEP, by setting RC=1 in that case. Otherwise, keep
              * the default of RC=0. */
             p = config_params;
-            uint8_t_TO_STREAM (p, NFC_PMID_PF_RC);
-            uint8_t_TO_STREAM (p, NCI_PARAM_LEN_PF_RC);
+            UINT8_TO_STREAM (p, NFC_PMID_PF_RC);
+            UINT8_TO_STREAM (p, NCI_PARAM_LEN_PF_RC);
             if ((dm_disc_mask & NFA_DM_DISC_MASK_PF_NFC_DEP) && !nfa_dm_is_p2p_paused())
             {
-                uint8_t_TO_STREAM (p, 0x00); // RC=0
+                UINT8_TO_STREAM (p, 0x00); // RC=0
             }
             else
             {
-                uint8_t_TO_STREAM (p, 0x01); // RC=1
+                UINT8_TO_STREAM (p, 0x01); // RC=1
             }
             nfa_dm_check_set_config(p - config_params, config_params, FALSE);
         }

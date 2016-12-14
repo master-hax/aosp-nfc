@@ -1952,7 +1952,7 @@ static void rw_t2t_handle_format_tag_rsp (uint8_t *p_data)
 
 
     p = p_t2t->ndef_final_block;
-    uint8_t_TO_BE_STREAM (p, p_t2t->tlv_value[2]);
+    UINT8_TO_BE_STREAM (p, p_t2t->tlv_value[2]);
 
     switch (p_t2t->substate)
     {
@@ -2014,16 +2014,16 @@ static void rw_t2t_handle_format_tag_rsp (uint8_t *p_data)
     case RW_T2T_SUBSTATE_WAIT_SET_LOCK_TLV:
 
         /* Prepare NULL NDEF TLV, TERMINATOR_TLV */
-        uint8_t_TO_BE_STREAM (p, TAG_NDEF_TLV);
-        uint8_t_TO_BE_STREAM (p, 0);
+        UINT8_TO_BE_STREAM (p, TAG_NDEF_TLV);
+        UINT8_TO_BE_STREAM (p, 0);
 
         if (  ((p_ret = t2t_tag_init_data (p_t2t->tag_hdr[0], FALSE, 0)) != NULL)
             &&(!p_ret->b_otp)  )
         {
-            uint8_t_TO_BE_STREAM (p, TAG_TERMINATOR_TLV);
+            UINT8_TO_BE_STREAM (p, TAG_TERMINATOR_TLV);
         }
         else
-            uint8_t_TO_BE_STREAM (p, 0);
+            UINT8_TO_BE_STREAM (p, 0);
 
         p_t2t->substate = RW_T2T_SUBSTATE_WAIT_SET_NULL_NDEF;
         /* send WRITE-E8 command */
@@ -2576,10 +2576,10 @@ tNFC_STATUS rw_t2t_set_lock_tlv (uint16_t addr, uint8_t num_dyn_lock_bits, uint1
     {
         memset (data_block, 0, T2T_BLOCK_SIZE);
         p = data_block;
-        uint8_t_TO_BE_STREAM (p, T2T_TLV_TYPE_LOCK_CTRL);
-        uint8_t_TO_BE_STREAM (p, T2T_TLEN_LOCK_CTRL_TLV);
-        uint8_t_TO_BE_STREAM (p, (PageAddr << 4 | ByteOffset));
-        uint8_t_TO_BE_STREAM (p, num_dyn_lock_bits);
+        UINT8_TO_BE_STREAM (p, T2T_TLV_TYPE_LOCK_CTRL);
+        UINT8_TO_BE_STREAM (p, T2T_TLEN_LOCK_CTRL_TLV);
+        UINT8_TO_BE_STREAM (p, (PageAddr << 4 | ByteOffset));
+        UINT8_TO_BE_STREAM (p, num_dyn_lock_bits);
 
         p_t2t->tlv_value[0] = PageAddr << 4 | ByteOffset;
         p_t2t->tlv_value[1] = num_dyn_lock_bits;
@@ -2628,10 +2628,10 @@ tNFC_STATUS rw_t2t_set_cc (uint8_t tms)
     p = cc_block;
 
     /* Prepare Capability Container */
-    uint8_t_TO_BE_STREAM (p, T2T_CC0_NMN);
-    uint8_t_TO_BE_STREAM (p, T2T_CC1_VNO);
-    uint8_t_TO_BE_STREAM (p, tms);
-    uint8_t_TO_BE_STREAM (p, T2T_CC3_RWA_RW);
+    UINT8_TO_BE_STREAM (p, T2T_CC0_NMN);
+    UINT8_TO_BE_STREAM (p, T2T_CC1_VNO);
+    UINT8_TO_BE_STREAM (p, tms);
+    UINT8_TO_BE_STREAM (p, T2T_CC3_RWA_RW);
 
     p_t2t->substate = RW_T2T_SUBSTATE_WAIT_SET_CC;
 
