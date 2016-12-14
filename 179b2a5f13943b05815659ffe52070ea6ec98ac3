@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da910b63_da85792b",
+        "filename": "src/gki/common/gki.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2016-12-14T17:40:18Z",
+      "side": 1,
+      "message": "without WIN2000 support, it looks like TIMER_PARAM_TYPE can be completely removed.  I would vote for simplicity over WIN2000 support.",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 6
+      },
+      "revId": "179b2a5f13943b05815659ffe52070ea6ec98ac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
