@@ -20,7 +20,7 @@
 #include <stdarg.h>
 #include <errno.h>
 
-#define GKI_DEBUG   false
+#define GKI_DEBUG   FALSE
 
 #include <pthread.h>  /* must be 1st header defined  */
 #include <time.h>
@@ -272,7 +272,7 @@ uint8_t GKI_create_task (TASKPTR task_entry, uint8_t task_id, int8_t *taskname, 
 
     if(pthread_getschedparam(gki_cb.os.thread_id[task_id], &policy, &param)==0)
     {
-#if defined(PBS_SQL_TASK)
+#if (PBS_SQL_TASK == TRUE)
          if (task_id == PBS_SQL_TASK)
          {
              GKI_TRACE_0("PBS SQL lowest priority task");
