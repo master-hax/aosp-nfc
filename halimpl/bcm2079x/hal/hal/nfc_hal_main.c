@@ -519,7 +519,7 @@ static void nfc_hal_send_credit_ntf_for_cid (uint8_t cid)
         ps = p;
         NCI_MSG_BLD_HDR0(p, NCI_MT_NTF, NCI_GID_CORE);
         NCI_MSG_BLD_HDR1(p, NCI_MSG_CORE_CONN_CREDITS);
-        uint8_t_TO_STREAM (p, 0x03);
+        UINT8_TO_STREAM (p, 0x03);
 
         /* Number of credit entries */
         *p++ = 0x01;

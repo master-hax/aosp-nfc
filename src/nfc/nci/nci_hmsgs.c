@@ -57,8 +57,8 @@ uint8_t nci_snd_core_reset (uint8_t reset_type)
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_CORE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_CORE_RESET);
-    uint8_t_TO_STREAM (pp, NCI_CORE_PARAM_SIZE_RESET);
-    uint8_t_TO_STREAM (pp, reset_type);
+    UINT8_TO_STREAM (pp, NCI_CORE_PARAM_SIZE_RESET);
+    UINT8_TO_STREAM (pp, reset_type);
 
     nfc_ncif_send_cmd (p);
     return (NCI_STATUS_OK);
@@ -89,7 +89,7 @@ uint8_t nci_snd_core_init (void)
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_CORE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_CORE_INIT);
-    uint8_t_TO_STREAM (pp, NCI_CORE_PARAM_SIZE_INIT);
+    UINT8_TO_STREAM (pp, NCI_CORE_PARAM_SIZE_INIT);
 
     nfc_ncif_send_cmd (p);
     return (NCI_STATUS_OK);
@@ -120,8 +120,8 @@ uint8_t nci_snd_core_get_config (uint8_t *param_ids, uint8_t num_ids)
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_CORE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_CORE_GET_CONFIG);
-    uint8_t_TO_STREAM (pp, (uint8_t) (num_ids + 1));
-    uint8_t_TO_STREAM (pp, num_ids);
+    UINT8_TO_STREAM (pp, (uint8_t) (num_ids + 1));
+    UINT8_TO_STREAM (pp, num_ids);
     ARRAY_TO_STREAM (pp, param_ids, num_ids);
 
     nfc_ncif_send_cmd (p);
@@ -153,7 +153,7 @@ uint8_t nci_snd_core_set_config (uint8_t *p_param_tlvs, uint8_t tlv_size)
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_CORE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_CORE_SET_CONFIG);
-    uint8_t_TO_STREAM (pp, (uint8_t) (tlv_size + 1));
+    UINT8_TO_STREAM (pp, (uint8_t) (tlv_size + 1));
     len         = tlv_size;
     pt          = p_param_tlvs;
     while (len > 1)
@@ -174,7 +174,7 @@ uint8_t nci_snd_core_set_config (uint8_t *p_param_tlvs, uint8_t tlv_size)
         }
     }
 
-    uint8_t_TO_STREAM (pp, num);
+    UINT8_TO_STREAM (pp, num);
     ARRAY_TO_STREAM (pp, p_param_tlvs, tlv_size);
     nfc_ncif_send_cmd (p);
 
@@ -207,9 +207,9 @@ uint8_t nci_snd_core_conn_create (uint8_t dest_type, uint8_t num_tlv, uint8_t tl
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_CORE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_CORE_CONN_CREATE);
-    uint8_t_TO_STREAM (pp, size);
-    uint8_t_TO_STREAM (pp, dest_type);
-    uint8_t_TO_STREAM (pp, num_tlv);
+    UINT8_TO_STREAM (pp, size);
+    UINT8_TO_STREAM (pp, dest_type);
+    UINT8_TO_STREAM (pp, num_tlv);
     if (tlv_size)
     {
         ARRAY_TO_STREAM (pp, p_param_tlvs, tlv_size);
@@ -245,8 +245,8 @@ uint8_t nci_snd_core_conn_close (uint8_t conn_id)
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_CORE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_CORE_CONN_CLOSE);
-    uint8_t_TO_STREAM (pp, NCI_CORE_PARAM_SIZE_CON_CLOSE);
-    uint8_t_TO_STREAM (pp, conn_id);
+    UINT8_TO_STREAM (pp, NCI_CORE_PARAM_SIZE_CON_CLOSE);
+    UINT8_TO_STREAM (pp, conn_id);
 
     nfc_ncif_send_cmd (p);
     return (NCI_STATUS_OK);
@@ -281,8 +281,8 @@ uint8_t nci_snd_nfcee_discover (uint8_t discover_action)
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_EE_MANAGE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_NFCEE_DISCOVER);
-    uint8_t_TO_STREAM (pp, NCI_PARAM_SIZE_DISCOVER_NFCEE);
-    uint8_t_TO_STREAM (pp, discover_action);
+    UINT8_TO_STREAM (pp, NCI_PARAM_SIZE_DISCOVER_NFCEE);
+    UINT8_TO_STREAM (pp, discover_action);
 
     nfc_ncif_send_cmd (p);
     return (NCI_STATUS_OK);
@@ -314,9 +314,9 @@ uint8_t nci_snd_nfcee_mode_set (uint8_t nfcee_id, uint8_t nfcee_mode)
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_EE_MANAGE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_NFCEE_MODE_SET);
-    uint8_t_TO_STREAM (pp, NCI_CORE_PARAM_SIZE_NFCEE_MODE_SET);
-    uint8_t_TO_STREAM (pp, nfcee_id);
-    uint8_t_TO_STREAM (pp, nfcee_mode);
+    UINT8_TO_STREAM (pp, NCI_CORE_PARAM_SIZE_NFCEE_MODE_SET);
+    UINT8_TO_STREAM (pp, nfcee_id);
+    UINT8_TO_STREAM (pp, nfcee_mode);
 
     nfc_ncif_send_cmd (p);
     return (NCI_STATUS_OK);
@@ -354,11 +354,11 @@ uint8_t nci_snd_discover_cmd (uint8_t num, tNCI_DISCOVER_PARAMS *p_param)
     p_size  = pp;
     pp++;
     p_start = pp;
-    uint8_t_TO_STREAM (pp, num);
+    UINT8_TO_STREAM (pp, num);
     for (xx=0; xx<num; xx++)
     {
-        uint8_t_TO_STREAM (pp, p_param[xx].type);
-        uint8_t_TO_STREAM (pp, p_param[xx].frequency);
+        UINT8_TO_STREAM (pp, p_param[xx].type);
+        UINT8_TO_STREAM (pp, p_param[xx].frequency);
     }
     *p_size = (uint8_t) (pp - p_start);
     p->len  = NCI_MSG_HDR_SIZE + *p_size;
@@ -393,10 +393,10 @@ uint8_t nci_snd_discover_select_cmd (uint8_t rf_disc_id, uint8_t protocol, uint8
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_RF_MANAGE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_RF_DISCOVER_SELECT);
-    uint8_t_TO_STREAM (pp, NCI_DISCOVER_PARAM_SIZE_SELECT);
-    uint8_t_TO_STREAM (pp, rf_disc_id);
-    uint8_t_TO_STREAM (pp, protocol);
-    uint8_t_TO_STREAM (pp, rf_interface);
+    UINT8_TO_STREAM (pp, NCI_DISCOVER_PARAM_SIZE_SELECT);
+    UINT8_TO_STREAM (pp, rf_disc_id);
+    UINT8_TO_STREAM (pp, protocol);
+    UINT8_TO_STREAM (pp, rf_interface);
 
     nfc_ncif_send_cmd (p);
     return (NCI_STATUS_OK);
@@ -430,8 +430,8 @@ uint8_t nci_snd_deactivate_cmd (uint8_t de_act_type )
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_RF_MANAGE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_RF_DEACTIVATE);
-    uint8_t_TO_STREAM (pp, NCI_DISCOVER_PARAM_SIZE_DEACT);
-    uint8_t_TO_STREAM (pp, de_act_type);
+    UINT8_TO_STREAM (pp, NCI_DISCOVER_PARAM_SIZE_DEACT);
+    UINT8_TO_STREAM (pp, de_act_type);
 
     nfc_ncif_send_cmd (p);
     return (NCI_STATUS_OK);
@@ -469,12 +469,12 @@ uint8_t nci_snd_discover_map_cmd (uint8_t num, tNCI_DISCOVER_MAPS *p_maps)
     p_size  = pp;
     pp++;
     p_start = pp;
-    uint8_t_TO_STREAM (pp, num);
+    UINT8_TO_STREAM (pp, num);
     for (xx = 0; xx < num; xx++)
     {
-        uint8_t_TO_STREAM (pp, p_maps[xx].protocol);
-        uint8_t_TO_STREAM (pp, p_maps[xx].mode);
-        uint8_t_TO_STREAM (pp, p_maps[xx].intf_type);
+        UINT8_TO_STREAM (pp, p_maps[xx].protocol);
+        UINT8_TO_STREAM (pp, p_maps[xx].mode);
+        UINT8_TO_STREAM (pp, p_maps[xx].intf_type);
     }
     *p_size = (uint8_t) (pp - p_start);
     p->len  = NCI_MSG_HDR_SIZE + *p_size;
@@ -507,10 +507,10 @@ uint8_t nci_snd_t3t_polling (uint16_t system_code, uint8_t rc, uint8_t tsn)
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_RF_MANAGE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_RF_T3T_POLLING);
-    uint8_t_TO_STREAM (pp, NCI_RF_PARAM_SIZE_T3T_POLLING);
-    uint16_t_TO_BE_STREAM (pp, system_code);
-    uint8_t_TO_STREAM (pp, rc);
-    uint8_t_TO_STREAM (pp, tsn);
+    UINT8_TO_STREAM (pp, NCI_RF_PARAM_SIZE_T3T_POLLING);
+    UINT16_TO_BE_STREAM (pp, system_code);
+    UINT8_TO_STREAM (pp, rc);
+    UINT8_TO_STREAM (pp, tsn);
 
     nfc_ncif_send_cmd (p);
     return (NCI_STATUS_OK);
@@ -542,7 +542,7 @@ uint8_t nci_snd_parameter_update_cmd (uint8_t *p_param_tlvs, uint8_t tlv_size)
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_RF_MANAGE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_RF_PARAMETER_UPDATE);
-    uint8_t_TO_STREAM (pp, (uint8_t) (tlv_size + 1));
+    UINT8_TO_STREAM (pp, (uint8_t) (tlv_size + 1));
     len         = tlv_size;
     pt          = p_param_tlvs;
     while (len > 1)
@@ -563,7 +563,7 @@ uint8_t nci_snd_parameter_update_cmd (uint8_t *p_param_tlvs, uint8_t tlv_size)
         }
     }
 
-    uint8_t_TO_STREAM (pp, num);
+    UINT8_TO_STREAM (pp, num);
     ARRAY_TO_STREAM (pp, p_param_tlvs, tlv_size);
     nfc_ncif_send_cmd (p);
 
@@ -606,15 +606,15 @@ uint8_t nci_snd_set_routing_cmd (bool    more, uint8_t num_tlv, uint8_t tlv_size
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_RF_MANAGE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_RF_SET_ROUTING);
-    uint8_t_TO_STREAM (pp, size);
-    uint8_t_TO_STREAM (pp, more);
+    UINT8_TO_STREAM (pp, size);
+    UINT8_TO_STREAM (pp, more);
     if (size == 2)
     {
-        uint8_t_TO_STREAM (pp, 0);
+        UINT8_TO_STREAM (pp, 0);
     }
     else
     {
-        uint8_t_TO_STREAM (pp, num_tlv);
+        UINT8_TO_STREAM (pp, num_tlv);
         ARRAY_TO_STREAM (pp, p_param_tlvs, tlv_size);
     }
     nfc_ncif_send_cmd (p);
@@ -649,7 +649,7 @@ uint8_t nci_snd_get_routing_cmd (void)
 
     NCI_MSG_BLD_HDR0 (pp, NCI_MT_CMD, NCI_GID_RF_MANAGE);
     NCI_MSG_BLD_HDR1 (pp, NCI_MSG_RF_GET_ROUTING);
-    uint8_t_TO_STREAM (pp, param_size);
+    UINT8_TO_STREAM (pp, param_size);
 
     nfc_ncif_send_cmd (p);
     return (NCI_STATUS_OK);

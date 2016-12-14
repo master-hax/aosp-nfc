@@ -137,8 +137,8 @@ tNDEF_STATUS NDEF_MsgAddWktHc (uint8_t *p_msg, uint32_t max_size, uint32_t *p_cu
 
     p = payload;
 
-    uint8_t_TO_STREAM (p, (ctf & 0x07));
-    uint8_t_TO_STREAM (p, carrier_type_len);
+    UINT8_TO_STREAM (p, (ctf & 0x07));
+    UINT8_TO_STREAM (p, carrier_type_len);
     ARRAY_TO_STREAM (p, p_carrier_type, carrier_type_len);
     ARRAY_TO_STREAM (p, p_carrier_data, carrier_data_len);
 
@@ -194,25 +194,25 @@ tNDEF_STATUS NDEF_MsgAddWktAc (uint8_t *p_msg, uint32_t max_size, uint32_t *p_cu
         p = NDEF_RecGetPayload (p_rec, &payload_len);
 
         /* Add Carrier Power State */
-        uint8_t_TO_BE_STREAM (p, cps);
+        UINT8_TO_BE_STREAM (p, cps);
 
         /* Carrier Data Reference length */
         ref_str_len = (uint8_t)strlen (p_carrier_data_ref_str);
 
-        uint8_t_TO_BE_STREAM (p, ref_str_len);
+        UINT8_TO_BE_STREAM (p, ref_str_len);
 
         /* Carrier Data Reference */
         ARRAY_TO_BE_STREAM (p, p_carrier_data_ref_str, ref_str_len);
 
         /* Aux Data Reference Count */
-        uint8_t_TO_BE_STREAM (p, aux_data_ref_count);
+        UINT8_TO_BE_STREAM (p, aux_data_ref_count);
 
         for (xx = 0; xx < aux_data_ref_count; xx++)
         {
             /* Aux Data Reference length (1 byte) */
             ref_str_len = (uint8_t)strlen (p_aux_data_ref_str[xx]);
 
-            uint8_t_TO_BE_STREAM (p, ref_str_len);
+            UINT8_TO_BE_STREAM (p, ref_str_len);
 
             /* Aux Data Reference */
             ARRAY_TO_BE_STREAM (p, p_aux_data_ref_str[xx], ref_str_len);
@@ -238,7 +238,7 @@ tNDEF_STATUS NDEF_MsgAddWktCr (uint8_t *p_msg, uint32_t max_size, uint32_t *p_cu
     uint8_t         data[2], *p;
 
     p = data;
-    uint16_t_TO_BE_STREAM (p, random_number);
+    UINT16_TO_BE_STREAM (p, random_number);
 
     status = NDEF_MsgAddRec (p_msg, max_size, p_cur_size,
                              NDEF_TNF_WKT, cr_rec_type, CR_REC_TYPE_LEN,
@@ -264,16 +264,16 @@ tNDEF_STATUS NDEF_MsgAddWktErr (uint8_t *p_msg, uint32_t max_size, uint32_t *p_c
 
     p = payload;
 
-    uint8_t_TO_BE_STREAM (p, error_reason);
+    UINT8_TO_BE_STREAM (p, error_reason);
 
     if (error_reason == 0x02)
     {
-        uint32_t_TO_BE_STREAM (p, error_data);
+        UINT32_TO_BE_STREAM (p, error_data);
         payload_len = 5;
     }
     else
     {
-        uint8_t_TO_BE_STREAM (p, error_data);
+        UINT8_TO_BE_STREAM (p, error_data);
         payload_len = 2;
     }
 
@@ -303,7 +303,7 @@ tNDEF_STATUS NDEF_MsgAddMediaBtOob (uint8_t *p_msg, uint32_t max_size, uint32_t 
     p = payload;
 
     /* length including itself */
-    uint16_t_TO_STREAM (p, BD_ADDR_LEN + 2);
+    UINT16_TO_STREAM (p, BD_ADDR_LEN + 2);
 
     /* BD Addr */
     BDADDR_TO_STREAM (p, bd_addr);
@@ -344,8 +344,8 @@ tNDEF_STATUS NDEF_MsgAppendMediaBtOobCod (uint8_t *p_msg, uint32_t max_size, uin
 
     /* create EIR data format for COD */
     p = eir_data;
-    uint8_t_TO_STREAM (p, BT_OOB_COD_SIZE + 1);
-    uint8_t_TO_STREAM (p, BT_EIR_OOB_COD_TYPE);
+    UINT8_TO_STREAM (p, BT_OOB_COD_SIZE + 1);
+    UINT8_TO_STREAM (p, BT_EIR_OOB_COD_TYPE);
     DEVCLASS_TO_STREAM (p, cod);
     eir_data_len = BT_OOB_COD_SIZE + 2;
 
@@ -358,7 +358,7 @@ tNDEF_STATUS NDEF_MsgAppendMediaBtOobCod (uint8_t *p_msg, uint32_t max_size, uin
     {
         /* payload length is the same as BT OOB data length */
         p = NDEF_RecGetPayload (p_rec, &oob_data_len);
-        uint16_t_TO_STREAM (p, oob_data_len);
+        UINT16_TO_STREAM (p, oob_data_len);
     }
 
     return (status);
@@ -393,15 +393,15 @@ tNDEF_STATUS NDEF_MsgAppendMediaBtOobName (uint8_t *p_msg, uint32_t max_size, ui
 
     /* create EIR data format for COD */
     p = eir_data;
-    uint8_t_TO_STREAM (p, name_len + 1);
+    UINT8_TO_STREAM (p, name_len + 1);
 
     if (is_complete)
     {
-        uint8_t_TO_STREAM (p, BT_EIR_COMPLETE_LOCAL_NAME_TYPE);
+        UINT8_TO_STREAM (p, BT_EIR_COMPLETE_LOCAL_NAME_TYPE);
     }
     else
     {
-        uint8_t_TO_STREAM (p, BT_EIR_SHORTENED_LOCAL_NAME_TYPE);
+        UINT8_TO_STREAM (p, BT_EIR_SHORTENED_LOCAL_NAME_TYPE);
     }
 
     ARRAY_TO_STREAM (p, p_name, name_len);
@@ -416,7 +416,7 @@ tNDEF_STATUS NDEF_MsgAppendMediaBtOobName (uint8_t *p_msg, uint32_t max_size, ui
     {
         /* payload length is the same as BT OOB data length */
         p = NDEF_RecGetPayload (p_rec, &oob_data_len);
-        uint16_t_TO_STREAM (p, oob_data_len);
+        UINT16_TO_STREAM (p, oob_data_len);
     }
 
     return (status);
@@ -450,12 +450,12 @@ tNDEF_STATUS NDEF_MsgAppendMediaBtOobHashCRandR (uint8_t *p_msg, uint32_t max_si
     /* create EIR data format */
     p = eir_data;
 
-    uint8_t_TO_STREAM   (p, BT_OOB_HASH_C_SIZE + 1);
-    uint8_t_TO_STREAM   (p, BT_EIR_OOB_SSP_HASH_C_TYPE);
+    UINT8_TO_STREAM   (p, BT_OOB_HASH_C_SIZE + 1);
+    UINT8_TO_STREAM   (p, BT_EIR_OOB_SSP_HASH_C_TYPE);
     ARRAY16_TO_STREAM (p, p_hash_c);
 
-    uint8_t_TO_STREAM   (p, BT_OOB_RAND_R_SIZE + 1);
-    uint8_t_TO_STREAM   (p, BT_EIR_OOB_SSP_RAND_R_TYPE);
+    UINT8_TO_STREAM   (p, BT_OOB_RAND_R_SIZE + 1);
+    UINT8_TO_STREAM   (p, BT_EIR_OOB_SSP_RAND_R_TYPE);
     ARRAY16_TO_STREAM (p, p_rand_r);
 
     eir_data_len = BT_OOB_HASH_C_SIZE + BT_OOB_RAND_R_SIZE + 4;
@@ -469,7 +469,7 @@ tNDEF_STATUS NDEF_MsgAppendMediaBtOobHashCRandR (uint8_t *p_msg, uint32_t max_si
     {
         /* payload length is the same as BT OOB data length */
         p = NDEF_RecGetPayload (p_rec, &oob_data_len);
-        uint16_t_TO_STREAM (p, oob_data_len);
+        UINT16_TO_STREAM (p, oob_data_len);
     }
 
     return (status);
@@ -503,8 +503,8 @@ tNDEF_STATUS NDEF_MsgAppendMediaBtOobEirData (uint8_t *p_msg, uint32_t max_size,
 
     /* create EIR data format */
     p = eir_data;
-    uint8_t_TO_STREAM (p, data_len + 1);
-    uint8_t_TO_STREAM (p, eir_type);
+    UINT8_TO_STREAM (p, data_len + 1);
+    UINT8_TO_STREAM (p, eir_type);
     ARRAY_TO_STREAM (p, p_data, data_len);
     eir_data_len = data_len + 2;
 
@@ -517,7 +517,7 @@ tNDEF_STATUS NDEF_MsgAppendMediaBtOobEirData (uint8_t *p_msg, uint32_t max_size,
     {
         /* payload length is the same as BT OOB data length */
         p = NDEF_RecGetPayload (p_rec, &oob_data_len);
-        uint16_t_TO_STREAM (p, oob_data_len);
+        UINT16_TO_STREAM (p, oob_data_len);
     }
 
     return (status);

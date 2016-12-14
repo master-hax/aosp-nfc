@@ -71,7 +71,7 @@ void llcp_sdp_check_send_snl (void)
         llcp_cb.sdp_cb.p_snl->offset  -= LLCP_PDU_HEADER_SIZE;
 
         p = (uint8_t *) (llcp_cb.sdp_cb.p_snl + 1) + llcp_cb.sdp_cb.p_snl->offset;
-        uint16_t_TO_BE_STREAM (p, LLCP_GET_PDU_HEADER (LLCP_SAP_SDP, LLCP_PDU_SNL_TYPE, LLCP_SAP_SDP ));
+        UINT16_TO_BE_STREAM (p, LLCP_GET_PDU_HEADER (LLCP_SAP_SDP, LLCP_PDU_SNL_TYPE, LLCP_SAP_SDP ));
 
         GKI_enqueue (&llcp_cb.lcb.sig_xmit_q, llcp_cb.sdp_cb.p_snl);
         llcp_cb.sdp_cb.p_snl = NULL;
@@ -95,9 +95,9 @@ static void llcp_sdp_add_sdreq (uint8_t tid, char *p_name)
 
     p = (uint8_t *) (llcp_cb.sdp_cb.p_snl + 1) + llcp_cb.sdp_cb.p_snl->offset + llcp_cb.sdp_cb.p_snl->len;
 
-    uint8_t_TO_BE_STREAM (p, LLCP_SDREQ_TYPE);
-    uint8_t_TO_BE_STREAM (p, (1 + name_len));
-    uint8_t_TO_BE_STREAM (p, tid);
+    UINT8_TO_BE_STREAM (p, LLCP_SDREQ_TYPE);
+    UINT8_TO_BE_STREAM (p, (1 + name_len));
+    UINT8_TO_BE_STREAM (p, tid);
     ARRAY_TO_BE_STREAM (p, p_name, name_len);
 
     llcp_cb.sdp_cb.p_snl->len += LLCP_SDREQ_MIN_LEN + name_len;
@@ -201,10 +201,10 @@ static void llcp_sdp_add_sdres (uint8_t tid, uint8_t sap)
 
     p = (uint8_t *) (llcp_cb.sdp_cb.p_snl + 1) + llcp_cb.sdp_cb.p_snl->offset + llcp_cb.sdp_cb.p_snl->len;
 
-    uint8_t_TO_BE_STREAM (p, LLCP_SDRES_TYPE);
-    uint8_t_TO_BE_STREAM (p, LLCP_SDRES_LEN);
-    uint8_t_TO_BE_STREAM (p, tid);
-    uint8_t_TO_BE_STREAM (p, sap);
+    UINT8_TO_BE_STREAM (p, LLCP_SDRES_TYPE);
+    UINT8_TO_BE_STREAM (p, LLCP_SDRES_LEN);
+    UINT8_TO_BE_STREAM (p, tid);
+    UINT8_TO_BE_STREAM (p, sap);
 
     llcp_cb.sdp_cb.p_snl->len += 2 + LLCP_SDRES_LEN;   /* type and length */
 }

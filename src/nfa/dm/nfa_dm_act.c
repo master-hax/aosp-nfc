@@ -571,8 +571,8 @@ bool    nfa_dm_set_config (tNFA_DM_MSG *p_data)
     }
     else
     {
-        uint8_t_TO_STREAM (p, p_data->setconfig.param_id);
-        uint8_t_TO_STREAM (p, p_data->setconfig.length);
+        UINT8_TO_STREAM (p, p_data->setconfig.param_id);
+        UINT8_TO_STREAM (p, p_data->setconfig.length);
         ARRAY_TO_STREAM (p, p_data->setconfig.p_data, p_data->setconfig.length)
         status = nfa_dm_check_set_config ((uint8_t) (p_data->setconfig.length + 2), buff, TRUE);
     }
