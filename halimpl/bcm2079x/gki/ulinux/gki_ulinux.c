@@ -20,8 +20,6 @@
 #include <stdarg.h>
 #include <errno.h>
 
-#define GKI_DEBUG   false
-
 #include <pthread.h>  /* must be 1st header defined  */
 #include <time.h>
 #include <hardware_legacy/power.h>  /* Android header */
@@ -43,6 +41,8 @@
 #define SCHED_BATCH 3
 
 #endif
+
+#define GKI_DEBUG   FALSE
 
 /* Define the structure that holds the GKI variables
 */
