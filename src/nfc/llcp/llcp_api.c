@@ -229,50 +229,50 @@ void LLCP_GetDiscoveryConfig (uint8_t *p_wt,
 
     *p_wt = llcp_cb.lcb.local_wt;
 
-    uint8_t_TO_BE_STREAM (p, LLCP_MAGIC_NUMBER_BYTE0);
-    uint8_t_TO_BE_STREAM (p, LLCP_MAGIC_NUMBER_BYTE1);
-    uint8_t_TO_BE_STREAM (p, LLCP_MAGIC_NUMBER_BYTE2);
+    UINT8_TO_BE_STREAM (p, LLCP_MAGIC_NUMBER_BYTE0);
+    UINT8_TO_BE_STREAM (p, LLCP_MAGIC_NUMBER_BYTE1);
+    UINT8_TO_BE_STREAM (p, LLCP_MAGIC_NUMBER_BYTE2);
 
 #if (LLCP_TEST_INCLUDED == TRUE) /* this is for LLCP testing */
-    uint8_t_TO_BE_STREAM (p, LLCP_VERSION_TYPE);
-    uint8_t_TO_BE_STREAM (p, LLCP_VERSION_LEN);
-    uint8_t_TO_BE_STREAM (p, llcp_test_params.version);
+    UINT8_TO_BE_STREAM (p, LLCP_VERSION_TYPE);
+    UINT8_TO_BE_STREAM (p, LLCP_VERSION_LEN);
+    UINT8_TO_BE_STREAM (p, llcp_test_params.version);
 
-    uint8_t_TO_BE_STREAM (p, LLCP_MIUX_TYPE);
-    uint8_t_TO_BE_STREAM (p, LLCP_MIUX_LEN);
-    uint16_t_TO_BE_STREAM (p, (llcp_cb.lcb.local_link_miu - LLCP_DEFAULT_MIU));
+    UINT8_TO_BE_STREAM (p, LLCP_MIUX_TYPE);
+    UINT8_TO_BE_STREAM (p, LLCP_MIUX_LEN);
+    UINT16_TO_BE_STREAM (p, (llcp_cb.lcb.local_link_miu - LLCP_DEFAULT_MIU));
 
-    uint8_t_TO_BE_STREAM (p, LLCP_WKS_TYPE);
-    uint8_t_TO_BE_STREAM (p, LLCP_WKS_LEN);
+    UINT8_TO_BE_STREAM (p, LLCP_WKS_TYPE);
+    UINT8_TO_BE_STREAM (p, LLCP_WKS_LEN);
     if (llcp_test_params.wks == 0)  /* not override */
     {
-        uint16_t_TO_BE_STREAM (p, llcp_cb.lcb.wks);
+        UINT16_TO_BE_STREAM (p, llcp_cb.lcb.wks);
     }
     else
     {
-        uint16_t_TO_BE_STREAM (p, llcp_test_params.wks);
+        UINT16_TO_BE_STREAM (p, llcp_test_params.wks);
     }
 #else
-    uint8_t_TO_BE_STREAM (p, LLCP_VERSION_TYPE);
-    uint8_t_TO_BE_STREAM (p, LLCP_VERSION_LEN);
-    uint8_t_TO_BE_STREAM (p, LLCP_VERSION_VALUE);
+    UINT8_TO_BE_STREAM (p, LLCP_VERSION_TYPE);
+    UINT8_TO_BE_STREAM (p, LLCP_VERSION_LEN);
+    UINT8_TO_BE_STREAM (p, LLCP_VERSION_VALUE);
 
-    uint8_t_TO_BE_STREAM (p, LLCP_MIUX_TYPE);
-    uint8_t_TO_BE_STREAM (p, LLCP_MIUX_LEN);
-    uint16_t_TO_BE_STREAM (p, (llcp_cb.lcb.local_link_miu - LLCP_DEFAULT_MIU));
+    UINT8_TO_BE_STREAM (p, LLCP_MIUX_TYPE);
+    UINT8_TO_BE_STREAM (p, LLCP_MIUX_LEN);
+    UINT16_TO_BE_STREAM (p, (llcp_cb.lcb.local_link_miu - LLCP_DEFAULT_MIU));
 
-    uint8_t_TO_BE_STREAM (p, LLCP_WKS_TYPE);
-    uint8_t_TO_BE_STREAM (p, LLCP_WKS_LEN);
-    uint16_t_TO_BE_STREAM (p, llcp_cb.lcb.wks);
+    UINT8_TO_BE_STREAM (p, LLCP_WKS_TYPE);
+    UINT8_TO_BE_STREAM (p, LLCP_WKS_LEN);
+    UINT16_TO_BE_STREAM (p, llcp_cb.lcb.wks);
 #endif
 
-    uint8_t_TO_BE_STREAM (p, LLCP_LTO_TYPE);
-    uint8_t_TO_BE_STREAM (p, LLCP_LTO_LEN);
-    uint8_t_TO_BE_STREAM (p, (llcp_cb.lcb.local_lto/LLCP_LTO_UNIT));
+    UINT8_TO_BE_STREAM (p, LLCP_LTO_TYPE);
+    UINT8_TO_BE_STREAM (p, LLCP_LTO_LEN);
+    UINT8_TO_BE_STREAM (p, (llcp_cb.lcb.local_lto/LLCP_LTO_UNIT));
 
-    uint8_t_TO_BE_STREAM (p, LLCP_OPT_TYPE);
-    uint8_t_TO_BE_STREAM (p, LLCP_OPT_LEN);
-    uint8_t_TO_BE_STREAM (p, llcp_cb.lcb.local_opt);
+    UINT8_TO_BE_STREAM (p, LLCP_OPT_TYPE);
+    UINT8_TO_BE_STREAM (p, LLCP_OPT_LEN);
+    UINT8_TO_BE_STREAM (p, llcp_cb.lcb.local_opt);
 
     *p_gen_bytes_len = (uint8_t) (p - p_gen_bytes);
 }

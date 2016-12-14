@@ -303,9 +303,9 @@ void nfc_ce_t3t_set_listen_params (void)
             (p_cb->listen_info[i].protocol_mask & NFA_PROTOCOL_MASK_T3T))
         {
             /* Set tag's system code and NFCID2 */
-            uint8_t_TO_STREAM (p_params, NFC_PMID_LF_T3T_ID1+t3t_idx);                 /* type */
-            uint8_t_TO_STREAM (p_params, NCI_PARAM_LEN_LF_T3T_ID);                     /* length */
-            uint16_t_TO_BE_STREAM (p_params, p_cb->listen_info[i].t3t_system_code);    /* System Code */
+            UINT8_TO_STREAM (p_params, NFC_PMID_LF_T3T_ID1+t3t_idx);                 /* type */
+            UINT8_TO_STREAM (p_params, NCI_PARAM_LEN_LF_T3T_ID);                     /* length */
+            UINT16_TO_BE_STREAM (p_params, p_cb->listen_info[i].t3t_system_code);    /* System Code */
             ARRAY_TO_BE_STREAM (p_params,  p_cb->listen_info[i].t3t_nfcid2, NCI_RF_F_UID_LEN);
 
             /* Set mask for this ID */
@@ -317,9 +317,9 @@ void nfc_ce_t3t_set_listen_params (void)
     /* For NCI draft 22+, the polarity of NFC_PMID_LF_T3T_FLAGS2 is flipped */
     t3t_flags2_mask = ~t3t_flags2_mask;
 
-    uint8_t_TO_STREAM (p_params, NFC_PMID_LF_T3T_FLAGS2);      /* type */
-    uint8_t_TO_STREAM (p_params, NCI_PARAM_LEN_LF_T3T_FLAGS2); /* length */
-    uint16_t_TO_STREAM (p_params, t3t_flags2_mask);            /* Mask of IDs to disable listening */
+    UINT8_TO_STREAM (p_params, NFC_PMID_LF_T3T_FLAGS2);      /* type */
+    UINT8_TO_STREAM (p_params, NCI_PARAM_LEN_LF_T3T_FLAGS2); /* length */
+    UINT16_TO_STREAM (p_params, t3t_flags2_mask);            /* Mask of IDs to disable listening */
 
     tlv_size = (uint8_t) (p_params-tlv);
     nfa_dm_check_set_config (tlv_size, (uint8_t *)tlv, false);

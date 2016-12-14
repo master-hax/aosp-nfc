@@ -987,18 +987,18 @@ tNFC_STATUS NFC_ConnCreate (uint8_t          dest_type,
         if (dest_type == NCI_DEST_TYPE_NFCEE)
         {
             num_tlv = 1;
-            uint8_t_TO_STREAM (pp, NCI_CON_CREATE_TAG_NFCEE_VAL);
-            uint8_t_TO_STREAM (pp, 2);
-            uint8_t_TO_STREAM (pp, id);
-            uint8_t_TO_STREAM (pp, protocol);
+            UINT8_TO_STREAM (pp, NCI_CON_CREATE_TAG_NFCEE_VAL);
+            UINT8_TO_STREAM (pp, 2);
+            UINT8_TO_STREAM (pp, id);
+            UINT8_TO_STREAM (pp, protocol);
             tlv_size = 4;
         }
         else if (dest_type == NCI_DEST_TYPE_REMOTE)
         {
             num_tlv = 1;
-            uint8_t_TO_STREAM (pp, NCI_CON_CREATE_TAG_RF_DISC_ID);
-            uint8_t_TO_STREAM (pp, 1);
-            uint8_t_TO_STREAM (pp, id);
+            UINT8_TO_STREAM (pp, NCI_CON_CREATE_TAG_RF_DISC_ID);
+            UINT8_TO_STREAM (pp, 1);
+            UINT8_TO_STREAM (pp, id);
             tlv_size = 3;
         }
         else if (dest_type == NCI_DEST_TYPE_NFCC)
@@ -1225,32 +1225,32 @@ tNFC_STATUS NFC_UpdateRFCommParams (tNFC_RF_COMM_PARAMS *p_params)
     /* RF Technology and Mode */
     if (p_params->include_rf_tech_mode)
     {
-        uint8_t_TO_STREAM (p, NCI_RF_PARAM_ID_TECH_N_MODE);
-        uint8_t_TO_STREAM (p, 1);
-        uint8_t_TO_STREAM (p, p_params->rf_tech_n_mode);
+        UINT8_TO_STREAM (p, NCI_RF_PARAM_ID_TECH_N_MODE);
+        UINT8_TO_STREAM (p, 1);
+        UINT8_TO_STREAM (p, p_params->rf_tech_n_mode);
     }
 
     /* Transmit Bit Rate */
     if (p_params->include_tx_bit_rate)
     {
-        uint8_t_TO_STREAM (p, NCI_RF_PARAM_ID_TX_BIT_RATE);
-        uint8_t_TO_STREAM (p, 1);
-        uint8_t_TO_STREAM (p, p_params->tx_bit_rate);
+        UINT8_TO_STREAM (p, NCI_RF_PARAM_ID_TX_BIT_RATE);
+        UINT8_TO_STREAM (p, 1);
+        UINT8_TO_STREAM (p, p_params->tx_bit_rate);
     }
 
     /* Receive Bit Rate */
     if (p_params->include_tx_bit_rate)
     {
-        uint8_t_TO_STREAM (p, NCI_RF_PARAM_ID_RX_BIT_RATE);
-        uint8_t_TO_STREAM (p, 1);
-        uint8_t_TO_STREAM (p, p_params->rx_bit_rate);
+        UINT8_TO_STREAM (p, NCI_RF_PARAM_ID_RX_BIT_RATE);
+        UINT8_TO_STREAM (p, 1);
+        UINT8_TO_STREAM (p, p_params->rx_bit_rate);
     }
 
     /* NFC-B Data Exchange Configuration */
     if (p_params->include_nfc_b_config)
     {
-        uint8_t_TO_STREAM (p, NCI_RF_PARAM_ID_B_DATA_EX_PARAM);
-        uint8_t_TO_STREAM (p, 1);
+        UINT8_TO_STREAM (p, NCI_RF_PARAM_ID_B_DATA_EX_PARAM);
+        UINT8_TO_STREAM (p, 1);
 
         data_exch_config =  (p_params->min_tr0 & 0x03) << 6;          /* b7b6 : Mininum TR0 */
         data_exch_config |= (p_params->min_tr1 & 0x03) << 4;          /* b5b4 : Mininum TR1 */
@@ -1258,7 +1258,7 @@ tNFC_STATUS NFC_UpdateRFCommParams (tNFC_RF_COMM_PARAMS *p_params)
         data_exch_config |= (p_params->suppression_sos & 0x01) << 2;  /* b2 :   Suppression of SoS */
         data_exch_config |= (p_params->min_tr2 & 0x03);               /* b1b0 : Mininum TR2 */
 
-        uint8_t_TO_STREAM (p, data_exch_config);
+        UINT8_TO_STREAM (p, data_exch_config);
     }
 
     return nci_snd_parameter_update_cmd (tlvs, (uint8_t) (p - tlvs));

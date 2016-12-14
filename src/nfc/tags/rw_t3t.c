@@ -592,7 +592,7 @@ tNFC_STATUS rw_t3t_send_to_lower (BT_HDR *p_msg)
     /* Set NFC-F SoD field (payload len + 1) */
     p_msg->offset -= 1;         /* Point to SoD field */
     p = (uint8_t *) (p_msg+1) + p_msg->offset;
-    uint8_t_TO_STREAM (p, (p_msg->len+1));
+    UINT8_TO_STREAM (p, (p_msg->len+1));
     p_msg->len += 1;            /* Increment len to include SoD */
 
 #if (BT_TRACE_PROTOCOL == TRUE)
@@ -686,29 +686,29 @@ tNFC_STATUS rw_t3t_send_update_ndef_attribute_cmd (tRW_T3T_CB *p_cb, bool    wri
         p = p_cmd_start  = (uint8_t *) (p_cmd_buf+1) + p_cmd_buf->offset;
 
         /* Add UPDATE opcode to message  */
-        uint8_t_TO_STREAM (p, T3T_MSG_OPC_UPDATE_CMD);
+        UINT8_TO_STREAM (p, T3T_MSG_OPC_UPDATE_CMD);
 
         /* Add IDm to message */
         ARRAY_TO_STREAM (p, p_cb->peer_nfcid2, NCI_NFCID2_LEN);
 
         /* Add Service code list */
-        uint8_t_TO_STREAM (p, 1);                       /* Number of services (only 1 service: NDEF) */
-        uint16_t_TO_STREAM (p, T3T_MSG_NDEF_SC_RW);     /* Service code (little-endian format) */
+        UINT8_TO_STREAM (p, 1);                       /* Number of services (only 1 service: NDEF) */
+        UINT16_TO_STREAM (p, T3T_MSG_NDEF_SC_RW);     /* Service code (little-endian format) */
 
         /* Add number of blocks in this UPDATE command */
-        uint8_t_TO_STREAM (p, 1);                      /* Number of blocks to write in this command */
+        UINT8_TO_STREAM (p, 1);                      /* Number of blocks to write in this command */
 
         /* Block List element: the NDEF attribute information block (block 0) */
-        uint8_t_TO_STREAM (p, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);
-        uint8_t_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);
+        UINT8_TO_STREAM (p, 0);
 
         /* Add payload (Attribute information block) */
         p_ndef_attr_info_start = p;                              /* Save start of a NDEF attribute info block for checksum */
-        uint8_t_TO_STREAM (p, T3T_MSG_NDEF_VERSION);
-        uint8_t_TO_STREAM (p, p_cb->ndef_attrib.nbr);
-        uint8_t_TO_STREAM (p, p_cb->ndef_attrib.nbw);
-        uint16_t_TO_BE_STREAM (p, p_cb->ndef_attrib.nmaxb);
-        uint32_t_TO_STREAM (p, 0);
+        UINT8_TO_STREAM (p, T3T_MSG_NDEF_VERSION);
+        UINT8_TO_STREAM (p, p_cb->ndef_attrib.nbr);
+        UINT8_TO_STREAM (p, p_cb->ndef_attrib.nbw);
+        UINT16_TO_BE_STREAM (p, p_cb->ndef_attrib.nmaxb);
+        UINT32_TO_STREAM (p, 0);
 
         /* If starting NDEF write: set WriteF=ON, and ln=current ndef length */
         if (write_in_progress)
@@ -722,11 +722,11 @@ tNFC_STATUS rw_t3t_send_update_ndef_attribute_cmd (tRW_T3T_CB *p_cb, bool    wri
             write_f = T3T_MSG_NDEF_WRITEF_OFF;
             ln = p_cb->ndef_msg_len;
         }
-        uint8_t_TO_STREAM (p, write_f);
-        uint8_t_TO_STREAM (p, p_cb->ndef_attrib.rwflag);
-        uint8_t_TO_STREAM (p, (ln>>16) & 0xFF);    /* High byte (of 3) of Ln */
-        uint8_t_TO_STREAM (p, (ln>>8) & 0xFF);     /* Middle byte (of 3) of Ln */
-        uint8_t_TO_STREAM (p, (ln) & 0xFF);        /* Low byte (of 3) of Ln */
+        UINT8_TO_STREAM (p, write_f);
+        UINT8_TO_STREAM (p, p_cb->ndef_attrib.rwflag);
+        UINT8_TO_STREAM (p, (ln>>16) & 0xFF);    /* High byte (of 3) of Ln */
+        UINT8_TO_STREAM (p, (ln>>8) & 0xFF);     /* Middle byte (of 3) of Ln */
+        UINT8_TO_STREAM (p, (ln) & 0xFF);        /* Low byte (of 3) of Ln */
 
         /* Calculate and append Checksum */
         checksum = 0;
@@ -734,7 +734,7 @@ tNFC_STATUS rw_t3t_send_update_ndef_attribute_cmd (tRW_T3T_CB *p_cb, bool    wri
         {
             checksum+=p_ndef_attr_info_start[i];
         }
-        uint16_t_TO_BE_STREAM (p, checksum);
+        UINT16_TO_BE_STREAM (p, checksum);
 
 
         /* Calculate length of message */
@@ -820,18 +820,18 @@ tNFC_STATUS rw_t3t_send_next_ndef_update_cmd (tRW_T3T_CB *p_cb)
         /* Write to command header for UPDATE */
 
         /* Add UPDATE opcode to message  */
-        uint8_t_TO_STREAM (p, T3T_MSG_OPC_UPDATE_CMD);
+        UINT8_TO_STREAM (p, T3T_MSG_OPC_UPDATE_CMD);
 
         /* Add IDm to message */
         ARRAY_TO_STREAM (p, p_cb->peer_nfcid2, NCI_NFCID2_LEN);
 
         /* Add Service code list */
-        uint8_t_TO_STREAM (p, 1);                       /* Number of services (only 1 service: NDEF) */
-        uint16_t_TO_STREAM (p, T3T_MSG_NDEF_SC_RW);     /* Service code (little-endian format) */
+        UINT8_TO_STREAM (p, 1);                       /* Number of services (only 1 service: NDEF) */
+        UINT16_TO_STREAM (p, T3T_MSG_NDEF_SC_RW);     /* Service code (little-endian format) */
 
 
         /* Add number of blocks in this UPDATE command */
-        uint8_t_TO_STREAM (p, ndef_blocks_to_write);   /* Number of blocks to write in this command */
+        UINT8_TO_STREAM (p, ndef_blocks_to_write);   /* Number of blocks to write in this command */
         timeout = rw_t3t_update_timeout(ndef_blocks_to_write);
 
         for (block_id = first_block_to_write; block_id < (first_block_to_write + ndef_blocks_to_write); block_id++)
@@ -839,14 +839,14 @@ tNFC_STATUS rw_t3t_send_next_ndef_update_cmd (tRW_T3T_CB *p_cb)
             if (block_id<256)
             {
                 /* Block IDs 0-255 can be specified in '2-byte' format: byte0=0, byte1=blocknumber */
-                uint8_t_TO_STREAM (p, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);    /* byte0: len=1; access-mode=0; service code list order=0 */
-                uint8_t_TO_STREAM (p, block_id);                                   /* byte1: block number */
+                UINT8_TO_STREAM (p, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);    /* byte0: len=1; access-mode=0; service code list order=0 */
+                UINT8_TO_STREAM (p, block_id);                                   /* byte1: block number */
             }
             else
             {
                 /* Block IDs 256+ must be specified in '3-byte' format: byte0=80h, followed by blocknumber */
-                uint8_t_TO_STREAM (p, 0x00);               /* byte0: len=0; access-mode=0; service code list order=0 */
-                uint16_t_TO_STREAM (p, block_id);          /* byte1-2: block number in little-endian format */
+                UINT8_TO_STREAM (p, 0x00);               /* byte0: len=0; access-mode=0; service code list order=0 */
+                UINT16_TO_STREAM (p, block_id);          /* byte1-2: block number in little-endian format */
             }
 
         }
@@ -950,40 +950,40 @@ tNFC_STATUS rw_t3t_send_next_ndef_check_cmd (tRW_T3T_CB *p_cb)
             ndef_bytes_remaining, cur_blocks_to_read, (p_cb->flags & RW_T3T_FL_IS_FINAL_NDEF_SEGMENT));
 
         /* Add CHECK opcode to message  */
-        uint8_t_TO_STREAM (p, T3T_MSG_OPC_CHECK_CMD);
+        UINT8_TO_STREAM (p, T3T_MSG_OPC_CHECK_CMD);
 
         /* Add IDm to message */
         ARRAY_TO_STREAM (p, p_cb->peer_nfcid2, NCI_NFCID2_LEN);
 
         /* Add Service code list */
-        uint8_t_TO_STREAM (p, 1);                       /* Number of services (only 1 service: NDEF) */
+        UINT8_TO_STREAM (p, 1);                       /* Number of services (only 1 service: NDEF) */
 
         /* Service code (little-endian format) . If NDEF is read-only, then use T3T_MSG_NDEF_SC_RO, otherwise use T3T_MSG_NDEF_SC_RW */
         if (p_cb->ndef_attrib.rwflag == T3T_MSG_NDEF_RWFLAG_RO)
         {
-            uint16_t_TO_STREAM (p, T3T_MSG_NDEF_SC_RO);
+            UINT16_TO_STREAM (p, T3T_MSG_NDEF_SC_RO);
         }
         else
         {
-            uint16_t_TO_STREAM (p, T3T_MSG_NDEF_SC_RW);
+            UINT16_TO_STREAM (p, T3T_MSG_NDEF_SC_RW);
         }
 
         /* Add number of blocks in this CHECK command */
-        uint8_t_TO_STREAM (p, cur_blocks_to_read);     /* Number of blocks to check in this command */
+        UINT8_TO_STREAM (p, cur_blocks_to_read);     /* Number of blocks to check in this command */
 
         for (block_id = first_block_to_read; block_id < (first_block_to_read + cur_blocks_to_read); block_id++)
         {
             if (block_id<256)
             {
                 /* Block IDs 0-255 can be specified in '2-byte' format: byte0=0, byte1=blocknumber */
-                uint8_t_TO_STREAM (p, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);    /* byte1: len=0; access-mode=0; service code list order=0 */
-                uint8_t_TO_STREAM (p, block_id);                                   /* byte1: block number */
+                UINT8_TO_STREAM (p, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);    /* byte1: len=0; access-mode=0; service code list order=0 */
+                UINT8_TO_STREAM (p, block_id);                                   /* byte1: block number */
             }
             else
             {
                 /* Block IDs 256+ must be specified in '3-byte' format: byte0=80h, followed by blocknumber */
-                uint8_t_TO_STREAM (p, 0x00);           /* byte0: len=1; access-mode=0; service code list order=0 */
-                uint16_t_TO_STREAM (p, block_id);      /* byte1-2: block number in little-endian format */
+                UINT8_TO_STREAM (p, 0x00);           /* byte0: len=1; access-mode=0; service code list order=0 */
+                UINT16_TO_STREAM (p, block_id);      /* byte1-2: block number in little-endian format */
             }
 
         }
@@ -1020,7 +1020,7 @@ void rw_t3t_message_set_block_list (tRW_T3T_CB *p_cb, uint8_t **p, uint8_t num_b
     uint16_t service_list[T3T_MSG_SERVICE_LIST_MAX];
 
     /* Add CHECK or UPDATE opcode to message  */
-    uint8_t_TO_STREAM ((*p), ((p_cb->cur_cmd == RW_T3T_CMD_CHECK) ? T3T_MSG_OPC_CHECK_CMD:T3T_MSG_OPC_UPDATE_CMD));
+    UINT8_TO_STREAM ((*p), ((p_cb->cur_cmd == RW_T3T_CMD_CHECK) ? T3T_MSG_OPC_CHECK_CMD:T3T_MSG_OPC_UPDATE_CMD));
 
     /* Add IDm to message */
     ARRAY_TO_STREAM ((*p), p_cb->peer_nfcid2, NCI_NFCID2_LEN);
@@ -1048,7 +1048,7 @@ void rw_t3t_message_set_block_list (tRW_T3T_CB *p_cb, uint8_t **p, uint8_t num_b
             num_services++;
 
             /* Add service code to T3T message */
-            uint16_t_TO_STREAM ((*p), cur_service_code);
+            UINT16_TO_STREAM ((*p), cur_service_code);
         }
     }
 
@@ -1056,7 +1056,7 @@ void rw_t3t_message_set_block_list (tRW_T3T_CB *p_cb, uint8_t **p, uint8_t num_b
     *p_msg_num_services = num_services;
 
     /* Add 'number of blocks' to the message */
-    uint8_t_TO_STREAM ((*p), num_blocks);
+    UINT8_TO_STREAM ((*p), num_blocks);
 
     /* Add block descriptors */
     for (i = 0; i < num_blocks; i++)
@@ -1073,14 +1073,14 @@ void rw_t3t_message_set_block_list (tRW_T3T_CB *p_cb, uint8_t **p, uint8_t num_b
         /* Add decriptor to T3T message */
         if (p_t3t_blocks[i].block_number > 0xFF)
         {
-            uint8_t_TO_STREAM ((*p), service_code_idx);
-            uint16_t_TO_STREAM ((*p), p_t3t_blocks[i].block_number);
+            UINT8_TO_STREAM ((*p), service_code_idx);
+            UINT16_TO_STREAM ((*p), p_t3t_blocks[i].block_number);
         }
         else
         {
             service_code_idx |= T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT;
-            uint8_t_TO_STREAM ((*p), service_code_idx);
-            uint8_t_TO_STREAM ((*p), p_t3t_blocks[i].block_number);
+            UINT8_TO_STREAM ((*p), service_code_idx);
+            UINT8_TO_STREAM ((*p), p_t3t_blocks[i].block_number);
         }
     }
 }
@@ -1181,21 +1181,21 @@ tNFC_STATUS rw_t3t_check_mc_block (tRW_T3T_CB *p_cb)
         p = p_cmd_start = (uint8_t *) (p_cmd_buf+1) + p_cmd_buf->offset;
 
         /* Add CHECK opcode to message  */
-        uint8_t_TO_STREAM (p, T3T_MSG_OPC_CHECK_CMD);
+        UINT8_TO_STREAM (p, T3T_MSG_OPC_CHECK_CMD);
 
         /* Add IDm to message */
         ARRAY_TO_STREAM (p, p_cb->peer_nfcid2, NCI_NFCID2_LEN);
 
         /* Add Service code list */
-        uint8_t_TO_STREAM (p, 1);                       /* Number of services (only 1 service: NDEF) */
-        uint16_t_TO_STREAM (p, T3T_MSG_NDEF_SC_RO);     /* Service code (little-endian format) */
+        UINT8_TO_STREAM (p, 1);                       /* Number of services (only 1 service: NDEF) */
+        UINT16_TO_STREAM (p, T3T_MSG_NDEF_SC_RO);     /* Service code (little-endian format) */
 
         /* Number of blocks */
-        uint8_t_TO_STREAM (p, 1);                       /* Number of blocks (only 1 block: Memory Configuration Information ) */
+        UINT8_TO_STREAM (p, 1);                       /* Number of blocks (only 1 block: Memory Configuration Information ) */
 
         /* Block List element: the Memory Configuration block (block 0x88) */
-        uint8_t_TO_STREAM (p, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);
-        uint8_t_TO_STREAM (p, T3T_MSG_FELICALITE_BLOCK_ID_MC);
+        UINT8_TO_STREAM (p, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);
+        UINT8_TO_STREAM (p, T3T_MSG_FELICALITE_BLOCK_ID_MC);
 
         /* Calculate length of message */
         p_cmd_buf->len = (uint16_t) (p - p_cmd_start);
@@ -1689,7 +1689,7 @@ static void rw_t3t_handle_get_sc_poll_rsp (tRW_T3T_CB *p_cb, uint8_t nci_status,
 
                     /* Construct T3T message */
                     p_cmd_start = p = (uint8_t *) (p_cmd_buf+1) + p_cmd_buf->offset;
-                    uint8_t_TO_STREAM (p, T3T_MSG_OPC_REQ_SYSTEMCODE_CMD);
+                    UINT8_TO_STREAM (p, T3T_MSG_OPC_REQ_SYSTEMCODE_CMD);
                     ARRAY_TO_STREAM (p, p_cb->peer_nfcid2, NCI_NFCID2_LEN);
 
                     /* Fill in length field */
@@ -1747,21 +1747,21 @@ static void rw_t3t_handle_ndef_detect_poll_rsp (tRW_T3T_CB *p_cb, uint8_t nci_st
             p = p_cmd_start = (uint8_t *) (p_cmd_buf+1) + p_cmd_buf->offset;
 
             /* Add CHECK opcode to message  */
-            uint8_t_TO_STREAM (p, T3T_MSG_OPC_CHECK_CMD);
+            UINT8_TO_STREAM (p, T3T_MSG_OPC_CHECK_CMD);
 
             /* Add IDm to message */
             ARRAY_TO_STREAM (p, p_cb->peer_nfcid2, NCI_NFCID2_LEN);
 
             /* Add Service code list */
-            uint8_t_TO_STREAM (p, 1);                       /* Number of services (only 1 service: NDEF) */
-            uint16_t_TO_STREAM (p, T3T_MSG_NDEF_SC_RO);     /* Service code (little-endian format) */
+            UINT8_TO_STREAM (p, 1);                       /* Number of services (only 1 service: NDEF) */
+            UINT16_TO_STREAM (p, T3T_MSG_NDEF_SC_RO);     /* Service code (little-endian format) */
 
             /* Number of blocks */
-            uint8_t_TO_STREAM (p, 1);                       /* Number of blocks (only 1 block: NDEF Attribute Information ) */
+            UINT8_TO_STREAM (p, 1);                       /* Number of blocks (only 1 block: NDEF Attribute Information ) */
 
             /* Block List element: the NDEF attribute information block (block 0) */
-            uint8_t_TO_STREAM (p, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);
-            uint8_t_TO_STREAM (p, 0);
+            UINT8_TO_STREAM (p, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);
+            UINT8_TO_STREAM (p, 0);
 
             /* Calculate length of message */
             p_cmd_buf->len = (uint16_t) (p - p_cmd_start);
@@ -1851,21 +1851,21 @@ tNFC_STATUS rw_t3t_update_block (tRW_T3T_CB *p_cb, uint8_t block_id, uint8_t *p_
         p_dst = p_cmd_start = (uint8_t *) (p_cmd_buf+1) + p_cmd_buf->offset;
 
         /* Add UPDATE opcode to message  */
-        uint8_t_TO_STREAM (p_dst, T3T_MSG_OPC_UPDATE_CMD);
+        UINT8_TO_STREAM (p_dst, T3T_MSG_OPC_UPDATE_CMD);
 
         /* Add IDm to message */
         ARRAY_TO_STREAM (p_dst, p_cb->peer_nfcid2, NCI_NFCID2_LEN);
 
         /* Add Service code list */
-        uint8_t_TO_STREAM (p_dst, 1);                      /* Number of services (only 1 service: NDEF) */
-        uint16_t_TO_STREAM (p_dst, T3T_MSG_NDEF_SC_RW);    /* Service code (little-endian format) */
+        UINT8_TO_STREAM (p_dst, 1);                      /* Number of services (only 1 service: NDEF) */
+        UINT16_TO_STREAM (p_dst, T3T_MSG_NDEF_SC_RW);    /* Service code (little-endian format) */
 
         /* Number of blocks */
-        uint8_t_TO_STREAM (p_dst, 1);
+        UINT8_TO_STREAM (p_dst, 1);
 
         /* Add Block list element for MC */
-        uint8_t_TO_STREAM (p_dst, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);
-        uint8_t_TO_STREAM (p_dst, block_id);
+        UINT8_TO_STREAM (p_dst, T3T_MSG_MASK_TWO_BYTE_BLOCK_DESC_FORMAT);
+        UINT8_TO_STREAM (p_dst, block_id);
 
         /* Copy MC data to UPDATE message */
         ARRAY_TO_STREAM (p_dst, p_block_data, T3T_MSG_BLOCKSIZE);
@@ -2064,20 +2064,20 @@ static void rw_t3t_handle_sro_poll_rsp (tRW_T3T_CB *p_cb, uint8_t nci_status, ui
 
             p = rw_t3t_ndef_attrib_info;
 
-            uint8_t_TO_STREAM (p, p_cb->ndef_attrib.version);
+            UINT8_TO_STREAM (p, p_cb->ndef_attrib.version);
 
             /* Update NDEF info */
-            uint8_t_TO_STREAM (p, p_cb->ndef_attrib.nbr);              /* NBr: number of blocks that can be read using one Check command */
-            uint8_t_TO_STREAM (p, p_cb->ndef_attrib.nbw);              /* Nbw: number of blocks that can be written using one Update command */
-            uint16_t_TO_BE_STREAM (p, p_cb->ndef_attrib.nmaxb);        /* Nmaxb: maximum number of blocks available for NDEF data */
-            uint32_t_TO_BE_STREAM (p, tempU32);
-            uint8_t_TO_STREAM (p, p_cb->ndef_attrib.writef);           /* WriteFlag: 00h if writing data finished; 0Fh if writing data in progress */
-            uint8_t_TO_STREAM (p, 0x00);                               /* RWFlag: 00h NDEF is read-only */
+            UINT8_TO_STREAM (p, p_cb->ndef_attrib.nbr);              /* NBr: number of blocks that can be read using one Check command */
+            UINT8_TO_STREAM (p, p_cb->ndef_attrib.nbw);              /* Nbw: number of blocks that can be written using one Update command */
+            UINT16_TO_BE_STREAM (p, p_cb->ndef_attrib.nmaxb);        /* Nmaxb: maximum number of blocks available for NDEF data */
+            UINT32_TO_BE_STREAM (p, tempU32);
+            UINT8_TO_STREAM (p, p_cb->ndef_attrib.writef);           /* WriteFlag: 00h if writing data finished; 0Fh if writing data in progress */
+            UINT8_TO_STREAM (p, 0x00);                               /* RWFlag: 00h NDEF is read-only */
 
             tempU8 = (uint8_t) (p_cb->ndef_attrib.ln >> 16);
             /* Get length (3-byte, big-endian) */
-            uint8_t_TO_STREAM (p, tempU8);                               /* Ln: high-byte */
-            uint16_t_TO_BE_STREAM (p, p_cb->ndef_attrib.ln);           /* Ln: lo-word */
+            UINT8_TO_STREAM (p, tempU8);                               /* Ln: high-byte */
+            UINT16_TO_BE_STREAM (p, p_cb->ndef_attrib.ln);           /* Ln: lo-word */
 
             /* Calculate and append Checksum */
             checksum = 0;
@@ -2085,7 +2085,7 @@ static void rw_t3t_handle_sro_poll_rsp (tRW_T3T_CB *p_cb, uint8_t nci_status, ui
             {
                 checksum+=rw_t3t_ndef_attrib_info[i];
             }
-            uint16_t_TO_BE_STREAM (p, checksum);
+            UINT16_TO_BE_STREAM (p, checksum);
 
             evt_data.status = rw_t3t_update_block (p_cb, 0, (uint8_t *) rw_t3t_ndef_attrib_info);
         }

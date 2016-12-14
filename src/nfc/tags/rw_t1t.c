@@ -340,9 +340,9 @@ tNFC_STATUS rw_t1t_send_static_cmd (uint8_t opcode, uint8_t add, uint8_t dat)
             p_t1t->addr             = add;
             p_data->offset          = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
             p                       = (uint8_t *) (p_data + 1) + p_data->offset;
-            uint8_t_TO_BE_STREAM (p, opcode);
-            uint8_t_TO_BE_STREAM (p, add);
-            uint8_t_TO_BE_STREAM (p, dat);
+            UINT8_TO_BE_STREAM (p, opcode);
+            UINT8_TO_BE_STREAM (p, add);
+            UINT8_TO_BE_STREAM (p, dat);
 
             ARRAY_TO_STREAM (p, p_t1t->mem, T1T_CMD_UID_LEN);
             p_data->len     = p_cmd_rsp_info->cmd_len;
@@ -400,8 +400,8 @@ tNFC_STATUS rw_t1t_send_dyn_cmd (uint8_t opcode, uint8_t add, uint8_t *p_dat)
             p_t1t->addr             = add;
             p_data->offset          = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
             p                       = (uint8_t *) (p_data + 1) + p_data->offset;
-            uint8_t_TO_BE_STREAM (p, opcode);
-            uint8_t_TO_BE_STREAM (p, add);
+            UINT8_TO_BE_STREAM (p, opcode);
+            UINT8_TO_BE_STREAM (p, add);
 
             if (p_dat)
             {

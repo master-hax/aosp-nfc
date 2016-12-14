@@ -391,7 +391,7 @@ tNFC_STATUS rw_t2t_send_cmd (uint8_t opcode, uint8_t *p_dat)
             p_data->offset  = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
             p               = (uint8_t *) (p_data + 1) + p_data->offset;
 
-            uint8_t_TO_STREAM (p, opcode);
+            UINT8_TO_STREAM (p, opcode);
 
             if (p_dat)
             {
@@ -711,10 +711,10 @@ tNFC_STATUS rw_t2t_sector_change (uint8_t sector)
     p_data->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_data + 1) + p_data->offset;
 
-    uint8_t_TO_BE_STREAM (p, sector);
-    uint8_t_TO_BE_STREAM (p, 0x00);
-    uint8_t_TO_BE_STREAM (p, 0x00);
-    uint8_t_TO_BE_STREAM (p, 0x00);
+    UINT8_TO_BE_STREAM (p, sector);
+    UINT8_TO_BE_STREAM (p, 0x00);
+    UINT8_TO_BE_STREAM (p, 0x00);
+    UINT8_TO_BE_STREAM (p, 0x00);
 
     p_data->len = 4;
 
@@ -770,8 +770,8 @@ tNFC_STATUS rw_t2t_read (uint16_t block)
             p_t2t->p_sec_cmd_buf->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
 
             p = (uint8_t *) (p_t2t->p_sec_cmd_buf + 1) + p_t2t->p_sec_cmd_buf->offset;
-            uint8_t_TO_BE_STREAM (p, T2T_CMD_READ);
-            uint8_t_TO_BE_STREAM (p, read_cmd[0]);
+            UINT8_TO_BE_STREAM (p, T2T_CMD_READ);
+            UINT8_TO_BE_STREAM (p, read_cmd[0]);
             p_t2t->p_sec_cmd_buf->len = 2;
             p_t2t->block_read = block;
 
@@ -828,7 +828,7 @@ tNFC_STATUS rw_t2t_write (uint16_t block, uint8_t *p_write_data)
             p_t2t->select_sector         = (uint8_t) (block/T2T_BLOCKS_PER_SECTOR);
             p_t2t->p_sec_cmd_buf->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
             p = (uint8_t *) (p_t2t->p_sec_cmd_buf + 1) + p_t2t->p_sec_cmd_buf->offset;
-            uint8_t_TO_BE_STREAM (p, T2T_CMD_WRITE);
+            UINT8_TO_BE_STREAM (p, T2T_CMD_WRITE);
             memcpy (p, write_cmd, T2T_WRITE_DATA_LEN + 1);
             p_t2t->p_sec_cmd_buf->len   = 2 + T2T_WRITE_DATA_LEN;
             p_t2t->block_written  = block;

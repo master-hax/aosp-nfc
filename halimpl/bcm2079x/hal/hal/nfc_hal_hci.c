@@ -593,7 +593,7 @@ void nfc_hal_hci_handle_nv_read (uint8_t block, tHAL_NFC_STATUS status, uint16_t
     /* Send HCI Network ntf command using nv data */
     NCI_MSG_BLD_HDR0 (p, NCI_MT_CMD, NCI_GID_PROP);
     NCI_MSG_BLD_HDR1 (p, NCI_MSG_HCI_NETWK);
-    uint8_t_TO_STREAM (p, (uint8_t) size);
+    UINT8_TO_STREAM (p, (uint8_t) size);
 
     nfc_hal_dm_send_nci_cmd (p_hci_netwk_info, (uint16_t) (NCI_MSG_HDR_SIZE + size), nfc_hal_hci_vsc_cback);
 

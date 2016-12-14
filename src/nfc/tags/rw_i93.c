@@ -560,27 +560,27 @@ tNFC_STATUS rw_i93_send_cmd_inventory (uint8_t *p_uid, bool    including_afi, ui
         flags |= I93_FLAG_AFI_PRESENT;
     }
 
-    uint8_t_TO_STREAM (p, flags);
+    UINT8_TO_STREAM (p, flags);
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_INVENTORY);
+    UINT8_TO_STREAM (p, I93_CMD_INVENTORY);
 
     if (including_afi)
     {
         /* Parameters */
-        uint8_t_TO_STREAM (p, afi);    /* Optional AFI */
+        UINT8_TO_STREAM (p, afi);    /* Optional AFI */
         p_cmd->len++;
     }
 
     if (p_uid)
     {
-        uint8_t_TO_STREAM  (p, I93_UID_BYTE_LEN*8);         /* Mask Length */
+        UINT8_TO_STREAM  (p, I93_UID_BYTE_LEN*8);         /* Mask Length */
         ARRAY8_TO_STREAM (p, p_uid);                      /* UID */
         p_cmd->len += I93_UID_BYTE_LEN;
     }
     else
     {
-        uint8_t_TO_STREAM (p, 0x00);   /* Mask Length */
+        UINT8_TO_STREAM (p, 0x00);   /* Mask Length */
     }
 
     if (rw_i93_send_to_lower (p_cmd))
@@ -623,10 +623,10 @@ tNFC_STATUS rw_i93_send_cmd_stay_quiet (void)
     p = (uint8_t *) (p_cmd + 1) + p_cmd->offset;
 
     /* Flags */
-    uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
+    UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_STAY_QUIET);
+    UINT8_TO_STREAM (p, I93_CMD_STAY_QUIET);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);    /* UID */
@@ -683,22 +683,22 @@ tNFC_STATUS rw_i93_send_cmd_read_single_block (uint16_t block_number, bool    re
     if (rw_cb.tcb.i93.intl_flags & RW_I93_FLAG_16BIT_NUM_BLOCK)
         flags |= I93_FLAG_PROT_EXT_YES;
 
-    uint8_t_TO_STREAM (p, flags);
+    UINT8_TO_STREAM (p, flags);
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_READ_SINGLE_BLOCK);
+    UINT8_TO_STREAM (p, I93_CMD_READ_SINGLE_BLOCK);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);     /* UID */
 
     if (rw_cb.tcb.i93.intl_flags & RW_I93_FLAG_16BIT_NUM_BLOCK)
     {
-        uint16_t_TO_STREAM (p, block_number);          /* Block number */
+        UINT16_TO_STREAM (p, block_number);          /* Block number */
         p_cmd->len++;
     }
     else
     {
-        uint8_t_TO_STREAM (p, block_number);          /* Block number */
+        UINT8_TO_STREAM (p, block_number);          /* Block number */
     }
 
     if (rw_i93_send_to_lower (p_cmd))
@@ -757,22 +757,22 @@ tNFC_STATUS rw_i93_send_cmd_write_single_block (uint16_t block_number, uint8_t *
     if (rw_cb.tcb.i93.intl_flags & RW_I93_FLAG_16BIT_NUM_BLOCK)
         flags |= I93_FLAG_PROT_EXT_YES;
 
-    uint8_t_TO_STREAM (p, flags);
+    UINT8_TO_STREAM (p, flags);
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_WRITE_SINGLE_BLOCK);
+    UINT8_TO_STREAM (p, I93_CMD_WRITE_SINGLE_BLOCK);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);    /* UID */
 
     if (rw_cb.tcb.i93.intl_flags & RW_I93_FLAG_16BIT_NUM_BLOCK)
     {
-        uint16_t_TO_STREAM (p, block_number);          /* Block number */
+        UINT16_TO_STREAM (p, block_number);          /* Block number */
         p_cmd->len++;
     }
     else
     {
-        uint8_t_TO_STREAM (p, block_number);          /* Block number */
+        UINT8_TO_STREAM (p, block_number);          /* Block number */
     }
 
 
@@ -828,19 +828,19 @@ tNFC_STATUS rw_i93_send_cmd_lock_block (uint8_t block_number)
         ||(rw_cb.tcb.i93.product_version == RW_I93_TAG_IT_HF_I_PRO_CHIP_INLAY)  )
     {
         /* Option must be set for TI tag */
-        uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | I93_FLAG_OPTION_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
+        UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | I93_FLAG_OPTION_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
     }
     else
     {
-        uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
+        UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
     }
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_LOCK_BLOCK);
+    UINT8_TO_STREAM (p, I93_CMD_LOCK_BLOCK);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);    /* UID */
-    uint8_t_TO_STREAM (p, block_number);         /* Block number */
+    UINT8_TO_STREAM (p, block_number);         /* Block number */
 
     if (rw_i93_send_to_lower (p_cmd))
     {
@@ -887,25 +887,25 @@ tNFC_STATUS rw_i93_send_cmd_read_multi_blocks (uint16_t first_block_number, uint
     if (rw_cb.tcb.i93.intl_flags & RW_I93_FLAG_16BIT_NUM_BLOCK)
         flags |= I93_FLAG_PROT_EXT_YES;
 
-    uint8_t_TO_STREAM (p, flags);
+    UINT8_TO_STREAM (p, flags);
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_READ_MULTI_BLOCK);
+    UINT8_TO_STREAM (p, I93_CMD_READ_MULTI_BLOCK);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);    /* UID */
 
     if (rw_cb.tcb.i93.intl_flags & RW_I93_FLAG_16BIT_NUM_BLOCK)
     {
-        uint16_t_TO_STREAM (p, first_block_number);   /* First block number */
+        UINT16_TO_STREAM (p, first_block_number);   /* First block number */
         p_cmd->len++;
     }
     else
     {
-        uint8_t_TO_STREAM (p, first_block_number);   /* First block number */
+        UINT8_TO_STREAM (p, first_block_number);   /* First block number */
     }
 
-    uint8_t_TO_STREAM (p, number_blocks - 1);    /* Number of blocks, 0x00 to read one block */
+    UINT8_TO_STREAM (p, number_blocks - 1);    /* Number of blocks, 0x00 to read one block */
 
     if (rw_i93_send_to_lower (p_cmd))
     {
@@ -949,15 +949,15 @@ tNFC_STATUS rw_i93_send_cmd_write_multi_blocks (uint8_t  first_block_number,
     p = (uint8_t *) (p_cmd + 1) + p_cmd->offset;
 
     /* Flags */
-    uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
+    UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_WRITE_MULTI_BLOCK);
+    UINT8_TO_STREAM (p, I93_CMD_WRITE_MULTI_BLOCK);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);   /* UID */
-    uint8_t_TO_STREAM (p, first_block_number);   /* First block number */
-    uint8_t_TO_STREAM (p, number_blocks - 1);    /* Number of blocks, 0x00 to read one block */
+    UINT8_TO_STREAM (p, first_block_number);   /* First block number */
+    UINT8_TO_STREAM (p, number_blocks - 1);    /* Number of blocks, 0x00 to read one block */
 
     /* Data */
     ARRAY_TO_STREAM (p, p_data, number_blocks * rw_cb.tcb.i93.block_size);
@@ -1002,10 +1002,10 @@ tNFC_STATUS rw_i93_send_cmd_select (uint8_t *p_uid)
     p = (uint8_t *) (p_cmd + 1) + p_cmd->offset;
 
     /* Flags */
-    uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
+    UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_SELECT);
+    UINT8_TO_STREAM (p, I93_CMD_SELECT);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, p_uid);    /* UID */
@@ -1050,10 +1050,10 @@ tNFC_STATUS rw_i93_send_cmd_reset_to_ready (void)
     p = (uint8_t *) (p_cmd + 1) + p_cmd->offset;
 
     /* Flags */
-    uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
+    UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_RESET_TO_READY);
+    UINT8_TO_STREAM (p, I93_CMD_RESET_TO_READY);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);    /* UID */
@@ -1098,14 +1098,14 @@ tNFC_STATUS rw_i93_send_cmd_write_afi (uint8_t afi)
     p = (uint8_t *) (p_cmd + 1) + p_cmd->offset;
 
     /* Flags */
-    uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
+    UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_WRITE_AFI);
+    UINT8_TO_STREAM (p, I93_CMD_WRITE_AFI);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);    /* UID */
-    uint8_t_TO_STREAM (p, afi);                  /* AFI */
+    UINT8_TO_STREAM (p, afi);                  /* AFI */
 
     if (rw_i93_send_to_lower (p_cmd))
     {
@@ -1147,10 +1147,10 @@ tNFC_STATUS rw_i93_send_cmd_lock_afi (void)
     p = (uint8_t *) (p_cmd + 1) + p_cmd->offset;
 
     /* Flags */
-    uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
+    UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_LOCK_AFI);
+    UINT8_TO_STREAM (p, I93_CMD_LOCK_AFI);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);    /* UID */
@@ -1195,14 +1195,14 @@ tNFC_STATUS rw_i93_send_cmd_write_dsfid (uint8_t dsfid)
     p = (uint8_t *) (p_cmd + 1) + p_cmd->offset;
 
     /* Flags */
-    uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
+    UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_WRITE_DSFID);
+    UINT8_TO_STREAM (p, I93_CMD_WRITE_DSFID);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);    /* UID */
-    uint8_t_TO_STREAM (p, dsfid);                /* DSFID */
+    UINT8_TO_STREAM (p, dsfid);                /* DSFID */
 
     if (rw_i93_send_to_lower (p_cmd))
     {
@@ -1244,10 +1244,10 @@ tNFC_STATUS rw_i93_send_cmd_lock_dsfid (void)
     p = (uint8_t *) (p_cmd + 1) + p_cmd->offset;
 
     /* Flags */
-    uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
+    UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE));
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_LOCK_DSFID);
+    UINT8_TO_STREAM (p, I93_CMD_LOCK_DSFID);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);    /* UID */
@@ -1292,10 +1292,10 @@ tNFC_STATUS rw_i93_send_cmd_get_sys_info (uint8_t *p_uid, uint8_t extra_flags)
     p = (uint8_t *) (p_cmd + 1) + p_cmd->offset;
 
     /* Flags */
-    uint8_t_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE | extra_flags));
+    UINT8_TO_STREAM (p, (I93_FLAG_ADDRESS_SET | RW_I93_FLAG_SUB_CARRIER | RW_I93_FLAG_DATA_RATE | extra_flags));
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_GET_SYS_INFO);
+    UINT8_TO_STREAM (p, I93_CMD_GET_SYS_INFO);
 
     /* Parameters */
     if (p_uid)
@@ -1353,24 +1353,24 @@ tNFC_STATUS rw_i93_send_cmd_get_multi_block_sec (uint16_t first_block_number,
     if (rw_cb.tcb.i93.intl_flags & RW_I93_FLAG_16BIT_NUM_BLOCK)
         flags |= I93_FLAG_PROT_EXT_YES;
 
-    uint8_t_TO_STREAM (p, flags);
+    UINT8_TO_STREAM (p, flags);
 
     /* Command Code */
-    uint8_t_TO_STREAM (p, I93_CMD_GET_MULTI_BLK_SEC);
+    UINT8_TO_STREAM (p, I93_CMD_GET_MULTI_BLK_SEC);
 
     /* Parameters */
     ARRAY8_TO_STREAM (p, rw_cb.tcb.i93.uid);    /* UID */
 
     if (rw_cb.tcb.i93.intl_flags & RW_I93_FLAG_16BIT_NUM_BLOCK)
     {
-        uint16_t_TO_STREAM (p, first_block_number);   /* First block number */
-        uint16_t_TO_STREAM (p, number_blocks - 1);    /* Number of blocks, 0x00 to read one block */
+        UINT16_TO_STREAM (p, first_block_number);   /* First block number */
+        UINT16_TO_STREAM (p, number_blocks - 1);    /* Number of blocks, 0x00 to read one block */
         p_cmd->len += 2;
     }
     else
     {
-        uint8_t_TO_STREAM (p, first_block_number);   /* First block number */
-        uint8_t_TO_STREAM (p, number_blocks - 1);    /* Number of blocks, 0x00 to read one block */
+        UINT8_TO_STREAM (p, first_block_number);   /* First block number */
+        UINT8_TO_STREAM (p, number_blocks - 1);    /* Number of blocks, 0x00 to read one block */
     }
 
     if (rw_i93_send_to_lower (p_cmd))

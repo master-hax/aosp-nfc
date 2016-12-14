@@ -119,7 +119,7 @@ tHAL_NFC_STATUS nfc_hal_dm_set_config (uint8_t tlv_size,
 
         NCI_MSG_BLD_HDR0 (p, NCI_MT_CMD, NCI_GID_CORE);
         NCI_MSG_BLD_HDR1 (p, NCI_MSG_CORE_SET_CONFIG);
-        uint8_t_TO_STREAM  (p, (uint8_t) (tlv_size + 1));
+        UINT8_TO_STREAM  (p, (uint8_t) (tlv_size + 1));
 
         rem_len = tlv_size;
         p_tlv   = p_param_tlvs;
@@ -151,7 +151,7 @@ tHAL_NFC_STATUS nfc_hal_dm_set_config (uint8_t tlv_size,
 
         if (status == HAL_NFC_STATUS_OK)
         {
-            uint8_t_TO_STREAM (p, num_param);
+            UINT8_TO_STREAM (p, num_param);
             ARRAY_TO_STREAM (p, p_param_tlvs, tlv_size);
 
             nfc_hal_dm_send_nci_cmd (p_buff, cmd_len, p_cback);
@@ -414,11 +414,11 @@ void nfc_hal_dm_set_xtal_freq_index (void)
     }
 
     p = nci_brcm_xtal_index_cmd;
-    uint8_t_TO_STREAM  (p, (NCI_MTS_CMD|NCI_GID_PROP));
-    uint8_t_TO_STREAM  (p, NCI_MSG_GET_XTAL_INDEX_FROM_DH);
-    uint8_t_TO_STREAM  (p, cmd_len);
-    uint8_t_TO_STREAM  (p, xtal_index);
-    uint16_t_TO_STREAM (p, xtal_freq);
+    UINT8_TO_STREAM  (p, (NCI_MTS_CMD|NCI_GID_PROP));
+    UINT8_TO_STREAM  (p, NCI_MSG_GET_XTAL_INDEX_FROM_DH);
+    UINT8_TO_STREAM  (p, cmd_len);
+    UINT8_TO_STREAM  (p, xtal_index);
+    UINT16_TO_STREAM (p, xtal_freq);
     if (cmd_len > NCI_PROP_PARAM_SIZE_XTAL_INDEX)
     {
         memcpy (p, &p_nfc_hal_dm_xtal_params_cfg[1], p_nfc_hal_dm_xtal_params_cfg[0]);
@@ -445,9 +445,9 @@ void nfc_hal_dm_set_power_level_zero (void)
     uint8_t cmd_len = NCI_PARAM_LEN_POWER_LEVEL;
 
     p = nci_brcm_set_pwr_level_cmd;
-    uint8_t_TO_STREAM  (p, (NCI_MTS_CMD|NCI_GID_PROP));
-    uint8_t_TO_STREAM  (p, NCI_MSG_POWER_LEVEL);
-    uint8_t_TO_STREAM  (p, NCI_PARAM_LEN_POWER_LEVEL);
+    UINT8_TO_STREAM  (p, (NCI_MTS_CMD|NCI_GID_PROP));
+    UINT8_TO_STREAM  (p, NCI_MSG_POWER_LEVEL);
+    UINT8_TO_STREAM  (p, NCI_PARAM_LEN_POWER_LEVEL);
     memset (p, 0, NCI_PARAM_LEN_POWER_LEVEL);
 
     nfc_hal_dm_send_nci_cmd (nci_brcm_set_pwr_level_cmd, NCI_MSG_HDR_SIZE + cmd_len,
@@ -570,13 +570,13 @@ bool    nfc_hal_dm_check_pre_set_mem (void)
     p = cmd;
 
     /* Add the command */
-    uint16_t_TO_STREAM (p, HCI_BRCM_PRE_SET_MEM);
-    uint8_t_TO_STREAM  (p, HCI_BRCM_PRE_SET_MEM_LENGTH);
+    UINT16_TO_STREAM (p, HCI_BRCM_PRE_SET_MEM);
+    UINT8_TO_STREAM  (p, HCI_BRCM_PRE_SET_MEM_LENGTH);
 
-    uint8_t_TO_STREAM  (p, HCI_BRCM_PRE_SET_MEM_TYPE);
-    uint32_t_TO_STREAM  (p, addr);
-    uint8_t_TO_STREAM   (p, 0);
-    uint32_t_TO_STREAM  (p, p_nfc_hal_dm_pre_set_mem[nfc_hal_cb.pre_set_mem_idx].data);
+    UINT8_TO_STREAM  (p, HCI_BRCM_PRE_SET_MEM_TYPE);
+    UINT32_TO_STREAM  (p, addr);
+    UINT8_TO_STREAM   (p, 0);
+    UINT32_TO_STREAM  (p, p_nfc_hal_dm_pre_set_mem[nfc_hal_cb.pre_set_mem_idx].data);
     nfc_hal_cb.pre_set_mem_idx++;
 
     nfc_hal_dm_send_bt_cmd (cmd,
@@ -1374,17 +1374,17 @@ tHAL_NFC_STATUS HAL_NfcSetSnoozeMode (uint8_t snooze_mode,
     p = cmd;
 
     /* Add the HCI command */
-    uint16_t_TO_STREAM (p, HCI_BRCM_WRITE_SLEEP_MODE);
-    uint8_t_TO_STREAM  (p, HCI_BRCM_WRITE_SLEEP_MODE_LENGTH);
+    UINT16_TO_STREAM (p, HCI_BRCM_WRITE_SLEEP_MODE);
+    UINT8_TO_STREAM  (p, HCI_BRCM_WRITE_SLEEP_MODE_LENGTH);
 
     memset (p, 0x00, HCI_BRCM_WRITE_SLEEP_MODE_LENGTH);
 
-    uint8_t_TO_STREAM  (p, snooze_mode);          /* Sleep Mode               */
+    UINT8_TO_STREAM  (p, snooze_mode);          /* Sleep Mode               */
 
-    uint8_t_TO_STREAM  (p, idle_threshold_dh);    /* Idle Threshold Host      */
-    uint8_t_TO_STREAM  (p, idle_threshold_nfcc);  /* Idle Threshold HC        */
-    uint8_t_TO_STREAM  (p, nfc_wake_active_mode); /* BT Wake Active Mode      */
-    uint8_t_TO_STREAM  (p, dh_wake_active_mode);  /* Host Wake Active Mode    */
+    UINT8_TO_STREAM  (p, idle_threshold_dh);    /* Idle Threshold Host      */
+    UINT8_TO_STREAM  (p, idle_threshold_nfcc);  /* Idle Threshold HC        */
+    UINT8_TO_STREAM  (p, nfc_wake_active_mode); /* BT Wake Active Mode      */
+    UINT8_TO_STREAM  (p, dh_wake_active_mode);  /* Host Wake Active Mode    */
 
     nfc_hal_dm_send_bt_cmd (cmd,
                             NFC_HAL_BT_HCI_CMD_HDR_SIZE + HCI_BRCM_WRITE_SLEEP_MODE_LENGTH,

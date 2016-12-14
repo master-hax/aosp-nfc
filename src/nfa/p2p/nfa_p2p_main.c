@@ -520,8 +520,8 @@ void nfa_p2p_set_config (tNFA_DM_DISC_TECH_PROTO_MASK disc_mask)
     {
         p = params;
 
-        uint8_t_TO_BE_STREAM (p, NFC_PMID_ATR_REQ_GEN_BYTES);
-        uint8_t_TO_BE_STREAM (p, gen_bytes_len);
+        UINT8_TO_BE_STREAM (p, NFC_PMID_ATR_REQ_GEN_BYTES);
+        UINT8_TO_BE_STREAM (p, gen_bytes_len);
 
         p += gen_bytes_len;
         length = gen_bytes_len + 2;
@@ -536,15 +536,15 @@ void nfa_p2p_set_config (tNFA_DM_DISC_TECH_PROTO_MASK disc_mask)
     {
         p = params;
 
-        uint8_t_TO_BE_STREAM (p, NFC_PMID_ATR_RES_GEN_BYTES);
-        uint8_t_TO_BE_STREAM (p, gen_bytes_len);
+        UINT8_TO_BE_STREAM (p, NFC_PMID_ATR_RES_GEN_BYTES);
+        UINT8_TO_BE_STREAM (p, gen_bytes_len);
 
         p += gen_bytes_len;
         length = gen_bytes_len + 2;
 
-        uint8_t_TO_BE_STREAM (p, NFC_PMID_WT);
-        uint8_t_TO_BE_STREAM (p, NCI_PARAM_LEN_WT);
-        uint8_t_TO_BE_STREAM (p, wt);
+        UINT8_TO_BE_STREAM (p, NFC_PMID_WT);
+        UINT8_TO_BE_STREAM (p, NCI_PARAM_LEN_WT);
+        UINT8_TO_BE_STREAM (p, wt);
 
         length += 3;
 

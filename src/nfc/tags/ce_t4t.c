@@ -91,7 +91,7 @@ static bool    ce_t4t_send_status (uint16_t status)
     p_r_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_r_apdu + 1) + p_r_apdu->offset;
 
-    uint16_t_TO_BE_STREAM (p, status);
+    UINT16_TO_BE_STREAM (p, status);
 
     p_r_apdu->len = T4T_RSP_STATUS_WORDS_SIZE;
 
@@ -201,7 +201,7 @@ static bool    ce_t4t_read_binary (uint16_t offset, uint8_t length)
         {
             if (offset == 0)
             {
-                uint16_t_TO_BE_STREAM (p_dst, p_t4t->nlen);
+                UINT16_TO_BE_STREAM (p_dst, p_t4t->nlen);
 
                 if (length == 1)
                 {
@@ -213,7 +213,7 @@ static bool    ce_t4t_read_binary (uint16_t offset, uint8_t length)
             }
             else if (offset == 1)
             {
-                uint8_t_TO_BE_STREAM (p_dst, (uint8_t) (p_t4t->nlen));
+                UINT8_TO_BE_STREAM (p_dst, (uint8_t) (p_t4t->nlen));
 
                 offset = 0;
                 length--;
@@ -230,7 +230,7 @@ static bool    ce_t4t_read_binary (uint16_t offset, uint8_t length)
             p_dst += length;
         }
 
-        uint16_t_TO_BE_STREAM (p_dst, T4T_RSP_CMD_CMPLTED);
+        UINT16_TO_BE_STREAM (p_dst, T4T_RSP_CMD_CMPLTED);
         p_r_apdu->len += T4T_RSP_STATUS_WORDS_SIZE;
 
         if (!ce_t4t_send_to_lower (p_r_apdu))
@@ -277,7 +277,7 @@ static bool    ce_t4t_update_binary (uint16_t offset, uint8_t length, uint8_t *p
     if ((offset < T4T_FILE_LENGTH_SIZE) && (length > 0))
     {
         p = file_length;
-        uint16_t_TO_BE_STREAM (p, p_t4t->nlen);
+        UINT16_TO_BE_STREAM (p, p_t4t->nlen);
 
         while ((offset < T4T_FILE_LENGTH_SIZE) && (length > 0))
         {
@@ -353,7 +353,7 @@ static void ce_t4t_set_version_in_cc (uint8_t version)
 
     p = p_t4t->cc_file + T4T_VERSION_OFFSET_IN_CC;
 
-    uint8_t_TO_BE_STREAM (p, version);
+    UINT8_TO_BE_STREAM (p, version);
 }
 
 /*******************************************************************************
@@ -890,26 +890,26 @@ tNFC_STATUS CE_T4tSetLocalNDEFMsg (bool       read_only,
     /* Initialise CC file */
     p = p_t4t->cc_file;
 
-    uint16_t_TO_BE_STREAM (p, T4T_CC_FILE_MIN_LEN);
-    uint8_t_TO_BE_STREAM (p, T4T_MY_VERSION);
-    uint16_t_TO_BE_STREAM (p, CE_T4T_MAX_LE);
-    uint16_t_TO_BE_STREAM (p, CE_T4T_MAX_LC);
+    UINT16_TO_BE_STREAM (p, T4T_CC_FILE_MIN_LEN);
+    UINT8_TO_BE_STREAM (p, T4T_MY_VERSION);
+    UINT16_TO_BE_STREAM (p, CE_T4T_MAX_LE);
+    UINT16_TO_BE_STREAM (p, CE_T4T_MAX_LC);
 
     /* Mandatory NDEF File Control TLV */
-    uint8_t_TO_BE_STREAM (p, T4T_NDEF_FILE_CONTROL_TYPE);            /* type */
-    uint8_t_TO_BE_STREAM (p, T4T_FILE_CONTROL_LENGTH);               /* length */
-    uint16_t_TO_BE_STREAM (p, CE_T4T_MANDATORY_NDEF_FILE_ID);         /* file ID */
-    uint16_t_TO_BE_STREAM (p, ndef_msg_max + T4T_FILE_LENGTH_SIZE);   /* max NDEF file size */
-    uint8_t_TO_BE_STREAM (p, T4T_FC_READ_ACCESS);                    /* read access */
+    UINT8_TO_BE_STREAM (p, T4T_NDEF_FILE_CONTROL_TYPE);            /* type */
+    UINT8_TO_BE_STREAM (p, T4T_FILE_CONTROL_LENGTH);               /* length */
+    UINT16_TO_BE_STREAM (p, CE_T4T_MANDATORY_NDEF_FILE_ID);         /* file ID */
+    UINT16_TO_BE_STREAM (p, ndef_msg_max + T4T_FILE_LENGTH_SIZE);   /* max NDEF file size */
+    UINT8_TO_BE_STREAM (p, T4T_FC_READ_ACCESS);                    /* read access */
 
     if (read_only)
     {
-        uint8_t_TO_BE_STREAM (p, T4T_FC_NO_WRITE_ACCESS);    /* read only */
+        UINT8_TO_BE_STREAM (p, T4T_FC_NO_WRITE_ACCESS);    /* read only */
         p_t4t->status |= CE_T4T_STATUS_NDEF_FILE_READ_ONLY;
     }
     else
     {
-        uint8_t_TO_BE_STREAM (p, T4T_FC_WRITE_ACCESS);       /* write access */
+        UINT8_TO_BE_STREAM (p, T4T_FC_WRITE_ACCESS);       /* write access */
         p_t4t->status &= ~ (CE_T4T_STATUS_NDEF_FILE_READ_ONLY);
     }
 
@@ -1082,7 +1082,7 @@ tNFC_STATUS CE_T4TTestSetCC (uint16_t cc_len,
 
     if (cc_len != 0xFFFF)
     {
-        uint16_t_TO_BE_STREAM (p, cc_len);
+        UINT16_TO_BE_STREAM (p, cc_len);
     }
     else
         p += 2;
@@ -1097,7 +1097,7 @@ tNFC_STATUS CE_T4TTestSetCC (uint16_t cc_len,
         else /* Undefined version */
             ce_test_tag_app_id[T4T_V20_NDEF_TAG_AID_LEN - 1] = 0xFF;
 
-        uint8_t_TO_BE_STREAM (p, version);
+        UINT8_TO_BE_STREAM (p, version);
     }
     else
     {
@@ -1107,14 +1107,14 @@ tNFC_STATUS CE_T4TTestSetCC (uint16_t cc_len,
 
     if (max_le != 0xFFFF)
     {
-        uint16_t_TO_BE_STREAM (p, max_le);
+        UINT16_TO_BE_STREAM (p, max_le);
     }
     else
         p += 2;
 
     if (max_lc != 0xFFFF)
     {
-        uint16_t_TO_BE_STREAM (p, max_lc);
+        UINT16_TO_BE_STREAM (p, max_lc);
     }
     else
         p += 2;
@@ -1153,42 +1153,42 @@ tNFC_STATUS CE_T4TTestSetNDEFCtrlTLV (uint8_t  type,
 
     if (type != 0xFF)
     {
-        uint8_t_TO_BE_STREAM (p, type);
+        UINT8_TO_BE_STREAM (p, type);
     }
     else
         p += 1;
 
     if (length != 0xFF)
     {
-        uint8_t_TO_BE_STREAM (p, length);
+        UINT8_TO_BE_STREAM (p, length);
     }
     else
         p += 1;
 
     if (file_id != 0xFFFF)
     {
-        uint16_t_TO_BE_STREAM (p, file_id);
+        UINT16_TO_BE_STREAM (p, file_id);
     }
     else
         p += 2;
 
     if (max_file_size != 0xFFFF)
     {
-        uint16_t_TO_BE_STREAM (p, max_file_size);
+        UINT16_TO_BE_STREAM (p, max_file_size);
     }
     else
         p += 2;
 
     if (read_access != 0xFF)
     {
-        uint8_t_TO_BE_STREAM (p, read_access);
+        UINT8_TO_BE_STREAM (p, read_access);
     }
     else
         p += 1;
 
     if (write_access != 0xFF)
     {
-        uint8_t_TO_BE_STREAM (p, write_access);
+        UINT8_TO_BE_STREAM (p, write_access);
     }
     else
         p += 1;

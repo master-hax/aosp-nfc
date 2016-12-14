@@ -963,7 +963,7 @@ void llcp_dlc_proc_i_pdu (uint8_t dsap, uint8_t ssap, uint16_t i_pdu_length, uin
                     p_dst = (uint8_t*) (p_last_buf + 1) + p_last_buf->offset + p_last_buf->len;
 
                     /* add length of information in I PDU */
-                    uint16_t_TO_BE_STREAM (p_dst, info_len);
+                    UINT16_TO_BE_STREAM (p_dst, info_len);
 
                     /* copy information of I PDU */
                     p = p_i_pdu + LLCP_PDU_HEADER_SIZE + LLCP_SEQUENCE_SIZE;
@@ -990,7 +990,7 @@ void llcp_dlc_proc_i_pdu (uint8_t dsap, uint8_t ssap, uint16_t i_pdu_length, uin
                 {
                     /* add length of information in front of information */
                     p = p_i_pdu + LLCP_PDU_HEADER_SIZE + LLCP_SEQUENCE_SIZE - LLCP_PDU_AGF_LEN_SIZE;
-                    uint16_t_TO_BE_STREAM (p, info_len);
+                    UINT16_TO_BE_STREAM (p, info_len);
 
                     p_msg->offset += LLCP_PDU_HEADER_SIZE + LLCP_SEQUENCE_SIZE - LLCP_PDU_AGF_LEN_SIZE;
                     p_msg->len    -= LLCP_PDU_HEADER_SIZE + LLCP_SEQUENCE_SIZE - LLCP_PDU_AGF_LEN_SIZE;
@@ -1005,7 +1005,7 @@ void llcp_dlc_proc_i_pdu (uint8_t dsap, uint8_t ssap, uint16_t i_pdu_length, uin
                         p_dst = (uint8_t*) (p_msg + 1);
 
                         /* add length of information in front of information */
-                        uint16_t_TO_BE_STREAM (p_dst, info_len);
+                        UINT16_TO_BE_STREAM (p_dst, info_len);
 
                         p = p_i_pdu + LLCP_PDU_HEADER_SIZE + LLCP_SEQUENCE_SIZE;
                         memcpy (p_dst, p, info_len);

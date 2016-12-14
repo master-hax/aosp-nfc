@@ -829,7 +829,7 @@ static void llcp_link_send_SYMM (void)
         p_msg->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
 
         p = (uint8_t *) (p_msg + 1) + p_msg->offset;
-        uint16_t_TO_BE_STREAM (p, LLCP_GET_PDU_HEADER (LLCP_SAP_LM, LLCP_PDU_SYMM_TYPE, LLCP_SAP_LM ));
+        UINT16_TO_BE_STREAM (p, LLCP_GET_PDU_HEADER (LLCP_SAP_LM, LLCP_PDU_SYMM_TYPE, LLCP_SAP_LM ));
 
         llcp_link_send_to_lower (p_msg);
     }
@@ -1031,7 +1031,7 @@ static void llcp_link_proc_ui_pdu (uint8_t  local_sap,
                 p_dst = (uint8_t*) (p_last_buf + 1) + p_last_buf->offset + p_last_buf->len;
 
                 /* add length of UI PDU */
-                uint16_t_TO_BE_STREAM (p_dst, ui_pdu_length);
+                UINT16_TO_BE_STREAM (p_dst, ui_pdu_length);
 
                 /* copy UI PDU with LLCP header */
                 memcpy (p_dst, p_ui_pdu, ui_pdu_length);
@@ -1053,7 +1053,7 @@ static void llcp_link_proc_ui_pdu (uint8_t  local_sap,
             {
                 /* add length of PDU in front of UI PDU (reuse room for NCI header) */
                 p_ui_pdu -= LLCP_PDU_AGF_LEN_SIZE;
-                uint16_t_TO_BE_STREAM (p_ui_pdu, ui_pdu_length);
+                UINT16_TO_BE_STREAM (p_ui_pdu, ui_pdu_length);
 
                 p_msg->offset -= LLCP_PDU_AGF_LEN_SIZE;
                 p_msg->len    += LLCP_PDU_AGF_LEN_SIZE;
@@ -1068,7 +1068,7 @@ static void llcp_link_proc_ui_pdu (uint8_t  local_sap,
                     p_dst = (uint8_t*) (p_msg + 1);
 
                     /* add length of PDU in front of UI PDU */
-                    uint16_t_TO_BE_STREAM (p_dst, ui_pdu_length);
+                    UINT16_TO_BE_STREAM (p_dst, ui_pdu_length);
 
                     memcpy (p_dst, p_ui_pdu, ui_pdu_length);
 
@@ -1624,8 +1624,8 @@ static BT_HDR *llcp_link_build_next_pdu (BT_HDR *p_pdu)
 
                     p = (uint8_t *) (p_agf + 1) + p_agf->offset;
 
-                    uint16_t_TO_BE_STREAM (p, LLCP_GET_PDU_HEADER (LLCP_SAP_LM, LLCP_PDU_AGF_TYPE, LLCP_SAP_LM ));
-                    uint16_t_TO_BE_STREAM (p, p_msg->len);
+                    UINT16_TO_BE_STREAM (p, LLCP_GET_PDU_HEADER (LLCP_SAP_LM, LLCP_PDU_AGF_TYPE, LLCP_SAP_LM ));
+                    UINT16_TO_BE_STREAM (p, p_msg->len);
                     memcpy(p, (uint8_t *) (p_msg + 1) + p_msg->offset, p_msg->len);
 
                     p_agf->len      = LLCP_PDU_HEADER_SIZE + 2 + p_msg->len;
@@ -1653,7 +1653,7 @@ static BT_HDR *llcp_link_build_next_pdu (BT_HDR *p_pdu)
 
             p = (uint8_t *) (p_agf + 1) + p_agf->offset + p_agf->len;
 
-            uint16_t_TO_BE_STREAM (p, p_next_pdu->len);
+            UINT16_TO_BE_STREAM (p, p_next_pdu->len);
             memcpy (p, (uint8_t *) (p_next_pdu + 1) + p_next_pdu->offset, p_next_pdu->len);
 
             p_agf->len += 2 + p_next_pdu->len;

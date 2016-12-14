@@ -150,9 +150,9 @@ static bool    rw_t4t_get_hw_version (void)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_INS_GET_HW_VERSION);
-    uint16_t_TO_BE_STREAM (p, 0x0000);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_INS_GET_HW_VERSION);
+    UINT16_TO_BE_STREAM (p, 0x0000);
     uint8_t_TO_BE_FIELD (p, 0x00);
 
     p_c_apdu->len = T4T_CMD_MAX_HDR_SIZE;
@@ -190,9 +190,9 @@ static bool    rw_t4t_get_sw_version (void)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_ADDI_FRAME_RESP);
-    uint16_t_TO_BE_STREAM (p, 0x0000);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_ADDI_FRAME_RESP);
+    UINT16_TO_BE_STREAM (p, 0x0000);
     uint8_t_TO_BE_FIELD (p, 0x00);
 
     p_c_apdu->len = T4T_CMD_MAX_HDR_SIZE;
@@ -280,9 +280,9 @@ static bool    rw_t4t_get_uid_details (void)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_ADDI_FRAME_RESP);
-    uint16_t_TO_BE_STREAM (p, 0x0000);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_ADDI_FRAME_RESP);
+    UINT16_TO_BE_STREAM (p, 0x0000);
     uint8_t_TO_BE_FIELD (p, 0x00);
 
     p_c_apdu->len = T4T_CMD_MAX_HDR_SIZE;
@@ -322,25 +322,25 @@ static bool    rw_t4t_create_app (void)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_CREATE_AID);
-    uint16_t_TO_BE_STREAM (p, 0x0000);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_CREATE_AID);
+    UINT16_TO_BE_STREAM (p, 0x0000);
     if (p_t4t->card_type == T4T_TYPE_DESFIRE_EV1)
     {
-        uint8_t_TO_BE_STREAM (p, (T4T_CMD_MAX_HDR_SIZE + sizeof(df_name) + 2));
+        UINT8_TO_BE_STREAM (p, (T4T_CMD_MAX_HDR_SIZE + sizeof(df_name) + 2));
         UINT24_TO_BE_STREAM (p, T4T_DES_EV1_NFC_APP_ID);
-        uint16_t_TO_BE_STREAM (p, 0x0F21);                  /*Key settings and no.of keys */
-        uint16_t_TO_BE_STREAM (p, 0x05E1);                  /* ISO file ID */
+        UINT16_TO_BE_STREAM (p, 0x0F21);                  /*Key settings and no.of keys */
+        UINT16_TO_BE_STREAM (p, 0x05E1);                  /* ISO file ID */
         ARRAY_TO_BE_STREAM (p, df_name, (int)sizeof(df_name));   /*DF file name */
-        uint8_t_TO_BE_STREAM (p, 0x00);                      /* Le */
+        UINT8_TO_BE_STREAM (p, 0x00);                      /* Le */
         p_c_apdu->len = 20;
     }
     else
     {
-        uint8_t_TO_BE_STREAM (p, T4T_CMD_MAX_HDR_SIZE);
+        UINT8_TO_BE_STREAM (p, T4T_CMD_MAX_HDR_SIZE);
         UINT24_TO_BE_STREAM (p, T4T_DES_EV0_NFC_APP_ID);
-        uint16_t_TO_BE_STREAM (p, 0x0F01);                  /*Key settings and no.of keys */
-        uint8_t_TO_BE_STREAM (p, 0x00);                      /* Le */
+        UINT16_TO_BE_STREAM (p, 0x0F01);                  /*Key settings and no.of keys */
+        UINT8_TO_BE_STREAM (p, 0x00);                      /* Le */
         p_c_apdu->len = 11;
     }
 
@@ -378,10 +378,10 @@ static bool    rw_t4t_select_app (void)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_SELECT_APP);
-    uint16_t_TO_BE_STREAM (p, 0x0000);
-    uint8_t_TO_BE_STREAM (p, 0x03);                      /* Lc: length of wrapped data */
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_SELECT_APP);
+    UINT16_TO_BE_STREAM (p, 0x0000);
+    UINT8_TO_BE_STREAM (p, 0x03);                      /* Lc: length of wrapped data */
     if (p_t4t->card_type == T4T_TYPE_DESFIRE_EV1)
     {
         UINT24_TO_BE_STREAM (p, T4T_DES_EV1_NFC_APP_ID);
@@ -391,7 +391,7 @@ static bool    rw_t4t_select_app (void)
         UINT24_TO_BE_STREAM(p, T4T_DES_EV0_NFC_APP_ID);
     }
 
-    uint8_t_TO_BE_STREAM (p, 0x00);                      /* Le */
+    UINT8_TO_BE_STREAM (p, 0x00);                      /* Le */
 
     p_c_apdu->len = 9;
 
@@ -429,25 +429,25 @@ static bool    rw_t4t_create_ccfile (void)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_CREATE_DATAFILE);
-    uint16_t_TO_BE_STREAM (p, 0x0000);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_CREATE_DATAFILE);
+    UINT16_TO_BE_STREAM (p, 0x0000);
     if (p_t4t->card_type == T4T_TYPE_DESFIRE_EV1)
     {
-        uint8_t_TO_BE_STREAM (p, 0x09);                    /* Lc: length of wrapped data */
-        uint8_t_TO_BE_STREAM (p, 0x01);                    /* EV1 CC file id             */
-        uint16_t_TO_BE_STREAM (p, 0x03E1);                 /* ISO file id                */
+        UINT8_TO_BE_STREAM (p, 0x09);                    /* Lc: length of wrapped data */
+        UINT8_TO_BE_STREAM (p, 0x01);                    /* EV1 CC file id             */
+        UINT16_TO_BE_STREAM (p, 0x03E1);                 /* ISO file id                */
     }
     else
     {
-        uint8_t_TO_BE_STREAM (p, 0x07);               /* Lc: length of wrapped data */
-        uint8_t_TO_BE_STREAM (p, 0x03);               /* DESFire CC file id         */
+        UINT8_TO_BE_STREAM (p, 0x07);               /* Lc: length of wrapped data */
+        UINT8_TO_BE_STREAM (p, 0x03);               /* DESFire CC file id         */
     }
 
-    uint8_t_TO_BE_STREAM (p, 0x00);                   /* COMM settings              */
-    uint16_t_TO_BE_STREAM (p, 0xEEEE);                /* Access rights              */
+    UINT8_TO_BE_STREAM (p, 0x00);                   /* COMM settings              */
+    UINT16_TO_BE_STREAM (p, 0xEEEE);                /* Access rights              */
     UINT24_TO_BE_STREAM (p, 0x0F0000);              /* Set file size              */
-    uint8_t_TO_BE_STREAM (p, 0x00);                   /* Le                         */
+    UINT8_TO_BE_STREAM (p, 0x00);                   /* Le                         */
 
     p_c_apdu->len = (p_t4t->card_type == T4T_TYPE_DESFIRE_EV1) ? 15 : 13;
 
@@ -485,26 +485,26 @@ static bool    rw_t4t_create_ndef (void)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_CREATE_DATAFILE);
-    uint16_t_TO_BE_STREAM (p, 0x0000);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_CREATE_DATAFILE);
+    UINT16_TO_BE_STREAM (p, 0x0000);
     if (p_t4t->card_type == T4T_TYPE_DESFIRE_EV1)
     {
-        uint8_t_TO_BE_STREAM (p, 0x09);                   /* Lc: length of wrapped data */
-        uint8_t_TO_BE_STREAM (p, 0x02);                   /* DESFEv1 NDEF file id       */
-        uint16_t_TO_BE_STREAM (p, 0x04E1);                /* ISO file id                */
+        UINT8_TO_BE_STREAM (p, 0x09);                   /* Lc: length of wrapped data */
+        UINT8_TO_BE_STREAM (p, 0x02);                   /* DESFEv1 NDEF file id       */
+        UINT16_TO_BE_STREAM (p, 0x04E1);                /* ISO file id                */
     }
     else
     {
-        uint8_t_TO_BE_STREAM (p, 0x07);
-        uint8_t_TO_BE_STREAM (p, 0x04);                   /* DESF4 NDEF file id        */
+        UINT8_TO_BE_STREAM (p, 0x07);
+        UINT8_TO_BE_STREAM (p, 0x04);                   /* DESF4 NDEF file id        */
     }
 
-    uint8_t_TO_BE_STREAM (p, 0x00);                       /* COMM settings              */
-    uint16_t_TO_BE_STREAM (p, 0xEEEE);                    /* Access rights              */
-    uint16_t_TO_STREAM (p, p_t4t->card_size);
-    uint8_t_TO_BE_STREAM (p, 0x00);                       /* Set card size              */
-    uint8_t_TO_BE_STREAM (p, 0x00);                       /* Le                         */
+    UINT8_TO_BE_STREAM (p, 0x00);                       /* COMM settings              */
+    UINT16_TO_BE_STREAM (p, 0xEEEE);                    /* Access rights              */
+    UINT16_TO_STREAM (p, p_t4t->card_size);
+    UINT8_TO_BE_STREAM (p, 0x00);                       /* Set card size              */
+    UINT8_TO_BE_STREAM (p, 0x00);                       /* Le                         */
 
     p_c_apdu->len = (p_t4t->card_type == T4T_TYPE_DESFIRE_EV1) ? 15 : 13;
 
@@ -543,26 +543,26 @@ static bool    rw_t4t_write_cc (void)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_WRITE);
-    uint16_t_TO_BE_STREAM (p, 0x0000);
-    uint8_t_TO_BE_STREAM (p, 0x16);                    /* Lc: length of wrapped data  */
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_WRITE);
+    UINT16_TO_BE_STREAM (p, 0x0000);
+    UINT8_TO_BE_STREAM (p, 0x16);                    /* Lc: length of wrapped data  */
     if (p_t4t->card_type == T4T_TYPE_DESFIRE_EV1)
     {
         CCFileBytes[2]  = 0x20;
         CCFileBytes[11] = p_t4t->card_size >> 8;
         CCFileBytes[12] = (uint8_t) p_t4t->card_size;
-        uint8_t_TO_BE_STREAM (p, 0x01);               /* CC file id                  */
+        UINT8_TO_BE_STREAM (p, 0x01);               /* CC file id                  */
     }
     else
     {
-        uint8_t_TO_BE_STREAM (p, 0x03);
+        UINT8_TO_BE_STREAM (p, 0x03);
     }
 
     UINT24_TO_BE_STREAM (p, 0x000000);              /* Set the offset              */
     UINT24_TO_BE_STREAM (p, 0x0F0000);              /* Set available length        */
     ARRAY_TO_BE_STREAM (p, CCFileBytes, (int)sizeof(CCFileBytes));
-    uint8_t_TO_BE_STREAM (p, 0x00);                    /* Le                         */
+    UINT8_TO_BE_STREAM (p, 0x00);                    /* Le                         */
 
     p_c_apdu->len = 28;
 
@@ -600,23 +600,23 @@ static bool    rw_t4t_write_ndef (void)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_DES_WRITE);
-    uint16_t_TO_BE_STREAM (p, 0x0000);
-    uint8_t_TO_BE_STREAM (p, 0x09);                    /* Lc: length of wrapped data  */
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_DES_WRITE);
+    UINT16_TO_BE_STREAM (p, 0x0000);
+    UINT8_TO_BE_STREAM (p, 0x09);                    /* Lc: length of wrapped data  */
     if (p_t4t->card_type == T4T_TYPE_DESFIRE_EV1)
     {
-        uint8_t_TO_BE_STREAM (p, 0x02);               /* DESFEv1 Ndef file id        */
+        UINT8_TO_BE_STREAM (p, 0x02);               /* DESFEv1 Ndef file id        */
     }
     else
     {
-        uint8_t_TO_BE_STREAM (p, 0x04);
+        UINT8_TO_BE_STREAM (p, 0x04);
     }
 
     UINT24_TO_BE_STREAM (p, 0x000000);              /* Set the offset              */
     UINT24_TO_BE_STREAM (p, 0x020000);              /* Set available length        */
-    uint16_t_TO_BE_STREAM (p, 0x0000);                /* Ndef file bytes             */
-    uint8_t_TO_BE_STREAM (p, 0x00);                    /* Le                          */
+    UINT16_TO_BE_STREAM (p, 0x0000);                /* Ndef file bytes             */
+    UINT8_TO_BE_STREAM (p, 0x00);                    /* Le                          */
 
     p_c_apdu->len = 15;
 
@@ -655,22 +655,22 @@ static bool    rw_t4t_select_file (uint16_t file_id)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_INS_SELECT);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_P1_SELECT_BY_FILE_ID);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_INS_SELECT);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_P1_SELECT_BY_FILE_ID);
 
     /* if current version mapping is V2.0 */
     if (rw_cb.tcb.t4t.version == T4T_VERSION_2_0)
     {
-        uint8_t_TO_BE_STREAM (p, T4T_CMD_P2_FIRST_OR_ONLY_0CH);
+        UINT8_TO_BE_STREAM (p, T4T_CMD_P2_FIRST_OR_ONLY_0CH);
     }
     else /* version 1.0 */
     {
-        uint8_t_TO_BE_STREAM (p, T4T_CMD_P2_FIRST_OR_ONLY_00H);
+        UINT8_TO_BE_STREAM (p, T4T_CMD_P2_FIRST_OR_ONLY_00H);
     }
 
-    uint8_t_TO_BE_STREAM (p, T4T_FILE_ID_SIZE);
-    uint16_t_TO_BE_STREAM (p, file_id);
+    UINT8_TO_BE_STREAM (p, T4T_FILE_ID_SIZE);
+    UINT16_TO_BE_STREAM (p, file_id);
 
     p_c_apdu->len = T4T_CMD_MAX_HDR_SIZE + T4T_FILE_ID_SIZE;
 
@@ -726,10 +726,10 @@ static bool    rw_t4t_read_file (uint16_t offset, uint16_t length, bool    is_co
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, (T4T_CMD_CLASS | rw_cb.tcb.t4t.channel));
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_INS_READ_BINARY);
-    uint16_t_TO_BE_STREAM (p, offset);
-    uint8_t_TO_BE_STREAM (p, length); /* Le */
+    UINT8_TO_BE_STREAM (p, (T4T_CMD_CLASS | rw_cb.tcb.t4t.channel));
+    UINT8_TO_BE_STREAM (p, T4T_CMD_INS_READ_BINARY);
+    UINT16_TO_BE_STREAM (p, offset);
+    UINT8_TO_BE_STREAM (p, length); /* Le */
 
     p_c_apdu->len = T4T_CMD_MIN_HDR_SIZE + 1; /* adding Le */
 
@@ -768,11 +768,11 @@ static bool    rw_t4t_update_nlen (uint16_t ndef_len)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_INS_UPDATE_BINARY);
-    uint16_t_TO_BE_STREAM (p, 0x0000);                    /* offset for NLEN */
-    uint8_t_TO_BE_STREAM (p, T4T_FILE_LENGTH_SIZE);
-    uint16_t_TO_BE_STREAM (p, ndef_len);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_INS_UPDATE_BINARY);
+    UINT16_TO_BE_STREAM (p, 0x0000);                    /* offset for NLEN */
+    UINT8_TO_BE_STREAM (p, T4T_FILE_LENGTH_SIZE);
+    UINT16_TO_BE_STREAM (p, ndef_len);
 
     p_c_apdu->len = T4T_CMD_MAX_HDR_SIZE + T4T_FILE_LENGTH_SIZE;
 
@@ -823,10 +823,10 @@ static bool    rw_t4t_update_file (void)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_INS_UPDATE_BINARY);
-    uint16_t_TO_BE_STREAM (p, p_t4t->rw_offset);
-    uint8_t_TO_BE_STREAM (p, length);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_INS_UPDATE_BINARY);
+    UINT16_TO_BE_STREAM (p, p_t4t->rw_offset);
+    UINT8_TO_BE_STREAM (p, length);
 
     memcpy (p, p_t4t->p_update_data, length);
 
@@ -873,13 +873,13 @@ static bool    rw_t4t_update_cc_to_readonly (void)
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
     /* Add Command Header */
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_INS_UPDATE_BINARY);
-    uint16_t_TO_BE_STREAM (p, (T4T_FC_TLV_OFFSET_IN_CC + T4T_FC_WRITE_ACCESS_OFFSET_IN_TLV)); /* Offset for Read Write access byte of CC */
-    uint8_t_TO_BE_STREAM (p, 1); /* Length of write access field in cc interms of bytes */
+    UINT8_TO_BE_STREAM (p, T4T_CMD_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_INS_UPDATE_BINARY);
+    UINT16_TO_BE_STREAM (p, (T4T_FC_TLV_OFFSET_IN_CC + T4T_FC_WRITE_ACCESS_OFFSET_IN_TLV)); /* Offset for Read Write access byte of CC */
+    UINT8_TO_BE_STREAM (p, 1); /* Length of write access field in cc interms of bytes */
 
     /* Remove Write access */
-    uint8_t_TO_BE_STREAM (p, T4T_FC_NO_WRITE_ACCESS);
+    UINT8_TO_BE_STREAM (p, T4T_FC_NO_WRITE_ACCESS);
 
 
     p_c_apdu->len = T4T_CMD_MAX_HDR_SIZE + 1;
@@ -925,14 +925,14 @@ static bool    rw_t4t_select_application (uint8_t version)
     p_c_apdu->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
     p = (uint8_t *) (p_c_apdu + 1) + p_c_apdu->offset;
 
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_CLASS);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_INS_SELECT);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_P1_SELECT_BY_NAME);
-    uint8_t_TO_BE_STREAM (p, T4T_CMD_P2_FIRST_OR_ONLY_00H);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_CLASS);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_INS_SELECT);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_P1_SELECT_BY_NAME);
+    UINT8_TO_BE_STREAM (p, T4T_CMD_P2_FIRST_OR_ONLY_00H);
 
     if (version == T4T_VERSION_1_0)   /* this is for V1.0 */
     {
-        uint8_t_TO_BE_STREAM (p, T4T_V10_NDEF_TAG_AID_LEN);
+        UINT8_TO_BE_STREAM (p, T4T_V10_NDEF_TAG_AID_LEN);
 
         memcpy (p, t4t_v10_ndef_tag_aid, T4T_V10_NDEF_TAG_AID_LEN);
 
@@ -940,12 +940,12 @@ static bool    rw_t4t_select_application (uint8_t version)
     }
     else if (version == T4T_VERSION_2_0)   /* this is for V2.0 */
     {
-        uint8_t_TO_BE_STREAM (p, T4T_V20_NDEF_TAG_AID_LEN);
+        UINT8_TO_BE_STREAM (p, T4T_V20_NDEF_TAG_AID_LEN);
 
         memcpy (p, t4t_v20_ndef_tag_aid, T4T_V20_NDEF_TAG_AID_LEN);
         p += T4T_V20_NDEF_TAG_AID_LEN;
 
-        uint8_t_TO_BE_STREAM (p, 0x00); /* Le set to 0x00 */
+        UINT8_TO_BE_STREAM (p, 0x00); /* Le set to 0x00 */
 
         p_c_apdu->len = T4T_CMD_MAX_HDR_SIZE + T4T_V20_NDEF_TAG_AID_LEN + 1;
     }
