@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da910b63_fa1dd528",
+        "filename": "halimpl/bcm2079x/adaptation/userial_linux.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2016-12-14T17:46:15Z",
+      "side": 0,
+      "message": "Are these guaranteed to be defined?  This change will break the build if USERIAL_DEBUG, USING_BRCM_USB, LINUX_OS, ...  are undefined for a platform.",
+      "range": {
+        "startLine": 1113,
+        "startChar": 1,
+        "endLine": 1113,
+        "endChar": 54
+      },
+      "revId": "c454d3fc510323d4f8713d77d26f365a7c717ec5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
