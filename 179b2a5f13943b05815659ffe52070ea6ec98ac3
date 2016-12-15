@@ -22,6 +22,30 @@
       "revId": "179b2a5f13943b05815659ffe52070ea6ec98ac3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da910b63_e3ffedb4",
+        "filename": "src/gki/common/gki.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2016-12-15T00:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da910b63_da85792b",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 6
+      },
+      "revId": "179b2a5f13943b05815659ffe52070ea6ec98ac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
