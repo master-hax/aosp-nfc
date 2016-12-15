@@ -22,6 +22,30 @@
       "revId": "c454d3fc510323d4f8713d77d26f365a7c717ec5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da910b63_436b61d1",
+        "filename": "halimpl/bcm2079x/adaptation/userial_linux.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2016-12-15T00:51:39Z",
+      "side": 0,
+      "message": "I have defined few and left few of the platform specific ones as defined.",
+      "parentUuid": "da910b63_fa1dd528",
+      "range": {
+        "startLine": 1113,
+        "startChar": 1,
+        "endLine": 1113,
+        "endChar": 54
+      },
+      "revId": "c454d3fc510323d4f8713d77d26f365a7c717ec5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
