@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a7a2769_ca11b3ca",
+        "filename": "halimpl/bcm2079x/adaptation/userial_linux.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2016-12-16T15:28:12Z",
+      "side": 1,
+      "message": "Do we have a centralized place for these defines?  If someone is trying to set these options in a makefile, this will break.\n\nIn Bluetooth, we moved them to one central place and guard the defaults with\n\n#ifndef THIS_OPTION\n#define THIS_OPTION FALSE\n#endif",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 49
+      },
+      "revId": "eab5ece7f89ab9ae65127a02669b843dc19bbb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a7a2769_8acdfb4b",
+        "filename": "halimpl/bcm2079x/gki/ulinux/gki_ulinux.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2016-12-16T15:28:12Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be moved as part of this patch.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "eab5ece7f89ab9ae65127a02669b843dc19bbb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
