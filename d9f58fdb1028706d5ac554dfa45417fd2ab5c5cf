@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "176b7e00_1ecef11b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2016-12-22T21:17:41Z",
+      "side": 1,
+      "message": "This commit message is not very helpful and actually counter to what actually was implemented ;)",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "d9f58fdb1028706d5ac554dfa45417fd2ab5c5cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
