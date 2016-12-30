@@ -1,0 +1,8 @@
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Steven Moreland <smoreland@google.com>
+Verified+1: Martijn Coenen <maco@google.com>
+Submitted-by: Martijn Coenen <maco@google.com>
+Submitted-at: Fri, 30 Dec 2016 12:22:51 +0000
+Reviewed-on: https://android-review.googlesource.com/316176
+Project: platform/system/nfc
+Branch: refs/heads/master
