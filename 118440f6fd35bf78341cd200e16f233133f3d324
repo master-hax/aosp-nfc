@@ -22,6 +22,30 @@
       "revId": "118440f6fd35bf78341cd200e16f233133f3d324",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b79b927b_4cfab352",
+        "filename": "halimpl/bcm2079x/adaptation/userial_linux.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-04T22:47:03Z",
+      "side": 1,
+      "message": "Changed the coccinelle script to be more specific",
+      "parentUuid": "3a7a2769_0a1c8bde",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 27
+      },
+      "revId": "118440f6fd35bf78341cd200e16f233133f3d324",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
