@@ -147,7 +147,7 @@ tNFC_HAL_DM_PRE_SET_MEM *p_nfc_hal_dm_pre_set_mem = NULL;
 
 tNFC_HAL_CFG nfc_hal_cfg =
 {
-    FALSE,                                  /* set nfc_hal_prm_nvm_required to TRUE, if the platform wants to abort PRM process without NVM */
+    false,                                  /* set nfc_hal_prm_nvm_required to TRUE, if the platform wants to abort PRM process without NVM */
     (uint16_t) NFC_HAL_NFCC_ENABLE_TIMEOUT,   /* max time to wait for RESET NTF after setting REG_PU to high
                                             ** If NFCC doesn't have NVM or cannot load patch from NVM without Xtal setting
                                             ** then set it to short to optimize bootup time because NFCC cannot send RESET NTF.
