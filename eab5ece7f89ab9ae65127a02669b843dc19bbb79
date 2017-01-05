@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b79b927b_a8e224b8",
+        "filename": "halimpl/bcm2079x/adaptation/userial_linux.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-01-05T22:40:25Z",
+      "side": 1,
+      "message": "in Bluetooth, we use bt_target.h for the centralized location.\n\nI see that bt_target.h in NFC looks pretty different.  Would it be worth having an nfc_target.h that holds these defines?  It makes me nervous to have them distributed throughout the code.",
+      "parentUuid": "b79b927b_a78ed8be",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 49
+      },
+      "revId": "eab5ece7f89ab9ae65127a02669b843dc19bbb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a7a2769_8acdfb4b",
         "filename": "halimpl/bcm2079x/gki/ulinux/gki_ulinux.c",
         "patchSetId": 5
