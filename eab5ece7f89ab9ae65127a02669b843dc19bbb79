@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b79b927b_a78ed8be",
+        "filename": "halimpl/bcm2079x/adaptation/userial_linux.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-05T01:22:11Z",
+      "side": 1,
+      "message": "There is no central place for this. Guarding it to check if it is defined sounds right. Will make that change for all the extra definitions.",
+      "parentUuid": "3a7a2769_ca11b3ca",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 49
+      },
+      "revId": "eab5ece7f89ab9ae65127a02669b843dc19bbb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a7a2769_8acdfb4b",
         "filename": "halimpl/bcm2079x/gki/ulinux/gki_ulinux.c",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-16T15:28:12Z",
       "side": 1,
       "message": "I don\u0027t think this should be moved as part of this patch.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "eab5ece7f89ab9ae65127a02669b843dc19bbb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b79b927b_07d404a3",
+        "filename": "halimpl/bcm2079x/gki/ulinux/gki_ulinux.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-05T01:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a7a2769_8acdfb4b",
       "range": {
         "startLine": 45,
         "startChar": 0,
