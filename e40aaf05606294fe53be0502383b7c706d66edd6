@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b79b927b_ec5b679a",
+        "filename": "halimpl/bcm2079x/adaptation/userial_linux.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-01-05T22:31:23Z",
+      "side": 1,
+      "message": "maybe for another patch: Remove boolean values that initialize an int.",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 38
+      },
+      "revId": "e40aaf05606294fe53be0502383b7c706d66edd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b79b927b_ecd607ad",
+        "filename": "halimpl/bcm2079x/hal/hal/nfc_hal_prm.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-01-05T22:31:23Z",
+      "side": 1,
+      "message": "for another patch: This looks odd.  It looks like firstTime only controls a log message.",
+      "range": {
+        "startLine": 526,
+        "startChar": 0,
+        "endLine": 532,
+        "endChar": 9
+      },
+      "revId": "e40aaf05606294fe53be0502383b7c706d66edd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
