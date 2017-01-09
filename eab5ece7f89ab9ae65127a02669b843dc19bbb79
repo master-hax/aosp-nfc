@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f74eea0a_c6a89374",
+        "filename": "halimpl/bcm2079x/adaptation/userial_linux.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-09T17:26:56Z",
+      "side": 1,
+      "message": "There are 5 places where we have added the #defines namely:\n\nBTU_STACK_LITE_ENABLED (2)\nNFC_STANDALONE (2)\nUSERIAL_DEBUG\n\nThe first two are gki related which will be removed soon. I think those can be ignored for now. I have shifted this one to nfc_target.h\n\nWhat could be done is, I could remove this patch from the topic, and then add it later when GKI is removed? Such that it doesn\u0027t require additional work which will be removed eventually?",
+      "parentUuid": "b79b927b_a8e224b8",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 49
+      },
+      "revId": "eab5ece7f89ab9ae65127a02669b843dc19bbb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a7a2769_8acdfb4b",
         "filename": "halimpl/bcm2079x/gki/ulinux/gki_ulinux.c",
         "patchSetId": 5
