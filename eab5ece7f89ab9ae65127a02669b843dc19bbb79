@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "f74eea0a_d9f3947b",
+        "filename": "halimpl/bcm2079x/adaptation/userial_linux.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-01-09T18:46:59Z",
+      "side": 1,
+      "message": "OK.  Whichever one you choose is fine with me.",
+      "parentUuid": "f74eea0a_c6a89374",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 49
+      },
+      "revId": "eab5ece7f89ab9ae65127a02669b843dc19bbb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a7a2769_8acdfb4b",
         "filename": "halimpl/bcm2079x/gki/ulinux/gki_ulinux.c",
         "patchSetId": 5
