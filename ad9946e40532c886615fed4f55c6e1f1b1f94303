@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f74eea0a_88336d08",
+        "filename": "src/gki/ulinux/data_types.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1019433
+      },
+      "writtenOn": "2017-01-10T20:38:47Z",
+      "side": 1,
+      "message": "Should be able to remove this as well. It was used by NCI_TRACE_xx in nfc_hal_target.h only.",
+      "range": {
+        "startLine": 32,
+        "startChar": 25,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "ad9946e40532c886615fed4f55c6e1f1b1f94303",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
