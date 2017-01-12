@@ -1,0 +1,114 @@
+NFA = "src/nfa"
+NFC = "src/nfc"
+HAL = "src/hal"
+UDRV = "src/udrv"
+HALIMPL = "halimpl/bcm2079x"
+D_CFLAGS = [
+    "-DANDROID",
+    "-DBUILDCFG=1",
+    "-Wno-deprecated-register",
+    "-Wno-unused-parameter",
+    "-Wno-missing-field-initializers",
+]
+
+cc_library_shared {
+    arch: {
+        arm: {
+            instruction_set: "arm",
+        },
+    },
+    name: "libnfc-nci",
+    shared_libs: [
+        "libcutils",
+        "liblog",
+        "libdl",
+        "libhardware",
+        "libpower",
+    ] + [ // Treble configuration
+        "libhidlbase",
+        "libhidltransport",
+        "libhwbinder",
+        "libutils",
+        "android.hardware.nfc@1.0",
+    ],
+    cflags: D_CFLAGS,
+    include_dirs: [
+        "system/libhwbinder/include",
+    ],
+    local_include_dirs: [
+        "src/include",
+        "src/gki/ulinux",
+        "src/gki/common",
+        "src/hal/include",
+        "src/hal/int",
+        NFA + "/include",
+        NFA + "/int",
+        NFC + "/include",
+        NFC + "/int",
+    ],
+
+    srcs: [
+        NFA + "/ce/*.c",
+        NFA + "/dm/*.c",
+        NFA + "/ee/*.c",
+        NFA + "/hci/*.c",
+        NFA + "/int/*.c",
+        NFA + "/p2p/*.c",
+        NFA + "/rw/*.c",
+        NFA + "/sys/*.c",
+        NFC + "/int/*.c",
+        NFC + "/llcp/*.c",
+        NFC + "/nci/*.c",
+        NFC + "/ndef/*.c",
+        NFC + "/nfc/*.c",
+        NFC + "/tags/*.c",
+        "src/adaptation/*.c",
+        "src/adaptation/*.cpp",
+        "src/gki/common/*.c",
+        "src/gki/ulinux/*.c",
+        "src/nfca_version.c",
+    ],
+}
+
+
+cc_library_shared {
+    name: "nfc_nci.bcm2079x.default",
+    relative_install_path: "hw",
+    srcs: [
+        HALIMPL + "/gki/common/*.c",
+        HALIMPL + "/gki/ulinux/*.c",
+        HALIMPL + "/hal/hal/*.c",
+        HALIMPL + "/adaptation/*.cpp",
+        HALIMPL + "/adaptation/*.c",
+        HALIMPL + "/nfc_nci.c",
+        "src/adaptation/CrcChecksum.cpp",
+        "src/nfca_version.c",
+    ],
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libhwbinder",
+        "libbase",
+        "libcutils",
+        "libutils",
+        "libpower",
+    ],
+    include_dirs: [
+    ],
+    local_include_dirs: [
+        HALIMPL + "/include",
+        HALIMPL + "/gki/ulinux",
+        HALIMPL + "/gki/common",
+        HALIMPL + "/adaptation",
+        HAL + "/include",
+        HAL + "/int",
+        NFC + "/include",
+        NFA + "/include",
+        UDRV + "/include",
+        "src/include",
+    ],
+    cflags: D_CFLAGS + [
+        "-DNFC_HAL_TARGET=TRUE",
+        "-DNFC_RW_ONLY=TRUE",
+    ],
+}
