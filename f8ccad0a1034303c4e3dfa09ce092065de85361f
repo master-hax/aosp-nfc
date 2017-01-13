@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3ac359c_e120dc19",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-13T22:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ac359c_7eaf0985",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 17
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ac359c_1eb0cde6",
         "filename": "Android.bp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-13T22:07:10Z",
       "side": 1,
       "message": "This is already in the common global cflags",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ac359c_011eb0da",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-13T22:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ac359c_1eb0cde6",
       "range": {
         "startLine": 7,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a3ac359c_a14424b3",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-13T22:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ac359c_9ea3fd9d",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 9
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ac359c_bea0c191",
         "filename": "Android.bp",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-01-13T22:07:10Z",
       "side": 1,
       "message": "This isn\u0027t necessary, libhwbinder exports this.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 6
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ac359c_a12b44e6",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-13T22:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ac359c_bea0c191",
       "range": {
         "startLine": 35,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a3ac359c_81a3a03e",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-13T22:31:49Z",
+      "side": 1,
+      "message": "No we don\u0027t expect other HALs to be built off this, even this hal implementation is legacy code not used by any which will be removed probably in P. So not inclined towards spending time refactoring that.",
+      "parentUuid": "a3ac359c_416c2872",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 29
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ac359c_de9d7558",
         "filename": "Android.bp",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a3ac359c_e14e1cd1",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-13T22:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ac359c_de9d7558",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 20
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ac359c_dec65548",
         "filename": "Android.bp",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2017-01-13T22:07:10Z",
       "side": 1,
       "message": "Remove this",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 6
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ac359c_c14118a2",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-13T22:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ac359c_dec65548",
       "range": {
         "startLine": 96,
         "startChar": 0,
