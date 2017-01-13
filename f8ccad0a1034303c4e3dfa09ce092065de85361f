@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ac359c_7eaf0985",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-01-13T22:07:10Z",
+      "side": 1,
+      "message": "These really only save a single character, and in my opinion are less readable.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 17
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ac359c_1eb0cde6",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-01-13T22:07:10Z",
+      "side": 1,
+      "message": "This is already in the common global cflags",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ac359c_9ea3fd9d",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-01-13T22:07:10Z",
+      "side": 1,
+      "message": "Remove this and just put a blank link above the comment",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 9
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ac359c_bea0c191",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-01-13T22:07:10Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary, libhwbinder exports this.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 6
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ac359c_416c2872",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-01-13T22:07:10Z",
+      "side": 1,
+      "message": "(larger refactor idea) If you expect other HAL implementations to be built off of this as well, you may want to split these off into a static library, and have that export the common src/* directories. Then the nfc_nci.bcm2079x.default definition could move into the the halimpl/bcm2079x folder and you wouldn\u0027t have to prefix everything with HALIMPL.\n\nEven today, it could be reasonable to move the libnfc-nci definition within the src directory so you don\u0027t need to add that prefix everywhere.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 29
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ac359c_de9d7558",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-01-13T22:07:10Z",
+      "side": 1,
+      "message": "This is listed twice",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 20
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ac359c_dec65548",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-01-13T22:07:10Z",
+      "side": 1,
+      "message": "Remove this",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 6
+      },
+      "revId": "f8ccad0a1034303c4e3dfa09ce092065de85361f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
