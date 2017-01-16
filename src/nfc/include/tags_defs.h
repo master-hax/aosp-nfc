@@ -380,6 +380,7 @@ typedef uint8_t tT3T_POLL_RC;
 
 #define T4T_FC_READ_ACCESS              0x00    /* read access granted without any security */
 #define T4T_FC_WRITE_ACCESS             0x00    /* write access granted without any security */
+#define T4T_FC_WRITE_ACCESS_PROP_START  0x80    /* proprietary write access range start */
 #define T4T_FC_NO_WRITE_ACCESS          0xFF    /* no write access granted at all (read-only) */
 
 #define T4T_FILE_LENGTH_SIZE            0x02
