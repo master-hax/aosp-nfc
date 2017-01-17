@@ -28,7 +28,6 @@
 #include "bt_types.h"
 #include "nfc_api.h"
 
-#if (NFC_INCLUDED == TRUE)
 #include "nfc_int.h"
 
 
@@ -209,6 +208,3 @@ extern void nfc_reset_all_conn_cbs (void)
         }
     }
 }
-
-
-#endif /* NFC_INCLUDED == TRUE */

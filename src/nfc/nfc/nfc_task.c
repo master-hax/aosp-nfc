@@ -27,7 +27,6 @@
 #include "nfc_target.h"
 #include "bt_types.h"
 
-#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nfc_hal_api.h"
 #include "nfc_int.h"
@@ -40,10 +39,8 @@
 #define llcp_cleanup()
 #endif
 
-#if (NFA_INCLUDED == TRUE)
 #include "nfa_sys.h"
 #include "nfa_dm_int.h"
-#endif
 
 /*******************************************************************************
 **
@@ -345,9 +342,7 @@ void nfc_task_shutdown_nfcc (void)
         /* Stop the timers */
         GKI_stop_timer (NFC_TIMER_ID);
         GKI_stop_timer (NFC_QUICK_TIMER_ID);
-#if (NFA_INCLUDED == TRUE)
         GKI_stop_timer (NFA_TIMER_ID);
-#endif
     }
 }
 
@@ -441,7 +436,6 @@ uint32_t nfc_task (uint32_t param)
             nfc_process_quick_timer_evt ();
         }
 
-#if (NFA_INCLUDED == TRUE)
         if (event & NFA_MBOX_EVT_MASK)
         {
             while ((p_msg = (NFC_HDR *) GKI_read_mbox (NFA_MBOX_ID)) != NULL)
@@ -454,7 +448,6 @@ uint32_t nfc_task (uint32_t param)
         {
             nfa_sys_timer_update ();
         }
-#endif
 
     }
 
@@ -464,5 +457,3 @@ uint32_t nfc_task (uint32_t param)
     GKI_exit_task (GKI_get_taskid ());
     return 0;
 }
-
-#endif /* NFC_INCLUDED == TRUE */

@@ -26,7 +26,6 @@
 #include <string.h>
 #include "nfc_target.h"
 
-#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nci_hmsgs.h"
 #include "rw_api.h"
@@ -3172,5 +3171,3 @@ tNFC_STATUS RW_T2tSetTagReadOnly (bool    b_hard_lock)
 }
 
 #endif /* (RW_NDEF_INCLUDED == TRUE) */
-
-#endif /* (NFC_INCLUDED == TRUE) */

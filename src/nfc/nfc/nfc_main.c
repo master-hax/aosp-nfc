@@ -29,7 +29,6 @@
 #include "nfc_target.h"
 #include "bt_types.h"
 
-#if (NFC_INCLUDED == TRUE)
 #include "nfc_hal_api.h"
 #include "nfc_api.h"
 #include "nfc_int.h"
@@ -1439,5 +1438,3 @@ char *NFC_GetStatusName (tNFC_STATUS status)
     }
 }
 #endif
-
-#endif /* NFC_INCLUDED == TRUE */

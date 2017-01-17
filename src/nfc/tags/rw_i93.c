@@ -28,8 +28,6 @@
 #include "bt_types.h"
 #include "trace_api.h"
 
-#if (NFC_INCLUDED == TRUE)
-
 #include "nfc_api.h"
 #include "nfc_int.h"
 #include "rw_api.h"
@@ -4300,5 +4298,3 @@ static char *rw_i93_get_tag_name (uint8_t product_version)
 }
 
 #endif
-
-#endif /* (NFC_INCLUDED == TRUE) */

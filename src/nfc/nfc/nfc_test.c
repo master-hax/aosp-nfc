@@ -29,7 +29,6 @@
 #include "nfc_target.h"
 #include "bt_types.h"
 
-#if (NFC_INCLUDED == TRUE)
 #include "nfc_int.h"
 #include "nci_hmsgs.h"
 
@@ -66,8 +65,3 @@ tNFC_STATUS NFC_TestLoopback (NFC_HDR *p_data)
 
     return status;
 }
-
-
-
-
-#endif /* NFC_INCLUDED == TRUE */

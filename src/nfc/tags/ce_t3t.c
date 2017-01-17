@@ -28,7 +28,6 @@
 #include "bt_types.h"
 #include "trace_api.h"
 
-#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nfc_int.h"
 #include "ce_api.h"
@@ -1069,5 +1068,3 @@ tNFC_STATUS CE_T3tSendUpdateRsp (uint8_t status1, uint8_t status2)
 
     return (retval);
 }
-
-#endif /* NFC_INCLUDED == TRUE */

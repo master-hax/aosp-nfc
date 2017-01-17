@@ -28,7 +28,6 @@
 #include "nfc_target.h"
 #include "bt_types.h"
 
-#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "nci_hmsgs.h"
 #include "ce_api.h"
@@ -146,5 +145,3 @@ uint8_t CE_SetTraceLevel (uint8_t new_level)
 
     return (ce_cb.trace_level);
 }
-
-#endif /* NFC_INCLUDED == TRUE */

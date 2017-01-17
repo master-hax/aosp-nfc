@@ -28,7 +28,6 @@
 #include <string.h>
 #include "nfc_target.h"
 
-#if (NFC_INCLUDED == TRUE)
 #include "nfc_hal_api.h"
 #include "nfc_api.h"
 #include "nci_defs.h"
@@ -1578,5 +1577,3 @@ void nfc_ncif_proc_data (NFC_HDR *p_msg)
     }
     GKI_freebuf (p_msg);
 }
-
-#endif /* NFC_INCLUDED == TRUE*/

@@ -26,7 +26,6 @@
 #include "nfc_target.h"
 #include "bt_types.h"
 
-#if (NFC_INCLUDED == TRUE)
 #include "nfc_api.h"
 #include "rw_api.h"
 #include "rw_int.h"
@@ -350,5 +349,3 @@ unsigned int tags_log2 (register unsigned int x)
 
         return (tags_ones32 (x) - 1);
 }
-
-#endif /* NFC_INCLUDED == TRUE*/
