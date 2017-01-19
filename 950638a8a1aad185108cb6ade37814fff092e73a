@@ -1,0 +1,8 @@
+Code-Review+2: Ruchi Kandoi <kandoiruchi@google.com>
+Verified+1: Chris Phoenix <cphoenix@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Chris Phoenix <cphoenix@google.com>
+Submitted-at: Thu, 19 Jan 2017 01:27:39 +0000
+Reviewed-on: https://android-review.googlesource.com/324529
+Project: platform/system/nfc
+Branch: refs/heads/master
