@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "885bce3e_1a5e3c55",
+        "filename": "src/nfc/tags/rw_t4t.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-01-20T00:27:55Z",
+      "side": 1,
+      "message": "Entire Proprietary range should be made valid. Modified the patch to do the same.",
+      "range": {
+        "startLine": 1037,
+        "startChar": 48,
+        "endLine": 1037,
+        "endChar": 56
+      },
+      "revId": "b2b03f5820e6c02fe61a43cf616900ede020c2cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
