@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02e00954_73b197e0",
+        "filename": "src/nfc/include/ndef_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-01-25T06:39:27Z",
+      "side": 1,
+      "message": "Why the extra 0?\n\nEither 0x20 or if you must, 0x0020, but not 0x020 :D",
+      "revId": "a9cdba04c53e235a612019efafaa5721936bbaa1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "528dfa9f_cccef108",
+        "filename": "src/nfc/include/ndef_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-01-25T06:39:27Z",
+      "side": 1,
+      "message": "Nit: fix comment indent***\n*** clang-format will really mess these up anyway though, so maybe no care?",
+      "revId": "a9cdba04c53e235a612019efafaa5721936bbaa1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "090a5482_a9fe496c",
+        "filename": "src/nfc/ndef/ndef_utils.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-01-25T06:39:27Z",
+      "side": 1,
+      "message": "Don\u0027t declare up here move into for().",
+      "range": {
+        "startLine": 84,
+        "startChar": 19,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "a9cdba04c53e235a612019efafaa5721936bbaa1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
