@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d20e528_446f8e97",
+        "filename": "src/nfc/include/ndef_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-01-25T18:09:24Z",
+      "side": 1,
+      "message": "???",
+      "range": {
+        "startLine": 39,
+        "startChar": 32,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "37b7c5f66fa46c359a3471bb5f032d359f9de331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
