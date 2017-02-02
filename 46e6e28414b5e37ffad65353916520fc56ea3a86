@@ -22,6 +22,29 @@
       "revId": "46e6e28414b5e37ffad65353916520fc56ea3a86",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82297f6c_b5114847",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-02-02T18:27:42Z",
+      "side": 1,
+      "message": "I just detect \"#define /* */\" which is more than 80 characters and then replace them. Will send you mini scripts and commands that helped me.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "46e6e28414b5e37ffad65353916520fc56ea3a86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
