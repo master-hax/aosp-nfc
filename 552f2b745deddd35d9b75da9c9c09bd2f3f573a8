@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31a21ace_ff1e2fee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-02-02T07:35:49Z",
+      "side": 1,
+      "message": "How do you identify the deviations,is it manual?\nHow do you rework the deviations, is it manual?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 58
+      },
+      "revId": "552f2b745deddd35d9b75da9c9c09bd2f3f573a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
