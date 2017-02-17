@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "855e44ef_0fbcb8f7",
+        "filename": "halimpl/pn54x/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1047473
+      },
+      "writtenOn": "2017-02-17T18:13:59Z",
+      "side": 0,
+      "message": "replace with space",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 1
+      },
+      "revId": "6fca02d5010de7bd31d83b853c32138021da5f29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
