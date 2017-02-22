@@ -22,6 +22,30 @@
       "revId": "6fca02d5010de7bd31d83b853c32138021da5f29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc31474c_a4a2fbef",
+        "filename": "halimpl/pn54x/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-02-22T09:26:37Z",
+      "side": 0,
+      "message": "does not matter. we deleted this file.",
+      "parentUuid": "855e44ef_0fbcb8f7",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 1
+      },
+      "revId": "6fca02d5010de7bd31d83b853c32138021da5f29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
