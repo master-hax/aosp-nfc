@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "318e2b45_93e2b2aa",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1010469
+      },
+      "writtenOn": "2017-02-22T17:23:11Z",
+      "side": 1,
+      "message": "This should not be device specific. pn54x?",
+      "range": {
+        "startLine": 3,
+        "startChar": 19,
+        "endLine": 3,
+        "endChar": 27
+      },
+      "revId": "6a17e430ee9551e3ff75c3bb8ccd01c230ecec51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
