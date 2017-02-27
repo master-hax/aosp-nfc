@@ -18,13 +18,13 @@
 
 #define LOG_TAG "USERIAL_LINUX"
 
+#include "userial.h"
 #include <string.h>
 #include "_OverrideLog.h"
 #include "gki.h"
 #include "nfc_hal_api.h"
 #include "nfc_hal_int.h"
 #include "nfc_target.h"
-#include "userial.h"
 
 #include <errno.h>
 #include <fcntl.h>

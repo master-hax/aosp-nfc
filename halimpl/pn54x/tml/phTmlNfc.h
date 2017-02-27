@@ -190,10 +190,10 @@ typedef struct phTmlNfc_Config {
 typedef struct {
   pphTmlNfc_DeferFuncPointer_t
       pDef_call; /*Deferred callback function to be invoked */
-  /* Source identifier
-   *
-   * Identifier of the source which posted the message
-   */
+                 /* Source identifier
+                  *
+                  * Identifier of the source which posted the message
+                  */
   uint32_t dwMsgPostedThread;
   /** Actual Message
    *

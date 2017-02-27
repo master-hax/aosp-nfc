@@ -23,8 +23,8 @@
  *
  ******************************************************************************/
 
-#include "gki.h"
 #include "nfa_sys.h"
+#include "gki.h"
 #include "nfc_target.h"
 
 const tNFA_SYS_CFG nfa_sys_cfg = {

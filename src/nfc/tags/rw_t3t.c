@@ -170,15 +170,10 @@ const uint8_t rw_t3t_default_attrib_info[T3T_MSG_BLOCKSIZE] = {
     RW_T3T_DEFAULT_FELICALITE_NBW,            /* NBw (max block write per cmd)*/
     (RW_T3T_DEFAULT_FELICALITE_NMAXB >> 8),   /* Nmaxb (max size in blocks)   */
     (RW_T3T_DEFAULT_FELICALITE_NMAXB & 0xFF), /* Nmaxb (max size in blocks)   */
-    0,
-    0,
-    0,
-    0,                       /* Unused                       */
-    T3T_MSG_NDEF_WRITEF_OFF, /* WriteF                       */
-    T3T_MSG_NDEF_RWFLAG_RW,  /* RW Flag                      */
-    0,
-    0,
-    0, /* Ln (current size in bytes)   */
+    0, 0, 0, 0,                               /* Unused                       */
+    T3T_MSG_NDEF_WRITEF_OFF,                  /* WriteF                       */
+    T3T_MSG_NDEF_RWFLAG_RW,                   /* RW Flag                      */
+    0, 0, 0,                                  /* Ln (current size in bytes)   */
 
     (RW_T3T_DEFAULT_FELICALITE_ATTRIB_INFO_CHECKSUM >>
      8), /* checksum (high-byte) */
@@ -266,9 +261,9 @@ void rw_t3t_process_error(tNFC_STATUS status) {
 
       /* allocate a new buffer for message */
       if ((p_cmd_buf = rw_t3t_get_cmd_buf()) != NULL) {
-        memcpy(p_cmd_buf, p_cb->p_cur_cmd_buf,
-               sizeof(NFC_HDR) + p_cb->p_cur_cmd_buf->offset +
-                   p_cb->p_cur_cmd_buf->len);
+        memcpy(p_cmd_buf, p_cb->p_cur_cmd_buf, sizeof(NFC_HDR) +
+                                                   p_cb->p_cur_cmd_buf->offset +
+                                                   p_cb->p_cur_cmd_buf->len);
 
         if (rw_t3t_send_to_lower(p_cmd_buf) == NFC_STATUS_OK) {
           /* Start timer for waiting for response */

@@ -593,9 +593,9 @@ static void rw_t1t_process_error(void) {
 
     /* allocate a new buffer for message */
     if ((p_cmd_buf = (NFC_HDR*)GKI_getpoolbuf(NFC_RW_POOL_ID)) != NULL) {
-      memcpy(p_cmd_buf, p_t1t->p_cur_cmd_buf,
-             sizeof(NFC_HDR) + p_t1t->p_cur_cmd_buf->offset +
-                 p_t1t->p_cur_cmd_buf->len);
+      memcpy(p_cmd_buf, p_t1t->p_cur_cmd_buf, sizeof(NFC_HDR) +
+                                                  p_t1t->p_cur_cmd_buf->offset +
+                                                  p_t1t->p_cur_cmd_buf->len);
 
 #if (RW_STATS_INCLUDED == TRUE)
       /* Update stats */

@@ -343,9 +343,10 @@ void nfa_hci_api_deregister(tNFA_HCI_EVENT_DATA* p_evt_data) {
            NULL)
       nfa_hciu_release_gate(p_gate->gate_id);
 
-    memset(&nfa_hci_cb.cfg
-                .reg_app_names[nfa_hci_cb.app_in_use & NFA_HANDLE_MASK][0],
-           0, NFA_MAX_HCI_APP_NAME_LEN + 1);
+    memset(
+        &nfa_hci_cb.cfg.reg_app_names[nfa_hci_cb.app_in_use & NFA_HANDLE_MASK]
+                                     [0],
+        0, NFA_MAX_HCI_APP_NAME_LEN + 1);
     nfa_hci_cb.p_app_cback[nfa_hci_cb.app_in_use & NFA_HANDLE_MASK] = NULL;
 
     nfa_hci_cb.nv_write_needed = true;

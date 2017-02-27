@@ -21,10 +21,10 @@
  *  This is the main implementation file for the NFA system manager.
  *
  ******************************************************************************/
+#include "nfa_sys.h"
 #include <string.h>
 #include "nfa_api.h"
 #include "nfa_dm_int.h"
-#include "nfa_sys.h"
 #include "nfa_sys_int.h"
 #include "nfa_sys_ptim.h"
 
