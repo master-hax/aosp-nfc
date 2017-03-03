@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d72afae_f81df87f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1060219
+      },
+      "writtenOn": "2017-03-03T04:11:13Z",
+      "side": 1,
+      "message": "Bug: 35934124",
+      "revId": "04d90198d34b39203e33e7b1b795da8736971a7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
