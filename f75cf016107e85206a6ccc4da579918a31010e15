@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e3aea47_b3a4a220",
+        "filename": "Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-03-07T18:20:32Z",
+      "side": 1,
+      "message": "We still need to support bcm2079 for a couple of devices and support for pn553 should be added to halimpl/pn54x/Android.mk",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 34
+      },
+      "revId": "f75cf016107e85206a6ccc4da579918a31010e15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5470e559_ba1924c4",
+        "filename": "Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-03-07T18:20:32Z",
+      "side": 1,
+      "message": "This can\u0027t be set for all builds.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "f75cf016107e85206a6ccc4da579918a31010e15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

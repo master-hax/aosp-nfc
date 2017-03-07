@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e3f7997_450f6821",
+        "filename": "halimpl/pn54x/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-03-07T18:20:32Z",
+      "side": 0,
+      "message": "This file cannot be deleted. We still need to support the older chipset and hence this file is needed.",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 52
+      },
+      "revId": "8a8b610006d7b2a3baf407c1100493a7a8527b54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
