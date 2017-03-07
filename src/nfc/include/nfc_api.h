@@ -409,6 +409,9 @@ typedef uint8_t tNFC_RF_TECH_N_MODE;
 #define NFC_SEL_RES_NFC_FORUM_T2T 0x00
 #define NFC_SEL_RES_MF_CLASSIC 0x08
 
+#define NCI_CALCULATE_ACK(a, v) \
+  { a &= ((1 << v) - 1); }
+#define MAX_NUM_VALID_BITS_FOR_ACK 0x07
 /* Bit Rates */
 #define NFC_BIT_RATE_106 NCI_BIT_RATE_106   /* 106 kbit/s */
 #define NFC_BIT_RATE_212 NCI_BIT_RATE_212   /* 212 kbit/s */
