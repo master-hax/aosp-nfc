@@ -1471,7 +1471,7 @@ int phNxpNciHal_core_initialized(uint8_t* p_core_init_rsp_params) {
 
   config_access = false;
   // if length of last command is 0 then only reset the P2P listen mode routing.
-  if (p_core_init_rsp_params[35] == 0) {
+  if (sizeof(p_core_init_rsp_params) > 35 && p_core_init_rsp_params[35] == 0) {
     /* P2P listen mode routing */
     status = phNxpNciHal_send_ext_cmd(sizeof(p2p_listen_mode_routing_cmd),
                                       p2p_listen_mode_routing_cmd);
@@ -1571,14 +1571,20 @@ int phNxpNciHal_core_initialized(uint8_t* p_core_init_rsp_params) {
       goto retry_core_init;
     }
 
-    if (*(p_core_init_rsp_params + 1) == 1)  // RF state is Discovery!!
-    {
+    // RF state is Discovery!!
+    if (sizeof(p_core_init_rsp_params) > 1 &&
+        *(p_core_init_rsp_params + 1) == 1) {
       NXPLOG_NCIHAL_E("Sending Set Screen ON State Command as raw packet!!");
       status =
           phNxpNciHal_send_ext_cmd(sizeof(set_screen_state), set_screen_state);
       if (status != NFCSTATUS_SUCCESS) {
         NXPLOG_NCIHAL_E(
             "Sending Set Screen ON State Command as raw packet!! Failed");
+        retry_core_init_cnt++;
+        goto retry_core_init;
+      }
+
+      if (sizeof(p_core_init_rsp_params) <= 3) {
         retry_core_init_cnt++;
         goto retry_core_init;
       }
@@ -1606,9 +1612,10 @@ int phNxpNciHal_core_initialized(uint8_t* p_core_init_rsp_params) {
     }
     NXPLOG_NCIHAL_E("Sending last command for Recovery ");
 
-    if (p_core_init_rsp_params[35] > 0) {  // if length of last command is 0
-                                           // then it doesn't need to send last
-                                           // command.
+    // Not sure what these parameters are and how they are attached to the
+    // CORE_INIT_RSP. Needs further clarification.
+    // if length of last command is 0 then it doesn't need to send last command.
+    if (sizeof(p_core_init_rsp_params) > 39 && p_core_init_rsp_params[35] > 0) {
       if (!(((p_core_init_rsp_params[36] == 0x21) &&
              (p_core_init_rsp_params[37] == 0x03)) &&
             (*(p_core_init_rsp_params + 1) == 1)) &&
