@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f406301e_36d60839",
+        "filename": "halimpl/pn54x/hal/phNxpNciHal.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-03-21T16:19:33Z",
+      "side": 1,
+      "message": "If we don\u0027t use this often enough to warrant a constant that would explain this, can we at least document in a comment above here to point out its significance.",
+      "range": {
+        "startLine": 1474,
+        "startChar": 69,
+        "endLine": 1474,
+        "endChar": 71
+      },
+      "revId": "0df86408141247507c29b023d109e5750ba9370e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "444739d2_d772ff97",
+        "filename": "halimpl/pn54x/hal/phNxpNciHal.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-03-21T16:19:33Z",
+      "side": 1,
+      "message": "\"\u003e\u003d 36\"  -----\u003e  \"\u003e 35\", that way, the number \"35\" will stand out more (see next comment).",
+      "range": {
+        "startLine": 1474,
+        "startChar": 37,
+        "endLine": 1474,
+        "endChar": 42
+      },
+      "revId": "0df86408141247507c29b023d109e5750ba9370e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
