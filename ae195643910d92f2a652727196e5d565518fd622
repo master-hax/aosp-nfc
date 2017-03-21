@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11838a65_0203e64a",
+        "filename": "halimpl/pn54x/hal/phNxpNciHal.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-03-21T19:38:26Z",
+      "side": 1,
+      "message": "As per NCI specification the CORE_INIT_RSP is not this big? Correct me if I\u0027m wrong.",
+      "range": {
+        "startLine": 1474,
+        "startChar": 10,
+        "endLine": 1474,
+        "endChar": 41
+      },
+      "revId": "ae195643910d92f2a652727196e5d565518fd622",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9949c353_61c19d9d",
+        "filename": "halimpl/pn54x/hal/phNxpNciHal.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-03-21T19:38:26Z",
+      "side": 1,
+      "message": "Similar comment here.",
+      "range": {
+        "startLine": 1618,
+        "startChar": 7,
+        "endLine": 1618,
+        "endChar": 43
+      },
+      "revId": "ae195643910d92f2a652727196e5d565518fd622",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
