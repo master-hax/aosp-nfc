@@ -748,7 +748,7 @@ bool nfa_dm_act_deactivate(tNFA_DM_MSG* p_data) {
   if ((p_data->deactivate.sleep_mode == false) ||
       ((nfa_dm_cb.disc_cb.activated_protocol != NFA_PROTOCOL_T1T) &&
        (nfa_dm_cb.disc_cb.activated_protocol != NFA_PROTOCOL_NFC_DEP) &&
-       (nfa_dm_cb.disc_cb.activated_protocol != NFA_PROTOCOL_ISO15693) &&
+       (nfa_dm_cb.disc_cb.activated_protocol != NFA_PROTOCOL_T5T) &&
        (nfa_dm_cb.disc_cb.activated_protocol != NFC_PROTOCOL_KOVIO))) {
     deact_type = NFA_DEACTIVATE_TYPE_DISCOVERY;
     if (p_data->deactivate.sleep_mode) {
@@ -891,8 +891,8 @@ tNFA_STATUS nfa_dm_start_polling(void) {
     if (poll_tech_mask & NFA_TECHNOLOGY_MASK_F_ACTIVE) {
       poll_disc_mask |= NFA_DM_DISC_MASK_PFA_NFC_DEP;
     }
-    if (poll_tech_mask & NFA_TECHNOLOGY_MASK_ISO15693) {
-      poll_disc_mask |= NFA_DM_DISC_MASK_P_ISO15693;
+    if (poll_tech_mask & NFA_TECHNOLOGY_MASK_V) {
+      poll_disc_mask |= NFA_DM_DISC_MASK_P_T5T;
     }
     if (poll_tech_mask & NFA_TECHNOLOGY_MASK_B_PRIME) {
       poll_disc_mask |= NFA_DM_DISC_MASK_P_B_PRIME;
@@ -1125,7 +1125,7 @@ bool nfa_dm_act_send_raw_frame(tNFA_DM_MSG* p_data) {
          (nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_T2T) ||
          (nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_T3T) ||
          (nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_ISO_DEP) ||
-         (nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_ISO15693))) {
+         (nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_T5T))) {
       /* if RW is checking presence then it will put into pending queue */
       status = nfa_rw_send_raw_frame((NFC_HDR*)p_data);
     } else {
@@ -1441,7 +1441,7 @@ static void nfa_dm_excl_disc_cback(tNFA_DM_RF_DISC_EVT event,
               (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T2T) ||
               (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T3T) ||
               (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_ISO_DEP) ||
-              (nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_ISO15693) ||
+              (nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_T5T) ||
               (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_KOVIO)) {
             /* Notify NFA tag sub-system */
             nfa_rw_proc_disc_evt(NFA_DM_RF_DISC_ACTIVATED_EVT, p_data, false);
@@ -1527,7 +1527,6 @@ static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
       if (nfa_dm_cb.p_activate_ntf) {
         memcpy(nfa_dm_cb.p_activate_ntf, &(p_data->activate),
                sizeof(tNFC_ACTIVATE_DEVT));
-
         if ((nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_NFC_DEP) &&
             (nfa_dm_cb.disc_cb.activated_rf_interface ==
              NFC_INTERFACE_NFC_DEP)) {
@@ -1547,8 +1546,7 @@ static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
                    (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T3T) ||
                    (nfa_dm_cb.disc_cb.activated_protocol ==
                     NFC_PROTOCOL_ISO_DEP) ||
-                   (nfa_dm_cb.disc_cb.activated_protocol ==
-                    NFC_PROTOCOL_15693) ||
+                   (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T5T) ||
                    (nfa_dm_cb.disc_cb.activated_protocol ==
                     NFC_PROTOCOL_KOVIO) ||
                    (nfa_dm_cb.disc_cb.activated_protocol ==
@@ -1676,7 +1674,7 @@ void nfa_dm_notify_activation_status(tNFA_STATUS status,
     } else if (p_tech_params->mode == NFC_DISCOVERY_TYPE_POLL_F) {
       nfcid_len = NFC_NFCID2_LEN;
       p_nfcid = p_tech_params->param.pf.nfcid2;
-    } else if (p_tech_params->mode == NFC_DISCOVERY_TYPE_POLL_ISO15693) {
+    } else if (p_tech_params->mode == NFC_DISCOVERY_TYPE_POLL_V) {
       nfcid_len = NFC_ISO15693_UID_LEN;
       p_nfcid = p_tech_params->param.pi93.uid;
     } else if (p_tech_params->mode == NFC_DISCOVERY_TYPE_POLL_KOVIO) {
@@ -1712,7 +1710,7 @@ void nfa_dm_notify_activation_status(tNFA_STATUS status,
             ((nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_ISO_DEP) &&
              (nfa_dm_cb.disc_cb.activated_rf_interface ==
               NFC_INTERFACE_ISO_DEP)) ||
-            (nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_ISO15693)) {
+            (nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_T5T)) {
           if (p_nfa_dm_cfg->auto_detect_ndef) {
             if (p_nfa_dm_cfg->auto_read_ndef) {
               nfa_dm_cb.flags |= NFA_DM_FLAGS_AUTO_READING_NDEF;
