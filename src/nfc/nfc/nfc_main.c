@@ -707,7 +707,17 @@ uint16_t NFC_GetLmrtSize(void) {
 #endif
   return size;
 }
-
+/*******************************************************************************
+**
+** Function         NFC_GetNCIVersion
+**
+** Description      Called by higher layer to get the current nci
+**                  version of nfc.
+**
+** Returns          NCI version NCI2.0 / NCI1.0
+**
+*******************************************************************************/
+uint8_t NFC_GetNCIVersion() { return nfc_cb.nci_version; }
 /*******************************************************************************
 **
 ** Function         NFC_SetConfig
