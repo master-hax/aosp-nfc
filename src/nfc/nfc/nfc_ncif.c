@@ -640,7 +640,7 @@ Available after Technology Detection
     if (u8) {
       STREAM_TO_ARRAY(p_lf->nfcid2, p, NCI_NFCID2_LEN);
     }
-  } else if (NCI_DISCOVERY_TYPE_POLL_ISO15693 == p_param->mode) {
+  } else if (NCI_DISCOVERY_TYPE_POLL_V == p_param->mode) {
     p_i93 = &p_param->param.pi93;
     p_i93->flag = *p++;
     p_i93->dsfid = *p++;
