@@ -707,7 +707,6 @@ uint16_t NFC_GetLmrtSize(void) {
 #endif
   return size;
 }
-
 /*******************************************************************************
 **
 ** Function         NFC_SetConfig
