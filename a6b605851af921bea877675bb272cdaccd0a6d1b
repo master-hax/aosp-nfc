@@ -22,6 +22,30 @@
       "revId": "a6b605851af921bea877675bb272cdaccd0a6d1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f787df6f_15594c15",
+        "filename": "src/nfc/nfc/nfc_ncif.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-03-31T09:45:17Z",
+      "side": 1,
+      "message": "I think, here it is better to handle anything proprietary in device specific hal impl.",
+      "parentUuid": "0b9304af_ef2a0b1a",
+      "range": {
+        "startLine": 1184,
+        "startChar": 11,
+        "endLine": 1184,
+        "endChar": 12
+      },
+      "revId": "a6b605851af921bea877675bb272cdaccd0a6d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
