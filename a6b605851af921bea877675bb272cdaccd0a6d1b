@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b9304af_ef2a0b1a",
+        "filename": "src/nfc/nfc/nfc_ncif.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-03-31T09:35:55Z",
+      "side": 1,
+      "message": "A proprietary reset trigger [0xA0-0xFF] is not necessarily an error case. \nAdding a third case for proprietary trigger may reflect more the NCI 2.0 specification.",
+      "range": {
+        "startLine": 1184,
+        "startChar": 11,
+        "endLine": 1184,
+        "endChar": 12
+      },
+      "revId": "a6b605851af921bea877675bb272cdaccd0a6d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
