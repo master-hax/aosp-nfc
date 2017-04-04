@@ -72,6 +72,8 @@ typedef struct nfa_dm_p2p_prio_logic {
 
 static nfa_dm_p2p_prio_logic_t p2p_prio_logic_data;
 
+static void nfa_dm_send_tag_deselect_cmd(void);
+
 /*******************************************************************************
 **
 ** Function         nfa_dm_get_rf_discover_config
@@ -2101,6 +2103,15 @@ static void nfa_dm_disc_sm_poll_active(tNFA_DM_RF_DISC_SM_EVENT event,
 
   switch (event) {
     case NFA_DM_RF_DEACTIVATE_CMD:
+      if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
+        if ((nfa_dm_cb.disc_cb.activated_rf_interface == NFC_INTERFACE_FRAME) &&
+            (p_data->deactivate_type == NFC_DEACTIVATE_TYPE_SLEEP)) {
+          /* NCI 2.0- DH is responsible for sending deactivation commands before
+           * RF_DEACTIVATE_CMD */
+          nfa_dm_send_tag_deselect_cmd();
+        }
+      }
+
       if (nfa_dm_cb.disc_cb.activated_protocol == NCI_PROTOCOL_MIFARE) {
         nfa_dm_cb.disc_cb.deact_pending = true;
         nfa_dm_cb.disc_cb.pending_deact_type = p_data->deactivate_type;
@@ -2974,4 +2985,32 @@ void nfa_dm_p2p_timer_event() {
 *******************************************************************************/
 void nfa_dm_p2p_prio_logic_cleanup() {
   memset(&p2p_prio_logic_data, 0x00, sizeof(nfa_dm_p2p_prio_logic_t));
+}
+
+/*******************************************************************************
+**
+** Function         nfa_dm_send_tag_deselect_cmd
+**
+** Description      Send command to send tag in sleep state
+**
+** Returns          void
+**
+*******************************************************************************/
+static void nfa_dm_send_tag_deselect_cmd(void) {
+  NFC_HDR* p_msg;
+  uint8_t* p;
+
+  NFA_TRACE_DEBUG0("nfa_dm_send_tag_cmd!!");
+  p_msg = (NFC_HDR*)GKI_getpoolbuf(NFC_RW_POOL_ID);
+
+  if (p_msg) {
+    /* send one byte of 0xc2 as as deselect command to Tag */
+    p_msg->len = 1;
+    p_msg->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
+
+    p = (uint8_t*)(p_msg + 1) + p_msg->offset;
+    *p = NFA_RW_TAG_DESELECT_CMD;
+
+    NFC_SendData(NFC_RF_CONN_ID, p_msg);
+  }
 }
