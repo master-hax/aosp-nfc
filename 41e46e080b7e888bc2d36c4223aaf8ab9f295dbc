@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bedd897e_d187e83a",
+        "filename": "src/nfc/include/nfc_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-04-04T22:18:54Z",
+      "side": 1,
+      "message": "Same comment, should be a part of the different patch",
+      "range": {
+        "startLine": 369,
+        "startChar": 0,
+        "endLine": 369,
+        "endChar": 35
+      },
+      "revId": "41e46e080b7e888bc2d36c4223aaf8ab9f295dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b73b53ca_d41c295e",
+        "filename": "src/nfc/nfc/nfc_main.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-04-04T22:18:54Z",
+      "side": 1,
+      "message": "This should be a different patch or a part of the Init patch",
+      "range": {
+        "startLine": 710,
+        "startChar": 0,
+        "endLine": 720,
+        "endChar": 58
+      },
+      "revId": "41e46e080b7e888bc2d36c4223aaf8ab9f295dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
