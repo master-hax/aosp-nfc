@@ -223,6 +223,9 @@ typedef struct {
   uint8_t hci_conn_credits; /* maximum conn credits for static HCI*/
 
   uint16_t nci_max_v_size; /*maximum NFC V rf frame size*/
+
+  uint8_t deact_reason;
+
 } tNFC_CB;
 
 /*****************************************************************************
