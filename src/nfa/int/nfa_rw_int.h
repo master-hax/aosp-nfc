@@ -48,6 +48,9 @@
 /* Both Lock and Memory control Tlvs are detected */
 #define NFA_RW_TLV_DETECT_ST_COMPLETE 0x03
 
+/* Tag deselect cmd*/
+#define NFA_RW_TAG_DESELECT_CMD 0xC2
+
 typedef uint8_t tNFA_RW_TLV_ST;
 
 /* RW events */
