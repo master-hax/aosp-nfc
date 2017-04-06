@@ -1251,6 +1251,24 @@ uint8_t NFC_SetTraceLevel(uint8_t new_level) {
   return (nfc_cb.trace_level);
 }
 
+/*******************************************************************************
+**
+** Function         NFC_ISODEPNakPresCheck
+**
+** Description      This function is called to send the ISO DEP nak presenc
+**                  check cmd to check that the remote end point in RF field.
+**
+**                  The response from NFCC is reported by call back.The ntf
+**                  indicates success if card is present in field or failed
+**                  if card is lost.
+**
+** Returns          tNFC_STATUS
+**
+*******************************************************************************/
+tNFC_STATUS NFC_ISODEPNakPresCheck() {
+  return nci_snd_iso_dep_nak_presence_check_cmd();
+}
+
 #if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
