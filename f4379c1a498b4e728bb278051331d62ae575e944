@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ffb3852_53095898",
+        "filename": "src/nfa/dm/nfa_dm_discover.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 3086,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-04-06T12:26:15Z",
+      "side": 1,
+      "message": "‘0xC2’ codes a S(DESELECT) frame, that is an ISO-DEP Protocol frame, meaning it can be handled only by devices/tags supporting ISO-DEP protocol.  So  ‘0xC2‘ should be sent only in case of Frame RF Interface used with a ISO-DEP RF Protocol.\nIn Type 1 tag Platform [following NFC Forum activity 2.0 spec]], not communicating over ISO-DEP, there is no particular action do to (no frame to send)\nIn Type 2 Tag Platform ], also not using IDO-DEP protocol, the reader device SHALL send a SLP_REQ Command and not a S(DESELCT).\n\nI suggest that dhe deselect command should be dependant of the higher RF Protocol used.",
+      "range": {
+        "startLine": 3086,
+        "startChar": 59,
+        "endLine": 3086,
+        "endChar": 61
+      },
+      "revId": "f4379c1a498b4e728bb278051331d62ae575e944",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
