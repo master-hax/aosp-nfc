@@ -222,7 +222,7 @@ enum {
   NFC_NFCC_TRANSPORT_ERR_REVT,      /* 16 NCI Tranport error            */
   NFC_NFCC_POWER_OFF_REVT,          /* 17 NFCC turned off               */
 
-  NFC_FIRST_VS_REVT /* First vendor-specific rsp event  */
+  NFC_FIRST_VS_REVT                 /* First vendor-specific rsp event  */
 };
 typedef uint16_t tNFC_RESPONSE_EVT;
 
@@ -1292,6 +1292,18 @@ extern tNFC_STATUS NFC_TestLoopback(NFC_HDR* p_data);
 **
 *******************************************************************************/
 extern uint8_t NFC_SetTraceLevel(uint8_t new_level);
+
+/*******************************************************************************
+**
+** Function         NFC_ISODEPNakPresCheck
+**
+** Description      This function is called to send the ISO DEP nak presence
+**                  check cmd to check that the remote end point in RF field.
+**
+** Returns          tNFC_STATUS
+**
+*******************************************************************************/
+extern tNFC_STATUS NFC_ISODEPNakPresCheck();
 
 #if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
