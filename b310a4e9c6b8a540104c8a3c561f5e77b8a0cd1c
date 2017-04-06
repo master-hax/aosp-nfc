@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a72be69_1fdb4422",
+        "filename": "halimpl/pn54x/hal/phNxpNciHal_ext.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-04-06T12:04:58Z",
+      "side": 1,
+      "message": "Since routing table ordering patch is uploaded. This workaround is no longer required.",
+      "range": {
+        "startLine": 605,
+        "startChar": 2,
+        "endLine": 624,
+        "endChar": 3
+      },
+      "revId": "b310a4e9c6b8a540104c8a3c561f5e77b8a0cd1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
