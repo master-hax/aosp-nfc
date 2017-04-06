@@ -22,6 +22,30 @@
       "revId": "f4379c1a498b4e728bb278051331d62ae575e944",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d915957c_35341407",
+        "filename": "src/nfa/dm/nfa_dm_discover.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 3086,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-04-06T13:21:50Z",
+      "side": 1,
+      "message": "Yes, we need to add one more condition for considering the RF protocol activation.\n\nRef: The DH is responsible for sending the necessary deactivation commands before RF_DEACTIVATE_CMD.",
+      "parentUuid": "3ffb3852_53095898",
+      "range": {
+        "startLine": 3086,
+        "startChar": 59,
+        "endLine": 3086,
+        "endChar": 61
+      },
+      "revId": "f4379c1a498b4e728bb278051331d62ae575e944",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
