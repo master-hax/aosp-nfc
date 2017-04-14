@@ -475,6 +475,7 @@ typedef uint8_t tNCI_DISCOVERY_TYPE;
 
 #define NCI_PARAM_ID_TOTAL_DURATION 0x00
 #define NCI_PARAM_ID_CON_DEVICES_LIMIT 0x01
+#define NCI_PARAM_ID_CON_DISCOVERY_PARAM 0x02
 #define NCI_PARAM_ID_PA_BAILOUT 0x08
 #define NCI_PARAM_ID_PB_AFI 0x10
 #define NCI_PARAM_ID_PB_BAILOUT 0x11
@@ -558,6 +559,8 @@ typedef uint8_t tNCI_DISCOVERY_TYPE;
  * NCI Parameter ID Lens
  **********************************************/
 #define NCI_PARAM_LEN_TOTAL_DURATION 2
+
+#define NCI_PARAM_LEN_CON_DISCOVERY_PARAM 1
 
 #define NCI_PARAM_LEN_PA_FSDI 1
 
