@@ -71,5 +71,6 @@ uint8_t nci_snd_get_routing_cmd(void);
 #ifdef __cplusplus
 }
 #endif
+uint8_t nci_snd_core_set_power_sub_state(uint8_t screen_state);
 
 #endif /* NFC_NCI_MSGS_H */
