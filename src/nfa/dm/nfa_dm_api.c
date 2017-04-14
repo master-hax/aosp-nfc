@@ -152,7 +152,51 @@ tNFA_STATUS NFA_Disable(bool graceful) {
 
   return (NFA_STATUS_FAILED);
 }
+/*******************************************************************************
+**
+** Function         NFA_SetPowerSubState
+**
+** Description      send the current screen state to NFCC
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**
+*******************************************************************************/
+tNFA_STATUS NFA_SetPowerSubState(uint8_t ScreenState) {
+  tNFA_DM_API_SET_POWER_SUB_STATE* p_msg;
+  uint8_t nci_scren_state = 0xFF;
 
+  NFA_TRACE_API1("NFA_SetPowerSubState (): state:0x%X", ScreenState);
+
+  if ((p_msg = (tNFA_DM_API_SET_POWER_SUB_STATE*)GKI_getbuf(
+           (uint16_t)(sizeof(tNFA_DM_API_SET_POWER_SUB_STATE)))) != NULL) {
+    p_msg->hdr.event = NFA_DM_API_SET_POWER_SUB_STATE_EVT;
+    switch (ScreenState) {
+      case NFA_SCREEN_STATE_ON_UNLOCKED:
+        nci_scren_state = SCREEN_STATE_ON_UNLOCKED;
+        break;
+      case NFA_SCREEN_STATE_OFF_UNLOCKED:
+        nci_scren_state = SCREEN_STATE_OFF_UNLOCKED;
+        break;
+      case NFA_SCREEN_STATE_ON_LOCKED:
+        nci_scren_state = SCREEN_STATE_ON_LOCKED;
+        break;
+      case NFA_SCREEN_STATE_OFF_LOCKED:
+        nci_scren_state = SCREEN_STATE_OFF_LOCKED;
+        break;
+
+      default:
+        NFA_TRACE_API1("%s, unknown screen state", __FUNCTION__);
+        break;
+    }
+
+    p_msg->screen_state = nci_scren_state;
+
+    nfa_sys_sendmsg(p_msg);
+    return (NFA_STATUS_OK);
+  }
+  return (NFA_STATUS_FAILED);
+}
 /*******************************************************************************
 **
 ** Function         NFA_SetConfig
