@@ -1991,7 +1991,13 @@ void nfa_ee_route_add_one_ecb_by_route_order(tNFA_EE_ECB* p_cb, int rout_type,
         if (p_cb->proto_battery_off & nfa_ee_proto_mask_list[xx])
           power_cfg |= NCI_ROUTE_PWR_STATE_BATT_OFF;
         if (power_cfg) {
-          *pp++ = NFC_ROUTE_TAG_PROTO;
+          /* Route Block is only applicable for ISO DEP Protocol*/
+          if (nfa_ee_proto_mask_list[xx] == NFA_PROTOCOL_MASK_ISO_DEP) {
+            *pp++ = NFC_ROUTE_TAG_PROTO | nfa_ee_cb.route_block_control;
+          } else {
+            *pp++ = NFC_ROUTE_TAG_PROTO;
+          }
+
           *pp++ = 3;
           *pp++ = p_cb->nfcee_id;
           *pp++ = power_cfg;
@@ -2033,7 +2039,7 @@ void nfa_ee_route_add_one_ecb_by_route_order(tNFA_EE_ECB* p_cb, int rout_type,
             pa = &p_cb->aid_cfg[start_offset];
             pa++;        /* EMV tag */
             len = *pa++; /* aid_len */
-            *pp++ = NFC_ROUTE_TAG_AID;
+            *pp++ = NFC_ROUTE_TAG_AID | nfa_ee_cb.route_block_control;
             *pp++ = len + 2;
             *pp++ = p_cb->nfcee_id;
             *pp++ = p_cb->aid_pwr_cfg[xx];
