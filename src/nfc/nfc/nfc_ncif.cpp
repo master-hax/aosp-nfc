@@ -28,6 +28,7 @@
 #include <string.h>
 #include "nfc_target.h"
 
+#include "include/debug_nfcsnoop.h"
 #include "nci_defs.h"
 #include "nci_hmsgs.h"
 #include "nfc_api.h"
@@ -157,6 +158,7 @@ uint8_t nfc_ncif_send_data(tNFC_CONN_CB* p_cb, NFC_HDR* p_data) {
   if (p_data) {
     /* always enqueue the data to the tx queue */
     GKI_enqueue(&p_cb->tx_q, p_data);
+    nfcsnoop_capture(p_data, false);
   }
 
   /* try to send the first data packet in the tx queue  */
@@ -310,6 +312,7 @@ void nfc_ncif_send_cmd(NFC_HDR* p_buf) {
   /* post the p_buf to NCIT task */
   p_buf->event = BT_EVT_TO_NFC_NCI;
   p_buf->layer_specific = 0;
+  nfcsnoop_capture(p_buf, false);
   nfc_ncif_check_cmd_queue(p_buf);
 }
 
@@ -334,6 +337,7 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
   pp = p;
   NCI_MSG_PRS_HDR0(pp, mt, pbf, gid);
 
+  nfcsnoop_capture(p_msg, true);
   switch (mt) {
     case NCI_MT_DATA:
       NFC_TRACE_DEBUG0("NFC received data");

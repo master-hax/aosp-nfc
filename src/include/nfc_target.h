@@ -675,4 +675,9 @@
 
 #endif /* HAL_WRITE */
 
+/* Enable/disable NFCSnoop memory logging */
+#ifndef NFCSNOOP_MEM
+#define NFCSNOOP_MEM TRUE
+#endif
+
 #endif /* NFC_TARGET_H */
