@@ -11,6 +11,7 @@ cc_library_shared {
         "libdl",
         "libhardware",
         "libpower",
+        "libz",
 
         // Treble configuration
         "libhidlbase",
@@ -53,6 +54,7 @@ cc_library_shared {
         "nfc/tags/*.c",
         "adaptation/*.c",
         "adaptation/*.cpp",
+        "adaptation/*.cc",
         "gki/common/*.c",
         "gki/ulinux/*.c",
         "nfca_version.c",
