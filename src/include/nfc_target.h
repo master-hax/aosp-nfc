@@ -658,6 +658,11 @@
 
 #ifdef NFC_HAL_SHARED_GKI
 
+/* Enable/disable NFCSnoop memory logging */
+#ifndef NFCSNOOP_MEM
+#define NFCSNOOP_MEM TRUE
+#endif
+
 /* NFC HAL Included if NFC_NFCEE_INCLUDED */
 #if (NFC_NFCEE_INCLUDED == TRUE)
 

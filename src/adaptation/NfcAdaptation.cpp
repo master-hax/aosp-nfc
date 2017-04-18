@@ -30,6 +30,7 @@ extern "C" {
 }
 #include "android_logmsg.h"
 #include "config.h"
+#include "debug_nfcsnoop.h"
 
 #undef LOG_TAG
 #define LOG_TAG "NfcAdaptation"
@@ -227,6 +228,9 @@ void NfcAdaptation::Initialize() {
   mHalCallback = NULL;
   memset(&mHalEntryFuncs, 0, sizeof(mHalEntryFuncs));
   InitializeHalDeviceContext();
+#if (NFCSNOOP_MEM == TRUE)
+  debug_nfcsnoop_init();
+#endif
   ALOGD("%s: exit", func);
 }
 
@@ -255,6 +259,20 @@ void NfcAdaptation::Finalize() {
   delete this;
 }
 
+/*******************************************************************************
+**
+** Function:    NfcAdaptation::Dump
+**
+** Description: Native support for dumpsys function.
+**
+** Returns:     None.
+**
+*******************************************************************************/
+void NfcAdaptation::Dump(int fd) {
+#if (NFCSNOOP_MEM == TRUE)
+  debug_nfcsnoop_dump(fd);
+#endif
+}
 /*******************************************************************************
 **
 ** Function:    NfcAdaptation::signal()
