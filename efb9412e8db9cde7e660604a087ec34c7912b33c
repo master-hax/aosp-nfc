@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ec87c99_e1122e6b",
+        "filename": "src/hal/include/nci_defs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-04-19T00:32:41Z",
+      "side": 1,
+      "message": "Comment on the previous for readability purpose:\n\nEx:\n/* AID matching is allowed when the SELECT AID is longer */\n#define NCI_ROUTE_QUAL_LONG_SELECT 0x10",
+      "range": {
+        "startLine": 589,
+        "startChar": 7,
+        "endLine": 593,
+        "endChar": 53
+      },
+      "revId": "efb9412e8db9cde7e660604a087ec34c7912b33c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
