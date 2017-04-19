@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4862fc26_c541ca5c",
+        "filename": "src/nfc/int/rw_int.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-04-19T00:29:11Z",
+      "side": 1,
+      "message": "Remove extra line.",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 0
+      },
+      "revId": "8f90e89593ea4212efc4d21c0c3153ea33cd8d31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
