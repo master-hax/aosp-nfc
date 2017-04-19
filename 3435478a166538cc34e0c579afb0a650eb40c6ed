@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d96e1ae9_8b9e9521",
+        "filename": "src/nfa/include/nfa_rw_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-04-19T00:47:11Z",
+      "side": 1,
+      "message": "spaces at the start and end of the comment",
+      "range": {
+        "startLine": 39,
+        "startChar": 32,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "3435478a166538cc34e0c579afb0a650eb40c6ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99e64db1_7762cc44",
+        "filename": "src/nfc/include/nci_hmsgs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-04-19T00:47:11Z",
+      "side": 1,
+      "message": "Do not remove this line.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 3
+      },
+      "revId": "3435478a166538cc34e0c579afb0a650eb40c6ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d878ea4_76998faa",
+        "filename": "src/nfc/include/nfc_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-04-19T00:47:11Z",
+      "side": 1,
+      "message": "Add this line back.",
+      "range": {
+        "startLine": 223,
+        "startChar": 74,
+        "endLine": 224,
+        "endChar": 1
+      },
+      "revId": "3435478a166538cc34e0c579afb0a650eb40c6ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bae766_0b1c79cd",
+        "filename": "src/nfc/include/nfc_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-04-19T00:47:11Z",
+      "side": 1,
+      "message": "spell check",
+      "range": {
+        "startLine": 1299,
+        "startChar": 68,
+        "endLine": 1299,
+        "endChar": 75
+      },
+      "revId": "3435478a166538cc34e0c579afb0a650eb40c6ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e50b828_d02ddf79",
+        "filename": "src/nfc/nfc/nfc_main.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-04-19T00:47:11Z",
+      "side": 1,
+      "message": "spell check and formatting",
+      "range": {
+        "startLine": 1259,
+        "startChar": 1,
+        "endLine": 1259,
+        "endChar": 9
+      },
+      "revId": "3435478a166538cc34e0c579afb0a650eb40c6ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
