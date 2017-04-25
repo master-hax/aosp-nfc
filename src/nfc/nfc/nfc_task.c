@@ -343,7 +343,10 @@ uint32_t nfc_task(uint32_t param) {
   /* main loop */
   while (true) {
     event = GKI_wait(0xFFFF, 0);
-
+    // There was some error in GKI_wait and we need to exit
+    if (event == 0) {
+      break;
+    }
     /* Handle NFC_TASK_EVT_TRANSPORT_READY from NFC HAL */
     if (event & NFC_TASK_EVT_TRANSPORT_READY) {
       NFC_TRACE_DEBUG0("NFC_TASK got NFC_TASK_EVT_TRANSPORT_READY.");
