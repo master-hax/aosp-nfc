@@ -22,6 +22,30 @@
       "revId": "02d818b3799729ed6ffa8a470738795607097d73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67f75b47_b844886a",
+        "filename": "src/nfc/nfc/nfc_task.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-04-26T16:10:51Z",
+      "side": 1,
+      "message": "I\u0027m not smart :p Forget that.",
+      "parentUuid": "4d05d8b5_4c226305",
+      "range": {
+        "startLine": 346,
+        "startChar": 8,
+        "endLine": 346,
+        "endChar": 33
+      },
+      "revId": "02d818b3799729ed6ffa8a470738795607097d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
