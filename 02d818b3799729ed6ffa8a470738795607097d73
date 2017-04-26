@@ -46,6 +46,30 @@
       "revId": "02d818b3799729ed6ffa8a470738795607097d73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71bc9fd4_89443cfc",
+        "filename": "src/nfc/nfc/nfc_task.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-04-26T16:20:41Z",
+      "side": 1,
+      "message": "You make a good point, I should use EVENT_MASK for this.",
+      "parentUuid": "67f75b47_b844886a",
+      "range": {
+        "startLine": 346,
+        "startChar": 8,
+        "endLine": 346,
+        "endChar": 33
+      },
+      "revId": "02d818b3799729ed6ffa8a470738795607097d73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
