@@ -40,16 +40,18 @@ using namespace ::std;
 class CNfcParam : public string {
  public:
   CNfcParam();
-  CNfcParam(const char* name, const string& value);
+  CNfcParam(const char* name, const string& value, bool is_num);
   CNfcParam(const char* name, unsigned long value);
   virtual ~CNfcParam();
   unsigned long numValue() const { return m_numValue; }
   const char* str_value() const { return m_str_value.c_str(); }
+  bool is_num() const { return m_is_num; }
   size_t str_len() const { return m_str_value.length(); }
 
  private:
   string m_str_value;
   unsigned long m_numValue;
+  bool m_is_num;
 };
 
 class CNfcConfig : public vector<const CNfcParam*> {
@@ -301,7 +303,7 @@ bool CNfcConfig::readConfig(const char* name, bool bResetContent) {
             while (n-- > 0) strValue.push_back(((numValue >> (n * 8)) & 0xFF));
           }
           if (strValue.length() > 0)
-            pParam = new CNfcParam(token.c_str(), strValue);
+            pParam = new CNfcParam(token.c_str(), strValue, true);
           else
             pParam = new CNfcParam(token.c_str(), numValue);
           add(pParam);
@@ -313,7 +315,7 @@ bool CNfcConfig::readConfig(const char* name, bool bResetContent) {
         if (c == '"') {
           strValue.push_back('\0');
           state = END_LINE;
-          pParam = new CNfcParam(token.c_str(), strValue);
+          pParam = new CNfcParam(token.c_str(), strValue, false);
           add(pParam);
         } else if (isPrintable(c))
           strValue.push_back(c);
@@ -458,9 +460,16 @@ const CNfcParam* CNfcConfig::find(const char* p_name) const {
     if (**it < p_name)
       continue;
     else if (**it == p_name) {
-      if ((*it)->str_len() > 0)
-        ALOGD("%s found %s=%s\n", __func__, p_name, (*it)->str_value());
-      else
+      if ((*it)->str_len() > 0) {
+        if ((*it)->is_num()) {
+          const char* array = (*it)->str_value();
+          char* buff = new char[(*it)->str_len() * 2]();
+          for (int i = 0; i < (*it)->str_len(); i++)
+            sprintf(buff + 2 * i, "%02x", array[i] & 0xff);
+          ALOGD("%s found %s=%s\n", __func__, p_name, buff);
+        } else
+          ALOGD("%s found %s=%s\n", __func__, p_name, (*it)->str_value());
+      } else
         ALOGD("%s found %s=(0x%lX)\n", __func__, p_name, (*it)->numValue());
       return *it;
     } else
@@ -576,8 +585,8 @@ CNfcParam::~CNfcParam() {}
 ** Returns:     none
 **
 *******************************************************************************/
-CNfcParam::CNfcParam(const char* name, const string& value)
-    : string(name), m_str_value(value), m_numValue(0) {}
+CNfcParam::CNfcParam(const char* name, const string& value, const bool is_num)
+    : string(name), m_str_value(value), m_numValue(0), m_is_num(is_num) {}
 
 /*******************************************************************************
 **
