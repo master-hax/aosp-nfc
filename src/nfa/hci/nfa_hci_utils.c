@@ -705,11 +705,15 @@ tNFA_HCI_DYN_PIPE* nfa_hciu_find_pipe_on_gate(uint8_t gate_id) {
 bool nfa_hciu_is_active_host(uint8_t host_id) {
   uint8_t xx;
 
-  for (xx = 0; xx < NFA_HCI_MAX_HOST_IN_NETWORK; xx++) {
-    if (nfa_hci_cb.inactive_host[xx] == host_id) return false;
-  }
+  if ((host_id == NFA_HCI_HOST_ID_UICC0) ||
+      (host_id >= NFA_HCI_HOST_ID_FIRST_PROPRIETARY)) {
+    for (xx = 0; xx < NFA_HCI_MAX_HOST_IN_NETWORK; xx++) {
+      if (nfa_hci_cb.active_host[xx] == host_id) return true;
+    }
+  } else
+    return false;
 
-  return true;
+  return false;
 }
 
 /*******************************************************************************
@@ -725,8 +729,11 @@ bool nfa_hciu_is_active_host(uint8_t host_id) {
 bool nfa_hciu_is_host_reseting(uint8_t host_id) {
   uint8_t xx;
 
-  for (xx = 0; xx < NFA_HCI_MAX_HOST_IN_NETWORK; xx++) {
-    if (nfa_hci_cb.reset_host[xx] == host_id) return true;
+  if ((host_id == NFA_HCI_HOST_ID_UICC0) ||
+      (host_id >= NFA_HCI_HOST_ID_FIRST_PROPRIETARY)) {
+    for (xx = 0; xx < NFA_HCI_MAX_HOST_IN_NETWORK; xx++) {
+      if (nfa_hci_cb.reset_host[xx] == host_id) return true;
+    }
   }
 
   return false;

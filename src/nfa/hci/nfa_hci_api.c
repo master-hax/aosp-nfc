@@ -376,8 +376,10 @@ tNFA_STATUS NFA_HciCreatePipe(tNFA_HANDLE hci_handle, uint8_t source_gate_id,
     return (NFA_STATUS_FAILED);
   }
 
-  for (xx = 0; xx < NFA_HCI_MAX_HOST_IN_NETWORK; xx++)
-    if (nfa_hci_cb.inactive_host[xx] == dest_host) break;
+  if (!nfa_hciu_is_active_host(dest_host)) {
+    NFA_TRACE_API1("NFA_HciCreatePipe (): Host not active:0x%02x", dest_host);
+    return (NFA_STATUS_FAILED);
+  }
 
   if (xx != NFA_HCI_MAX_HOST_IN_NETWORK) {
     NFA_TRACE_API1("NFA_HciCreatePipe (): Host not active:0x%02x", dest_host);
@@ -879,8 +881,10 @@ tNFA_STATUS NFA_HciAddStaticPipe(tNFA_HANDLE hci_handle, uint8_t host,
     return (NFA_STATUS_FAILED);
   }
 
-  for (xx = 0; xx < NFA_HCI_MAX_HOST_IN_NETWORK; xx++)
-    if (nfa_hci_cb.inactive_host[xx] == host) break;
+  if (!nfa_hciu_is_active_host(host)) {
+    NFA_TRACE_API1("NFA_HciAddStaticPipe (): Host not active:0x%02x", host);
+    return (NFA_STATUS_FAILED);
+  }
 
   if (xx != NFA_HCI_MAX_HOST_IN_NETWORK) {
     NFA_TRACE_API1("NFA_HciAddStaticPipe (): Host not active:0x%02x", host);
