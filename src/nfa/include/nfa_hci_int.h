@@ -38,6 +38,8 @@ extern uint8_t HCI_LOOPBACK_DEBUG;
 *****************************************************************************/
 
 #define NFA_HCI_HOST_ID_UICC0 0x02 /* Host ID for UICC 0 */
+#define NFA_HCI_HOST_ID_FIRST_DYNAMICALLY_ALLOCATED \
+  0x80 /* First dynamically allocated host ID */
 /* Lost host specific gate */
 #define NFA_HCI_LAST_HOST_SPECIFIC_GATE 0xEF
 
@@ -365,6 +367,8 @@ typedef struct {
                                  discovery disable ntf */
   uint8_t inactive_host[NFA_HCI_MAX_HOST_IN_NETWORK]; /* Inactive host in the
                                                          host network */
+  uint8_t active_host[NFA_HCI_MAX_HOST_IN_NETWORK];   /* active host in the
+                                                           host network */
   uint8_t reset_host[NFA_HCI_MAX_HOST_IN_NETWORK]; /* List of host reseting */
   bool b_low_power_mode;  /* Host controller in low power mode */
   bool b_hci_netwk_reset; /* Command sent to reset HCI Network */
