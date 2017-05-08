@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee49526c_124921fe",
+        "filename": "src/hal/include/nci_defs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-08T22:01:27Z",
+      "side": 1,
+      "message": "Comment on the previous line for readability",
+      "range": {
+        "startLine": 369,
+        "startChar": 6,
+        "endLine": 369,
+        "endChar": 41
+      },
+      "revId": "6087b7729d31decdd9314c92bf27401aa3626f6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad35887a_75a06476",
+        "filename": "src/nfa/dm/nfa_dm_discover.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 2211,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-08T22:01:27Z",
+      "side": 1,
+      "message": "comment on previous line",
+      "range": {
+        "startLine": 2211,
+        "startChar": 19,
+        "endLine": 2211,
+        "endChar": 55
+      },
+      "revId": "6087b7729d31decdd9314c92bf27401aa3626f6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d7dda37_caa2fc02",
+        "filename": "src/nfa/dm/nfa_dm_discover.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 2240,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-08T22:01:27Z",
+      "side": 1,
+      "message": "space before end of comment",
+      "range": {
+        "startLine": 2240,
+        "startChar": 24,
+        "endLine": 2240,
+        "endChar": 26
+      },
+      "revId": "6087b7729d31decdd9314c92bf27401aa3626f6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
