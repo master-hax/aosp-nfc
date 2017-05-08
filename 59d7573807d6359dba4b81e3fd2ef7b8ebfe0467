@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0500378_d1467d07",
+        "filename": "src/nfa/int/nfa_dm_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-08T21:53:17Z",
+      "side": 1,
+      "message": "/* NFA_DM_API_SET_POWER_SUB_STATE_EVT   */\ntNFA_DM_API_SET_POWER_SUB_STATE set_power_state;\n\nplace comment either before/after",
+      "range": {
+        "startLine": 221,
+        "startChar": 8,
+        "endLine": 222,
+        "endChar": 33
+      },
+      "revId": "59d7573807d6359dba4b81e3fd2ef7b8ebfe0467",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9150b466_7296c854",
+        "filename": "src/nfc/include/nci_hmsgs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-08T21:53:17Z",
+      "side": 1,
+      "message": "Move this above _cplusplus",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 31
+      },
+      "revId": "59d7573807d6359dba4b81e3fd2ef7b8ebfe0467",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60f7bdab_ab30b5f7",
+        "filename": "src/nfc/nfc/nfc_main.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-08T21:53:17Z",
+      "side": 1,
+      "message": "formatting",
+      "range": {
+        "startLine": 1112,
+        "startChar": 1,
+        "endLine": 1112,
+        "endChar": 5
+      },
+      "revId": "59d7573807d6359dba4b81e3fd2ef7b8ebfe0467",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
