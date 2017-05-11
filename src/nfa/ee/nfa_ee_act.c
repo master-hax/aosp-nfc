@@ -64,20 +64,20 @@ const uint8_t nfa_ee_tech_list[NFA_EE_NUM_TECH] = {
     pp = _pp;                                                                 \
   }
 
-#define ADD_ROUTE_AID_TLV(pp, pa, nfcee_id, pwr_cfg)                       \
-  {                                                                        \
-    uint8_t* _pp = (uint8_t*)pp;                                           \
-    uint8_t* _pa = (uint8_t*)pa;                                           \
-    _pa++;        /* EMV tag */                                            \
-    len = *_pa++; /* aid_len */                                            \
-    *_pp++ = (uint8_t)(NFC_ROUTE_TAG_AID | nfa_ee_cb.route_block_control); \
-    *_pp++ = (uint8_t)(len + 2);                                           \
-    *_pp++ = (uint8_t)nfcee_id;                                            \
-    *_pp++ = (uint8_t)pwr_cfg;                                             \
-    /* copy the AID */                                                     \
-    memcpy(_pp, _pa, len);                                                 \
-    _pp += len;                                                            \
-    pp = _pp;                                                              \
+#define ADD_ROUTE_AID_TLV(pp, pa, nfcee_id, pwr_cfg, tag) \
+  {                                                       \
+    uint8_t* _pp = (uint8_t*)pp;                          \
+    uint8_t* _pa = (uint8_t*)pa;                          \
+    _pa++;        /* EMV tag */                           \
+    len = *_pa++; /* aid_len */                           \
+    *_pp++ = (uint8_t)(tag);                              \
+    *_pp++ = (uint8_t)(len + 2);                          \
+    *_pp++ = (uint8_t)nfcee_id;                           \
+    *_pp++ = (uint8_t)pwr_cfg;                            \
+    /* copy the AID */                                    \
+    memcpy(_pp, _pa, len);                                \
+    _pp += len;                                           \
+    pp = _pp;                                             \
   }
 
 const uint8_t nfa_ee_proto_mask_list[NFA_EE_NUM_PROTO] = {
@@ -312,7 +312,7 @@ static void nfa_ee_add_proto_route_to_ecb(tNFA_EE_ECB* p_cb, uint8_t* pp,
 static void nfa_ee_add_aid_route_to_ecb(tNFA_EE_ECB* p_cb, uint8_t* pp,
                                         uint8_t* p, uint8_t* ps,
                                         int* p_cur_offset, int* p_max_len) {
-  uint8_t len, new_size = 0;
+  uint8_t len, new_size, tag = 0;
   uint8_t num_tlv = *ps;
   uint8_t* pa;
   uint8_t* p_start;
@@ -324,12 +324,29 @@ static void nfa_ee_add_aid_route_to_ecb(tNFA_EE_ECB* p_cb, uint8_t* pp,
     for (int xx = 0; xx < p_cb->aid_entries; xx++) {
       /* remember the beginning of this AID routing entry, just in case we
        * need to put it in next command */
+      uint8_t route_qual = 0;
       p_start = pp;
       /* add one AID entry */
       if (p_cb->aid_rt_info[xx] & NFA_EE_AE_ROUTE) {
         num_tlv++;
         pa = &p_cb->aid_cfg[start_offset];
-        ADD_ROUTE_AID_TLV(pp, pa, p_cb->nfcee_id, p_cb->aid_pwr_cfg[xx]);
+
+        NFA_TRACE_DEBUG2("%s -  p_cb->aid_info%x", __FUNCTION__,
+                         p_cb->aid_info[xx]);
+        if (p_cb->aid_info[xx] & NCI_ROUTE_QUAL_LONG_SELECT) {
+          NFA_TRACE_DEBUG2("%s - %x", __FUNCTION__,
+                           p_cb->aid_info[xx] & NCI_ROUTE_QUAL_LONG_SELECT);
+          route_qual |= NCI_ROUTE_QUAL_LONG_SELECT;
+        }
+        if (p_cb->aid_info[xx] & NCI_ROUTE_QUAL_SHORT_SELECT) {
+          NFA_TRACE_DEBUG2("%s - %x", __FUNCTION__,
+                           p_cb->aid_info[xx] & NCI_ROUTE_QUAL_SHORT_SELECT);
+          route_qual |= NCI_ROUTE_QUAL_SHORT_SELECT;
+        }
+
+        tag = NFC_ROUTE_TAG_AID | nfa_ee_cb.route_block_control | route_qual;
+
+        ADD_ROUTE_AID_TLV(pp, pa, p_cb->nfcee_id, p_cb->aid_pwr_cfg[xx], tag);
       }
       start_offset += p_cb->aid_len[xx];
       new_size = (uint8_t)(pp - p_start);
@@ -744,6 +761,7 @@ void nfa_ee_api_add_aid(tNFA_EE_MSG* p_data) {
         "nfa_ee_api_add_aid The AID entry is already in the database");
     if (p_chk_cb == p_cb) {
       p_cb->aid_rt_info[entry] |= NFA_EE_AE_ROUTE;
+      p_cb->aid_info[entry] = p_add->aidInfo;
       new_size = nfa_ee_total_lmrt_size();
       if (new_size > NFC_GetLmrtSize()) {
         NFA_TRACE_ERROR1("Exceed LMRT size:%d (add ROUTE)", new_size);
@@ -781,6 +799,7 @@ void nfa_ee_api_add_aid(tNFA_EE_MSG* p_data) {
       } else {
         /* add AID */
         p_cb->aid_pwr_cfg[p_cb->aid_entries] = p_add->power_state;
+        p_cb->aid_info[p_cb->aid_entries] = p_add->aidInfo;
         p_cb->aid_rt_info[p_cb->aid_entries] = NFA_EE_AE_ROUTE;
         p = p_cb->aid_cfg + len;
         p_start = p;
