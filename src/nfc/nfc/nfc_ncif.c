@@ -488,6 +488,19 @@ void nfc_ncif_error_status(uint8_t conn_id, uint8_t status) {
     (*p_cb->p_cback)(conn_id, NFC_ERROR_CEVT, (tNFC_CONN*)&status);
   }
 }
+/*******************************************************************************
+**
+** Function         nfc_ncif_error_process
+**
+** Description      This function is called to process error reported
+**
+** Returns          void
+**
+*******************************************************************************/
+void nfc_ncif_error_process(uint8_t* p) {
+  NFC_TRACE_ERROR0("nfc_ncif_error_process ()");
+  nfa_dm_rf_qos_check_error_code(p);
+}
 
 /*******************************************************************************
 **
