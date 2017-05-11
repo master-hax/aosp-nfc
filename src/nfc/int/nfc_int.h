@@ -268,6 +268,7 @@ extern void nfc_ncif_rf_management_status(tNFC_DISCOVER_EVT event,
 extern void nfc_ncif_set_config_status(uint8_t* p, uint8_t len);
 extern void nfc_ncif_event_status(tNFC_RESPONSE_EVT event, uint8_t status);
 extern void nfc_ncif_error_status(uint8_t conn_id, uint8_t status);
+extern void nfc_ncif_error_process(uint8_t* p);
 extern void nfc_ncif_proc_credits(uint8_t* p, uint16_t plen);
 extern void nfc_ncif_proc_activate(uint8_t* p, uint8_t len);
 extern void nfc_ncif_proc_deactivate(uint8_t status, uint8_t deact_type,
@@ -286,6 +287,7 @@ extern void nfc_ncif_proc_init_rsp(NFC_HDR* p_msg);
 extern void nfc_ncif_proc_get_config_rsp(NFC_HDR* p_msg);
 extern void nfc_ncif_proc_data(NFC_HDR* p_msg);
 extern bool nfa_dm_p2p_prio_logic(uint8_t event, uint8_t* p, uint8_t ntf_rsp);
+extern void nfa_dm_rf_qos_check_error_code(uint8_t* p_data);
 extern void nfa_dm_p2p_timer_event();
 extern void nfa_dm_p2p_prio_logic_cleanup();
 extern void nfc_ncif_proc_isodep_nak_presence_check_status(uint8_t status,

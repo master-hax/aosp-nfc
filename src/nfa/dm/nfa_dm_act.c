@@ -35,6 +35,7 @@
 #include "nfc_api.h"
 
 #if (NFC_NFCEE_INCLUDED == TRUE)
+#include "nfa_dm_rf_activity_info.h"
 #include "nfa_ee_int.h"
 #include "nfa_hci_int.h"
 #endif
@@ -56,7 +57,6 @@ static void nfa_dm_excl_disc_cback(tNFA_DM_RF_DISC_EVT event,
                                    tNFC_DISCOVER* p_data);
 static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
                                    tNFC_DISCOVER* p_data);
-
 /*******************************************************************************
 **
 ** Function         nfa_dm_module_init_cback
@@ -353,6 +353,11 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
     case NFC_RF_FIELD_REVT: /* RF Field information            */
       dm_cback_data.rf_field.status = NFA_STATUS_OK;
       dm_cback_data.rf_field.rf_field_status = p_data->rf_field.rf_field;
+      if (p_data->rf_field.rf_field == 1) {
+        nfa_dm_rf_qos_listen_capture_onevent();
+      } else if (p_data->rf_field.rf_field == 0) {
+        nfa_dm_rf_qos_listen_capture_offevent();
+      }
       (*nfa_dm_cb.p_dm_cback)(NFA_DM_RF_FIELD_EVT, &dm_cback_data);
       break;
 

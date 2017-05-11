@@ -1203,12 +1203,15 @@ static tNFA_STATUS nfa_dm_disc_notify_activation(tNFC_DISCOVER* p_data) {
 
   tNFC_RF_TECH_N_MODE tech_n_mode = p_data->activate.rf_tech_param.mode;
   tNFC_PROTOCOL protocol = p_data->activate.protocol;
+  tNFC_INTF_TYPE interface = p_data->activate.intf_param.type;
 
   tNFA_DM_DISC_TECH_PROTO_MASK activated_disc_mask;
 
   NFA_TRACE_DEBUG2(
       "nfa_dm_disc_notify_activation (): tech_n_mode:0x%X, proto:0x%X",
       tech_n_mode, protocol);
+
+  nfa_dm_rf_qos_activation_info(tech_n_mode, protocol, interface);
 
   if (nfa_dm_cb.disc_cb.excl_disc_entry.in_use) {
     nfa_dm_cb.disc_cb.activated_tech_mode = tech_n_mode;

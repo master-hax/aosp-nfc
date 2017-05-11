@@ -24,7 +24,9 @@
 #ifndef NFA_DM_INT_H
 #define NFA_DM_INT_H
 
+#include <sys/time.h>
 #include "nfa_api.h"
+#include "nfa_dm_rf_activity_info.h"
 #include "nfa_sys.h"
 #include "nfc_api.h"
 
@@ -62,6 +64,8 @@ enum {
   NFA_DM_API_SEND_VSC_EVT,
   NFA_DM_TIMEOUT_DISABLE_EVT,
   NFA_DM_API_SET_POWER_SUB_STATE_EVT,
+  NFA_DM_LISTEN_DISC_QOS_TIMEOUT_EVT,
+  NFA_DM_RF_EVENT_QOS_TIMEOUT_EVT,
   NFA_DM_MAX_EVT
 };
 
@@ -352,6 +356,41 @@ typedef struct {
       selected_disc_mask; /* technology and protocol waiting for activation */
 } tNFA_DM_DISC_ENTRY;
 
+/* DM RF discovery state activity info */
+typedef struct {
+  /*QOS Poll/Listen data*/
+  tNFC_INTF_TYPE rf_interface;
+  tNFC_RF_TECH_N_MODE rf_protocol;
+  tNFC_PROTOCOL rf_tech_mode;
+  uint8_t rf_activation_type;
+
+  /*QOS Poll data*/
+  uint8_t rf_poll_record_flag;
+  struct timeval startRFPollActivity, endRFPollActivity;
+  long rf_poll_interval;
+
+  /*QOS Listen data*/
+  bool rf_listen_active;
+  uint8_t start_listen_timerflag;
+  TIMER_LIST_ENT qos_tle;
+  uint8_t rf_event_timerflag;
+  TIMER_LIST_ENT qos_rf_event_tle;
+  struct timeval startRFlistenTime, currentRFlistenTime;
+  long rf_listen_inactive_max_interval;
+  long rf_listen_inactive_total_interval;
+} tNFA_DM_RF_ACTIVITY_INFO;
+
+typedef union {
+  uint8_t rf_error_reason_code;
+  long rf_on_off_burst_period;
+} tNFA_DM_RF_DISC_ERR_CODE_PARAMS;
+/* DM RF discovery state error code and info */
+typedef struct {
+  uint8_t rf_error_code;
+  tNFA_DM_RF_DISC_ERR_CODE_PARAMS rf_error_info;
+  struct timeval rf_error_tv;
+} tNFA_DM_DISC_ERROR_PARAMS;
+
 /* polling, raw listen, P2P listen, NDEF CE, 2xVSE, 2xUICC */
 #define NFA_DM_DISC_NUM_ENTRIES 8
 
@@ -406,6 +445,8 @@ typedef struct {
   bool deact_notify_pending; /* TRUE if notify DEACTIVATED EVT while Stop rf
                                 discovery*/
   tNFA_DEACTIVATE_TYPE pending_deact_type; /* pending deactivate type */
+  tNFA_DM_RF_ACTIVITY_INFO activation_info;       /* activation info */
+  tNFA_DM_DISC_ERROR_PARAMS discovery_error_info; /* discovery error info */
 
 } tNFA_DM_DISC_CB;
 
@@ -630,6 +671,9 @@ bool nfa_dm_act_nfc_cback_data(tNFA_DM_MSG* p_data);
 bool nfa_dm_set_power_sub_state(tNFA_DM_MSG* p_data);
 
 void nfa_dm_proc_nfcc_power_mode(uint8_t nfcc_power_mode);
+
+bool nfa_dm_rf_qos_listen_interval_timeout(tNFA_DM_MSG* p_data);
+bool nfa_dm_rf_qos_listen_event_timeout(tNFA_DM_MSG* p_data);
 
 /* Main function prototypes */
 bool nfa_dm_evt_hdlr(NFC_HDR* p_msg);
