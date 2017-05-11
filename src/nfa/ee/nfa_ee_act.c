@@ -587,13 +587,16 @@ void nfa_ee_api_add_aid(tNFA_EE_MSG* p_data) {
         "nfa_ee_api_add_aid The AID entry is already in the database");
     if (p_chk_cb == p_cb) {
       p_cb->aid_rt_info[entry] |= NFA_EE_AE_ROUTE;
+      p_cb->aid_info = p_add->aidInfo;
       new_size = nfa_ee_total_lmrt_size();
       if (new_size > NFC_GetLmrtSize()) {
         NFA_TRACE_ERROR1("Exceed LMRT size:%d (add ROUTE)", new_size);
         evt_data.status = NFA_STATUS_BUFFER_FULL;
         p_cb->aid_rt_info[entry] &= ~NFA_EE_AE_ROUTE;
+        p_cb->aid_info = p_add->aidInfo;
       } else {
         p_cb->aid_pwr_cfg[entry] = p_add->power_state;
+        p_cb->aid_info = p_add->aidInfo;
       }
     } else {
       NFA_TRACE_ERROR1(
@@ -624,6 +627,7 @@ void nfa_ee_api_add_aid(tNFA_EE_MSG* p_data) {
       } else {
         /* add AID */
         p_cb->aid_pwr_cfg[p_cb->aid_entries] = p_add->power_state;
+        p_cb->aid_info = p_add->aidInfo;
         p_cb->aid_rt_info[p_cb->aid_entries] = NFA_EE_AE_ROUTE;
         p = p_cb->aid_cfg + len;
         p_start = p;
@@ -2014,6 +2018,7 @@ void nfa_ee_route_add_one_ecb_by_route_order(tNFA_EE_ECB* p_cb, int rout_type,
       /* add the AID routing */
       if (p_cb->aid_entries) {
         start_offset = 0;
+        uint8_t route_qual = 0;
         for (xx = 0; xx < p_cb->aid_entries; xx++) {
           /* remember the beginning of this AID routing entry, just in case we
           * need
@@ -2025,7 +2030,12 @@ void nfa_ee_route_add_one_ecb_by_route_order(tNFA_EE_ECB* p_cb, int rout_type,
             pa = &p_cb->aid_cfg[start_offset];
             pa++;        /* EMV tag */
             len = *pa++; /* aid_len */
-            *pp++ = NFC_ROUTE_TAG_AID | nfa_ee_cb.route_block_control;
+            if (p_cb->aid_info & NCI_ROUTE_QUAL_LONG_SELECT)
+              route_qual |= NCI_ROUTE_QUAL_LONG_SELECT;
+            if (p_cb->aid_info & NCI_ROUTE_QUAL_SHORT_SELECT)
+              route_qual |= NCI_ROUTE_QUAL_SHORT_SELECT;
+            *pp++ =
+                NFC_ROUTE_TAG_AID | nfa_ee_cb.route_block_control | route_qual;
             *pp++ = len + 2;
             *pp++ = p_cb->nfcee_id;
             *pp++ = p_cb->aid_pwr_cfg[xx];
