@@ -12,6 +12,7 @@ cc_library_shared {
         "libhardware",
         "libpower",
         "libz",
+        "libmetricslogger",
 
         // Treble configuration
         "libhidlbase",
@@ -51,6 +52,7 @@ cc_library_shared {
         "nfc/nci/*.c",
         "nfc/ndef/*.c",
         "nfc/nfc/*.c",
+        "nfc/nfc/*.cpp",
         "nfc/tags/*.c",
         "adaptation/*.c",
         "adaptation/*.cpp",
