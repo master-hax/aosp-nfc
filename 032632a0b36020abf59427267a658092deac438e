@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cded6f1_3449f167",
+        "filename": "src/nfc/nfc/nfc_main.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-24T23:04:53Z",
+      "side": 1,
+      "message": "Please add the line back.",
+      "range": {
+        "startLine": 709,
+        "startChar": 1,
+        "endLine": 710,
+        "endChar": 3
+      },
+      "revId": "032632a0b36020abf59427267a658092deac438e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
