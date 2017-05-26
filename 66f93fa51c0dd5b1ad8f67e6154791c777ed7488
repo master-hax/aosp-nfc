@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "875dcf91_2dbbf5a2",
+        "filename": "src/nfa/ee/nfa_ee_act.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-26T02:04:22Z",
+      "side": 0,
+      "message": "please add this line back.",
+      "range": {
+        "startLine": 2037,
+        "startChar": 0,
+        "endLine": 2038,
+        "endChar": 26
+      },
+      "revId": "66f93fa51c0dd5b1ad8f67e6154791c777ed7488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eaf3483_f926be8c",
+        "filename": "src/nfa/ee/nfa_ee_act.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-26T02:04:22Z",
+      "side": 1,
+      "message": "please fix this comment to distribute it evenly among the lines.",
+      "range": {
+        "startLine": 2009,
+        "startChar": 13,
+        "endLine": 2011,
+        "endChar": 22
+      },
+      "revId": "4575d7dd802b06c0ab13670e0445880155851a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
