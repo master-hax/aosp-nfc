@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28919f13_94c8787f",
+        "filename": "src/hal/include/nci_defs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-26T01:52:37Z",
+      "side": 1,
+      "message": "The device is in* screen off Unlock mode. \nSimilar for following comments.",
+      "range": {
+        "startLine": 451,
+        "startChar": 14,
+        "endLine": 451,
+        "endChar": 36
+      },
+      "revId": "1424b00cfee2656402f7bd619b10faa246cb6cef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ccb6fa84_9422c659",
+        "filename": "src/nfc/include/nfc_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-26T01:52:37Z",
+      "side": 1,
+      "message": "please fix the spacing",
+      "range": {
+        "startLine": 1190,
+        "startChar": 1,
+        "endLine": 1190,
+        "endChar": 6
+      },
+      "revId": "1424b00cfee2656402f7bd619b10faa246cb6cef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
