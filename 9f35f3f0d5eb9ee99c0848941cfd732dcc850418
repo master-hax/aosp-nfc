@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6291e1a9_3a9f023c",
+        "filename": "src/nfa/ee/nfa_ee_act.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-26T15:51:31Z",
+      "side": 1,
+      "message": "this is not necessary? Since p_cb-\u003eaid_info is getting initialized above.",
+      "range": {
+        "startLine": 596,
+        "startChar": 6,
+        "endLine": 596,
+        "endChar": 40
+      },
+      "revId": "9f35f3f0d5eb9ee99c0848941cfd732dcc850418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
