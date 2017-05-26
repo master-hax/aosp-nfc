@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a97d42d_0ee96931",
+        "filename": "src/nfc/int/nfc_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-26T01:34:48Z",
+      "side": 1,
+      "message": "This should be part of another patch?",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 23
+      },
+      "revId": "b3cc7d3d823fafc7b3d405e2f526e75571cdabd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
