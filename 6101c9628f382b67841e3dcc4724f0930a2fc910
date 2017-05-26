@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b381cefb_dff59788",
+        "filename": "src/adaptation/config.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-05-26T21:06:03Z",
+      "side": 1,
+      "message": "Would love this to be it\u0027s own function.\nAlso would love if it wouldn\u0027t leak memory :p",
+      "range": {
+        "startLine": 465,
+        "startChar": 0,
+        "endLine": 468,
+        "endChar": 59
+      },
+      "revId": "6101c9628f382b67841e3dcc4724f0930a2fc910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
