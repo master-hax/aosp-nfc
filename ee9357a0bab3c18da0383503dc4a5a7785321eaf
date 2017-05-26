@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3135394b_e06aa1b3",
+        "filename": "src/nfc/include/nfc_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-26T02:01:32Z",
+      "side": 1,
+      "message": "remove this from this patch. Might lead to merge conflicts.",
+      "range": {
+        "startLine": 225,
+        "startChar": 20,
+        "endLine": 225,
+        "endChar": 37
+      },
+      "revId": "ee9357a0bab3c18da0383503dc4a5a7785321eaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
