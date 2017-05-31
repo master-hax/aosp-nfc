@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be84e52_72baf436",
+        "filename": "src/adaptation/config.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-05-31T23:43:28Z",
+      "side": 1,
+      "message": "The charArrayToHex() here kind of splits the buffer allocation, value casting, etc. etc. responsibilities between the caller here and the function itself (above).\n\nSince we\u0027re in C++ land here, maybe just do \"std::string  NfcParamToHex(*it)\" or so to avoid this calling-site/function mismatch and to do a less old school new/delete shenanigans :)",
+      "range": {
+        "startLine": 473,
+        "startChar": 0,
+        "endLine": 478,
+        "endChar": 24
+      },
+      "revId": "fab3a857772513f692eac8cba57625b6da4cfb14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
