@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c2b7df8_a55b6e3f",
+        "filename": "halimpl/pn54x/libnfc-brcm_NCI2_0.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-31T20:22:03Z",
+      "side": 1,
+      "message": "space. And please split it into 2 lines?",
+      "range": {
+        "startLine": 315,
+        "startChar": 3,
+        "endLine": 315,
+        "endChar": 6
+      },
+      "revId": "dc2052cb2d382eb9fafbc4f5488ef914e26c71ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a745e3a5_69024fad",
+        "filename": "halimpl/pn54x/libnfc-brcm_NCI2_0.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-31T20:22:03Z",
+      "side": 1,
+      "message": "spacing",
+      "range": {
+        "startLine": 376,
+        "startChar": 1,
+        "endLine": 376,
+        "endChar": 3
+      },
+      "revId": "dc2052cb2d382eb9fafbc4f5488ef914e26c71ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
