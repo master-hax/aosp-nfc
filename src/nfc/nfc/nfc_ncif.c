@@ -39,10 +39,14 @@
 static const uint8_t nfc_mpl_code_to_size[] = {64, 128, 192, 254};
 
 #endif /* NFC_RW_ONLY */
-
+#if (APPL_DTA_MODE == TRUE)
+// Global Structure varibale for FW Version
+static tNFC_FW_VERSION nfc_fw_version;
+#endif
 #define NFC_PB_ATTRIB_REQ_FIXED_BYTES 1
 #define NFC_LB_ATTRIB_REQ_FIXED_BYTES 8
 
+extern unsigned char appl_dta_mode_flag;
 /*******************************************************************************
 **
 ** Function         nfc_ncif_update_window
@@ -253,13 +257,23 @@ void nfc_ncif_check_cmd_queue(NFC_HDR* p_buf) {
         /* save the callback for NCI VSCs)  */
         nfc_cb.p_vsc_cback = (void*)((tNFC_NCI_VS_MSG*)p_buf)->p_cback;
       }
-
-      /* send to HAL */
-      HAL_WRITE(p_buf);
-
+#if (APPL_DTA_MODE == TRUE)
+      else if (p_buf->layer_specific == NFC_WAIT_RSP_NXP) {
+        /* save the callback for NCI NXPs)  */
+        nfc_cb.p_vsc_cback = (void*)((tNFC_NCI_VS_MSG*)p_buf)->p_cback;
+        nfc_cb.nxpCbflag = TRUE;
+      }
+#endif
       /* Indicate command is pending */
       nfc_cb.nci_cmd_window--;
 
+      /* send to HAL */
+      HAL_WRITE(p_buf);
+#if (APPL_DTA_MODE == TRUE)
+#else
+      /* Indicate command is pending */
+      nfc_cb.nci_cmd_window--;
+#endif
       /* start NFC command-timeout timer */
       nfc_start_timer(&nfc_cb.nci_wait_rsp_timer,
                       (uint16_t)(NFC_TTYPE_NCI_WAIT_RSP),
@@ -296,7 +310,18 @@ void nfc_ncif_check_cmd_queue(NFC_HDR* p_buf) {
     }
   }
 }
-
+#if (APPL_DTA_MODE == TRUE)
+/*******************************************************************************
+**
+** Function         nfc_ncif_getFWVersion
+**
+** Description      This function is called to fet the FW Version
+**
+** Returns          tNFC_FW_VERSION
+**
+*******************************************************************************/
+tNFC_FW_VERSION nfc_ncif_getFWVersion() { return nfc_fw_version; }
+#endif
 /*******************************************************************************
 **
 ** Function         nfc_ncif_send_cmd
@@ -333,7 +358,15 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
 
   pp = p;
   NCI_MSG_PRS_HDR0(pp, mt, pbf, gid);
-
+#if (APPL_DTA_MODE == TRUE)
+  oid = ((*pp) & NCI_OID_MASK);
+  if ((nfc_cb.nxpCbflag == TRUE) &&
+      nfc_ncif_proc_proprietary_rsp(mt, gid, oid) == TRUE) {
+    nci_proc_prop_nxp_rsp(p_msg);
+    nfc_cb.nxpCbflag = FALSE;
+    return (free);
+  }
+#endif
   switch (mt) {
     case NCI_MT_DATA:
       NFC_TRACE_DEBUG0("NFC received data");
@@ -1562,6 +1595,97 @@ void nfc_ncif_proc_data(NFC_HDR* p_msg) {
   }
   GKI_freebuf(p_msg);
 }
+#if (APPL_DTA_MODE == TRUE)
+/*******************************************************************************
+**
+** Function         nfc_ncif_process_proprietary_rsp
+**
+** Description      Process the response to avoid collision
+**                  while nxpCbflag is set
+**
+** Returns          TRUE if proprietary response else FALSE
+**
+*******************************************************************************/
+
+bool nfc_ncif_proc_proprietary_rsp(uint8_t mt, uint8_t gid, uint8_t oid) {
+  bool stat = FALSE;
+  NFC_TRACE_DEBUG3("nfc_ncif_proc_proprietary_rsp: mt=%u, gid=%u, oid=%u", mt,
+                   gid, oid);
+  switch (mt) {
+    case NCI_MT_DATA:
+      switch (gid) {
+        case 0x03:
+          switch (oid) {
+            case 0x00: /*Data Response*/
+              stat = FALSE;
+              break;
+
+            default:
+              stat = TRUE;
+              break;
+          }
+          break;
+
+        default:
+          stat = TRUE;
+          break;
+      }
+      break;
+
+    case NCI_MT_NTF:
+      switch (gid) {
+        case NCI_GID_CORE:
+          switch (oid) {
+            case 0x00: /*CORE_RESET_NTF*/
+            case 0x06: /*CORE_CONN_CREDITS_NTF*/
+              stat = FALSE;
+              break;
+
+            default:
+              stat = TRUE;
+              break;
+          }
+          break;
+        case NCI_GID_RF_MANAGE:
+          switch (oid) {
+            case 0x06: /*CORE_CONN_CREDITS_NTF*/
+              stat = FALSE;
+              break;
+            case 0x09:
+              stat = FALSE; /*NFA_EE_ACTION_NTF*/
+              break;
+            case 0x0A: /*NFA_EE_DISCOVERY_REQ_NTF*/
+              stat = FALSE;
+              break;
+            default:
+              stat = TRUE;
+              break;
+          }
+          break;
+        case NCI_GID_EE_MANAGE:
+          switch (oid) {
+            case 0x00:
+              stat = FALSE;
+              break;
+            default:
+              stat = TRUE;
+              break;
+          }
+          break;
+        default:
+          stat = TRUE;
+          break;
+      }
+      break;
+
+    default:
+      stat = TRUE;
+      break;
+  }
+  NFC_TRACE_DEBUG1("nfc_ncif_proc_proprietary_rsp: exit status=%u", stat);
+  return stat;
+}
+#endif
 
 /*******************************************************************************
 **

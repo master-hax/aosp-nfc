@@ -40,6 +40,18 @@ extern "C" {
 
 extern unsigned char appl_trace_level;
 extern uint32_t ScrProtocolTraceFlag;
+extern unsigned char
+    appl_dta_mode_flag;  // defined for run time DTA mode selection
+/*******************************************************************************
+**
+** Function:        initializeGlobalDtaMode
+**
+** Description:     Initialize and get global DTA mode from .conf
+**
+** Returns:         none:
+**
+*******************************************************************************/
+void initializeGlobalAppDtaMode();
 
 /*******************************************************************************
 **

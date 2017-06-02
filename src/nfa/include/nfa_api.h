@@ -315,6 +315,19 @@ typedef union {
 /* NFA_DM callback */
 typedef void(tNFA_DM_CBACK)(uint8_t event, tNFA_DM_CBACK_DATA* p_data);
 
+/* NFA Enable DTA Type Mode */
+typedef enum {
+  NFA_DTA_DEFAULT_MODE = 0x00000001,
+  NFA_DTA_LLCP_MODE = 0x00000002,
+  NFA_DTA_SNEP_MODE = 0x00000003,
+  NFA_DTA_HCEF_MODE = 0x00000004,
+  NFA_DTA_CR8 = 0x00000080,
+  NFA_DTA_CR9 = 0x00000090,
+  NFA_DTA_CR10 = 0x000000A0,
+  NFA_DTA_CR11 = 0x000000B0,
+  NFA_DTA_CR12 = 0x000000C0,
+} tNFA_eDtaModes;
+
 /* NFA Connection Callback Events */
 #define NFA_POLL_ENABLED_EVT 0  /* Polling enabled event */
 #define NFA_POLL_DISABLED_EVT 1 /* Polling disabled event */
@@ -1383,7 +1396,28 @@ extern tNFC_STATUS NFA_RegVSCback(bool is_register, tNFA_VSC_CBACK* p_cback);
 extern tNFA_STATUS NFA_SendVsCommand(uint8_t oid, uint8_t cmd_params_len,
                                      uint8_t* p_cmd_params,
                                      tNFA_VSC_CBACK* p_cback);
+#if (APPL_DTA_MODE == TRUE)
+/*******************************************************************************
+**
+** Function         NFA_SendNxpNciCommand
+**
+** Description      This function is called to send NXP NCI Vendor Specific
+**                  command to NFCC.
+**
+**                  cmd_params_len  - The command parameter len
+**                  p_cmd_params    - The command parameter
+**                  p_cback         - The callback function to receive the
+**                                    command
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**
+*******************************************************************************/
 
+extern tNFA_STATUS NFA_SendNxpNciCommand(uint8_t cmd_params_len,
+                                         uint8_t* p_cmd_params,
+                                         tNFA_VSC_CBACK* p_cback);
+#endif
 /*******************************************************************************
 **
 ** Function         NFA_SetTraceLevel
@@ -1396,6 +1430,16 @@ extern tNFA_STATUS NFA_SendVsCommand(uint8_t oid, uint8_t cmd_params_len,
 *******************************************************************************/
 extern uint8_t NFA_SetTraceLevel(uint8_t new_level);
 
+/*******************************************************************************
+**
+** Function:        NFA_EnableDtamode
+**
+** Description:     Initialize and get global DTA type mode from .conf
+**
+** Returns:         none:
+**
+*******************************************************************************/
+extern void NFA_EnableDtamode(tNFA_eDtaModes eDtaMode);
 /*******************************************************************************
 ** Function         NFA_GetNCIVersion
 **

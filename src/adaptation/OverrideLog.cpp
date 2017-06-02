@@ -93,3 +93,16 @@ uint32_t initializeProtocolLogLevel() {
 
   return ScrProtocolTraceFlag;
 }
+/*******************************************************************************
+**
+** Function:        initializeGlobalDtaMode
+**
+** Description:     Initialize and get global DTA mode from .conf
+**
+** Returns:         none:
+**
+*******************************************************************************/
+void initializeGlobalAppDtaMode() {
+  appl_dta_mode_flag = 0x01;
+  ALOGD("%s: DTA Enabled", __FUNCTION__);
+}

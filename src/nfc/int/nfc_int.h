@@ -50,6 +50,9 @@ extern "C" {
 #define NFC_TTYPE_NCI_WAIT_RSP 0
 #define NFC_TTYPE_WAIT_2_DEACTIVATE 1
 #define NFC_TTYPE_WAIT_MODE_SET_NTF 2
+#if (APPL_DTA_MODE == TRUE)
+#define NFC_WAIT_RSP_NXP 0x02
+#endif
 
 #define NFC_TTYPE_LLCP_LINK_MANAGER 100
 #define NFC_TTYPE_LLCP_LINK_INACT 101
@@ -231,6 +234,8 @@ typedef struct {
 
   uint8_t deact_reason;
 
+  uint8_t nxpCbflag;
+
   TIMER_LIST_ENT nci_mode_set_ntf_timer; /*Mode set notification timer*/
 
 } tNFC_CB;
@@ -295,9 +300,11 @@ extern void nfc_ncif_proc_get_config_rsp(NFC_HDR* p_msg);
 extern void nfc_ncif_proc_data(NFC_HDR* p_msg);
 extern bool nfa_dm_p2p_prio_logic(uint8_t event, uint8_t* p, uint8_t ntf_rsp);
 extern void nfa_dm_p2p_timer_event();
+extern bool nfc_ncif_proc_proprietary_rsp(uint8_t mt, uint8_t gid, uint8_t oid);
 extern void nfa_dm_p2p_prio_logic_cleanup();
 extern void nfc_ncif_proc_isodep_nak_presence_check_status(uint8_t status,
                                                            bool is_ntf);
+extern void nfc_ncif_update_window(void);
 #if (NFC_RW_ONLY == FALSE)
 extern void nfc_ncif_proc_rf_field_ntf(uint8_t rf_status);
 #else
