@@ -350,7 +350,7 @@ void nfa_ee_api_discover(tNFA_EE_MSG* p_data) {
                    nfa_ee_cb.discv_timer.in_use);
   if (nfa_ee_cb.discv_timer.in_use) {
     nfa_sys_stop_timer(&nfa_ee_cb.discv_timer);
-    NFC_NfceeDiscover(false);
+    if (NFA_GetNCIVersion() != NCI_VERSION_2_0) NFC_NfceeDiscover(false);
   }
   if (nfa_ee_cb.p_ee_disc_cback == NULL &&
       NFC_NfceeDiscover(true) == NFC_STATUS_OK) {
@@ -435,10 +435,18 @@ void nfa_ee_api_deregister(tNFA_EE_MSG* p_data) {
 *******************************************************************************/
 void nfa_ee_api_mode_set(tNFA_EE_MSG* p_data) {
   tNFA_EE_ECB* p_cb = p_data->cfg_hdr.p_cb;
-
+  tNFA_EE_MODE_SET mode_set;
   NFA_TRACE_DEBUG2("nfa_ee_api_mode_set() handle:0x%02x mode:%d",
                    p_cb->nfcee_id, p_data->mode_set.mode);
-  NFC_NfceeModeSet(p_cb->nfcee_id, p_data->mode_set.mode);
+  mode_set.status = NFC_NfceeModeSet(p_cb->nfcee_id, p_data->mode_set.mode);
+  if (mode_set.status != NFC_STATUS_OK) {
+    /* the api is rejected at NFC layer, report the failure status right away */
+    mode_set.ee_handle = (tNFA_HANDLE)p_cb->nfcee_id | NFA_HANDLE_GROUP_EE;
+    mode_set.ee_status = p_data->mode_set.mode;
+    nfa_ee_report_event(NULL, NFA_EE_MODE_SET_EVT,
+                        (tNFA_EE_CBACK_DATA*)&mode_set);
+    return;
+  }
   /* set the NFA_EE_STATUS_PENDING bit to indicate the status is not exactly
    * active */
   if (p_data->mode_set.mode == NFC_MODE_ACTIVATE)
@@ -1078,7 +1086,7 @@ void nfa_ee_nci_disc_ntf(tNFA_EE_MSG* p_data) {
     if ((nfa_ee_cb.num_ee_expecting == 0) &&
         (nfa_ee_cb.p_ee_disc_cback != NULL)) {
       /* Discovery triggered by API function */
-      NFC_NfceeDiscover(false);
+      if (NFA_GetNCIVersion() != NCI_VERSION_2_0) NFC_NfceeDiscover(false);
     }
   }
   switch (nfa_ee_cb.em_state) {
@@ -1143,7 +1151,8 @@ void nfa_ee_nci_disc_ntf(tNFA_EE_MSG* p_data) {
     memcpy(p_cb->ee_interface, p_ee->ee_interface, p_ee->num_interface);
     p_cb->num_tlvs = p_ee->num_tlvs;
     memcpy(p_cb->ee_tlv, p_ee->ee_tlv, p_ee->num_tlvs * sizeof(tNFA_EE_TLV));
-
+    if (NFA_GetNCIVersion() == NCI_VERSION_2_0)
+      p_cb->ee_power_supply_status = p_ee->nfcee_power_ctrl;
     if (nfa_ee_cb.em_state == NFA_EE_EM_STATE_RESTORING) {
       /* NCI spec says: An NFCEE_DISCOVER_NTF that contains a Protocol type of
        * "HCI Access"
@@ -1171,6 +1180,8 @@ void nfa_ee_nci_disc_ntf(tNFA_EE_MSG* p_data) {
         memcpy(p_info->ee_interface, p_cb->ee_interface, p_cb->num_interface);
         memcpy(p_info->ee_tlv, p_cb->ee_tlv,
                p_cb->num_tlvs * sizeof(tNFA_EE_TLV));
+        if (NFA_GetNCIVersion() == NCI_VERSION_2_0)
+          p_info->ee_power_supply_status = p_cb->ee_power_supply_status;
         nfa_ee_report_event(NULL, NFA_EE_NEW_EE_EVT, &evt_data);
       }
     } else
@@ -1335,7 +1346,8 @@ void nfa_ee_nci_mode_set_rsp(tNFA_EE_MSG* p_data) {
 
   /* update routing table and vs on mode change */
   nfa_ee_start_timer();
-
+  NFA_TRACE_ERROR1("nfa_ee_nci_mode_set_ntf()p_rsp->status:0x%02x",
+                   p_rsp->status);
   if (p_rsp->status == NFA_STATUS_OK) {
     if (p_rsp->mode == NFA_EE_MD_ACTIVATE) {
       p_cb->ee_status = NFC_NFCEE_STATUS_ACTIVE;
@@ -1355,6 +1367,10 @@ void nfa_ee_nci_mode_set_rsp(tNFA_EE_MSG* p_data) {
           0;
       p_cb->aid_entries = 0;
       p_cb->ee_status = NFC_NFCEE_STATUS_INACTIVE;
+    }
+  } else {
+    if (p_rsp->mode == NFA_EE_MD_ACTIVATE) {
+      p_cb->ee_status = NFC_NFCEE_STATUS_REMOVED;
     }
   }
   NFA_TRACE_DEBUG4("status:%d ecb_flags  :0x%02x ee_cfged:0x%02x ee_status:%d",
@@ -1385,6 +1401,8 @@ void nfa_ee_nci_mode_set_rsp(tNFA_EE_MSG* p_data) {
       nfa_ee_report_discover_req_evt();
     }
   }
+  if (nfa_ee_cb.p_enable_cback)
+    (*nfa_ee_cb.p_enable_cback)(NFA_EE_MODE_SET_COMPLETE);
 }
 
 /*******************************************************************************
@@ -2000,7 +2018,7 @@ void nfa_ee_rout_timeout(tNFA_EE_MSG* p_data) {
 **
 *******************************************************************************/
 void nfa_ee_discv_timeout(tNFA_EE_MSG* p_data) {
-  NFC_NfceeDiscover(false);
+  if (NFA_GetNCIVersion() != NCI_VERSION_2_0) NFC_NfceeDiscover(false);
   if (nfa_ee_cb.p_enable_cback)
     (*nfa_ee_cb.p_enable_cback)(NFA_EE_DISC_STS_OFF);
 }
