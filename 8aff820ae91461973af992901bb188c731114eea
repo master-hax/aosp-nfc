@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7f0151f_8620bd40",
+        "filename": "src/nfa/ee/nfa_ee_act.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1949,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-06-02T06:59:28Z",
+      "side": 1,
+      "message": "In the same commit, it may be useful to implement Route Block for technology based routing",
+      "range": {
+        "startLine": 1949,
+        "startChar": 36,
+        "endLine": 1949,
+        "endChar": 37
+      },
+      "revId": "8aff820ae91461973af992901bb188c731114eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84d9abe1_6b56b1dc",
+        "filename": "src/nfa/ee/nfa_ee_act.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1976,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-06-02T06:59:28Z",
+      "side": 1,
+      "message": "Following NCI2.0, Route block is applicable for all protocols.\nI don\u0027t think it should be limited to ISO-DEP protocol",
+      "range": {
+        "startLine": 1976,
+        "startChar": 64,
+        "endLine": 1976,
+        "endChar": 66
+      },
+      "revId": "8aff820ae91461973af992901bb188c731114eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
