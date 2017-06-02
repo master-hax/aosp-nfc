@@ -1562,3 +1562,26 @@ void nfc_ncif_proc_data(NFC_HDR* p_msg) {
   }
   GKI_freebuf(p_msg);
 }
+
+/*******************************************************************************
+**
+** Function         nfc_mode_set_ntf_timeout
+**
+** Description      This function is invoked on mode set ntf timeout
+**
+** Returns          void
+**
+*******************************************************************************/
+void nfc_mode_set_ntf_timeout() {
+  NFC_TRACE_ERROR1("%s", __func__);
+  tNFC_NFCEE_MODE_SET_REVT mode_set_info;
+  mode_set_info.status = NCI_STATUS_FAILED;
+  mode_set_info.nfcee_id = nfc_cb.last_cmd;
+  mode_set_info.mode = NCI_NFCEE_MD_DEACTIVATE;
+
+  tNFC_RESPONSE* p_evt = (tNFC_RESPONSE*)&mode_set_info;
+
+  tNFC_RESPONSE_CBACK* p_cback = nfc_cb.p_resp_cback;
+  tNFC_RESPONSE_EVT event = NFC_NFCEE_MODE_SET_REVT;
+  if (p_cback) (*p_cback)(event, p_evt);
+}
