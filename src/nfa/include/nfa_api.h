@@ -1396,7 +1396,17 @@ extern tNFA_STATUS NFA_SendVsCommand(uint8_t oid, uint8_t cmd_params_len,
 extern uint8_t NFA_SetTraceLevel(uint8_t new_level);
 
 /*******************************************************************************
+** Function         NFA_GetNCIVersion
 **
+** Description      Called by higher layer to get the current nci
+**                  version of nfc.
+**
+** Returns          NCI version NCI2.0 / NCI1.0
+**
+*******************************************************************************/
+extern uint8_t NFA_GetNCIVersion();
+
+/*******************************************************************************
 ** Function:        NFA_SetPowerSubStateForScreenState
 **
 ** Description:     This function send the current screen state
