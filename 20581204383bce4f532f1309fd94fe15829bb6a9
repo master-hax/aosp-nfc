@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c3fb9e_2be0093a",
+        "filename": "src/nfa/hci/nfa_hci_main.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-06-19T11:44:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure that all the NFCEE hots should be enabled by default. It may have to be configurable.",
+      "range": {
+        "startLine": 535,
+        "startChar": 48,
+        "endLine": 535,
+        "endChar": 49
+      },
+      "revId": "20581204383bce4f532f1309fd94fe15829bb6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8657055_a026e1d9",
+        "filename": "src/nfa/hci/nfa_hci_main.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-06-19T11:44:27Z",
+      "side": 1,
+      "message": "If it is a first activation of a NFCEE, it is better to wait for the NFCEE_STATUS_NTF (with a status NFCEE \"Initialization sequence completed\" as stated by NCI2.0 spec) before sending the next NFCEE_MODE_SET.",
+      "range": {
+        "startLine": 538,
+        "startChar": 49,
+        "endLine": 538,
+        "endChar": 51
+      },
+      "revId": "20581204383bce4f532f1309fd94fe15829bb6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2947df80_993ca34e",
+        "filename": "src/nfc/include/nfc_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-06-19T11:44:27Z",
+      "side": 1,
+      "message": "Following NCI 2.0, the static HCI connection ID should have the value 1.",
+      "range": {
+        "startLine": 879,
+        "startChar": 24,
+        "endLine": 879,
+        "endChar": 25
+      },
+      "revId": "20581204383bce4f532f1309fd94fe15829bb6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
