@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3e47886_91417302",
+        "filename": "src/adaptation/OverrideLog.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-06-28T15:19:30Z",
+      "side": 1,
+      "message": "Comment is not helpful and even misleading (what .conf?!).\nPlease remove whole block.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 80
+      },
+      "revId": "0877a587085bb4cce6b4dd3347a692dab8c6d649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f4bb6be_01d0aac9",
+        "filename": "src/include/_OverrideLog.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-06-28T15:19:30Z",
+      "side": 1,
+      "message": "Smae comment as in source file; comment is misleading - remove",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "0877a587085bb4cce6b4dd3347a692dab8c6d649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed7f417c_25e734b8",
+        "filename": "src/nfa/dm/nfa_dm_api.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-06-28T15:19:30Z",
+      "side": 1,
+      "message": "Vendor specific code should live below the HAL if possible. So would suggest a VSC is sent instead. If need be, a \"meta\" VSC can be sent to be parsed by the HAL.\nOr we can add functionality to invoke additional functions in the  HAL.",
+      "range": {
+        "startLine": 1238,
+        "startChar": 0,
+        "endLine": 1281,
+        "endChar": 6
+      },
+      "revId": "0877a587085bb4cce6b4dd3347a692dab8c6d649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
