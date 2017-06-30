@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b452663e_8f6792e8",
+        "filename": "src/nfc/nfc/nfc_ncif.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-06-30T20:47:33Z",
+      "side": 1,
+      "message": "__func__",
+      "range": {
+        "startLine": 1443,
+        "startChar": 32,
+        "endLine": 1443,
+        "endChar": 46
+      },
+      "revId": "7e54455e426eb04e4a048191f23dfef6b850847f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
