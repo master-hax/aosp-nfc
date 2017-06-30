@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c168006_235ac72d",
+        "filename": "src/nfa/ee/nfa_ee_act.c",
+        "patchSetId": 12
+      },
+      "lineNbr": 1957,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-06-30T20:52:58Z",
+      "side": 1,
+      "message": "These individual case {} blocks are really good candidates to be their own [static] functions. Also, the pointer arithmetic and boiler plate copy pasta makes me wish for a better way to encapsulate the TLV record creation. At least  a struct maybe?",
+      "range": {
+        "startLine": 1955,
+        "startChar": 0,
+        "endLine": 1957,
+        "endChar": 1
+      },
+      "revId": "3a9d4b424d2a64faba6afa41a4f7c580f6539066",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
