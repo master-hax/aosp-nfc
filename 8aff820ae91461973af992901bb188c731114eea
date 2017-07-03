@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8006c275_144831bb",
+        "filename": "src/nfa/ee/nfa_ee_act.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1949,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-07-03T13:56:34Z",
+      "side": 1,
+      "message": "Hi,\nIn NCI2.0 Spec, 6.3.9 (Technology-based Route Selection Process), it is mentioned that \n•\tIf the bit representing the current Power State is equal to ‘0b’ in the routing entry and the route blocked bit is ‘1b’ and the technologies match, then set EE_ROUTE to “blocked”.\n\nFrom a Device Host point of view, the behavior is defined by the NCI2.0 spec. and the DH may want to make sure that a specific technology is ignored.",
+      "parentUuid": "5df82dc0_25ccc6ea",
+      "range": {
+        "startLine": 1949,
+        "startChar": 36,
+        "endLine": 1949,
+        "endChar": 37
+      },
+      "revId": "8aff820ae91461973af992901bb188c731114eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d9abe1_6b56b1dc",
         "filename": "src/nfa/ee/nfa_ee_act.c",
         "patchSetId": 4
