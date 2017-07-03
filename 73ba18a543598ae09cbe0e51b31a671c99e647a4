@@ -22,6 +22,30 @@
       "revId": "73ba18a543598ae09cbe0e51b31a671c99e647a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee9612f9_ca1d2ea1",
+        "filename": "src/nfa/dm/nfa_dm_act.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-07-03T12:00:41Z",
+      "side": 1,
+      "message": "updated the yy, keeping xx as it is.",
+      "parentUuid": "ace5d0f9_2934ada9",
+      "range": {
+        "startLine": 132,
+        "startChar": 12,
+        "endLine": 132,
+        "endChar": 16
+      },
+      "revId": "73ba18a543598ae09cbe0e51b31a671c99e647a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
