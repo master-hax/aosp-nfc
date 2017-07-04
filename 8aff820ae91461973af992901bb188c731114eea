@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "ae49a84b_ee7f0f8e",
+        "filename": "src/nfa/ee/nfa_ee_act.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1949,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-07-04T15:11:26Z",
+      "side": 1,
+      "message": "Section 6.3.1 of NCI does not define that the block bit is not defined for technology-based route. \nAFAIK the block bit is even described for technology-based route entry in section 6.3.9. So the block bit is for me also defined for technology based routing entry in NCI 2.0.\n\nI e-mailed the Technical Committee Chair of NFC forum and he see no reason to not use it \"a routing entry with a block bit set shall not be refused as the DH may want to make sure that a specific technology is ignored.\"",
+      "parentUuid": "1a39abd5_ccc9aeff",
+      "range": {
+        "startLine": 1949,
+        "startChar": 36,
+        "endLine": 1949,
+        "endChar": 37
+      },
+      "revId": "8aff820ae91461973af992901bb188c731114eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d9abe1_6b56b1dc",
         "filename": "src/nfa/ee/nfa_ee_act.c",
         "patchSetId": 4
