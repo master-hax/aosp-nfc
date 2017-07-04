@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cbb510c1_7953ab14",
+        "filename": "src/nfa/hci/nfa_hci_main.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-07-04T15:39:26Z",
+      "side": 1,
+      "message": "Ok agreed.\nThe assumption here is that every NFCEE ID reported at the NCI layer should enabled by default during the stack initialization.",
+      "parentUuid": "70ed3a94_42954ae6",
+      "range": {
+        "startLine": 535,
+        "startChar": 48,
+        "endLine": 535,
+        "endChar": 49
+      },
+      "revId": "20581204383bce4f532f1309fd94fe15829bb6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8657055_a026e1d9",
         "filename": "src/nfa/hci/nfa_hci_main.c",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "As the function name \"nfa_hci_enable_one_nfcee\" suggest this function will only enable one NFCEE at a time and allow to wait for NFCEE_STATUS_NFC/NFCEE_MODE_SET_NTF, before next NFCEE_MODE_CMD.",
       "parentUuid": "b8657055_a026e1d9",
+      "range": {
+        "startLine": 538,
+        "startChar": 49,
+        "endLine": 538,
+        "endChar": 51
+      },
+      "revId": "20581204383bce4f532f1309fd94fe15829bb6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20deffe4_f5c52ecf",
+        "filename": "src/nfa/hci/nfa_hci_main.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-07-04T15:39:26Z",
+      "side": 1,
+      "message": "Indeed for each NFCEE_MODE_CMD, this function waits for NFCEE_MODE_SET_NTF.\nMy comments was about the use of the new NCI 2.0 notification NFCEE_STATUS_NTF which can be used in case of NFCEE first activation (new UICC or after a FW flash).",
+      "parentUuid": "f85c910e_98d6ca99",
       "range": {
         "startLine": 538,
         "startChar": 49,
