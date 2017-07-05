@@ -22,6 +22,7 @@
  *
  ******************************************************************************/
 
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "gki.h"
@@ -342,7 +343,7 @@ void llcp_sdp_proc_deactivation(void) {
 
   /* free any pending SNL PDU */
   if (llcp_cb.sdp_cb.p_snl) {
-    GKI_freebuf(llcp_cb.sdp_cb.p_snl);
+    free(llcp_cb.sdp_cb.p_snl);
     llcp_cb.sdp_cb.p_snl = NULL;
   }
 

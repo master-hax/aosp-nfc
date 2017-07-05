@@ -21,6 +21,7 @@
  *  Entry point for NFC_TASK
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "gki.h"
@@ -60,7 +61,7 @@ void nfc_start_timer(TIMER_LIST_ENT* p_tle, uint16_t type, uint32_t timeout) {
     /* if timer starts on other than NFC task (scritp wrapper) */
     if (GKI_get_taskid() != NFC_TASK) {
       /* post event to start timer in NFC task */
-      p_msg = (NFC_HDR*)GKI_getbuf(NFC_HDR_SIZE);
+      p_msg = (NFC_HDR*)malloc(NFC_HDR_SIZE);
       if (p_msg != NULL) {
         p_msg->event = BT_EVT_TO_START_TIMER;
         GKI_send_msg(NFC_TASK, NFC_MBOX_ID, p_msg);
@@ -174,7 +175,7 @@ void nfc_start_quick_timer(TIMER_LIST_ENT* p_tle, uint16_t type,
     /* if timer starts on other than NFC task (scritp wrapper) */
     if (GKI_get_taskid() != NFC_TASK) {
       /* post event to start timer in NFC task */
-      p_msg = (NFC_HDR*)GKI_getbuf(NFC_HDR_SIZE);
+      p_msg = (NFC_HDR*)malloc(NFC_HDR_SIZE);
       if (p_msg != NULL) {
         p_msg->event = BT_EVT_TO_START_QUICK_TIMER;
         GKI_send_msg(NFC_TASK, NFC_MBOX_ID, p_msg);
@@ -295,7 +296,7 @@ void nfc_task_shutdown_nfcc(void) {
 
   /* Free any messages still in the mbox */
   while ((p_msg = (NFC_HDR*)GKI_read_mbox(NFC_MBOX_ID)) != NULL) {
-    GKI_freebuf(p_msg);
+    free(p_msg);
   }
 
   nfc_gen_cleanup();
@@ -389,7 +390,7 @@ uint32_t nfc_task(uint32_t param) {
         }
 
         if (free_buf) {
-          GKI_freebuf(p_msg);
+          free(p_msg);
         }
       }
     }

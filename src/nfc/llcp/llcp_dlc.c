@@ -22,6 +22,7 @@
  *
  ******************************************************************************/
 
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "gki.h"
@@ -602,7 +603,7 @@ void llcp_dlc_flush_q(tLLCP_DLCB* p_dlcb) {
 
     /* Release any held buffers */
     while (p_dlcb->i_xmit_q.p_first) {
-      GKI_freebuf(GKI_dequeue(&p_dlcb->i_xmit_q));
+      free(GKI_dequeue(&p_dlcb->i_xmit_q));
       llcp_cb.total_tx_i_pdu--;
     }
 
@@ -958,7 +959,7 @@ void llcp_dlc_proc_i_pdu(uint8_t dsap, uint8_t ssap, uint16_t i_pdu_length,
           p_last_buf->len += LLCP_PDU_AGF_LEN_SIZE + info_len;
 
           if (p_msg) {
-            GKI_freebuf(p_msg);
+            free(p_msg);
             p_msg = NULL;
           }
 
@@ -1037,7 +1038,7 @@ void llcp_dlc_proc_i_pdu(uint8_t dsap, uint8_t ssap, uint16_t i_pdu_length,
   }
 
   if (p_msg) {
-    GKI_freebuf(p_msg);
+    free(p_msg);
   }
 }
 
@@ -1319,7 +1320,7 @@ NFC_HDR* llcp_dlc_get_next_pdu(tLLCP_DLCB* p_dlcb) {
       LLCP_TRACE_ERROR2(
           "LLCP - llcp_dlc_get_next_pdu (): offset (%d) must be %d at least",
           p_msg->offset, LLCP_MIN_OFFSET);
-      GKI_freebuf(p_msg);
+      free(p_msg);
       p_msg = NULL;
     }
   }

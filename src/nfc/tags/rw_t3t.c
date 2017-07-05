@@ -22,6 +22,7 @@
  *  mode.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "nfc_target.h"
@@ -262,9 +263,9 @@ void rw_t3t_process_error(tNFC_STATUS status) {
       /* allocate a new buffer for message */
       p_cmd_buf = rw_t3t_get_cmd_buf();
       if (p_cmd_buf != NULL) {
-        memcpy(p_cmd_buf, p_cb->p_cur_cmd_buf,
-               sizeof(NFC_HDR) + p_cb->p_cur_cmd_buf->offset +
-                   p_cb->p_cur_cmd_buf->len);
+        memcpy(p_cmd_buf, p_cb->p_cur_cmd_buf, sizeof(NFC_HDR) +
+                                                   p_cb->p_cur_cmd_buf->offset +
+                                                   p_cb->p_cur_cmd_buf->len);
 
         if (rw_t3t_send_to_lower(p_cmd_buf) == NFC_STATUS_OK) {
           /* Start timer for waiting for response */
@@ -273,7 +274,7 @@ void rw_t3t_process_error(tNFC_STATUS status) {
           return;
         } else {
           /* failure - could not send buffer */
-          GKI_freebuf(p_cmd_buf);
+          free(p_cmd_buf);
         }
       }
     } else {
@@ -1353,7 +1354,7 @@ void rw_t3t_act_handle_ndef_detect_rsp(tRW_T3T_CB* p_cb, NFC_HDR* p_msg_rsp) {
   /* Notify app of NDEF detection result */
   (*(rw_cb.p_cback))(RW_T3T_NDEF_DETECT_EVT, (tRW_DATA*)&evt_data);
 
-  GKI_freebuf(p_msg_rsp);
+  free(p_msg_rsp);
 }
 
 /*****************************************************************************
@@ -1377,13 +1378,13 @@ void rw_t3t_act_handle_check_rsp(tRW_T3T_CB* p_cb, NFC_HDR* p_msg_rsp) {
                  NCI_NFCID2_LEN) != 0)) /* verify response IDm */
   {
     nfc_status = NFC_STATUS_FAILED;
-    GKI_freebuf(p_msg_rsp);
+    free(p_msg_rsp);
   } else if (p_t3t_rsp[T3T_MSG_RSP_OFFSET_RSPCODE] != T3T_MSG_OPC_CHECK_RSP) {
     RW_TRACE_ERROR2("Response error: expecting rsp_code %02X, but got %02X",
                     T3T_MSG_OPC_CHECK_RSP,
                     p_t3t_rsp[T3T_MSG_RSP_OFFSET_RSPCODE]);
     nfc_status = NFC_STATUS_FAILED;
-    GKI_freebuf(p_msg_rsp);
+    free(p_msg_rsp);
   } else {
     /* Copy incoming data into buffer */
     p_msg_rsp->offset +=
@@ -1433,7 +1434,7 @@ void rw_t3t_act_handle_update_rsp(tRW_T3T_CB* p_cb, NFC_HDR* p_msg_rsp) {
 
   (*(rw_cb.p_cback))(RW_T3T_UPDATE_CPLT_EVT, (tRW_DATA*)&evt_data);
 
-  GKI_freebuf(p_msg_rsp);
+  free(p_msg_rsp);
 }
 
 /*****************************************************************************
@@ -1496,13 +1497,13 @@ void rw_t3t_act_handle_check_ndef_rsp(tRW_T3T_CB* p_cb, NFC_HDR* p_msg_rsp) {
                     p_t3t_rsp[T3T_MSG_RSP_OFFSET_NUMBLOCKS],
                     ((p_cb->ndef_rx_readlen + 15) >> 4));
     nfc_status = NFC_STATUS_FAILED;
-    GKI_freebuf(p_msg_rsp);
+    free(p_msg_rsp);
   } else if (p_t3t_rsp[T3T_MSG_RSP_OFFSET_RSPCODE] != T3T_MSG_OPC_CHECK_RSP) {
     RW_TRACE_ERROR2("Response error: expecting rsp_code %02X, but got %02X",
                     T3T_MSG_OPC_CHECK_RSP,
                     p_t3t_rsp[T3T_MSG_RSP_OFFSET_RSPCODE]);
     nfc_status = NFC_STATUS_FAILED;
-    GKI_freebuf(p_msg_rsp);
+    free(p_msg_rsp);
   } else {
     /* Notify app of NDEF segment received */
     rsp_num_bytes_rx = p_t3t_rsp[T3T_MSG_RSP_OFFSET_NUMBLOCKS] *
@@ -1522,7 +1523,7 @@ void rw_t3t_act_handle_check_ndef_rsp(tRW_T3T_CB* p_cb, NFC_HDR* p_msg_rsp) {
           "received %i bytes",
           rsp_num_bytes_rx, p_msg_rsp->len);
       nfc_status = NFC_STATUS_FAILED;
-      GKI_freebuf(p_msg_rsp);
+      free(p_msg_rsp);
     } else {
       /* If this is the the final block, then set len to reflect only valid
        * bytes (do not include padding to 16-byte boundary) */
@@ -1618,7 +1619,7 @@ void rw_t3t_act_handle_update_ndef_rsp(tRW_T3T_CB* p_cb, NFC_HDR* p_msg_rsp) {
     (*(rw_cb.p_cback))(RW_T3T_UPDATE_CPLT_EVT, (tRW_DATA*)&evt_data);
   }
 
-  GKI_freebuf(p_msg_rsp);
+  free(p_msg_rsp);
 
   return;
 }
@@ -1918,7 +1919,7 @@ void rw_t3t_act_handle_fmt_rsp(tRW_T3T_CB* p_cb, NFC_HDR* p_msg_rsp) {
     rw_t3t_format_cplt(evt_data.status);
   }
 
-  GKI_freebuf(p_msg_rsp);
+  free(p_msg_rsp);
 }
 
 /*****************************************************************************
@@ -2107,7 +2108,7 @@ void rw_t3t_act_handle_sro_rsp(tRW_T3T_CB* p_cb, NFC_HDR* p_msg_rsp) {
     rw_t3t_set_readonly_cplt(evt_data.status);
   }
 
-  GKI_freebuf(p_msg_rsp);
+  free(p_msg_rsp);
 }
 
 /*******************************************************************************
@@ -2154,7 +2155,7 @@ void rw_t3t_data_cback(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
     sod = p[0];
     if (p[sod] != NCI_STATUS_OK) {
       RW_TRACE_ERROR1("T3T: rf frame error (crc status=%i)", p[sod]);
-      GKI_freebuf(p_msg);
+      free(p_msg);
 
       rw_t3t_process_frame_error();
       return;
@@ -2204,13 +2205,13 @@ void rw_t3t_data_cback(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
         break;
 
       default:
-        GKI_freebuf(p_msg);
+        free(p_msg);
         break;
     }
   }
 
   if (free_msg) {
-    GKI_freebuf(p_msg);
+    free(p_msg);
   }
 }
 
@@ -2245,7 +2246,7 @@ void rw_t3t_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
         break;
       } else if (p_data->data.p_data != NULL) {
         /* Free the response buffer in case of error response */
-        GKI_freebuf((NFC_HDR*)(p_data->data.p_data));
+        free((NFC_HDR*)(p_data->data.p_data));
         p_data->data.p_data = NULL;
       }
     /* Data event with error status...fall through to NFC_ERROR_CEVT case */
@@ -2354,7 +2355,7 @@ static tNFC_STATUS rw_t3t_unselect(uint8_t peer_nfcid2[]) {
 
   /* Free cmd buf for retransmissions */
   if (p_cb->p_cur_cmd_buf) {
-    GKI_freebuf(p_cb->p_cur_cmd_buf);
+    free(p_cb->p_cur_cmd_buf);
     p_cb->p_cur_cmd_buf = NULL;
   }
 

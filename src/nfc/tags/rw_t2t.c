@@ -22,6 +22,7 @@
  *  mode.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "nfc_target.h"
@@ -111,7 +112,7 @@ static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
       rw_t2t_process_frame_error();
       p_t2t->check_tag_halt = false;
     }
-    GKI_freebuf(p_pkt);
+    free(p_pkt);
     return;
   }
   rw_cb.cur_retry = 0;
@@ -218,7 +219,7 @@ static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
     }
   }
 
-  if (b_release) GKI_freebuf(p_pkt);
+  if (b_release) free(p_pkt);
 
 #if (BT_TRACE_VERBOSE == TRUE)
   if (begin_state != p_t2t->state) {
@@ -264,12 +265,12 @@ void rw_t2t_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 
       /* Free cmd buf for retransmissions */
       if (p_t2t->p_cur_cmd_buf) {
-        GKI_freebuf(p_t2t->p_cur_cmd_buf);
+        free(p_t2t->p_cur_cmd_buf);
         p_t2t->p_cur_cmd_buf = NULL;
       }
       /* Free cmd buf used to hold command before sector change */
       if (p_t2t->p_sec_cmd_buf) {
-        GKI_freebuf(p_t2t->p_sec_cmd_buf);
+        free(p_t2t->p_sec_cmd_buf);
         p_t2t->p_sec_cmd_buf = NULL;
       }
 
@@ -285,7 +286,7 @@ void rw_t2t_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
           break;
         } else if (p_data->data.p_data != NULL) {
           /* Free the response buffer in case of error response */
-          GKI_freebuf((NFC_HDR*)(p_data->data.p_data));
+          free((NFC_HDR*)(p_data->data.p_data));
           p_data->data.p_data = NULL;
         }
       }
@@ -502,9 +503,9 @@ static void rw_t2t_process_error(void) {
     /* allocate a new buffer for message */
     p_cmd_buf = (NFC_HDR*)GKI_getpoolbuf(NFC_RW_POOL_ID);
     if (p_cmd_buf != NULL) {
-      memcpy(p_cmd_buf, p_t2t->p_cur_cmd_buf,
-             sizeof(NFC_HDR) + p_t2t->p_cur_cmd_buf->offset +
-                 p_t2t->p_cur_cmd_buf->len);
+      memcpy(p_cmd_buf, p_t2t->p_cur_cmd_buf, sizeof(NFC_HDR) +
+                                                  p_t2t->p_cur_cmd_buf->offset +
+                                                  p_t2t->p_cur_cmd_buf->len);
 #if (RW_STATS_INCLUDED == TRUE)
       /* Update stats */
       rw_main_update_tx_stats(p_cmd_buf->len, true);
@@ -608,9 +609,9 @@ static void rw_t2t_resume_op(void) {
   /* allocate a new buffer for message */
   p_cmd_buf = (NFC_HDR*)GKI_getpoolbuf(NFC_RW_POOL_ID);
   if (p_cmd_buf != NULL) {
-    memcpy(p_cmd_buf, p_t2t->p_sec_cmd_buf,
-           sizeof(NFC_HDR) + p_t2t->p_sec_cmd_buf->offset +
-               p_t2t->p_sec_cmd_buf->len);
+    memcpy(p_cmd_buf, p_t2t->p_sec_cmd_buf, sizeof(NFC_HDR) +
+                                                p_t2t->p_sec_cmd_buf->offset +
+                                                p_t2t->p_sec_cmd_buf->len);
     memcpy(p_t2t->p_cur_cmd_buf, p_t2t->p_sec_cmd_buf,
            sizeof(NFC_HDR) + p_t2t->p_sec_cmd_buf->offset +
                p_t2t->p_sec_cmd_buf->len);

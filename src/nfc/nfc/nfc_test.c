@@ -23,6 +23,7 @@
  *  (callback). On the transmit side, it manages the command transmission.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "gki.h"
@@ -58,7 +59,7 @@ tNFC_STATUS NFC_TestLoopback(NFC_HDR* p_data) {
     status = nfc_ncif_send_data(p_cb, p_data);
   }
 
-  if (status != NFC_STATUS_OK) GKI_freebuf(p_data);
+  if (status != NFC_STATUS_OK) free(p_data);
 
   return status;
 }

@@ -21,6 +21,7 @@
  *  Handle ndef messages
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "ndef_utils.h"
 #include "nfa_api.h"
@@ -88,7 +89,7 @@ void nfa_dm_ndef_dereg_hdlr_by_handle(tNFA_HANDLE ndef_type_handle) {
   hdlr_idx = (uint16_t)(ndef_type_handle & NFA_HANDLE_MASK);
 
   if (p_cb->p_ndef_handler[hdlr_idx]) {
-    GKI_freebuf(p_cb->p_ndef_handler[hdlr_idx]);
+    free(p_cb->p_ndef_handler[hdlr_idx]);
     p_cb->p_ndef_handler[hdlr_idx] = NULL;
   }
 }
@@ -110,7 +111,7 @@ void nfa_dm_ndef_dereg_all(void) {
   for (i = 0; i < NFA_NDEF_MAX_HANDLERS; i++) {
     /* If this is a free slot, then remember it */
     if (p_cb->p_ndef_handler[i] != NULL) {
-      GKI_freebuf(p_cb->p_ndef_handler[i]);
+      free(p_cb->p_ndef_handler[i]);
       p_cb->p_ndef_handler[i] = NULL;
     }
   }

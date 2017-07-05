@@ -22,6 +22,7 @@
  *
  ******************************************************************************/
 #include "nfa_hci_api.h"
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_hci_defs.h"
 #include "nfa_hci_int.h"
@@ -70,7 +71,7 @@ tNFA_STATUS NFA_HciRegister(char* p_app_name, tNFA_HCI_CBACK* p_cback,
   /* Register the application with HCI */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
       (p_app_name != NULL) && (app_name_len <= NFA_MAX_HCI_APP_NAME_LEN) &&
-      ((p_msg = (tNFA_HCI_API_REGISTER_APP*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_REGISTER_APP*)malloc(
             sizeof(tNFA_HCI_API_REGISTER_APP))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_REGISTER_APP_EVT;
 
@@ -116,7 +117,7 @@ tNFA_STATUS NFA_HciGetGateAndPipeList(tNFA_HANDLE hci_handle) {
 
   /* Register the application with HCI */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_GET_APP_GATE_PIPE*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_GET_APP_GATE_PIPE*)malloc(
             sizeof(tNFA_HCI_API_GET_APP_GATE_PIPE))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_GET_APP_GATE_PIPE_EVT;
     p_msg->hci_handle = hci_handle;
@@ -175,7 +176,7 @@ tNFA_STATUS NFA_HciDeregister(char* p_app_name) {
 
   /* Deregister the application with HCI */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_DEREGISTER_APP*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_DEREGISTER_APP*)malloc(
             sizeof(tNFA_HCI_API_DEREGISTER_APP))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_DEREGISTER_APP_EVT;
 
@@ -227,7 +228,7 @@ tNFA_STATUS NFA_HciAllocGate(tNFA_HANDLE hci_handle, uint8_t gate) {
 
   /* Request HCI to allocate gate to the application */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_ALLOC_GATE*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_ALLOC_GATE*)malloc(
             sizeof(tNFA_HCI_API_ALLOC_GATE))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_ALLOC_GATE_EVT;
     p_msg->hci_handle = hci_handle;
@@ -274,7 +275,7 @@ tNFA_STATUS NFA_HciDeallocGate(tNFA_HANDLE hci_handle, uint8_t gate) {
   /* Request HCI to deallocate the gate that was previously allocated to the
    * application */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_DEALLOC_GATE*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_DEALLOC_GATE*)malloc(
             sizeof(tNFA_HCI_API_DEALLOC_GATE))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_DEALLOC_GATE_EVT;
     p_msg->hci_handle = hci_handle;
@@ -312,7 +313,7 @@ tNFA_STATUS NFA_HciGetHostList(tNFA_HANDLE hci_handle) {
 
   /* Request HCI to get list of host in the hci network */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_GET_HOST_LIST*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_GET_HOST_LIST*)malloc(
             sizeof(tNFA_HCI_API_GET_HOST_LIST))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_GET_HOST_LIST_EVT;
     p_msg->hci_handle = hci_handle;
@@ -387,7 +388,7 @@ tNFA_STATUS NFA_HciCreatePipe(tNFA_HANDLE hci_handle, uint8_t source_gate_id,
   /* Request HCI to create a pipe between two specified gates */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
       (!nfa_hci_cb.b_low_power_mode) &&
-      ((p_msg = (tNFA_HCI_API_CREATE_PIPE_EVT*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_CREATE_PIPE_EVT*)malloc(
             sizeof(tNFA_HCI_API_CREATE_PIPE_EVT))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_CREATE_PIPE_EVT;
     p_msg->hci_handle = hci_handle;
@@ -434,7 +435,7 @@ tNFA_STATUS NFA_HciOpenPipe(tNFA_HANDLE hci_handle, uint8_t pipe) {
   /* Request HCI to open a pipe if it is in closed state */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
       (!nfa_hci_cb.b_low_power_mode) &&
-      ((p_msg = (tNFA_HCI_API_OPEN_PIPE_EVT*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_OPEN_PIPE_EVT*)malloc(
             sizeof(tNFA_HCI_API_OPEN_PIPE_EVT))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_OPEN_PIPE_EVT;
     p_msg->hci_handle = hci_handle;
@@ -482,7 +483,7 @@ tNFA_STATUS NFA_HciGetRegistry(tNFA_HANDLE hci_handle, uint8_t pipe,
 
   /* Request HCI to get list of gates supported by the specified host */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_GET_REGISTRY*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_GET_REGISTRY*)malloc(
             sizeof(tNFA_HCI_API_GET_REGISTRY))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_GET_REGISTRY_EVT;
     p_msg->hci_handle = hci_handle;
@@ -540,7 +541,7 @@ extern tNFA_STATUS NFA_HciSetRegistry(tNFA_HANDLE hci_handle, uint8_t pipe,
 
   /* Request HCI to get list of gates supported by the specified host */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_SET_REGISTRY*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_SET_REGISTRY*)malloc(
             sizeof(tNFA_HCI_API_SET_REGISTRY))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_SET_REGISTRY_EVT;
     p_msg->hci_handle = hci_handle;
@@ -598,7 +599,7 @@ tNFA_STATUS NFA_HciSendCommand(tNFA_HANDLE hci_handle, uint8_t pipe,
 
   /* Request HCI to post event data on a particular pipe */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_SEND_CMD_EVT*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_SEND_CMD_EVT*)malloc(
             sizeof(tNFA_HCI_API_SEND_CMD_EVT))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_SEND_CMD_EVT;
     p_msg->hci_handle = hci_handle;
@@ -657,7 +658,7 @@ extern tNFA_STATUS NFA_HciSendResponse(tNFA_HANDLE hci_handle, uint8_t pipe,
 
   /* Request HCI to get list of gates supported by the specified host */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_SEND_RSP_EVT*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_SEND_RSP_EVT*)malloc(
             sizeof(tNFA_HCI_API_SEND_RSP_EVT))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_SEND_RSP_EVT;
     p_msg->hci_handle = hci_handle;
@@ -740,7 +741,7 @@ tNFA_STATUS NFA_HciSendEvent(tNFA_HANDLE hci_handle, uint8_t pipe,
 
   /* Request HCI to post event data on a particular pipe */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_SEND_EVENT_EVT*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_SEND_EVENT_EVT*)malloc(
             sizeof(tNFA_HCI_API_SEND_EVENT_EVT))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_SEND_EVENT_EVT;
     p_msg->hci_handle = hci_handle;
@@ -793,7 +794,7 @@ tNFA_STATUS NFA_HciClosePipe(tNFA_HANDLE hci_handle, uint8_t pipe) {
   /* Request HCI to close a pipe if it is in opened state */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
       (!nfa_hci_cb.b_low_power_mode) &&
-      ((p_msg = (tNFA_HCI_API_CLOSE_PIPE_EVT*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_CLOSE_PIPE_EVT*)malloc(
             sizeof(tNFA_HCI_API_CLOSE_PIPE_EVT))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_CLOSE_PIPE_EVT;
     p_msg->hci_handle = hci_handle;
@@ -843,7 +844,7 @@ tNFA_STATUS NFA_HciDeletePipe(tNFA_HANDLE hci_handle, uint8_t pipe) {
    * handle */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
       (!nfa_hci_cb.b_low_power_mode) &&
-      ((p_msg = (tNFA_HCI_API_DELETE_PIPE_EVT*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_DELETE_PIPE_EVT*)malloc(
             sizeof(tNFA_HCI_API_DELETE_PIPE_EVT))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_DELETE_PIPE_EVT;
     p_msg->hci_handle = hci_handle;
@@ -903,7 +904,7 @@ tNFA_STATUS NFA_HciAddStaticPipe(tNFA_HANDLE hci_handle, uint8_t host,
   /* Request HCI to delete a pipe created by the application identified by hci
    * handle */
   if ((nfa_hci_cb.hci_state != NFA_HCI_STATE_DISABLED) &&
-      ((p_msg = (tNFA_HCI_API_ADD_STATIC_PIPE_EVT*)GKI_getbuf(
+      ((p_msg = (tNFA_HCI_API_ADD_STATIC_PIPE_EVT*)malloc(
             sizeof(tNFA_HCI_API_ADD_STATIC_PIPE_EVT))) != NULL)) {
     p_msg->hdr.event = NFA_HCI_API_ADD_STATIC_PIPE_EVT;
     p_msg->hci_handle = hci_handle;

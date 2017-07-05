@@ -21,6 +21,7 @@
  *  This is the main implementation file for the NFA_RW
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_dm_int.h"
 #include "nfa_rw_api.h"
@@ -94,7 +95,7 @@ void nfa_rw_sys_disable(void) {
 
   /* Free pending command if any */
   if (nfa_rw_cb.p_pending_msg) {
-    GKI_freebuf(nfa_rw_cb.p_pending_msg);
+    free(nfa_rw_cb.p_pending_msg);
     nfa_rw_cb.p_pending_msg = NULL;
   }
 
@@ -146,14 +147,14 @@ void nfa_rw_proc_disc_evt(tNFA_DM_RF_DISC_EVT event, tNFC_DISCOVER* p_data,
 tNFA_STATUS nfa_rw_send_raw_frame(NFC_HDR* p_data) {
   tNFA_RW_MSG* p_msg;
 
-  p_msg = (tNFA_RW_MSG*)GKI_getbuf((uint16_t)sizeof(tNFA_RW_MSG));
+  p_msg = (tNFA_RW_MSG*)malloc((uint16_t)sizeof(tNFA_RW_MSG));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
     p_msg->op_req.op = NFA_RW_OP_SEND_RAW_FRAME;
 
     p_msg->op_req.params.send_raw_frame.p_data = p_data;
 
-    if (nfa_rw_handle_event((NFC_HDR*)p_msg)) GKI_freebuf(p_msg);
+    if (nfa_rw_handle_event((NFC_HDR*)p_msg)) free(p_msg);
 
     return (NFA_STATUS_OK);
   }

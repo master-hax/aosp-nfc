@@ -22,6 +22,7 @@
  *  mode.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "nfc_target.h"
@@ -323,7 +324,7 @@ bool rw_i93_check_sys_info_prot_ext(uint8_t error_code) {
 **
 *******************************************************************************/
 void rw_i93_send_to_upper(NFC_HDR* p_resp) {
-  uint8_t *p = (uint8_t *)(p_resp + 1) + p_resp->offset, *p_uid;
+  uint8_t *p = (uint8_t*)(p_resp + 1) + p_resp->offset, *p_uid;
   uint16_t length = p_resp->len;
   tRW_I93_CB* p_i93 = &rw_cb.tcb.i93;
   tRW_DATA rw_data;
@@ -375,7 +376,7 @@ void rw_i93_send_to_upper(NFC_HDR* p_resp) {
     case I93_CMD_GET_MULTI_BLK_SEC:
 
       /* forward tag data or security status */
-      p_buff = (NFC_HDR*)GKI_getbuf((uint16_t)(length + NFC_HDR_SIZE));
+      p_buff = (NFC_HDR*)malloc((uint16_t)(length + NFC_HDR_SIZE));
 
       if (p_buff) {
         p_buff->offset = 0;
@@ -464,7 +465,7 @@ bool rw_i93_send_to_lower(NFC_HDR* p_msg) {
 
   /* store command for retransmitting */
   if (rw_cb.tcb.i93.p_retry_cmd) {
-    GKI_freebuf(rw_cb.tcb.i93.p_retry_cmd);
+    free(rw_cb.tcb.i93.p_retry_cmd);
     rw_cb.tcb.i93.p_retry_cmd = NULL;
   }
 
@@ -1377,7 +1378,7 @@ tNFC_STATUS rw_i93_get_next_block_sec(void) {
 **
 *******************************************************************************/
 void rw_i93_sm_detect_ndef(NFC_HDR* p_resp) {
-  uint8_t *p = (uint8_t *)(p_resp + 1) + p_resp->offset, *p_uid;
+  uint8_t *p = (uint8_t*)(p_resp + 1) + p_resp->offset, *p_uid;
   uint8_t flags, u8 = 0, cc[4];
   uint16_t length = p_resp->len, xx, block, first_block, last_block, num_blocks;
   tRW_I93_CB* p_i93 = &rw_cb.tcb.i93;
@@ -2102,7 +2103,7 @@ void rw_i93_sm_update_ndef(NFC_HDR* p_resp) {
 **
 *******************************************************************************/
 void rw_i93_sm_format(NFC_HDR* p_resp) {
-  uint8_t *p = (uint8_t *)(p_resp + 1) + p_resp->offset, *p_uid;
+  uint8_t *p = (uint8_t*)(p_resp + 1) + p_resp->offset, *p_uid;
   uint8_t flags;
   uint16_t length = p_resp->len, xx, block_number;
   tRW_I93_CB* p_i93 = &rw_cb.tcb.i93;
@@ -2322,7 +2323,7 @@ void rw_i93_sm_format(NFC_HDR* p_resp) {
       }
 
       /* get buffer to store CC, zero length NDEF TLV and Terminator TLV */
-      p_i93->p_update_data = (uint8_t*)GKI_getbuf(RW_I93_FORMAT_DATA_LEN);
+      p_i93->p_update_data = (uint8_t*)malloc(RW_I93_FORMAT_DATA_LEN);
 
       if (!p_i93->p_update_data) {
         RW_TRACE_ERROR0("rw_i93_sm_format (): Cannot allocate buffer");
@@ -2405,7 +2406,7 @@ void rw_i93_sm_format(NFC_HDR* p_resp) {
           rw_i93_handle_error(NFC_STATUS_FAILED);
         }
       } else {
-        GKI_freebuf(p_i93->p_update_data);
+        free(p_i93->p_update_data);
         p_i93->p_update_data = NULL;
 
         p_i93->state = RW_I93_STATE_IDLE;
@@ -2600,7 +2601,7 @@ void rw_i93_handle_error(tNFC_STATUS status) {
 
       case RW_I93_STATE_FORMAT:
         if (p_i93->p_update_data) {
-          GKI_freebuf(p_i93->p_update_data);
+          free(p_i93->p_update_data);
           p_i93->p_update_data = NULL;
         }
         event = RW_I93_FORMAT_CPLT_EVT;
@@ -2662,7 +2663,7 @@ void rw_i93_process_timeout(TIMER_LIST_ENT* p_tle) {
 
     /* all retrial is done or failed to send command to lower layer */
     if (rw_cb.tcb.i93.p_retry_cmd) {
-      GKI_freebuf(rw_cb.tcb.i93.p_retry_cmd);
+      free(rw_cb.tcb.i93.p_retry_cmd);
       rw_cb.tcb.i93.p_retry_cmd = NULL;
       rw_cb.tcb.i93.retry_count = 0;
     }
@@ -2713,7 +2714,7 @@ static void rw_i93_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 
       /* all retrial is done or failed to send command to lower layer */
       if (p_i93->p_retry_cmd) {
-        GKI_freebuf(p_i93->p_retry_cmd);
+        free(p_i93->p_retry_cmd);
         p_i93->p_retry_cmd = NULL;
         p_i93->retry_count = 0;
       }
@@ -2722,7 +2723,7 @@ static void rw_i93_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
     } else {
       /* free retry buffer */
       if (p_i93->p_retry_cmd) {
-        GKI_freebuf(p_i93->p_retry_cmd);
+        free(p_i93->p_retry_cmd);
         p_i93->p_retry_cmd = NULL;
         p_i93->retry_count = 0;
       }
@@ -2742,7 +2743,7 @@ static void rw_i93_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 
   /* free retry buffer */
   if (p_i93->p_retry_cmd) {
-    GKI_freebuf(p_i93->p_retry_cmd);
+    free(p_i93->p_retry_cmd);
     p_i93->p_retry_cmd = NULL;
     p_i93->retry_count = 0;
   }
@@ -2769,18 +2770,18 @@ static void rw_i93_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
         (*(rw_cb.p_cback))(RW_I93_RAW_FRAME_EVT, &rw_data);
         p_resp = NULL;
       } else {
-        GKI_freebuf(p_resp);
+        free(p_resp);
       }
       break;
     case RW_I93_STATE_BUSY:
       p_i93->state = RW_I93_STATE_IDLE;
       rw_i93_send_to_upper(p_resp);
-      GKI_freebuf(p_resp);
+      free(p_resp);
       break;
 
     case RW_I93_STATE_DETECT_NDEF:
       rw_i93_sm_detect_ndef(p_resp);
-      GKI_freebuf(p_resp);
+      free(p_resp);
       break;
 
     case RW_I93_STATE_READ_NDEF:
@@ -2790,17 +2791,17 @@ static void rw_i93_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 
     case RW_I93_STATE_UPDATE_NDEF:
       rw_i93_sm_update_ndef(p_resp);
-      GKI_freebuf(p_resp);
+      free(p_resp);
       break;
 
     case RW_I93_STATE_FORMAT:
       rw_i93_sm_format(p_resp);
-      GKI_freebuf(p_resp);
+      free(p_resp);
       break;
 
     case RW_I93_STATE_SET_READ_ONLY:
       rw_i93_sm_set_read_only(p_resp);
-      GKI_freebuf(p_resp);
+      free(p_resp);
       break;
 
     case RW_I93_STATE_PRESENCE_CHECK:
@@ -2810,12 +2811,12 @@ static void rw_i93_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
       /* if any response, send presence check with ok */
       rw_data.status = NFC_STATUS_OK;
       (*(rw_cb.p_cback))(RW_I93_PRESENCE_CHECK_EVT, &rw_data);
-      GKI_freebuf(p_resp);
+      free(p_resp);
       break;
 
     default:
       RW_TRACE_ERROR1("rw_i93_data_cback (): invalid state=%d", p_i93->state);
-      GKI_freebuf(p_resp);
+      free(p_resp);
       break;
   }
 

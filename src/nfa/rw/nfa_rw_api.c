@@ -21,6 +21,7 @@
  *  NFA interface for tag Reader/Writer
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_api.h"
 #include "nfa_rw_int.h"
@@ -63,7 +64,7 @@ tNFA_STATUS NFA_RwDetectNDef(void) {
 
   NFA_TRACE_API0("NFA_RwDetectNDef");
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
     p_msg->op = NFA_RW_OP_DETECT_NDEF;
@@ -108,7 +109,7 @@ tNFA_STATUS NFA_RwReadNDef(void) {
 
   NFA_TRACE_API0("NFA_RwReadNDef");
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
     p_msg->op = NFA_RW_OP_READ_NDEF;
@@ -150,7 +151,7 @@ tNFA_STATUS NFA_RwWriteNDef(uint8_t* p_data, uint32_t len) {
   /* Validate parameters */
   if (p_data == NULL) return (NFA_STATUS_INVALID_PARAM);
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
     p_msg->op = NFA_RW_OP_WRITE_NDEF;
@@ -185,7 +186,7 @@ tNFA_STATUS NFA_RwPresenceCheck(tNFA_RW_PRES_CHK_OPTION option) {
 
   NFA_TRACE_API0("NFA_RwPresenceCheck");
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
     p_msg->op = NFA_RW_OP_PRESENCE_CHECK;
@@ -218,7 +219,7 @@ tNFA_STATUS NFA_RwFormatTag(void) {
 
   NFA_TRACE_API0("NFA_RwFormatTag");
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
     p_msg->op = NFA_RW_OP_FORMAT_TAG;
@@ -272,7 +273,7 @@ tNFA_STATUS NFA_RwSetTagReadOnly(bool b_hard_lock) {
   NFA_TRACE_API1("NFA_RwSetTagReadOnly (): %s",
                  b_hard_lock ? "Hard lock" : "Soft lock");
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -330,7 +331,7 @@ tNFA_STATUS NFA_RwLocateTlv(uint8_t tlv_type) {
 
   NFA_TRACE_API0("NFA_RwLocateTlv");
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
 
@@ -370,7 +371,7 @@ tNFA_STATUS NFA_RwLocateTlv(uint8_t tlv_type) {
 tNFA_STATUS NFA_RwT1tRid(void) {
   tNFA_RW_OPERATION* p_msg;
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -401,7 +402,7 @@ tNFA_STATUS NFA_RwT1tRid(void) {
 tNFA_STATUS NFA_RwT1tReadAll(void) {
   tNFA_RW_OPERATION* p_msg;
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -432,7 +433,7 @@ tNFA_STATUS NFA_RwT1tReadAll(void) {
 tNFA_STATUS NFA_RwT1tRead(uint8_t block_number, uint8_t index) {
   tNFA_RW_OPERATION* p_msg;
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -466,7 +467,7 @@ tNFA_STATUS NFA_RwT1tWrite(uint8_t block_number, uint8_t index, uint8_t data,
                            bool b_erase) {
   tNFA_RW_OPERATION* p_msg;
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -501,7 +502,7 @@ tNFA_STATUS NFA_RwT1tWrite(uint8_t block_number, uint8_t index, uint8_t data,
 tNFA_STATUS NFA_RwT1tReadSeg(uint8_t segment_number) {
   tNFA_RW_OPERATION* p_msg;
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -533,7 +534,7 @@ tNFA_STATUS NFA_RwT1tReadSeg(uint8_t segment_number) {
 tNFA_STATUS NFA_RwT1tRead8(uint8_t block_number) {
   tNFA_RW_OPERATION* p_msg;
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -566,7 +567,7 @@ tNFA_STATUS NFA_RwT1tWrite8(uint8_t block_number, uint8_t* p_data,
                             bool b_erase) {
   tNFA_RW_OPERATION* p_msg;
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -603,7 +604,7 @@ tNFA_STATUS NFA_RwT2tRead(uint8_t block_number) {
 
   NFA_TRACE_API1("NFA_RwT2tRead (): Block to read: %d", block_number);
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -636,7 +637,7 @@ tNFA_STATUS NFA_RwT2tWrite(uint8_t block_number, uint8_t* p_data) {
 
   NFA_TRACE_API1("NFA_RwT2tWrite (): Block to write: %d", block_number);
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -672,7 +673,7 @@ tNFA_STATUS NFA_RwT2tSectorSelect(uint8_t sector_number) {
 
   NFA_TRACE_API1("NFA_RwT2tRead (): sector to select: %d", sector_number);
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -712,7 +713,7 @@ tNFA_STATUS NFA_RwT3tRead(uint8_t num_blocks, tNFA_T3T_BLOCK_DESC* t3t_blocks) {
   if ((num_blocks == 0) || (t3t_blocks == NULL))
     return (NFA_STATUS_INVALID_PARAM);
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(
+  p_msg = (tNFA_RW_OPERATION*)malloc((uint16_t)(
       sizeof(tNFA_RW_OPERATION) + (num_blocks * sizeof(tNFA_T3T_BLOCK_DESC))));
   if (p_msg != NULL) {
     /* point to area after tNFA_RW_OPERATION */
@@ -763,9 +764,9 @@ tNFA_STATUS NFA_RwT3tWrite(uint8_t num_blocks, tNFA_T3T_BLOCK_DESC* t3t_blocks,
   if ((num_blocks == 0) || (t3t_blocks == NULL) | (p_data == NULL))
     return (NFA_STATUS_INVALID_PARAM);
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf(
-      (uint16_t)(sizeof(tNFA_RW_OPERATION) +
-                 (num_blocks * (sizeof(tNFA_T3T_BLOCK_DESC) + 16))));
+  p_msg = (tNFA_RW_OPERATION*)malloc(
+      sizeof(tNFA_RW_OPERATION) +
+      (num_blocks * (sizeof(tNFA_T3T_BLOCK_DESC) + 16)));
   if (p_msg != NULL) {
     /* point to block descriptor and data areas after tNFA_RW_OPERATION */
     p_block_desc = (uint8_t*)(p_msg + 1);
@@ -821,7 +822,7 @@ tNFA_STATUS NFA_RwI93Inventory(bool afi_present, uint8_t afi, uint8_t* p_uid) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -870,7 +871,7 @@ tNFA_STATUS NFA_RwI93StayQuiet(void) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -911,7 +912,7 @@ tNFA_STATUS NFA_RwI93ReadSingleBlock(uint8_t block_number) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -958,8 +959,8 @@ tNFA_STATUS NFA_RwI93WriteSingleBlock(uint8_t block_number, uint8_t* p_data) {
     return (NFA_STATUS_FAILED);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf(
-      (uint16_t)(sizeof(tNFA_RW_OPERATION) + nfa_rw_cb.i93_block_size));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION) +
+                                     nfa_rw_cb.i93_block_size);
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1003,7 +1004,7 @@ tNFA_STATUS NFA_RwI93LockBlock(uint8_t block_number) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1047,7 +1048,7 @@ tNFA_STATUS NFA_RwI93ReadMultipleBlocks(uint8_t first_block_number,
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1100,8 +1101,7 @@ tNFA_STATUS NFA_RwI93WriteMultipleBlocks(uint8_t first_block_number,
 
   data_length = nfa_rw_cb.i93_block_size * number_blocks;
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf(
-      (uint16_t)(sizeof(tNFA_RW_OPERATION) + data_length));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION) + data_length);
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1152,8 +1152,8 @@ tNFA_STATUS NFA_RwI93Select(uint8_t* p_uid) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf(
-      (uint16_t)(sizeof(tNFA_RW_OPERATION) + I93_UID_BYTE_LEN));
+  p_msg =
+      (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION) + I93_UID_BYTE_LEN);
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1195,7 +1195,7 @@ tNFA_STATUS NFA_RwI93ResetToReady(void) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1234,7 +1234,7 @@ tNFA_STATUS NFA_RwI93WriteAFI(uint8_t afi) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1275,7 +1275,7 @@ tNFA_STATUS NFA_RwI93LockAFI(void) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1314,7 +1314,7 @@ tNFA_STATUS NFA_RwI93WriteDSFID(uint8_t dsfid) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1355,7 +1355,7 @@ tNFA_STATUS NFA_RwI93LockDSFID(void) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1395,7 +1395,7 @@ tNFA_STATUS NFA_RwI93GetSysInfo(uint8_t* p_uid) {
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
@@ -1445,7 +1445,7 @@ tNFA_STATUS NFA_RwI93GetMultiBlockSecurityStatus(uint8_t first_block_number,
     return (NFA_STATUS_WRONG_PROTOCOL);
   }
 
-  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  p_msg = (tNFA_RW_OPERATION*)malloc(sizeof(tNFA_RW_OPERATION));
   if (p_msg != NULL) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;

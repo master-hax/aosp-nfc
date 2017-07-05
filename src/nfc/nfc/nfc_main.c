@@ -23,6 +23,7 @@
  *  (callback). On the transmit side, it manages the command transmission.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "gki.h"
@@ -333,7 +334,7 @@ void nfc_gen_cleanup(void) {
    * buffer */
   if (nfc_cb.flags & NFC_FL_DISCOVER_PENDING) {
     nfc_cb.flags &= ~NFC_FL_DISCOVER_PENDING;
-    GKI_freebuf(nfc_cb.p_disc_pending);
+    free(nfc_cb.p_disc_pending);
     nfc_cb.p_disc_pending = NULL;
   }
 
@@ -346,7 +347,7 @@ void nfc_gen_cleanup(void) {
   nfc_reset_all_conn_cbs();
 
   if (nfc_cb.p_nci_init_rsp) {
-    GKI_freebuf(nfc_cb.p_nci_init_rsp);
+    free(nfc_cb.p_nci_init_rsp);
     nfc_cb.p_nci_init_rsp = NULL;
   }
 
@@ -406,7 +407,7 @@ void nfc_main_handle_hal_evt(tNFC_HAL_EVT_MSG* p_msg) {
           }
         }
 
-        GKI_freebuf(nfc_cb.p_nci_init_rsp);
+        free(nfc_cb.p_nci_init_rsp);
         nfc_cb.p_nci_init_rsp = NULL;
       }
       break;
@@ -421,7 +422,7 @@ void nfc_main_handle_hal_evt(tNFC_HAL_EVT_MSG* p_msg) {
         nfc_cb.flags &= ~NFC_FL_DISCOVER_PENDING;
         ps = (uint8_t*)nfc_cb.p_disc_pending;
         nci_snd_discover_cmd(*ps, (tNFC_DISCOVER_PARAMS*)(ps + 1));
-        GKI_freebuf(nfc_cb.p_disc_pending);
+        free(nfc_cb.p_disc_pending);
         nfc_cb.p_disc_pending = NULL;
       } else {
         /* check if there's other pending commands */
@@ -508,7 +509,7 @@ void nfc_main_flush_cmd_queue(void) {
 
   /* dequeue and free buffer */
   while ((p_msg = (NFC_HDR*)GKI_dequeue(&nfc_cb.nci_cmd_xmit_q)) != NULL) {
-    GKI_freebuf(p_msg);
+    free(p_msg);
   }
 }
 
@@ -524,7 +525,7 @@ void nfc_main_flush_cmd_queue(void) {
 void nfc_main_post_hal_evt(uint8_t hal_evt, tHAL_NFC_STATUS status) {
   tNFC_HAL_EVT_MSG* p_msg;
 
-  p_msg = (tNFC_HAL_EVT_MSG*)GKI_getbuf(sizeof(tNFC_HAL_EVT_MSG));
+  p_msg = (tNFC_HAL_EVT_MSG*)malloc(sizeof(tNFC_HAL_EVT_MSG));
   if (p_msg != NULL) {
     /* Initialize NFC_HDR */
     p_msg->hdr.len = 0;
@@ -877,8 +878,7 @@ tNFC_STATUS NFC_DiscoveryStart(uint8_t num_params,
     nfc_cb.flags |= NFC_FL_DISCOVER_PENDING;
     nfc_cb.flags |= NFC_FL_CONTROL_REQUESTED;
     params_size = sizeof(tNFC_DISCOVER_PARAMS) * num_params;
-    nfc_cb.p_disc_pending =
-        GKI_getbuf((uint16_t)(NFC_HDR_SIZE + 1 + params_size));
+    nfc_cb.p_disc_pending = malloc((uint16_t)(NFC_HDR_SIZE + 1 + params_size));
     if (nfc_cb.p_disc_pending) {
       p = (uint8_t*)nfc_cb.p_disc_pending;
       *p++ = num_params;
@@ -1053,7 +1053,7 @@ tNFC_STATUS NFC_SendData(uint8_t conn_id, NFC_HDR* p_data) {
     status = nfc_ncif_send_data(p_cb, p_data);
   }
 
-  if (status != NFC_STATUS_OK) GKI_freebuf(p_data);
+  if (status != NFC_STATUS_OK) free(p_data);
 
   return status;
 }
@@ -1077,7 +1077,7 @@ tNFC_STATUS NFC_FlushData(uint8_t conn_id) {
 
   if (p_cb) {
     status = NFC_STATUS_OK;
-    while ((p_buf = GKI_dequeue(&p_cb->tx_q)) != NULL) GKI_freebuf(p_buf);
+    while ((p_buf = GKI_dequeue(&p_cb->tx_q)) != NULL) free(p_buf);
   }
 
   return status;
@@ -1121,7 +1121,7 @@ tNFC_STATUS NFC_Deactivate(tNFC_DEACT_TYPE deactivate_type) {
       /* if HAL did not request for control, clear this bit now */
       nfc_cb.flags &= ~NFC_FL_CONTROL_REQUESTED;
     }
-    GKI_freebuf(nfc_cb.p_disc_pending);
+    free(nfc_cb.p_disc_pending);
     nfc_cb.p_disc_pending = NULL;
     return NFC_STATUS_OK;
   }

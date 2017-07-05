@@ -21,6 +21,7 @@
  *  NFA interface for card emulation
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_api.h"
 #include "nfa_ce_int.h"
@@ -51,7 +52,7 @@ tNFA_STATUS nfa_ce_api_deregister_listen(tNFA_HANDLE handle,
     return (NFA_STATUS_BAD_HANDLE);
   }
 
-  p_ce_msg = (tNFA_CE_MSG*)GKI_getbuf((uint16_t)(sizeof(tNFA_CE_MSG)));
+  p_ce_msg = (tNFA_CE_MSG*)malloc((uint16_t)(sizeof(tNFA_CE_MSG)));
   if (p_ce_msg != NULL) {
     p_ce_msg->hdr.event = NFA_CE_API_DEREG_LISTEN_EVT;
     p_ce_msg->dereg_listen.handle = handle;
@@ -143,7 +144,7 @@ tNFA_STATUS NFA_CeConfigureLocalTag(tNFA_PROTOCOL_MASK protocol_mask,
       return (NFA_STATUS_INVALID_PARAM);
     }
   }
-  p_msg = (tNFA_CE_MSG*)GKI_getbuf((uint16_t)sizeof(tNFA_CE_MSG));
+  p_msg = (tNFA_CE_MSG*)malloc((uint16_t)sizeof(tNFA_CE_MSG));
   if (p_msg != NULL) {
     p_msg->local_tag.hdr.event = NFA_CE_API_CFG_LOCAL_TAG_EVT;
 
@@ -205,7 +206,7 @@ tNFA_STATUS NFA_CeConfigureUiccListenTech(tNFA_HANDLE ee_handle,
 
   /* Otherwise then app is configuring uicc listen for the specificed
    * technologies */
-  p_msg = (tNFA_CE_MSG*)GKI_getbuf((uint16_t)sizeof(tNFA_CE_MSG));
+  p_msg = (tNFA_CE_MSG*)malloc((uint16_t)sizeof(tNFA_CE_MSG));
   if (p_msg != NULL) {
     p_msg->reg_listen.hdr.event = NFA_CE_API_REG_LISTEN_EVT;
     p_msg->reg_listen.listen_type = NFA_CE_REG_TYPE_UICC;
@@ -253,7 +254,7 @@ tNFA_STATUS NFA_CeRegisterFelicaSystemCodeOnDH(uint16_t system_code,
   /* Validate parameters */
   if (p_conn_cback == NULL) return (NFA_STATUS_INVALID_PARAM);
 
-  p_msg = (tNFA_CE_MSG*)GKI_getbuf((uint16_t)sizeof(tNFA_CE_MSG));
+  p_msg = (tNFA_CE_MSG*)malloc((uint16_t)sizeof(tNFA_CE_MSG));
   if (p_msg != NULL) {
     p_msg->reg_listen.hdr.event = NFA_CE_API_REG_LISTEN_EVT;
     p_msg->reg_listen.p_conn_cback = p_conn_cback;
@@ -328,7 +329,7 @@ tNFA_STATUS NFA_CeRegisterAidOnDH(uint8_t aid[NFC_MAX_AID_LEN], uint8_t aid_len,
   /* Validate parameters */
   if (p_conn_cback == NULL) return (NFA_STATUS_INVALID_PARAM);
 
-  p_msg = (tNFA_CE_MSG*)GKI_getbuf((uint16_t)sizeof(tNFA_CE_MSG));
+  p_msg = (tNFA_CE_MSG*)malloc((uint16_t)sizeof(tNFA_CE_MSG));
   if (p_msg != NULL) {
     p_msg->reg_listen.hdr.event = NFA_CE_API_REG_LISTEN_EVT;
     p_msg->reg_listen.p_conn_cback = p_conn_cback;
@@ -407,7 +408,7 @@ tNFA_STATUS NFA_CeSetIsoDepListenTech(tNFA_TECHNOLOGY_MASK tech_mask) {
     return (NFA_STATUS_INVALID_PARAM);
   }
 
-  p_msg = (tNFA_CE_MSG*)GKI_getbuf((uint16_t)sizeof(tNFA_CE_MSG));
+  p_msg = (tNFA_CE_MSG*)malloc((uint16_t)sizeof(tNFA_CE_MSG));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_CE_API_CFG_ISODEP_TECH_EVT;
     p_msg->hdr.layer_specific = tech_mask;

@@ -23,6 +23,7 @@
  *  (callback). On the transmit side, it manages the command transmission.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include "bt_types.h"
 #include "nfc_api.h"
 #include "nfc_target.h"
@@ -149,9 +150,9 @@ void nfc_free_conn_cb(tNFC_CONN_CB* p_cb) {
 
   if (p_cb == NULL) return;
 
-  while ((p_buf = GKI_dequeue(&p_cb->rx_q)) != NULL) GKI_freebuf(p_buf);
+  while ((p_buf = GKI_dequeue(&p_cb->rx_q)) != NULL) free(p_buf);
 
-  while ((p_buf = GKI_dequeue(&p_cb->tx_q)) != NULL) GKI_freebuf(p_buf);
+  while ((p_buf = GKI_dequeue(&p_cb->tx_q)) != NULL) free(p_buf);
 
   nfc_cb.conn_id[p_cb->conn_id] = 0;
   p_cb->p_cback = NULL;

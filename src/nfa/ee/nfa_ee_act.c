@@ -21,6 +21,7 @@
  *  This file contains the action functions for NFA-EE
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_api.h"
 #include "nfa_dm_int.h"
@@ -822,7 +823,7 @@ void nfa_ee_api_send_data(tNFA_EE_MSG* p_data) {
   tNFA_STATUS status = NFA_STATUS_FAILED;
 
   if (p_cb->conn_st == NFA_EE_CONN_ST_CONN) {
-    p_pkt = (NFC_HDR*)GKI_getbuf(size);
+    p_pkt = (NFC_HDR*)malloc(size);
     if (p_pkt) {
       p_pkt->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
       p_pkt->len = p_data->send_data.data_len;
@@ -1512,7 +1513,7 @@ void nfa_ee_nci_conn(tNFA_EE_MSG* p_data) {
 
     if ((event != NFA_EE_INVALID) && (p_cback)) (*p_cback)(event, &evt_data);
   }
-  if (p_pkt) GKI_freebuf(p_pkt);
+  if (p_pkt) free(p_pkt);
 }
 
 /*******************************************************************************
@@ -2027,7 +2028,7 @@ void nfa_ee_lmrt_to_nfcc(tNFA_EE_MSG* p_data) {
   uint8_t max_tlv;
 
   /* update routing table: DH and the activated NFCEEs */
-  p = (uint8_t*)GKI_getbuf(NFA_EE_ROUT_BUF_SIZE);
+  p = (uint8_t*)malloc(NFA_EE_ROUT_BUF_SIZE);
   if (p == NULL) {
     NFA_TRACE_ERROR0("nfa_ee_lmrt_to_nfcc() no buffer to send routing info.");
     nfa_ee_report_event(NULL, NFA_EE_NO_MEM_ERR_EVT,
@@ -2082,7 +2083,7 @@ void nfa_ee_lmrt_to_nfcc(tNFA_EE_MSG* p_data) {
     nfa_ee_report_event(NULL, NFA_EE_ROUT_ERR_EVT,
                         (tNFA_EE_CBACK_DATA*)&status);
   }
-  GKI_freebuf(p);
+  free(p);
 }
 
 /*******************************************************************************

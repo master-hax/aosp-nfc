@@ -22,6 +22,7 @@
  *  mode.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "nfc_target.h"
@@ -351,7 +352,7 @@ void ce_t3t_handle_update_cmd(tCE_CB* p_ce_cb, NFC_HDR* p_cmd_msg) {
     p_ce_cb->p_cback(CE_T3T_NDEF_UPDATE_CPLT_EVT, (tCE_DATA*)&update_info);
   }
 
-  GKI_freebuf(p_cmd_msg);
+  free(p_cmd_msg);
 }
 
 /*******************************************************************************
@@ -499,7 +500,7 @@ void ce_t3t_handle_check_cmd(tCE_CB* p_ce_cb, NFC_HDR* p_cmd_msg) {
     CE_TRACE_ERROR0("CE: Unable to allocat buffer for response message");
   }
 
-  GKI_freebuf(p_cmd_msg);
+  free(p_cmd_msg);
 }
 
 /*******************************************************************************
@@ -592,12 +593,12 @@ void ce_t3t_handle_non_nfc_forum_cmd(tCE_CB* p_mem_cb, uint8_t cmd_id,
       p_rsp_msg->len = (uint16_t)(p_dst - p_rsp_start);
       ce_t3t_send_to_lower(p_rsp_msg);
     } else {
-      GKI_freebuf(p_rsp_msg);
+      free(p_rsp_msg);
     }
   } else {
     CE_TRACE_ERROR0("CE: Unable to allocat buffer for response message");
   }
-  GKI_freebuf(p_cmd_msg);
+  free(p_cmd_msg);
 }
 
 /*******************************************************************************
@@ -765,7 +766,7 @@ void ce_t3t_data_cback(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
     ce_t3t_send_rsp(p_ce_cb, p_nfcid2, T3T_MSG_OPC_CHECK_RSP,
                     T3T_MSG_RSP_STATUS_ERROR,
                     T3T_MSG_RSP_STATUS2_ERROR_PROCESSING);
-    GKI_freebuf(p_msg);
+    free(p_msg);
   }
 }
 

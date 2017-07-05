@@ -21,6 +21,7 @@
  *  This is the main implementation file for the NFA P2P.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "llcp_api.h"
 #include "llcp_defs.h"
@@ -241,7 +242,7 @@ static void nfa_p2p_update_active_listen(void) {
       p2p_listen_mask, NFA_DM_DISC_HOST_ID_DH, nfa_p2p_discovery_cback);
 
   /* restart RF discovery to update RF technologies */
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->event = NFA_P2P_INT_RESTART_RF_DISC_EVT;
     nfa_sys_sendmsg(p_msg);

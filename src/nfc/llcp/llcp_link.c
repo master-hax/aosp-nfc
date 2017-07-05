@@ -22,6 +22,7 @@
  *
  ******************************************************************************/
 
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "gki.h"
@@ -369,7 +370,7 @@ void llcp_link_deactivate(uint8_t reason) {
 
   /* Release any held buffers in signaling PDU queue */
   while (llcp_cb.lcb.sig_xmit_q.p_first)
-    GKI_freebuf(GKI_dequeue(&llcp_cb.lcb.sig_xmit_q));
+    free(GKI_dequeue(&llcp_cb.lcb.sig_xmit_q));
 
   /* Release any held buffers in UI PDU queue */
   for (local_sap = LLCP_SAP_SDP + 1; local_sap < LLCP_NUM_SAPS; local_sap++) {
@@ -377,12 +378,11 @@ void llcp_link_deactivate(uint8_t reason) {
 
     if ((p_app_cb) && (p_app_cb->p_app_cback)) {
       while (p_app_cb->ui_xmit_q.p_first)
-        GKI_freebuf(GKI_dequeue(&p_app_cb->ui_xmit_q));
+        free(GKI_dequeue(&p_app_cb->ui_xmit_q));
 
       p_app_cb->is_ui_tx_congested = false;
 
-      while (p_app_cb->ui_rx_q.p_first)
-        GKI_freebuf(GKI_dequeue(&p_app_cb->ui_rx_q));
+      while (p_app_cb->ui_rx_q.p_first) free(GKI_dequeue(&p_app_cb->ui_rx_q));
     }
   }
 
@@ -927,7 +927,7 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
     llcp_util_send_frmr(p_dlcb, LLCP_FRMR_W_ERROR_FLAG, LLCP_PDU_UI_TYPE, 0);
     llcp_dlsm_execute(p_dlcb, LLCP_DLC_EVENT_FRAME_ERROR, NULL);
     if (p_msg) {
-      GKI_freebuf(p_msg);
+      free(p_msg);
     }
     return;
   }
@@ -968,7 +968,7 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
 
         p_last_buf->len += LLCP_PDU_AGF_LEN_SIZE + ui_pdu_length;
 
-        if (p_msg) GKI_freebuf(p_msg);
+        if (p_msg) free(p_msg);
 
         appended = true;
       }
@@ -1017,7 +1017,7 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
           "discard oldest UI PDU",
           local_sap, p_app_cb->ui_rx_q.count);
 
-      GKI_freebuf(GKI_dequeue(&p_app_cb->ui_rx_q));
+      free(GKI_dequeue(&p_app_cb->ui_rx_q));
       llcp_cb.total_rx_ui_pdu--;
     }
 
@@ -1033,7 +1033,7 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
                       local_sap);
 
     if (p_msg) {
-      GKI_freebuf(p_msg);
+      free(p_msg);
     }
   }
 }
@@ -1080,7 +1080,7 @@ static void llcp_link_proc_agf_pdu(NFC_HDR* p_agf) {
 
   if (agf_length != 0) {
     LLCP_TRACE_ERROR0("llcp_link_proc_agf_pdu (): Received invalid AGF PDU");
-    GKI_freebuf(p_agf);
+    free(p_agf);
     return;
   }
 
@@ -1113,7 +1113,7 @@ static void llcp_link_proc_agf_pdu(NFC_HDR* p_agf) {
 
     if ((ptype == LLCP_PDU_DISC_TYPE) && (dsap == LLCP_SAP_LM) &&
         (ssap == LLCP_SAP_LM)) {
-      GKI_freebuf(p_agf);
+      free(p_agf);
       llcp_link_deactivate(LLCP_LINK_REMOTE_INITIATED);
       return;
     } else if (ptype == LLCP_PDU_SYMM_TYPE) {
@@ -1140,7 +1140,7 @@ static void llcp_link_proc_agf_pdu(NFC_HDR* p_agf) {
     agf_length -= pdu_length;
   }
 
-  GKI_freebuf(p_agf);
+  free(p_agf);
 }
 
 /*******************************************************************************
@@ -1202,7 +1202,7 @@ static void llcp_link_proc_rx_pdu(uint8_t dsap, uint8_t ptype, uint8_t ssap,
       break;
   }
 
-  if (free_buffer) GKI_freebuf(p_msg);
+  if (free_buffer) free(p_msg);
 }
 
 /*******************************************************************************
@@ -1299,7 +1299,7 @@ static void llcp_link_proc_rx_data(NFC_HDR* p_msg) {
     LLCP_TRACE_ERROR0("Received PDU in state of SYMM_MUST_XMIT_NEXT");
   }
 
-  if (free_buffer) GKI_freebuf(p_msg);
+  if (free_buffer) free(p_msg);
 }
 
 /*******************************************************************************
@@ -1480,7 +1480,7 @@ static NFC_HDR* llcp_link_build_next_pdu(NFC_HDR* p_pdu) {
 
           p_agf->len = LLCP_PDU_HEADER_SIZE + 2 + p_msg->len;
 
-          GKI_freebuf(p_msg);
+          free(p_msg);
           p_msg = p_agf;
         } else {
           LLCP_TRACE_ERROR0("llcp_link_build_next_pdu (): Out of buffer");
@@ -1505,7 +1505,7 @@ static NFC_HDR* llcp_link_build_next_pdu(NFC_HDR* p_pdu) {
 
       p_agf->len += 2 + p_next_pdu->len;
 
-      GKI_freebuf(p_next_pdu);
+      free(p_next_pdu);
 
       /* Get next PDU length from link manager or data links without dequeue */
       llcp_link_get_next_pdu(true, &next_pdu_length);
@@ -1558,14 +1558,14 @@ void llcp_link_connection_cback(uint8_t conn_id, tNFC_CONN_EVT event,
       /* respoding SYMM while LLCP is deactivated but RF link is not deactivated
        * yet */
       llcp_link_send_SYMM();
-      GKI_freebuf((NFC_HDR*)p_data->data.p_data);
+      free((NFC_HDR*)p_data->data.p_data);
     } else if (llcp_cb.lcb.link_state == LLCP_LINK_STATE_ACTIVATION_FAILED) {
       /* respoding with invalid LLC PDU until initiator deactivates RF link
       *after LLCP activation was failed,
       ** so that initiator knows LLCP link activation was failed.
       */
       llcp_link_send_invalid_pdu();
-      GKI_freebuf((NFC_HDR*)p_data->data.p_data);
+      free((NFC_HDR*)p_data->data.p_data);
     } else {
       llcp_cb.lcb.flags |= LLCP_LINK_FLAGS_RX_ANY_LLC_PDU;
       llcp_link_proc_rx_data((NFC_HDR*)p_data->data.p_data);

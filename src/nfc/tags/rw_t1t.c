@@ -22,6 +22,7 @@
  *  mode.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfc_target.h"
 
@@ -102,7 +103,7 @@ static void rw_t1t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
           p_t1t->prev_cmd_rsp_info.op_code,
           p_t1t->prev_cmd_rsp_info.pend_retx_rsp - 1);
       p_t1t->prev_cmd_rsp_info.pend_retx_rsp--;
-      GKI_freebuf(p_pkt);
+      free(p_pkt);
     } else {
       /* Raw frame event */
       evt_data.data.p_data = p_pkt;
@@ -153,7 +154,7 @@ static void rw_t1t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 #endif
       rw_t1t_process_frame_error();
     }
-    GKI_freebuf(p_pkt);
+    free(p_pkt);
     return;
   }
 
@@ -196,7 +197,7 @@ static void rw_t1t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   if (b_notify) {
     if ((p_t1t->state != RW_T1T_STATE_READ) &&
         (p_t1t->state != RW_T1T_STATE_WRITE)) {
-      GKI_freebuf(p_pkt);
+      free(p_pkt);
       evt_data.data.p_data = NULL;
     } else {
       evt_data.data.p_data = p_pkt;
@@ -204,7 +205,7 @@ static void rw_t1t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
     rw_t1t_handle_op_complete();
     (*rw_cb.p_cback)(rw_event, (tRW_DATA*)&evt_data);
   } else
-    GKI_freebuf(p_pkt);
+    free(p_pkt);
 
 #if (BT_TRACE_VERBOSE == TRUE)
   if (begin_state != p_t1t->state) {
@@ -253,7 +254,7 @@ void rw_t1t_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 
       /* Free cmd buf for retransmissions */
       if (p_t1t->p_cur_cmd_buf) {
-        GKI_freebuf(p_t1t->p_cur_cmd_buf);
+        free(p_t1t->p_cur_cmd_buf);
         p_t1t->p_cur_cmd_buf = NULL;
       }
 
@@ -268,7 +269,7 @@ void rw_t1t_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
           break;
         } else if (p_data->data.p_data != NULL) {
           /* Free the response buffer in case of error response */
-          GKI_freebuf((NFC_HDR*)(p_data->data.p_data));
+          free((NFC_HDR*)(p_data->data.p_data));
           p_data->data.p_data = NULL;
         }
       }
@@ -595,9 +596,9 @@ static void rw_t1t_process_error(void) {
     /* allocate a new buffer for message */
     p_cmd_buf = (NFC_HDR*)GKI_getpoolbuf(NFC_RW_POOL_ID);
     if (p_cmd_buf != NULL) {
-      memcpy(p_cmd_buf, p_t1t->p_cur_cmd_buf,
-             sizeof(NFC_HDR) + p_t1t->p_cur_cmd_buf->offset +
-                 p_t1t->p_cur_cmd_buf->len);
+      memcpy(p_cmd_buf, p_t1t->p_cur_cmd_buf, sizeof(NFC_HDR) +
+                                                  p_t1t->p_cur_cmd_buf->offset +
+                                                  p_t1t->p_cur_cmd_buf->len);
 
 #if (RW_STATS_INCLUDED == TRUE)
       /* Update stats */

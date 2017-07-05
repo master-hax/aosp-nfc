@@ -22,6 +22,7 @@
  *  machine.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nci_hmsgs.h"
 #include "nfa_api.h"
@@ -300,8 +301,8 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
 
     case NFC_GET_CONFIG_REVT: /* 3  Get Config Response */
       if (p_data->get_config.status == NFC_STATUS_OK) {
-        p_nfa_get_confg = (tNFA_GET_CONFIG*)GKI_getbuf(
-            (uint16_t)(sizeof(tNFA_GET_CONFIG) + p_data->get_config.tlv_size));
+        p_nfa_get_confg = (tNFA_GET_CONFIG*)malloc(sizeof(tNFA_GET_CONFIG) +
+                                                   p_data->get_config.tlv_size);
         if (p_nfa_get_confg != NULL) {
           p_nfa_get_confg->status = NFA_STATUS_OK;
           p_nfa_get_confg->tlv_size = p_data->get_config.tlv_size;
@@ -310,7 +311,7 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
           (*nfa_dm_cb.p_dm_cback)(NFA_DM_GET_CONFIG_EVT,
                                   (tNFA_DM_CBACK_DATA*)p_nfa_get_confg);
 
-          GKI_freebuf(p_nfa_get_confg);
+          free(p_nfa_get_confg);
           return;
         } else {
           NFA_TRACE_DEBUG0(
@@ -1342,7 +1343,7 @@ static void nfa_dm_act_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 
       nfa_dm_conn_cback_event_notify(NFA_DATA_EVT, &evt_data);
 
-      GKI_freebuf(p_msg);
+      free(p_msg);
     } else {
       NFA_TRACE_ERROR0(
           "nfa_dm_act_data_cback (): received NFC_DATA_CEVT with NULL data "
@@ -1393,8 +1394,7 @@ static void nfa_dm_excl_disc_cback(tNFA_DM_RF_DISC_EVT event,
         nfa_dm_conn_cback_event_notify(NFA_ACTIVATED_EVT, &evt_data);
       } else {
         /* holding activation notification until sub-module is ready */
-        nfa_dm_cb.p_activate_ntf =
-            (uint8_t*)GKI_getbuf(sizeof(tNFC_ACTIVATE_DEVT));
+        nfa_dm_cb.p_activate_ntf = (uint8_t*)malloc(sizeof(tNFC_ACTIVATE_DEVT));
 
         if (nfa_dm_cb.p_activate_ntf) {
           memcpy(nfa_dm_cb.p_activate_ntf, &(p_data->activate),
@@ -1484,8 +1484,7 @@ static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
       }
 
       /* holding activation notification until sub-module is ready */
-      nfa_dm_cb.p_activate_ntf =
-          (uint8_t*)GKI_getbuf(sizeof(tNFC_ACTIVATE_DEVT));
+      nfa_dm_cb.p_activate_ntf = (uint8_t*)malloc(sizeof(tNFC_ACTIVATE_DEVT));
 
       if (nfa_dm_cb.p_activate_ntf) {
         memcpy(nfa_dm_cb.p_activate_ntf, &(p_data->activate),
@@ -1497,7 +1496,7 @@ static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
             /* activate LLCP */
             nfa_p2p_activate_llcp(p_data);
             if (nfa_dm_cb.p_activate_ntf) {
-              GKI_freebuf(nfa_dm_cb.p_activate_ntf);
+              free(nfa_dm_cb.p_activate_ntf);
               nfa_dm_cb.p_activate_ntf = NULL;
             }
           } else {
@@ -1701,7 +1700,7 @@ void nfa_dm_notify_activation_status(tNFA_STATUS status,
     }
   }
 
-  GKI_freebuf(nfa_dm_cb.p_activate_ntf);
+  free(nfa_dm_cb.p_activate_ntf);
   nfa_dm_cb.p_activate_ntf = NULL;
 }
 

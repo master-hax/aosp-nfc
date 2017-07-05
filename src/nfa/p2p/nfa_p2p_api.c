@@ -22,6 +22,7 @@
  *
  ******************************************************************************/
 #include "nfa_p2p_api.h"
+#include <stdlib.h>
 #include <string.h>
 #include "llcp_api.h"
 #include "llcp_defs.h"
@@ -84,7 +85,7 @@ tNFA_STATUS NFA_P2pRegisterServer(uint8_t server_sap,
     return (NFA_STATUS_FAILED);
   }
 
-  if ((p_msg = (tNFA_P2P_API_REG_SERVER*)GKI_getbuf(
+  if ((p_msg = (tNFA_P2P_API_REG_SERVER*)malloc(
            sizeof(tNFA_P2P_API_REG_SERVER))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_REG_SERVER_EVT;
 
@@ -134,7 +135,7 @@ tNFA_STATUS NFA_P2pRegisterClient(tNFA_P2P_LINK_TYPE link_type,
     return (NFA_STATUS_FAILED);
   }
 
-  if ((p_msg = (tNFA_P2P_API_REG_CLIENT*)GKI_getbuf(
+  if ((p_msg = (tNFA_P2P_API_REG_CLIENT*)malloc(
            sizeof(tNFA_P2P_API_REG_CLIENT))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_REG_CLIENT_EVT;
 
@@ -180,7 +181,7 @@ tNFA_STATUS NFA_P2pDeregister(tNFA_HANDLE handle) {
     return (NFA_STATUS_BAD_HANDLE);
   }
 
-  if ((p_msg = (tNFA_P2P_API_DEREG*)GKI_getbuf(sizeof(tNFA_P2P_API_DEREG))) !=
+  if ((p_msg = (tNFA_P2P_API_DEREG*)malloc(sizeof(tNFA_P2P_API_DEREG))) !=
       NULL) {
     p_msg->hdr.event = NFA_P2P_API_DEREG_EVT;
 
@@ -231,7 +232,7 @@ tNFA_STATUS NFA_P2pAcceptConn(tNFA_HANDLE handle, uint16_t miu, uint8_t rw) {
   if ((miu < LLCP_DEFAULT_MIU) || (nfa_p2p_cb.local_link_miu < miu)) {
     P2P_TRACE_ERROR3("NFA_P2pAcceptConn (): MIU(%d) must be between %d and %d",
                      miu, LLCP_DEFAULT_MIU, nfa_p2p_cb.local_link_miu);
-  } else if ((p_msg = (tNFA_P2P_API_ACCEPT_CONN*)GKI_getbuf(
+  } else if ((p_msg = (tNFA_P2P_API_ACCEPT_CONN*)malloc(
                   sizeof(tNFA_P2P_API_ACCEPT_CONN))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_ACCEPT_CONN_EVT;
 
@@ -280,7 +281,7 @@ tNFA_STATUS NFA_P2pRejectConn(tNFA_HANDLE handle) {
     return (NFA_STATUS_BAD_HANDLE);
   }
 
-  if ((p_msg = (tNFA_P2P_API_REJECT_CONN*)GKI_getbuf(
+  if ((p_msg = (tNFA_P2P_API_REJECT_CONN*)malloc(
            sizeof(tNFA_P2P_API_REJECT_CONN))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_REJECT_CONN_EVT;
 
@@ -333,7 +334,7 @@ tNFA_STATUS NFA_P2pDisconnect(tNFA_HANDLE handle, bool flush) {
     return (NFA_STATUS_BAD_HANDLE);
   }
 
-  if ((p_msg = (tNFA_P2P_API_DISCONNECT*)GKI_getbuf(
+  if ((p_msg = (tNFA_P2P_API_DISCONNECT*)malloc(
            sizeof(tNFA_P2P_API_DISCONNECT))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_DISCONNECT_EVT;
 
@@ -386,7 +387,7 @@ tNFA_STATUS NFA_P2pConnectByName(tNFA_HANDLE client_handle,
         "NFA_P2pConnectByName (): MIU(%d) must be between %d and %d or LLCP "
         "link is not activated",
         miu, LLCP_DEFAULT_MIU, nfa_p2p_cb.local_link_miu);
-  } else if ((p_msg = (tNFA_P2P_API_CONNECT*)GKI_getbuf(
+  } else if ((p_msg = (tNFA_P2P_API_CONNECT*)malloc(
                   sizeof(tNFA_P2P_API_CONNECT))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_CONNECT_EVT;
 
@@ -443,7 +444,7 @@ tNFA_STATUS NFA_P2pConnectBySap(tNFA_HANDLE client_handle, uint8_t dsap,
         "NFA_P2pConnectBySap (): MIU(%d) must be between %d and %d, or LLCP "
         "link is not activated",
         miu, LLCP_DEFAULT_MIU, nfa_p2p_cb.local_link_miu);
-  } else if ((p_msg = (tNFA_P2P_API_CONNECT*)GKI_getbuf(
+  } else if ((p_msg = (tNFA_P2P_API_CONNECT*)malloc(
                   sizeof(tNFA_P2P_API_CONNECT))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_CONNECT_EVT;
 
@@ -513,7 +514,7 @@ tNFA_STATUS NFA_P2pSendUI(tNFA_HANDLE handle, uint8_t dsap, uint16_t length,
     P2P_TRACE_WARNING1(
         "NFA_P2pSendUI(): handle:0x%X, logical data link is congested", handle);
     ret_status = NFA_STATUS_CONGESTED;
-  } else if ((p_msg = (tNFA_P2P_API_SEND_UI*)GKI_getbuf(
+  } else if ((p_msg = (tNFA_P2P_API_SEND_UI*)malloc(
                   sizeof(tNFA_P2P_API_SEND_UI))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_SEND_UI_EVT;
 
@@ -535,7 +536,7 @@ tNFA_STATUS NFA_P2pSendUI(tNFA_HANDLE handle, uint8_t dsap, uint16_t length,
 
       ret_status = NFA_STATUS_OK;
     } else {
-      GKI_freebuf(p_msg);
+      free(p_msg);
 
       nfa_p2p_cb.sap_cb[xx].flags |= NFA_P2P_SAP_FLAG_LLINK_CONGESTED;
       ret_status = NFA_STATUS_CONGESTED;
@@ -685,7 +686,7 @@ tNFA_STATUS NFA_P2pSendData(tNFA_HANDLE handle, uint16_t length,
         "NFA_P2pSendData (): handle:0x%X, data link connection is congested",
         handle);
     ret_status = NFA_STATUS_CONGESTED;
-  } else if ((p_msg = (tNFA_P2P_API_SEND_DATA*)GKI_getbuf(
+  } else if ((p_msg = (tNFA_P2P_API_SEND_DATA*)malloc(
                   sizeof(tNFA_P2P_API_SEND_DATA))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_SEND_DATA_EVT;
 
@@ -706,7 +707,7 @@ tNFA_STATUS NFA_P2pSendData(tNFA_HANDLE handle, uint16_t length,
 
       ret_status = NFA_STATUS_OK;
     } else {
-      GKI_freebuf(p_msg);
+      free(p_msg);
       nfa_p2p_cb.conn_cb[xx].flags |= NFA_P2P_CONN_FLAG_CONGESTED;
       ret_status = NFA_STATUS_CONGESTED;
     }
@@ -834,7 +835,7 @@ tNFA_STATUS NFA_P2pSetLocalBusy(tNFA_HANDLE conn_handle, bool is_busy) {
     return (NFA_STATUS_BAD_HANDLE);
   }
 
-  if ((p_msg = (tNFA_P2P_API_SET_LOCAL_BUSY*)GKI_getbuf(
+  if ((p_msg = (tNFA_P2P_API_SET_LOCAL_BUSY*)malloc(
            sizeof(tNFA_P2P_API_SET_LOCAL_BUSY))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_SET_LOCAL_BUSY_EVT;
 
@@ -881,7 +882,7 @@ tNFA_STATUS NFA_P2pGetLinkInfo(tNFA_HANDLE handle) {
     return (NFA_STATUS_BAD_HANDLE);
   }
 
-  if ((p_msg = (tNFA_P2P_API_GET_LINK_INFO*)GKI_getbuf(
+  if ((p_msg = (tNFA_P2P_API_GET_LINK_INFO*)malloc(
            sizeof(tNFA_P2P_API_GET_LINK_INFO))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_GET_LINK_INFO_EVT;
 
@@ -928,7 +929,7 @@ tNFA_STATUS NFA_P2pGetRemoteSap(tNFA_HANDLE handle, char* p_service_name) {
     return (NFA_STATUS_BAD_HANDLE);
   }
 
-  if ((p_msg = (tNFA_P2P_API_GET_REMOTE_SAP*)GKI_getbuf(
+  if ((p_msg = (tNFA_P2P_API_GET_REMOTE_SAP*)malloc(
            sizeof(tNFA_P2P_API_GET_REMOTE_SAP))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_GET_REMOTE_SAP_EVT;
 
@@ -995,7 +996,7 @@ tNFA_STATUS NFA_P2pSetLLCPConfig(uint16_t link_miu, uint8_t opt, uint8_t wt,
     return (NFA_STATUS_FAILED);
   }
 
-  if ((p_msg = (tNFA_P2P_API_SET_LLCP_CFG*)GKI_getbuf(
+  if ((p_msg = (tNFA_P2P_API_SET_LLCP_CFG*)malloc(
            sizeof(tNFA_P2P_API_SET_LLCP_CFG))) != NULL) {
     p_msg->hdr.event = NFA_P2P_API_SET_LLCP_CFG_EVT;
 

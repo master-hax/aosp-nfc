@@ -21,6 +21,7 @@
  *  This is the main implementation file for the NFA EE.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_dm_int.h"
 #include "nfa_ee_int.h"
@@ -641,8 +642,7 @@ bool nfa_ee_evt_hdlr(NFC_HDR* p_msg) {
   } else {
     /* if the data event is not handled by action function, free the data packet
      */
-    if (p_msg->event == NFA_EE_NCI_DATA_EVT)
-      GKI_freebuf(p_evt_data->conn.p_data);
+    if (p_msg->event == NFA_EE_NCI_DATA_EVT) free(p_evt_data->conn.p_data);
   }
 
   return true;

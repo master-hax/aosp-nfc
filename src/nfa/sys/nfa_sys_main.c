@@ -21,6 +21,7 @@
  *  This is the main implementation file for the NFA system manager.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_api.h"
 #include "nfa_dm_int.h"
@@ -83,7 +84,7 @@ void nfa_sys_event(NFC_HDR* p_msg) {
   }
 
   if (freebuf) {
-    GKI_freebuf(p_msg);
+    free(p_msg);
   }
 }
 

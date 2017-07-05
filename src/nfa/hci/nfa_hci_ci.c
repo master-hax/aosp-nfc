@@ -21,6 +21,7 @@
  *  This file contains the call-in functions for NFA HCI
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_hci_api.h"
 #include "nfa_hci_int.h"
@@ -40,7 +41,7 @@ void nfa_nv_ci_read(uint16_t num_bytes_read, tNFA_NV_CO_STATUS status,
                     uint8_t block) {
   tNFA_HCI_EVENT_DATA* p_msg;
 
-  p_msg = (tNFA_HCI_EVENT_DATA*)GKI_getbuf(sizeof(tNFA_HCI_EVENT_DATA));
+  p_msg = (tNFA_HCI_EVENT_DATA*)malloc(sizeof(tNFA_HCI_EVENT_DATA));
   if (p_msg != NULL) {
     p_msg->nv_read.hdr.event = NFA_HCI_RSP_NV_READ_EVT;
 
@@ -67,7 +68,7 @@ void nfa_nv_ci_read(uint16_t num_bytes_read, tNFA_NV_CO_STATUS status,
 void nfa_nv_ci_write(tNFA_NV_CO_STATUS status) {
   tNFA_HCI_EVENT_DATA* p_msg;
 
-  p_msg = (tNFA_HCI_EVENT_DATA*)GKI_getbuf(sizeof(tNFA_HCI_EVENT_DATA));
+  p_msg = (tNFA_HCI_EVENT_DATA*)malloc(sizeof(tNFA_HCI_EVENT_DATA));
   if (p_msg != NULL) {
     p_msg->nv_write.hdr.event = NFA_HCI_RSP_NV_WRITE_EVT;
     p_msg->nv_write.status = 0;

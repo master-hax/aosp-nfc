@@ -22,6 +22,7 @@
  *  commands (for DH).
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfc_target.h"
 
@@ -163,7 +164,7 @@ uint8_t nci_snd_core_set_config(uint8_t* p_param_tlvs, uint8_t tlv_size) {
     if (len >= ulen) {
       len -= ulen;
     } else {
-      GKI_freebuf(p);
+      free(p);
       return NCI_STATUS_FAILED;
     }
   }
@@ -567,7 +568,7 @@ uint8_t nci_snd_parameter_update_cmd(uint8_t* p_param_tlvs, uint8_t tlv_size) {
     if (len >= ulen) {
       len -= ulen;
     } else {
-      GKI_freebuf(p);
+      free(p);
       return NCI_STATUS_FAILED;
     }
   }

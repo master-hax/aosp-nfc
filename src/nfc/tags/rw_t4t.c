@@ -22,6 +22,7 @@
  *  mode.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "nfc_target.h"
@@ -1493,7 +1494,7 @@ static void rw_t4t_sm_read_ndef(NFC_HDR* p_r_apdu) {
 
   if (status_words != T4T_RSP_CMD_CMPLTED) {
     rw_t4t_handle_error(NFC_STATUS_CMD_NOT_CMPLTD, *(p - 2), *(p - 1));
-    GKI_freebuf(p_r_apdu);
+    free(p_r_apdu);
     return;
   }
 
@@ -1548,7 +1549,7 @@ static void rw_t4t_sm_read_ndef(NFC_HDR* p_r_apdu) {
       break;
   }
 
-  if (p_r_apdu) GKI_freebuf(p_r_apdu);
+  if (p_r_apdu) free(p_r_apdu);
 }
 
 /*******************************************************************************
@@ -1838,12 +1839,12 @@ static void rw_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
         (*(rw_cb.p_cback))(RW_T4T_RAW_FRAME_EVT, &rw_data);
         p_r_apdu = NULL;
       } else {
-        GKI_freebuf(p_r_apdu);
+        free(p_r_apdu);
       }
       break;
     case RW_T4T_STATE_DETECT_NDEF:
       rw_t4t_sm_detect_ndef(p_r_apdu);
-      GKI_freebuf(p_r_apdu);
+      free(p_r_apdu);
       break;
     case RW_T4T_STATE_READ_NDEF:
       rw_t4t_sm_read_ndef(p_r_apdu);
@@ -1851,26 +1852,26 @@ static void rw_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
       break;
     case RW_T4T_STATE_UPDATE_NDEF:
       rw_t4t_sm_update_ndef(p_r_apdu);
-      GKI_freebuf(p_r_apdu);
+      free(p_r_apdu);
       break;
     case RW_T4T_STATE_PRESENCE_CHECK:
       /* if any response, send presence check with ok */
       rw_data.status = NFC_STATUS_OK;
       p_t4t->state = RW_T4T_STATE_IDLE;
       (*(rw_cb.p_cback))(RW_T4T_PRESENCE_CHECK_EVT, &rw_data);
-      GKI_freebuf(p_r_apdu);
+      free(p_r_apdu);
       break;
     case RW_T4T_STATE_SET_READ_ONLY:
       rw_t4t_sm_set_readonly(p_r_apdu);
-      GKI_freebuf(p_r_apdu);
+      free(p_r_apdu);
       break;
     case RW_T4T_STATE_NDEF_FORMAT:
       rw_t4t_sm_ndef_format(p_r_apdu);
-      GKI_freebuf(p_r_apdu);
+      free(p_r_apdu);
       break;
     default:
       RW_TRACE_ERROR1("rw_t4t_data_cback (): invalid state=%d", p_t4t->state);
-      GKI_freebuf(p_r_apdu);
+      free(p_r_apdu);
       break;
   }
 
@@ -2138,7 +2139,7 @@ tNFC_STATUS RW_T4tPresenceCheck(uint8_t option) {
     status = false;
     if (option == RW_T4T_CHK_EMPTY_I_BLOCK) {
       /* use empty I block for presence check */
-      p_data = (NFC_HDR*)GKI_getbuf(NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE);
+      p_data = (NFC_HDR*)malloc(NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE);
       if (p_data != NULL) {
         p_data->offset = NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE;
         p_data->len = 0;

@@ -23,6 +23,8 @@
  ******************************************************************************/
 
 #include "nfa_sys_ptim.h"
+#include <stdlib.h>
+#include <string.h>
 #include "gki.h"
 #include "nfa_sys.h"
 #include "nfa_sys_int.h"
@@ -93,7 +95,7 @@ void nfa_sys_ptim_timer_update(tPTIM_CB* p_cb) {
     if (p_tle->p_cback) {
       (*p_tle->p_cback)(p_tle);
     } else if (p_tle->event) {
-      p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+      p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
       if (p_msg != NULL) {
         p_msg->event = p_tle->event;
         p_msg->layer_specific = 0;

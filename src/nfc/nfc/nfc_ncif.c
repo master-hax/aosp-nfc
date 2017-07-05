@@ -283,7 +283,7 @@ void nfc_ncif_check_cmd_queue(NFC_HDR* p_buf) {
           nfc_cb.flags &= ~NFC_FL_DISCOVER_PENDING;
           ps = (uint8_t*)nfc_cb.p_disc_pending;
           nci_snd_discover_cmd(*ps, (tNFC_DISCOVER_PARAMS*)(ps + 1));
-          GKI_freebuf(nfc_cb.p_disc_pending);
+          free(nfc_cb.p_disc_pending);
           nfc_cb.p_disc_pending = NULL;
         }
       } else if (nfc_cb.flags & NFC_FL_HAL_REQUESTED) {
@@ -998,11 +998,11 @@ void nfc_ncif_proc_deactivate(uint8_t status, uint8_t deact_type, bool is_ntf) {
   }
 
   while ((p_data = GKI_dequeue(&p_cb->rx_q)) != NULL) {
-    GKI_freebuf(p_data);
+    free(p_data);
   }
 
   while ((p_data = GKI_dequeue(&p_cb->tx_q)) != NULL) {
-    GKI_freebuf(p_data);
+    free(p_data);
   }
 
   if (p_cb->p_cback)
@@ -1331,7 +1331,7 @@ void nfc_ncif_proc_init_rsp(NFC_HDR* p_msg) {
       nci_snd_core_reset(NCI_RESET_TYPE_RESET_CFG);
     } else {
       nfc_enabled(status, NULL);
-      GKI_freebuf(p_msg);
+      free(p_msg);
     }
   }
 }
@@ -1509,7 +1509,7 @@ void nfc_ncif_proc_data(NFC_HDR* p_msg) {
 
             /* place the new buffer in the queue instead */
             GKI_remove_from_queue(&p_cb->rx_q, p_last);
-            GKI_freebuf(p_last);
+            free(p_last);
             GKI_enqueue(&p_cb->rx_q, p_max);
             p_last = p_max;
           }
@@ -1533,7 +1533,7 @@ void nfc_ncif_proc_data(NFC_HDR* p_msg) {
          * They are stripped off at NFC_DATA_CEVT and len may exceed 255 */
         NFC_TRACE_DEBUG1("nfc_ncif_proc_data len:%d", p_last->len);
         p_last->layer_specific = p_msg->layer_specific;
-        GKI_freebuf(p_msg);
+        free(p_msg);
 #ifdef DISP_NCI
         if (!(p_last->layer_specific & NFC_RAS_FRAGMENTED)) {
           /* this packet was reassembled. display the complete packet */
@@ -1561,5 +1561,5 @@ void nfc_ncif_proc_data(NFC_HDR* p_msg) {
     }
     return;
   }
-  GKI_freebuf(p_msg);
+  free(p_msg);
 }

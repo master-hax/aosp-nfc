@@ -16,6 +16,8 @@
  *
  ******************************************************************************/
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gki_int.h"
 
 #if (GKI_NUM_TOTAL_BUF_POOLS > 16)
@@ -94,7 +96,7 @@ static bool gki_alloc_free_queue(uint8_t id) {
   if (Q->p_first == 0) {
     void* p_mem = GKI_os_malloc((Q->size + BUFFER_PADDING_SIZE) * Q->total);
     if (p_mem) {
-// re-initialize the queue with allocated memory
+      // re-initialize the queue with allocated memory
       gki_init_free_queue(id, Q->size, Q->total, p_mem);
       return true;
     }
@@ -234,93 +236,6 @@ void GKI_init_q(BUFFER_Q* p_q) {
 
 /*******************************************************************************
 **
-** Function         GKI_getbuf
-**
-** Description      Called by an application to get a free buffer which
-**                  is of size greater or equal to the requested size.
-**
-**                  Note: This routine only takes buffers from public pools.
-**                        It will not use any buffers from pools
-**                        marked GKI_RESTRICTED_POOL.
-**
-** Parameters       size - (input) number of bytes needed.
-**
-** Returns          A pointer to the buffer, or NULL if none available
-**
-*******************************************************************************/
-void* GKI_getbuf(uint16_t size)
-{
-  uint8_t i;
-  FREE_QUEUE_T* Q;
-  BUFFER_HDR_T* p_hdr;
-  tGKI_COM_CB* p_cb = &gki_cb.com;
-
-  if (size == 0) {
-    GKI_exception(GKI_ERROR_BUF_SIZE_ZERO, "getbuf: Size is zero");
-    return (NULL);
-  }
-
-  /* Find the first buffer pool that is public that can hold the desired size */
-  for (i = 0; i < p_cb->curr_total_no_of_pools; i++) {
-    if (size <= p_cb->freeq[p_cb->pool_list[i]].size) break;
-  }
-
-  if (i == p_cb->curr_total_no_of_pools) {
-    GKI_exception(GKI_ERROR_BUF_SIZE_TOOBIG, "getbuf: Size is too big");
-    return (NULL);
-  }
-
-  /* Make sure the buffers aren't disturbed til finished with allocation */
-  GKI_disable();
-
-  /* search the public buffer pools that are big enough to hold the size
-   * until a free buffer is found */
-  for (; i < p_cb->curr_total_no_of_pools; i++) {
-    /* Only look at PUBLIC buffer pools (bypass RESTRICTED pools) */
-    if (((uint16_t)1 << p_cb->pool_list[i]) & p_cb->pool_access_mask) continue;
-
-    Q = &p_cb->freeq[p_cb->pool_list[i]];
-    if (Q->cur_cnt < Q->total) {
-      if (Q->p_first == 0 && gki_alloc_free_queue(i) != true) {
-        GKI_TRACE_ERROR_0("GKI_getbuf() out of buffer");
-        GKI_enable();
-        return NULL;
-      }
-
-      if (Q->p_first == 0) {
-        /* gki_alloc_free_queue() failed to alloc memory */
-        GKI_TRACE_ERROR_0("GKI_getbuf() fail alloc free queue");
-        GKI_enable();
-        return NULL;
-      }
-
-      p_hdr = Q->p_first;
-      Q->p_first = p_hdr->p_next;
-
-      if (!Q->p_first) Q->p_last = NULL;
-
-      if (++Q->cur_cnt > Q->max_cnt) Q->max_cnt = Q->cur_cnt;
-
-      GKI_enable();
-
-      p_hdr->task_id = GKI_get_taskid();
-
-      p_hdr->status = BUF_STATUS_UNLINKED;
-      p_hdr->p_next = NULL;
-      p_hdr->Type = 0;
-      return ((void*)((uint8_t*)p_hdr + BUFFER_HDR_SIZE));
-    }
-  }
-
-  GKI_TRACE_ERROR_0("GKI_getbuf() unable to allocate buffer!!!!!");
-
-  GKI_enable();
-
-  return (NULL);
-}
-
-/*******************************************************************************
-**
 ** Function         GKI_getpoolbuf
 **
 ** Description      Called by an application to get a free buffer from
@@ -335,8 +250,7 @@ void* GKI_getbuf(uint16_t size)
 ** Returns          A pointer to the buffer, or NULL if none available
 **
 *******************************************************************************/
-void* GKI_getpoolbuf(uint8_t pool_id)
-{
+void* GKI_getpoolbuf(uint8_t pool_id) {
   FREE_QUEUE_T* Q;
   BUFFER_HDR_T* p_hdr;
   tGKI_COM_CB* p_cb = &gki_cb.com;
@@ -378,64 +292,7 @@ void* GKI_getpoolbuf(uint8_t pool_id)
   GKI_enable();
 
   /* try for free buffers in public pools */
-  return (GKI_getbuf(p_cb->freeq[pool_id].size));
-}
-
-/*******************************************************************************
-**
-** Function         GKI_freebuf
-**
-** Description      Called by an application to return a buffer to the free
-**                  pool.
-**
-** Parameters       p_buf - (input) address of the beginning of a buffer.
-**
-** Returns          void
-**
-*******************************************************************************/
-void GKI_freebuf(void* p_buf) {
-  FREE_QUEUE_T* Q;
-  BUFFER_HDR_T* p_hdr;
-
-#if (GKI_ENABLE_BUF_CORRUPTION_CHECK == TRUE)
-  if (!p_buf || gki_chk_buf_damage(p_buf)) {
-    GKI_exception(GKI_ERROR_BUF_CORRUPTED, "Free - Buf Corrupted");
-    return;
-  }
-#endif
-
-  p_hdr = (BUFFER_HDR_T*)((uint8_t*)p_buf - BUFFER_HDR_SIZE);
-
-  if (p_hdr->status != BUF_STATUS_UNLINKED) {
-    GKI_exception(GKI_ERROR_FREEBUF_BUF_LINKED, "Freeing Linked Buf");
-    return;
-  }
-
-  if (p_hdr->q_id >= GKI_NUM_TOTAL_BUF_POOLS) {
-    GKI_exception(GKI_ERROR_FREEBUF_BAD_QID, "Bad Buf QId");
-    return;
-  }
-
-  GKI_disable();
-
-  /*
-  ** Release the buffer
-  */
-  Q = &gki_cb.com.freeq[p_hdr->q_id];
-  if (Q->p_last)
-    Q->p_last->p_next = p_hdr;
-  else
-    Q->p_first = p_hdr;
-
-  Q->p_last = p_hdr;
-  p_hdr->p_next = NULL;
-  p_hdr->status = BUF_STATUS_FREE;
-  p_hdr->task_id = GKI_INVALID_TASK;
-  if (Q->cur_cnt > 0) Q->cur_cnt--;
-
-  GKI_enable();
-
-  return;
+  return (malloc(p_cb->freeq[pool_id].size));
 }
 
 /*******************************************************************************
@@ -508,7 +365,7 @@ void GKI_send_msg(uint8_t task_id, uint8_t mbox, void* msg) {
   if ((task_id >= GKI_MAX_TASKS) || (mbox >= NUM_TASK_MBOX) ||
       (p_cb->OSRdyTbl[task_id] == TASK_DEAD)) {
     GKI_exception(GKI_ERROR_SEND_MSG_BAD_DEST, "Sending to unknown dest");
-    GKI_freebuf(msg);
+    free(msg);
     return;
   }
 
@@ -1090,7 +947,7 @@ void GKI_isend_msg(uint8_t task_id, uint8_t mbox, void* msg) {
   if ((task_id >= GKI_MAX_TASKS) || (mbox >= NUM_TASK_MBOX) ||
       (p_cb->OSRdyTbl[task_id] == TASK_DEAD)) {
     GKI_exception(GKI_ERROR_SEND_MSG_BAD_DEST, "Sending to unknown dest");
-    GKI_freebuf(msg);
+    free(msg);
     return;
   }
 

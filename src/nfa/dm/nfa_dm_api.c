@@ -21,6 +21,7 @@
  *  NFA interface for device management
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "ndef_utils.h"
 #include "nfa_api.h"
@@ -101,7 +102,7 @@ tNFA_STATUS NFA_Enable(tNFA_DM_CBACK* p_dm_cback,
     return (NFA_STATUS_FAILED);
   }
 
-  p_msg = (tNFA_DM_API_ENABLE*)GKI_getbuf(sizeof(tNFA_DM_API_ENABLE));
+  p_msg = (tNFA_DM_API_ENABLE*)malloc(sizeof(tNFA_DM_API_ENABLE));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_ENABLE_EVT;
     p_msg->p_dm_cback = p_dm_cback;
@@ -140,7 +141,7 @@ tNFA_STATUS NFA_Disable(bool graceful) {
 
   NFA_TRACE_API1("NFA_Disable (graceful=%i)", graceful);
 
-  p_msg = (tNFA_DM_API_DISABLE*)GKI_getbuf(sizeof(tNFA_DM_API_DISABLE));
+  p_msg = (tNFA_DM_API_DISABLE*)malloc(sizeof(tNFA_DM_API_DISABLE));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_DISABLE_EVT;
     p_msg->graceful = graceful;
@@ -176,7 +177,7 @@ tNFA_STATUS NFA_SetConfig(tNFA_PMID param_id, uint8_t length, uint8_t* p_data) {
 
   NFA_TRACE_API1("NFA_SetConfig (): param_id:0x%X", param_id);
 
-  p_msg = (tNFA_DM_API_SET_CONFIG*)GKI_getbuf(
+  p_msg = (tNFA_DM_API_SET_CONFIG*)malloc(
       (uint16_t)(sizeof(tNFA_DM_API_SET_CONFIG) + length));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_SET_CONFIG_EVT;
@@ -213,7 +214,7 @@ tNFA_STATUS NFA_GetConfig(uint8_t num_ids, tNFA_PMID* p_param_ids) {
 
   NFA_TRACE_API1("NFA_GetConfig (): num_ids: %i", num_ids);
 
-  p_msg = (tNFA_DM_API_GET_CONFIG*)GKI_getbuf(
+  p_msg = (tNFA_DM_API_GET_CONFIG*)malloc(
       (uint16_t)(sizeof(tNFA_DM_API_GET_CONFIG) + num_ids));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_GET_CONFIG_EVT;
@@ -280,7 +281,7 @@ tNFA_STATUS NFA_RequestExclusiveRfControl(tNFA_TECHNOLOGY_MASK poll_mask,
     return (NFA_STATUS_FAILED);
   }
 
-  p_msg = (tNFA_DM_API_REQ_EXCL_RF_CTRL*)GKI_getbuf(
+  p_msg = (tNFA_DM_API_REQ_EXCL_RF_CTRL*)malloc(
       sizeof(tNFA_DM_API_REQ_EXCL_RF_CTRL));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_REQUEST_EXCL_RF_CTRL_EVT;
@@ -324,7 +325,7 @@ tNFA_STATUS NFA_ReleaseExclusiveRfControl(void) {
     return (NFA_STATUS_FAILED);
   }
 
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->event = NFA_DM_API_RELEASE_EXCL_RF_CTRL_EVT;
     nfa_sys_sendmsg(p_msg);
@@ -374,7 +375,7 @@ tNFA_STATUS NFA_EnablePolling(tNFA_TECHNOLOGY_MASK poll_mask) {
 
   NFA_TRACE_API1("NFA_EnablePolling () 0x%X", poll_mask);
 
-  p_msg = (tNFA_DM_API_ENABLE_POLL*)GKI_getbuf(sizeof(tNFA_DM_API_ENABLE_POLL));
+  p_msg = (tNFA_DM_API_ENABLE_POLL*)malloc(sizeof(tNFA_DM_API_ENABLE_POLL));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_ENABLE_POLLING_EVT;
     p_msg->poll_mask = poll_mask;
@@ -408,7 +409,7 @@ tNFA_STATUS NFA_DisablePolling(void) {
 
   NFA_TRACE_API0("NFA_DisablePolling ()");
 
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->event = NFA_DM_API_DISABLE_POLLING_EVT;
 
@@ -448,7 +449,7 @@ tNFA_STATUS NFA_EnableListening(void) {
 
   NFA_TRACE_API0("NFA_EnableListening ()");
 
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->event = NFA_DM_API_ENABLE_LISTENING_EVT;
 
@@ -482,7 +483,7 @@ tNFA_STATUS NFA_DisableListening(void) {
 
   NFA_TRACE_API0("NFA_DisableListening ()");
 
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->event = NFA_DM_API_DISABLE_LISTENING_EVT;
 
@@ -519,7 +520,7 @@ tNFA_STATUS NFA_PauseP2p(void) {
 
   NFA_TRACE_API0("NFA_PauseP2p ()");
 
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->event = NFA_DM_API_PAUSE_P2P_EVT;
 
@@ -552,7 +553,7 @@ tNFA_STATUS NFA_ResumeP2p(void) {
 
   NFA_TRACE_API0("NFA_ResumeP2p ()");
 
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->event = NFA_DM_API_RESUME_P2P_EVT;
 
@@ -589,7 +590,7 @@ tNFA_STATUS NFA_SetP2pListenTech(tNFA_TECHNOLOGY_MASK tech_mask) {
 
   NFA_TRACE_API1("NFA_P2pSetListenTech (): tech_mask:0x%X", tech_mask);
 
-  p_msg = (tNFA_DM_API_SET_P2P_LISTEN_TECH*)GKI_getbuf(
+  p_msg = (tNFA_DM_API_SET_P2P_LISTEN_TECH*)malloc(
       sizeof(tNFA_DM_API_SET_P2P_LISTEN_TECH));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_SET_P2P_LISTEN_TECH_EVT;
@@ -622,7 +623,7 @@ tNFA_STATUS NFA_StartRfDiscovery(void) {
 
   NFA_TRACE_API0("NFA_StartRfDiscovery ()");
 
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->event = NFA_DM_API_START_RF_DISCOVERY_EVT;
 
@@ -652,7 +653,7 @@ tNFA_STATUS NFA_StopRfDiscovery(void) {
 
   NFA_TRACE_API0("NFA_StopRfDiscovery ()");
 
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->event = NFA_DM_API_STOP_RF_DISCOVERY_EVT;
 
@@ -692,7 +693,7 @@ tNFA_STATUS NFA_SetRfDiscoveryDuration(uint16_t discovery_period_ms) {
   NFA_TRACE_API0("NFA_SetRfDiscoveryDuration ()");
 
   /* Post the API message */
-  p_msg = (tNFA_DM_API_SET_RF_DISC_DUR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (tNFA_DM_API_SET_RF_DISC_DUR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_SET_RF_DISC_DURATION_EVT;
 
@@ -741,8 +742,7 @@ tNFA_STATUS NFA_Select(uint8_t rf_disc_id, tNFA_NFC_PROTOCOL protocol,
     return (NFA_STATUS_INVALID_PARAM);
   }
 
-  p_msg =
-      (tNFA_DM_API_SELECT*)GKI_getbuf((uint16_t)(sizeof(tNFA_DM_API_SELECT)));
+  p_msg = (tNFA_DM_API_SELECT*)malloc((uint16_t)(sizeof(tNFA_DM_API_SELECT)));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_SELECT_EVT;
     p_msg->rf_disc_id = rf_disc_id;
@@ -776,7 +776,7 @@ tNFA_STATUS NFA_UpdateRFCommParams(tNFA_RF_COMM_PARAMS* p_params) {
 
   NFA_TRACE_API0("NFA_UpdateRFCommParams ()");
 
-  p_msg = (tNFA_DM_API_UPDATE_RF_PARAMS*)GKI_getbuf(
+  p_msg = (tNFA_DM_API_UPDATE_RF_PARAMS*)malloc(
       (uint16_t)(sizeof(tNFA_DM_API_UPDATE_RF_PARAMS)));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_UPDATE_RF_PARAMS_EVT;
@@ -826,7 +826,7 @@ extern tNFA_STATUS NFA_Deactivate(bool sleep_mode) {
 
   NFA_TRACE_API1("NFA_Deactivate (): sleep_mode:%i", sleep_mode);
 
-  p_msg = (tNFA_DM_API_DEACTIVATE*)GKI_getbuf(
+  p_msg = (tNFA_DM_API_DEACTIVATE*)malloc(
       (uint16_t)(sizeof(tNFA_DM_API_DEACTIVATE)));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_DEACTIVATE_EVT;
@@ -872,7 +872,7 @@ tNFA_STATUS NFA_SendRawFrame(uint8_t* p_raw_data, uint16_t data_len,
     return (NFA_STATUS_INVALID_PARAM);
 
   size = NFC_HDR_SIZE + NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE + data_len;
-  p_msg = (NFC_HDR*)GKI_getbuf(size);
+  p_msg = (NFC_HDR*)malloc(size);
   if (p_msg != NULL) {
     p_msg->event = NFA_DM_API_RAW_FRAME_EVT;
     p_msg->layer_specific = presence_check_start_delay;
@@ -935,7 +935,7 @@ tNFA_STATUS NFA_RegisterNDefTypeHandler(bool handle_whole_message, tNFA_TNF tnf,
     return (NFA_STATUS_INVALID_PARAM);
   }
 
-  p_msg = (tNFA_DM_API_REG_NDEF_HDLR*)GKI_getbuf(
+  p_msg = (tNFA_DM_API_REG_NDEF_HDLR*)malloc(
       (uint16_t)(sizeof(tNFA_DM_API_REG_NDEF_HDLR) + type_name_len));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_REG_NDEF_HDLR_EVT;
@@ -995,7 +995,7 @@ extern tNFA_STATUS NFA_RegisterNDefUriHandler(bool handle_whole_message,
     return (NFA_STATUS_INVALID_PARAM);
   }
 
-  p_msg = (tNFA_DM_API_REG_NDEF_HDLR*)GKI_getbuf(
+  p_msg = (tNFA_DM_API_REG_NDEF_HDLR*)malloc(
       (uint16_t)(sizeof(tNFA_DM_API_REG_NDEF_HDLR) + uri_id_len));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_REG_NDEF_HDLR_EVT;
@@ -1041,7 +1041,7 @@ extern tNFA_STATUS NFA_DeregisterNDefTypeHandler(tNFA_HANDLE ndef_type_handle) {
   NFA_TRACE_API1("NFA_DeregisterNDefHandler (): handle 0x%08x",
                  ndef_type_handle);
 
-  p_msg = (tNFA_DM_API_DEREG_NDEF_HDLR*)GKI_getbuf(
+  p_msg = (tNFA_DM_API_DEREG_NDEF_HDLR*)malloc(
       (uint16_t)(sizeof(tNFA_DM_API_DEREG_NDEF_HDLR)));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_DEREG_NDEF_HDLR_EVT;
@@ -1083,7 +1083,7 @@ tNFA_STATUS NFA_PowerOffSleepMode(bool start_stop) {
     nfa_dm_cb.flags |= NFA_DM_FLAGS_SETTING_PWR_MODE;
   }
 
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
+  p_msg = (NFC_HDR*)malloc(sizeof(NFC_HDR));
   if (p_msg != NULL) {
     p_msg->event = NFA_DM_API_POWER_OFF_SLEEP_EVT;
     p_msg->layer_specific = start_stop;
@@ -1118,7 +1118,7 @@ tNFC_STATUS NFA_RegVSCback(bool is_register, tNFA_VSC_CBACK* p_cback) {
     return (NFA_STATUS_FAILED);
   }
 
-  p_msg = (tNFA_DM_API_REG_VSC*)GKI_getbuf(sizeof(tNFA_DM_API_REG_VSC));
+  p_msg = (tNFA_DM_API_REG_VSC*)malloc(sizeof(tNFA_DM_API_REG_VSC));
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_REG_VSC_EVT;
     p_msg->is_register = is_register;
@@ -1156,7 +1156,7 @@ tNFA_STATUS NFA_SendVsCommand(uint8_t oid, uint8_t cmd_params_len,
 
   NFA_TRACE_API1("NFA_SendVsCommand() oid=0x%x", oid);
 
-  p_msg = (tNFA_DM_API_SEND_VSC*)GKI_getbuf(size);
+  p_msg = (tNFA_DM_API_SEND_VSC*)malloc(size);
   if (p_msg != NULL) {
     p_msg->hdr.event = NFA_DM_API_SEND_VSC_EVT;
     p_msg->oid = oid;

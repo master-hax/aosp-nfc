@@ -21,6 +21,7 @@
  *  This file contains the action functions for the NFA HCI.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_dm_int.h"
 #include "nfa_hci_api.h"
@@ -114,7 +115,7 @@ void nfa_hci_check_pending_api_requests(void) {
       break;
   }
 
-  if (b_free) GKI_freebuf(p_msg);
+  if (b_free) free(p_msg);
 }
 
 /*******************************************************************************
@@ -213,7 +214,7 @@ void nfa_hci_check_api_requests(void) {
         break;
     }
 
-    GKI_freebuf(p_msg);
+    free(p_msg);
   }
 }
 
@@ -1646,8 +1647,8 @@ void nfa_hci_handle_admin_gate_evt(uint8_t* p_data) {
     nfa_hciu_send_to_all_apps(NFA_HCI_EVENT_RCVD_EVT, &evt_data);
 
     /* Send Get Host List after receiving any pending response */
-    p_msg = (tNFA_HCI_API_GET_HOST_LIST*)GKI_getbuf(
-        sizeof(tNFA_HCI_API_GET_HOST_LIST));
+    p_msg =
+        (tNFA_HCI_API_GET_HOST_LIST*)malloc(sizeof(tNFA_HCI_API_GET_HOST_LIST));
     if (p_msg != NULL) {
       p_msg->hdr.event = NFA_HCI_API_GET_HOST_LIST_EVT;
       /* Set Invalid handle to identify this Get Host List command is internal

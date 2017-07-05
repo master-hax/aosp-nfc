@@ -655,7 +655,7 @@
 #define HAL_WRITE(p)                                            \
   {                                                             \
     nfc_cb.p_hal->write(p->len, (uint8_t*)(p + 1) + p->offset); \
-    GKI_freebuf(p);                                             \
+    free(p);                                                    \
   }
 
 #ifdef NFC_HAL_SHARED_GKI

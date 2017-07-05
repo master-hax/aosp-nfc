@@ -23,6 +23,7 @@
  ******************************************************************************/
 
 #include "llcp_api.h"
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "gki.h"
@@ -425,7 +426,7 @@ uint8_t LLCP_RegisterServer(uint8_t reg_sap, uint8_t link_type,
       return LLCP_INVALID_SAP;
     }
 
-    p_app_cb->p_service_name = (uint8_t*)GKI_getbuf((uint16_t)(length + 1));
+    p_app_cb->p_service_name = (uint8_t*)malloc((uint16_t)(length + 1));
     if (p_app_cb->p_service_name == NULL) {
       LLCP_TRACE_ERROR0("LLCP_RegisterServer (): Out of resource");
       return LLCP_INVALID_SAP;
@@ -537,7 +538,7 @@ tLLCP_STATUS LLCP_Deregister(uint8_t local_sap) {
     return LLCP_STATUS_FAIL;
   }
 
-  if (p_app_cb->p_service_name) GKI_freebuf(p_app_cb->p_service_name);
+  if (p_app_cb->p_service_name) free(p_app_cb->p_service_name);
 
   /* update WKS bit map */
   if (local_sap <= LLCP_UPPER_BOUND_WK_SAP) {
@@ -560,7 +561,7 @@ tLLCP_STATUS LLCP_Deregister(uint8_t local_sap) {
 
   /* discard any pending tx UI PDU from this SAP */
   while (p_app_cb->ui_xmit_q.p_first) {
-    GKI_freebuf(GKI_dequeue(&p_app_cb->ui_xmit_q));
+    free(GKI_dequeue(&p_app_cb->ui_xmit_q));
     llcp_cb.total_tx_ui_pdu--;
   }
 
@@ -663,7 +664,7 @@ tLLCP_STATUS LLCP_SendUI(uint8_t ssap, uint8_t dsap, NFC_HDR* p_buf) {
   }
 
   if (status == LLCP_STATUS_FAIL) {
-    GKI_freebuf(p_buf);
+    free(p_buf);
   }
 
   return status;
@@ -739,7 +740,7 @@ bool LLCP_ReadLogicalLinkData(uint8_t local_sap, uint32_t max_data_len,
       /* if read all of UI PDU */
       if (p_buf->len == 0) {
         GKI_dequeue(&p_app_cb->ui_rx_q);
-        GKI_freebuf(p_buf);
+        free(p_buf);
 
         /* decrease number of received UI PDU in in all of ui_rx_q and check rx
          * congestion status */
@@ -804,7 +805,7 @@ uint32_t LLCP_FlushLogicalLinkRxData(uint8_t local_sap) {
       /* if read all of UI PDU */
       if (p_buf->len == 0) {
         GKI_dequeue(&p_app_cb->ui_rx_q);
-        GKI_freebuf(p_buf);
+        free(p_buf);
         llcp_cb.total_rx_ui_pdu--;
       }
     }
@@ -1081,7 +1082,7 @@ tLLCP_STATUS LLCP_SendData(uint8_t local_sap, uint8_t remote_sap,
   }
 
   if (status == LLCP_STATUS_FAIL) {
-    GKI_freebuf(p_buf);
+    free(p_buf);
   }
 
   return status;
@@ -1154,7 +1155,7 @@ bool LLCP_ReadDataLinkData(uint8_t local_sap, uint8_t remote_sap,
       /* if read all of I PDU */
       if (p_buf->len == 0) {
         GKI_dequeue(&p_dlcb->i_rx_q);
-        GKI_freebuf(p_buf);
+        free(p_buf);
 
         /* decrease number of received I PDU in in all of ui_rx_q and check rx
          * congestion status */
@@ -1225,7 +1226,7 @@ uint32_t LLCP_FlushDataLinkRxData(uint8_t local_sap, uint8_t remote_sap) {
       /* if read all of I PDU */
       if (p_buf->len == 0) {
         GKI_dequeue(&p_dlcb->i_rx_q);
-        GKI_freebuf(p_buf);
+        free(p_buf);
         llcp_cb.total_rx_i_pdu--;
       }
     }

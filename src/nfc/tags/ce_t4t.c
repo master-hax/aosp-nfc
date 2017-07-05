@@ -22,6 +22,7 @@
  *  mode.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "bt_types.h"
 #include "nfc_target.h"
@@ -394,7 +395,7 @@ static void ce_t4t_process_select_app_cmd(uint8_t* p_cmd, NFC_HDR* p_c_apdu) {
     if ((data_len == T4T_V20_NDEF_TAG_AID_LEN) &&
         (!memcmp(p_cmd, ce_test_tag_app_id, data_len)) &&
         (ce_cb.mem.t4t.p_ndef_msg)) {
-      GKI_freebuf(p_c_apdu);
+      free(p_c_apdu);
       ce_t4t_send_status((uint16_t)T4T_RSP_CMD_CMPLTED);
       return;
     }
@@ -492,7 +493,7 @@ static void ce_t4t_process_select_app_cmd(uint8_t* p_cmd, NFC_HDR* p_c_apdu) {
     }
 
     ce_t4t_send_status(status_words);
-    GKI_freebuf(p_c_apdu);
+    free(p_c_apdu);
   }
   /* if status_words is not set then upper layer will send R-APDU */
 
@@ -570,7 +571,7 @@ static void ce_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   if ((cla != T4T_CMD_CLASS) &&
       ((ce_cb.mem.t4t.status & CE_T4T_STATUS_REG_AID_SELECTED) == 0) &&
       ((ce_cb.mem.t4t.status & CE_T4T_STATUS_WILDCARD_AID_SELECTED) == 0)) {
-    GKI_freebuf(p_c_apdu);
+    free(p_c_apdu);
     ce_t4t_send_status(T4T_RSP_CLASS_NOT_SUPPORTED);
     return;
   }
@@ -602,7 +603,7 @@ static void ce_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
       (*(ce_cb.mem.t4t.reg_aid[ce_cb.mem.t4t.selected_aid_idx].p_cback))(
           CE_T4T_RAW_FRAME_EVT, &ce_data);
     } else {
-      GKI_freebuf(p_c_apdu);
+      free(p_c_apdu);
       ce_t4t_send_status(T4T_RSP_NOT_FOUND);
     }
   } else if (ce_cb.mem.t4t.status & CE_T4T_STATUS_WILDCARD_AID_SELECTED) {
@@ -708,7 +709,7 @@ static void ce_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
     ce_t4t_send_status(T4T_RSP_CMD_NOT_ALLOWED);
   }
 
-  if (p_c_apdu) GKI_freebuf(p_c_apdu);
+  if (p_c_apdu) free(p_c_apdu);
 }
 
 /*******************************************************************************

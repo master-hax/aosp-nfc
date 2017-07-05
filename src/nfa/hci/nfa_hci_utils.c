@@ -21,6 +21,7 @@
  *  This file contains the utility functions for the NFA HCI.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_dm_int.h"
 #include "nfa_hci_api.h"
@@ -1401,7 +1402,7 @@ static void handle_debug_loopback(NFC_HDR* p_buf, uint8_t pipe, uint8_t type,
         break;
     }
   } else if (type == NFA_HCI_RESPONSE_TYPE) {
-    GKI_freebuf(p_buf);
+    free(p_buf);
     return;
   }
 

@@ -23,6 +23,7 @@
  *  (callback). On the transmit side, it manages the command transmission.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "gki.h"
 #include "nfc_target.h"
@@ -103,7 +104,7 @@ tNFC_STATUS NFC_SendVsCommand(uint8_t oid, NFC_HDR* p_data,
   if ((p_data == NULL) || (p_data->offset < NCI_VSC_MSG_HDR_SIZE) ||
       (p_data->len > NCI_MAX_VSC_SIZE)) {
     NFC_TRACE_ERROR1("buffer offset must be >= %d", NCI_VSC_MSG_HDR_SIZE);
-    if (p_data) GKI_freebuf(p_data);
+    if (p_data) free(p_data);
     return NFC_STATUS_INVALID_PARAM;
   }
 

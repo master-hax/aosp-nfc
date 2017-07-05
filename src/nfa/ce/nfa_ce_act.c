@@ -21,6 +21,7 @@
  *  This file contains the action functions the NFA_CE state machine.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "ce_api.h"
 #include "ndef_utils.h"
@@ -94,7 +95,7 @@ void nfa_ce_handle_t3t_evt(tCE_EVENT event, tCE_DATA* p_ce_data) {
         conn_evt.ce_data.len = p_ce_data->raw_frame.p_data->len;
         (*p_cb->p_active_conn_cback)(NFA_CE_DATA_EVT, &conn_evt);
       }
-      GKI_freebuf(p_ce_data->raw_frame.p_data);
+      free(p_ce_data->raw_frame.p_data);
       break;
 
     default:
@@ -225,7 +226,7 @@ void nfa_ce_handle_t4t_aid_evt(tCE_EVENT event, tCE_DATA* p_ce_data) {
           p_ce_data->raw_frame.aid_handle)
     }
 
-    GKI_freebuf(p_ce_data->raw_frame.p_data);
+    free(p_ce_data->raw_frame.p_data);
   }
 }
 

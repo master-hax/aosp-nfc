@@ -385,8 +385,6 @@ extern void GKI_change_buf_owner(void*, uint8_t);
 extern uint8_t GKI_create_pool(uint16_t, uint16_t, uint8_t, void*);
 extern void GKI_delete_pool(uint8_t);
 extern void* GKI_find_buf_start(void*);
-extern void GKI_freebuf(void*);
-extern void* GKI_getbuf(uint16_t);
 extern uint16_t GKI_get_buf_size(void*);
 extern void* GKI_getpoolbuf(uint8_t);
 

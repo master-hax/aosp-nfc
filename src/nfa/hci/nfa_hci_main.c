@@ -21,6 +21,7 @@
  *  This is the main implementation file for the NFA HCI.
  *
  ******************************************************************************/
+#include <stdlib.h>
 #include <string.h>
 #include "nfa_dm_int.h"
 #include "nfa_ee_api.h"
@@ -742,7 +743,7 @@ static void nfa_hci_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   /* If still reassembling fragments, just return */
   if (nfa_hci_cb.assembling) {
     /* if not last packet, release GKI buffer */
-    GKI_freebuf(p_pkt);
+    free(p_pkt);
     return;
   }
 
@@ -1106,7 +1107,7 @@ static bool nfa_hci_evt_hdlr(NFC_HDR* p_msg) {
     }
   }
 
-  if ((p_msg->event > NFA_HCI_LAST_API_EVENT)) GKI_freebuf(p_msg);
+  if ((p_msg->event > NFA_HCI_LAST_API_EVENT)) free(p_msg);
 
   nfa_hci_check_api_requests();
 
