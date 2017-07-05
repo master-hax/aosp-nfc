@@ -600,6 +600,29 @@
     },
     {
       "key": {
+        "uuid": "bb2f9710_c556854a",
+        "filename": "src/nfc/int/nfc_vs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-07-05T21:06:11Z",
+      "side": 1,
+      "message": "where is this used? If not please delete?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "4f09caae16b6bb62cc5bd0b5b99290cce9bf7953",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11ceb47d_b27d551a",
         "filename": "src/nfc/llcp/llcp_api.c",
         "patchSetId": 3
