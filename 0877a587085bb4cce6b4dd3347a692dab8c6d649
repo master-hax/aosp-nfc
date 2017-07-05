@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e393b6c6_80fe5771",
+        "filename": "src/adaptation/OverrideLog.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-07-05T13:47:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3e47886_91417302",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 80
+      },
+      "revId": "0877a587085bb4cce6b4dd3347a692dab8c6d649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f4bb6be_01d0aac9",
         "filename": "src/include/_OverrideLog.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c8e46a70_7c180ee6",
+        "filename": "src/include/_OverrideLog.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-07-05T13:47:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f4bb6be_01d0aac9",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "0877a587085bb4cce6b4dd3347a692dab8c6d649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed7f417c_25e734b8",
         "filename": "src/nfa/dm/nfa_dm_api.c",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-28T15:19:30Z",
       "side": 1,
       "message": "Vendor specific code should live below the HAL if possible. So would suggest a VSC is sent instead. If need be, a \"meta\" VSC can be sent to be parsed by the HAL.\nOr we can add functionality to invoke additional functions in the  HAL.",
+      "range": {
+        "startLine": 1238,
+        "startChar": 0,
+        "endLine": 1281,
+        "endChar": 6
+      },
+      "revId": "0877a587085bb4cce6b4dd3347a692dab8c6d649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "801ceaca_acc12399",
+        "filename": "src/nfa/dm/nfa_dm_api.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-07-05T13:47:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed7f417c_25e734b8",
       "range": {
         "startLine": 1238,
         "startChar": 0,
