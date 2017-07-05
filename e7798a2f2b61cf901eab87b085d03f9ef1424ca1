@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a31f4c8_12033c9a",
+        "filename": "src/nfa/dm/nfa_dm_api.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-07-05T09:01:15Z",
+      "side": 1,
+      "message": "The power sub state and screen state are related, for each screen state change NfcService layer sets the corresponding\npower sub state.\nUpdating the function name to more verbose.",
+      "parentUuid": "79da9e60_e6589c90",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 57
+      },
+      "revId": "e7798a2f2b61cf901eab87b085d03f9ef1424ca1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d83dd86c_b4712812",
         "filename": "src/nfa/dm/nfa_dm_api.c",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-30T21:07:00Z",
       "side": 1,
       "message": "Declare \u0026 initialize below",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 41
+      },
+      "revId": "e7798a2f2b61cf901eab87b085d03f9ef1424ca1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49d9720f_856bd7d1",
+        "filename": "src/nfa/dm/nfa_dm_api.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-07-05T09:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d83dd86c_b4712812",
       "range": {
         "startLine": 166,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "afd1bbad_5277deb3",
+        "filename": "src/nfa/dm/nfa_dm_api.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-07-05T09:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d074666_64838406",
+      "range": {
+        "startLine": 169,
+        "startChar": 18,
+        "endLine": 169,
+        "endChar": 38
+      },
+      "revId": "e7798a2f2b61cf901eab87b085d03f9ef1424ca1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "273b526f_610c3b20",
         "filename": "src/nfa/dm/nfa_dm_api.c",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-30T21:07:00Z",
       "side": 1,
       "message": "Separate assignment from initialization please.",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 75
+      },
+      "revId": "e7798a2f2b61cf901eab87b085d03f9ef1424ca1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2042c881_c7e075a8",
+        "filename": "src/nfa/dm/nfa_dm_api.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-07-05T09:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "273b526f_610c3b20",
       "range": {
         "startLine": 171,
         "startChar": 2,
