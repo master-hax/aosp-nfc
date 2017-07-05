@@ -210,6 +210,30 @@
       "revId": "e7798a2f2b61cf901eab87b085d03f9ef1424ca1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f8c1099_a29abf90",
+        "filename": "src/nfc/nci/nci_hmsgs.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-07-05T09:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcc7d468_9575d77c",
+      "range": {
+        "startLine": 642,
+        "startChar": 0,
+        "endLine": 644,
+        "endChar": 31
+      },
+      "revId": "e7798a2f2b61cf901eab87b085d03f9ef1424ca1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
