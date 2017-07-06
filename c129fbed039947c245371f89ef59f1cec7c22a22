@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edaeb3e1_bf3f27ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-07-06T23:55:14Z",
+      "side": 1,
+      "message": "NFC",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "c129fbed039947c245371f89ef59f1cec7c22a22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59774c84_1eeb0bf4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-07-06T23:55:14Z",
+      "side": 1,
+      "message": "? Wouldn\u0027t that be the last 256k?\nMaybe no need to mention the exact number?",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 49
+      },
+      "revId": "c129fbed039947c245371f89ef59f1cec7c22a22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "860b9e2c_4b1f7c26",
+        "filename": "src/adaptation/NfcAdaptation.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-07-06T23:55:14Z",
+      "side": 1,
+      "message": "Empty line below plz.",
+      "revId": "c129fbed039947c245371f89ef59f1cec7c22a22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34192a6d_935d859b",
+        "filename": "src/adaptation/debug_nfcsnoop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-07-06T23:55:14Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "c129fbed039947c245371f89ef59f1cec7c22a22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b5629db_8f529e4f",
+        "filename": "src/adaptation/debug_nfcsnoop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-07-06T23:55:14Z",
+      "side": 1,
+      "message": "Necessary at all?",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "c129fbed039947c245371f89ef59f1cec7c22a22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
