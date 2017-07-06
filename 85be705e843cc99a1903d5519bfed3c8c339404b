@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2372bb4_a640572e",
+        "filename": "src/nfc/nfc/nfc_ncif.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-07-06T23:50:28Z",
+      "side": 0,
+      "message": ".cc?",
+      "revId": "85be705e843cc99a1903d5519bfed3c8c339404b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
