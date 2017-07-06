@@ -16,6 +16,24 @@
       "revId": "85be705e843cc99a1903d5519bfed3c8c339404b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "497ccc64_e703f575",
+        "filename": "src/nfc/nfc/nfc_ncif.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-07-06T23:55:17Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a2372bb4_a640572e",
+      "revId": "85be705e843cc99a1903d5519bfed3c8c339404b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
