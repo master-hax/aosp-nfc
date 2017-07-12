@@ -1,0 +1,10 @@
+Code-Review+1: Jayant Chowdhary <jchowdhary@google.com>
+Code-Review+2: Ruchi Kandoi <kandoiruchi@google.com>
+Verified+1: Tri Vo <trong@google.com>
+Autosubmit+1: Tri Vo <trong@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 12 Jul 2017 22:56:01 +0000
+Reviewed-on: https://android-review.googlesource.com/434140
+Project: platform/system/nfc
+Branch: refs/heads/master
