@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "011be91c_ad0dd216",
+        "filename": "src/nfa/dm/nfa_dm_act.c",
+        "patchSetId": 11
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-07-14T18:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d55e0f5_33a16ae8",
+      "range": {
+        "startLine": 764,
+        "startChar": 2,
+        "endLine": 767,
+        "endChar": 68
+      },
+      "revId": "a570318cd9aea23f3d25370cae82518b35a13b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef839930_b24bd690",
         "filename": "src/nfc/nfc/nfc_ncif.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-14T18:08:02Z",
       "side": 1,
       "message": "Should remove this and keep the above one.",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 6
+      },
+      "revId": "a570318cd9aea23f3d25370cae82518b35a13b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dac13fa8_58b5d6b3",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-07-14T18:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef839930_b24bd690",
       "range": {
         "startLine": 269,
         "startChar": 0,
