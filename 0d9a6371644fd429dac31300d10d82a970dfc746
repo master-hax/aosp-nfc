@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4d06a28_27a536c8",
+        "filename": "src/nfa/dm/nfa_dm_act.c",
+        "patchSetId": 10
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-07-14T01:41:36Z",
+      "side": 1,
+      "message": "This seems incorrect.",
+      "range": {
+        "startLine": 766,
+        "startChar": 3,
+        "endLine": 767,
+        "endChar": 30
+      },
+      "revId": "0d9a6371644fd429dac31300d10d82a970dfc746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
