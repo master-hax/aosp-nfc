@@ -46,6 +46,30 @@
       "revId": "6facaee1d9d9080133ef331d8a6b5a1932f0583e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45d4010d_9d965615",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-07-17T19:45:52Z",
+      "side": 1,
+      "message": "@LK not sure what you mean by that?\n\nDo we need to wait for further changes on this patch? What\u0027s to be continued?",
+      "parentUuid": "a17321c5_a45b9a62",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 28
+      },
+      "revId": "6facaee1d9d9080133ef331d8a6b5a1932f0583e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
