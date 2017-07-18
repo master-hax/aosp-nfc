@@ -70,6 +70,30 @@
       "revId": "6facaee1d9d9080133ef331d8a6b5a1932f0583e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51d74d9f_b9af3997",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-07-18T09:56:35Z",
+      "side": 1,
+      "message": "testing ongoing, keeping as it is as of now.",
+      "parentUuid": "45d4010d_9d965615",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 28
+      },
+      "revId": "6facaee1d9d9080133ef331d8a6b5a1932f0583e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
