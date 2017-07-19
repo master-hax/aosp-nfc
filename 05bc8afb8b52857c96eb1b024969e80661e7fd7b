@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffa4df51_023c8601",
+        "filename": "halimpl/pn54x/hal/phNxpNciHal.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1821,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-07-19T15:45:50Z",
+      "side": 1,
+      "message": "if status is getting re-initialized then this is not needed right?",
+      "range": {
+        "startLine": 1819,
+        "startChar": 8,
+        "endLine": 1821,
+        "endChar": 7
+      },
+      "revId": "05bc8afb8b52857c96eb1b024969e80661e7fd7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
