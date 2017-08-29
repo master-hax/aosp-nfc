@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03e4f37_aa6f62eb",
+        "filename": "src/adaptation/config.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-08-29T23:00:13Z",
+      "side": 1,
+      "message": "The more I think about this, the less I like this class :)\n\n- Not sure we should derive from string. What are we gaining as a result? Maybe one of the stream operators? Would be easy enough to implement one that forwards to the string one. Not sure what else. If there is no good reason we should only have a string as a member variable (as we already do).\n\n- The member variables AND the functions are inconsistently named (str_value() vs. numValue()) etc.\n\n- Is this really just a map in disguise?\n\nHappy to discuss further...",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "b2e035bde1c7945f21f3407f670c04585ba72237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
