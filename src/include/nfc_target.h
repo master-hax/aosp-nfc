@@ -33,6 +33,7 @@
 #include "bt_trace.h"
 #endif
 
+#include "_OverrideLog.h"
 #ifndef USERIAL_DEBUG
 #define USERIAL_DEBUG FALSE
 #endif
