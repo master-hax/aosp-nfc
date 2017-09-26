@@ -96,8 +96,7 @@ static std::string llcp_pdu_type(uint8_t ptype);
 static void llcp_link_start_inactivity_timer(void) {
   if ((llcp_cb.lcb.inact_timer.in_use == false) &&
       (llcp_cb.lcb.inact_timeout > 0)) {
-    LLCP_TRACE_DEBUG1("Start inactivity_timer: %d ms",
-                      llcp_cb.lcb.inact_timeout);
+    ALOGD("Start inactivity_timer: %d ms", llcp_cb.lcb.inact_timeout);
 
     nfc_start_quick_timer(&llcp_cb.lcb.inact_timer, NFC_TTYPE_LLCP_LINK_INACT,
                           ((uint32_t)llcp_cb.lcb.inact_timeout) *
@@ -116,7 +115,7 @@ static void llcp_link_start_inactivity_timer(void) {
 *******************************************************************************/
 static void llcp_link_stop_inactivity_timer(void) {
   if (llcp_cb.lcb.inact_timer.in_use) {
-    LLCP_TRACE_DEBUG0("Stop inactivity_timer");
+    ALOGD("Stop inactivity_timer");
 
     nfc_stop_quick_timer(&llcp_cb.lcb.inact_timer);
   }
@@ -169,23 +168,22 @@ static void llcp_link_stop_link_timer(void) {
 **
 *******************************************************************************/
 tLLCP_STATUS llcp_link_activate(tLLCP_ACTIVATE_CONFIG* p_config) {
-  LLCP_TRACE_DEBUG0("llcp_link_activate ()");
+  ALOGD("llcp_link_activate ()");
 
   /* At this point, MAC link activation procedure has been successfully
    * completed */
 
   /* The Length Reduction values LRi and LRt MUST be 11b. (254bytes) */
   if (p_config->max_payload_size != LLCP_NCI_MAX_PAYL_SIZE) {
-    LLCP_TRACE_WARNING2(
-        "llcp_link_activate (): max payload size (%d) must be %d bytes",
-        p_config->max_payload_size, LLCP_NCI_MAX_PAYL_SIZE);
+    ALOGW("llcp_link_activate (): max payload size (%d) must be %d bytes",
+          p_config->max_payload_size, LLCP_NCI_MAX_PAYL_SIZE);
   }
 
   /* Processing the parametes that have been received with the MAC link
    * activation */
   if (llcp_link_parse_gen_bytes(p_config->gen_bytes_len,
                                 p_config->p_gen_bytes) == false) {
-    LLCP_TRACE_ERROR0("llcp_link_activate (): Failed to parse general bytes");
+    ALOGE("llcp_link_activate (): Failed to parse general bytes");
     /* For LLCP DTA test, In case of bad magic bytes normal p2p communication is
      * expected,but in case of wrong magic bytes in ATR_REQ, LLC layer will be
      * disconnected but P2P connection is expected to be in connected state
@@ -224,7 +222,7 @@ tLLCP_STATUS llcp_link_activate(tLLCP_ACTIVATE_CONFIG* p_config) {
   */
   if ((p_config->is_initiator) &&
       (llcp_link_rwt[p_config->waiting_time] > llcp_cb.lcb.peer_lto)) {
-    LLCP_TRACE_WARNING3(
+    ALOGW(
         "llcp_link_activate (): WT (%d, %dms) must be less than or equal to "
         "LTO (%dms)",
         p_config->waiting_time, llcp_link_rwt[p_config->waiting_time],
@@ -239,7 +237,7 @@ tLLCP_STATUS llcp_link_activate(tLLCP_ACTIVATE_CONFIG* p_config) {
   }
   /* LLCP version number agreement */
   if (llcp_link_version_agreement() == false) {
-    LLCP_TRACE_ERROR0("llcp_link_activate (): Failed to agree version");
+    ALOGE("llcp_link_activate (): Failed to agree version");
     (*llcp_cb.lcb.p_link_cback)(LLCP_LINK_ACTIVATION_FAILED_EVT,
                                 LLCP_LINK_VERSION_FAILED);
 
@@ -269,7 +267,7 @@ tLLCP_STATUS llcp_link_activate(tLLCP_ACTIVATE_CONFIG* p_config) {
   ** symmetry procedure.
   */
   if (llcp_cb.lcb.is_initiator) {
-    LLCP_TRACE_DEBUG0("llcp_link_activate (): Connected as Initiator");
+    ALOGD("llcp_link_activate (): Connected as Initiator");
 
     llcp_cb.lcb.inact_timeout = llcp_cb.lcb.inact_timeout_init;
     llcp_cb.lcb.symm_state = LLCP_LINK_SYMM_LOCAL_XMIT_NEXT;
@@ -284,7 +282,7 @@ tLLCP_STATUS llcp_link_activate(tLLCP_ACTIVATE_CONFIG* p_config) {
       llcp_link_send_SYMM();
     }
   } else {
-    LLCP_TRACE_DEBUG0("llcp_link_activate (): Connected as Target");
+    ALOGD("llcp_link_activate (): Connected as Target");
     llcp_cb.lcb.inact_timeout = llcp_cb.lcb.inact_timeout_target;
     llcp_cb.lcb.symm_state = LLCP_LINK_SYMM_REMOTE_XMIT_NEXT;
 
@@ -352,7 +350,7 @@ void llcp_link_process_link_timeout(void) {
     if ((llcp_cb.lcb.symm_delay > 0) &&
         (llcp_cb.lcb.symm_state == LLCP_LINK_SYMM_LOCAL_XMIT_NEXT)) {
       /* upper layer doesn't have anything to send */
-      LLCP_TRACE_DEBUG0(
+      ALOGD(
           "llcp_link_process_link_timeout (): LEVT_TIMEOUT in state of "
           "LLCP_LINK_SYMM_LOCAL_XMIT_NEXT");
       llcp_link_send_SYMM();
@@ -365,7 +363,7 @@ void llcp_link_process_link_timeout(void) {
         llcp_link_start_inactivity_timer();
       }
     } else {
-      LLCP_TRACE_ERROR0(
+      ALOGE(
           "llcp_link_process_link_timeout (): LEVT_TIMEOUT in state of "
           "LLCP_LINK_SYMM_REMOTE_XMIT_NEXT");
       llcp_link_deactivate(LLCP_LINK_TIMEOUT);
@@ -391,7 +389,7 @@ void llcp_link_deactivate(uint8_t reason) {
   tLLCP_DLCB* p_dlcb;
   tLLCP_APP_CB* p_app_cb;
 
-  LLCP_TRACE_DEBUG1("llcp_link_deactivate () reason = 0x%x", reason);
+  ALOGD("llcp_link_deactivate () reason = 0x%x", reason);
 
   /* Release any held buffers in signaling PDU queue */
   while (llcp_cb.lcb.sig_xmit_q.p_first)
@@ -448,8 +446,7 @@ void llcp_link_deactivate(uint8_t reason) {
     llcp_util_send_disc(LLCP_SAP_LM, LLCP_SAP_LM);
 
     /* Wait until DISC is sent to peer */
-    LLCP_TRACE_DEBUG0(
-        "llcp_link_deactivate (): Wait until DISC is sent to peer");
+    ALOGD("llcp_link_deactivate (): Wait until DISC is sent to peer");
 
     llcp_cb.lcb.link_state = LLCP_LINK_STATE_DEACTIVATING;
 
@@ -527,7 +524,7 @@ static bool llcp_link_version_agreement(void) {
   peer_minor_version = LLCP_GET_MINOR_VERSION(llcp_cb.lcb.peer_version);
 
   if (peer_major_version < LLCP_MIN_MAJOR_VERSION) {
-    LLCP_TRACE_ERROR1(
+    ALOGE(
         "llcp_link_version_agreement(): unsupported peer version number. Peer "
         "Major Version:%d",
         peer_major_version);
@@ -550,11 +547,10 @@ static bool llcp_link_version_agreement(void) {
       llcp_cb.lcb.agreed_minor_version = LLCP_VERSION_MINOR;
     }
 
-    LLCP_TRACE_DEBUG6(
-        "local version:%d.%d, remote version:%d.%d, agreed version:%d.%d",
-        LLCP_VERSION_MAJOR, LLCP_VERSION_MINOR, peer_major_version,
-        peer_minor_version, llcp_cb.lcb.agreed_major_version,
-        llcp_cb.lcb.agreed_minor_version);
+    ALOGD("local version:%d.%d, remote version:%d.%d, agreed version:%d.%d",
+          LLCP_VERSION_MAJOR, LLCP_VERSION_MINOR, peer_major_version,
+          peer_minor_version, llcp_cb.lcb.agreed_major_version,
+          llcp_cb.lcb.agreed_minor_version);
 
     return true;
   }
@@ -614,9 +610,8 @@ static void llcp_link_check_congestion(void) {
     /* overall buffer usage is high */
     llcp_cb.overall_tx_congested = true;
 
-    LLCP_TRACE_WARNING2(
-        "overall tx congestion start: total_tx_ui_pdu=%d, total_tx_i_pdu=%d",
-        llcp_cb.total_tx_ui_pdu, llcp_cb.total_tx_i_pdu);
+    ALOGW("overall tx congestion start: total_tx_ui_pdu=%d, total_tx_i_pdu=%d",
+          llcp_cb.total_tx_ui_pdu, llcp_cb.total_tx_i_pdu);
 
     data.congest.event = LLCP_SAP_EVT_CONGEST;
     data.congest.is_congested = true;
@@ -634,9 +629,8 @@ static void llcp_link_check_congestion(void) {
         if (!p_app_cb->is_ui_tx_congested) {
           p_app_cb->is_ui_tx_congested = true;
 
-          LLCP_TRACE_WARNING2(
-              "Logical link (SAP=0x%X) congestion start: count=%d", sap,
-              p_app_cb->ui_xmit_q.count);
+          ALOGW("Logical link (SAP=0x%X) congestion start: count=%d", sap,
+                p_app_cb->ui_xmit_q.count);
 
           data.congest.local_sap = sap;
           p_app_cb->p_app_cback(&data);
@@ -653,10 +647,9 @@ static void llcp_link_check_congestion(void) {
           (llcp_cb.dlcb[idx].is_tx_congested == false)) {
         llcp_cb.dlcb[idx].is_tx_congested = true;
 
-        LLCP_TRACE_WARNING3(
-            "Data link (SSAP:DSAP=0x%X:0x%X) congestion start: count=%d",
-            llcp_cb.dlcb[idx].local_sap, llcp_cb.dlcb[idx].remote_sap,
-            llcp_cb.dlcb[idx].i_xmit_q.count);
+        ALOGW("Data link (SSAP:DSAP=0x%X:0x%X) congestion start: count=%d",
+              llcp_cb.dlcb[idx].local_sap, llcp_cb.dlcb[idx].remote_sap,
+              llcp_cb.dlcb[idx].i_xmit_q.count);
 
         data.congest.local_sap = llcp_cb.dlcb[idx].local_sap;
         data.congest.remote_sap = llcp_cb.dlcb[idx].remote_sap;
@@ -689,9 +682,8 @@ static void llcp_link_check_uncongested(void) {
       /* overall congestion is cleared */
       llcp_cb.overall_tx_congested = false;
 
-      LLCP_TRACE_WARNING2(
-          "overall tx congestion end: total_tx_ui_pdu=%d, total_tx_i_pdu=%d",
-          llcp_cb.total_tx_ui_pdu, llcp_cb.total_tx_i_pdu);
+      ALOGW("overall tx congestion end: total_tx_ui_pdu=%d, total_tx_i_pdu=%d",
+            llcp_cb.total_tx_ui_pdu, llcp_cb.total_tx_i_pdu);
     } else {
       /* wait until more data packets are sent out */
       return;
@@ -725,8 +717,8 @@ static void llcp_link_check_uncongested(void) {
           /* if it was congested but now tx queue count is below threshold */
           p_app_cb->is_ui_tx_congested = false;
 
-          LLCP_TRACE_DEBUG2("Logical link (SAP=0x%X) congestion end: count=%d",
-                            sap, p_app_cb->ui_xmit_q.count);
+          ALOGD("Logical link (SAP=0x%X) congestion end: count=%d", sap,
+                p_app_cb->ui_xmit_q.count);
 
           data.congest.local_sap = sap;
           p_app_cb->p_app_cback(&data);
@@ -770,10 +762,9 @@ static void llcp_link_check_uncongested(void) {
       llcp_cb.dlcb[idx].is_tx_congested = false;
 
       if (llcp_cb.dlcb[idx].remote_busy == false) {
-        LLCP_TRACE_DEBUG3(
-            "Data link (SSAP:DSAP=0x%X:0x%X) congestion end: count=%d",
-            llcp_cb.dlcb[idx].local_sap, llcp_cb.dlcb[idx].remote_sap,
-            llcp_cb.dlcb[idx].i_xmit_q.count);
+        ALOGD("Data link (SSAP:DSAP=0x%X:0x%X) congestion end: count=%d",
+              llcp_cb.dlcb[idx].local_sap, llcp_cb.dlcb[idx].remote_sap,
+              llcp_cb.dlcb[idx].i_xmit_q.count);
 
         data.congest.local_sap = llcp_cb.dlcb[idx].local_sap;
         data.congest.remote_sap = llcp_cb.dlcb[idx].remote_sap;
@@ -875,7 +866,7 @@ void llcp_link_check_send_data(void) {
   if (llcp_cb.lcb.symm_state == LLCP_LINK_SYMM_LOCAL_XMIT_NEXT ||
       (appl_dta_mode_flag &&
        llcp_cb.lcb.link_state == LLCP_LINK_STATE_DEACTIVATING)) {
-    LLCP_TRACE_DEBUG0(
+    ALOGD(
         "llcp_link_check_send_data () in state of "
         "LLCP_LINK_SYMM_LOCAL_XMIT_NEXT");
 
@@ -973,9 +964,8 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
   /* if application is registered and expecting UI PDU on logical data link */
   if ((p_app_cb) && (p_app_cb->p_app_cback) &&
       (p_app_cb->link_type & LLCP_LINK_TYPE_LOGICAL_DATA_LINK)) {
-    LLCP_TRACE_DEBUG2(
-        "llcp_link_proc_ui_pdu () Local SAP:0x%x, Remote SAP:0x%x", local_sap,
-        remote_sap);
+    ALOGD("llcp_link_proc_ui_pdu () Local SAP:0x%x, Remote SAP:0x%x", local_sap,
+          remote_sap);
 
     /* if this is not from AGF PDU */
     if (p_msg) {
@@ -1038,7 +1028,7 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
           p_msg->len = LLCP_PDU_AGF_LEN_SIZE + ui_pdu_length;
           p_msg->layer_specific = 0;
         } else {
-          LLCP_TRACE_ERROR0("llcp_link_proc_ui_pdu (): out of buffer");
+          ALOGE("llcp_link_proc_ui_pdu (): out of buffer");
         }
       }
 
@@ -1050,7 +1040,7 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
     }
 
     if (p_app_cb->ui_rx_q.count > llcp_cb.ll_rx_congest_start) {
-      LLCP_TRACE_WARNING2(
+      ALOGW(
           "llcp_link_proc_ui_pdu (): SAP:0x%x, rx link is congested (%d), "
           "discard oldest UI PDU",
           local_sap, p_app_cb->ui_rx_q.count);
@@ -1067,8 +1057,7 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
       (*p_app_cb->p_app_cback)(&data);
     }
   } else {
-    LLCP_TRACE_ERROR1("llcp_link_proc_ui_pdu (): Unregistered SAP:0x%x",
-                      local_sap);
+    ALOGE("llcp_link_proc_ui_pdu (): Unregistered SAP:0x%x", local_sap);
 
     if (p_msg) {
       GKI_freebuf(p_msg);
@@ -1117,7 +1106,7 @@ static void llcp_link_proc_agf_pdu(NFC_HDR* p_agf) {
   }
 
   if (agf_length != 0) {
-    LLCP_TRACE_ERROR0("llcp_link_proc_agf_pdu (): Received invalid AGF PDU");
+    ALOGE("llcp_link_proc_agf_pdu (): Received invalid AGF PDU");
     GKI_freebuf(p_agf);
     return;
   }
@@ -1143,7 +1132,7 @@ static void llcp_link_proc_agf_pdu(NFC_HDR* p_agf) {
     ssap = LLCP_GET_SSAP(pdu_hdr);
 
 #if (BT_TRACE_VERBOSE == TRUE)
-    LLCP_TRACE_DEBUG4(
+    ALOGD(
         "llcp_link_proc_agf_pdu (): Rx DSAP:0x%x, PTYPE:%s (0x%x), SSAP:0x%x "
         "in AGF",
         dsap, llcp_pdu_type(ptype).c_str(), ptype, ssap);
@@ -1155,11 +1144,9 @@ static void llcp_link_proc_agf_pdu(NFC_HDR* p_agf) {
       llcp_link_deactivate(LLCP_LINK_REMOTE_INITIATED);
       return;
     } else if (ptype == LLCP_PDU_SYMM_TYPE) {
-      LLCP_TRACE_ERROR0(
-          "llcp_link_proc_agf_pdu (): SYMM PDU exchange shall not be in AGF");
+      ALOGE("llcp_link_proc_agf_pdu (): SYMM PDU exchange shall not be in AGF");
     } else if (ptype == LLCP_PDU_PAX_TYPE) {
-      LLCP_TRACE_ERROR0(
-          "llcp_link_proc_agf_pdu (): PAX PDU exchange shall not be used");
+      ALOGE("llcp_link_proc_agf_pdu (): PAX PDU exchange shall not be used");
     } else if (ptype == LLCP_PDU_SNL_TYPE) {
       llcp_sdp_proc_snl((uint16_t)(pdu_length - LLCP_PDU_HEADER_SIZE), p_info);
     } else if ((ptype == LLCP_PDU_UI_TYPE) &&
@@ -1197,8 +1184,7 @@ static void llcp_link_proc_rx_pdu(uint8_t dsap, uint8_t ptype, uint8_t ssap,
 
   switch (ptype) {
     case LLCP_PDU_PAX_TYPE:
-      LLCP_TRACE_ERROR0(
-          "llcp_link_proc_rx_pdu (); PAX PDU exchange shall not be used");
+      ALOGE("llcp_link_proc_rx_pdu (); PAX PDU exchange shall not be used");
       break;
 
     case LLCP_PDU_DISC_TYPE:
@@ -1277,7 +1263,7 @@ static void llcp_link_proc_rx_data(NFC_HDR* p_msg) {
         llcp_link_process_link_timeout();
     } else {
       if (p_msg->len < LLCP_PDU_HEADER_SIZE) {
-        LLCP_TRACE_ERROR1("Received too small PDU: got %d bytes", p_msg->len);
+        ALOGE("Received too small PDU: got %d bytes", p_msg->len);
         frame_error = true;
       } else {
         p = (uint8_t*)(p_msg + 1) + p_msg->offset;
@@ -1294,7 +1280,7 @@ static void llcp_link_proc_rx_data(NFC_HDR* p_msg) {
             info_length =
                 p_msg->len - LLCP_PDU_HEADER_SIZE - LLCP_SEQUENCE_SIZE;
           } else {
-            LLCP_TRACE_ERROR0("Received I/RR/RNR PDU without sequence");
+            ALOGE("Received I/RR/RNR PDU without sequence");
             frame_error = true;
           }
         } else {
@@ -1303,13 +1289,13 @@ static void llcp_link_proc_rx_data(NFC_HDR* p_msg) {
 
         /* check if length of information is bigger than link MIU */
         if ((!frame_error) && (info_length > llcp_cb.lcb.local_link_miu)) {
-          LLCP_TRACE_ERROR2("Received exceeding MIU (%d): got %d bytes SDU",
-                            llcp_cb.lcb.local_link_miu, info_length);
+          ALOGE("Received exceeding MIU (%d): got %d bytes SDU",
+                llcp_cb.lcb.local_link_miu, info_length);
 
           frame_error = true;
         } else {
 #if (BT_TRACE_VERBOSE == TRUE)
-          LLCP_TRACE_DEBUG4(
+          ALOGD(
               "llcp_link_proc_rx_data (): DSAP:0x%x, PTYPE:%s (0x%x), "
               "SSAP:0x%x",
               dsap, llcp_pdu_type(ptype).c_str(), ptype, ssap);
@@ -1317,8 +1303,7 @@ static void llcp_link_proc_rx_data(NFC_HDR* p_msg) {
 
           if (ptype == LLCP_PDU_SYMM_TYPE) {
             if (info_length > 0) {
-              LLCP_TRACE_ERROR1("Received extra data (%d bytes) in SYMM PDU",
-                                info_length);
+              ALOGE("Received extra data (%d bytes) in SYMM PDU", info_length);
               frame_error = true;
             }
           } else {
@@ -1337,7 +1322,7 @@ static void llcp_link_proc_rx_data(NFC_HDR* p_msg) {
       llcp_link_check_send_data();
     }
   } else {
-    LLCP_TRACE_ERROR0("Received PDU in state of SYMM_MUST_XMIT_NEXT");
+    ALOGE("Received PDU in state of SYMM_MUST_XMIT_NEXT");
   }
 
   if (free_buffer) GKI_freebuf(p_msg);
@@ -1473,7 +1458,7 @@ static NFC_HDR* llcp_link_build_next_pdu(NFC_HDR* p_pdu) {
   uint8_t *p, ptype;
   uint16_t next_pdu_length, pdu_hdr;
 
-  LLCP_TRACE_DEBUG0("llcp_link_build_next_pdu ()");
+  ALOGD("llcp_link_build_next_pdu ()");
 
   /* add any pending SNL PDU into sig_xmit_q for transmitting */
   llcp_sdp_check_send_snl();
@@ -1524,7 +1509,7 @@ static NFC_HDR* llcp_link_build_next_pdu(NFC_HDR* p_pdu) {
           GKI_freebuf(p_msg);
           p_msg = p_agf;
         } else {
-          LLCP_TRACE_ERROR0("llcp_link_build_next_pdu (): Out of buffer");
+          ALOGE("llcp_link_build_next_pdu (): Out of buffer");
           return p_msg;
         }
       } else {

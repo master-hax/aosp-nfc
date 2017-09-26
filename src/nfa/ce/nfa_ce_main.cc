@@ -70,7 +70,7 @@ static std::string nfa_ce_evt_2_str(uint16_t event);
 **
 *******************************************************************************/
 void nfa_ce_init(void) {
-  NFA_TRACE_DEBUG0("nfa_ce_init ()");
+  ALOGD("nfa_ce_init ()");
 
   /* initialize control block */
   memset(&nfa_ce_cb, 0, sizeof(tNFA_CE_CB));
@@ -133,8 +133,7 @@ static void nfa_ce_proc_nfcc_power_mode(uint8_t nfcc_power_mode) {
   tNFA_CE_CB* p_cb = &nfa_ce_cb;
   uint8_t listen_info_idx;
 
-  NFA_TRACE_DEBUG1("nfa_ce_proc_nfcc_power_mode (): nfcc_power_mode=%d",
-                   nfcc_power_mode);
+  ALOGD("nfa_ce_proc_nfcc_power_mode (): nfcc_power_mode=%d", nfcc_power_mode);
 
   /* if NFCC power mode is change to full power */
   if (nfcc_power_mode == NFA_DM_PWR_MODE_FULL) {
@@ -171,12 +170,11 @@ bool nfa_ce_hdl_event(NFC_HDR* p_msg) {
   bool freebuf = true;
 
 #if (BT_TRACE_VERBOSE == TRUE)
-  NFA_TRACE_EVENT3("nfa_ce_handle_event event: %s (0x%02x), flags: %08x",
-                   nfa_ce_evt_2_str(p_msg->event).c_str(), p_msg->event,
-                   nfa_ce_cb.flags);
+  ALOGD("nfa_ce_handle_event event: %s (0x%02x), flags: %08x",
+        nfa_ce_evt_2_str(p_msg->event).c_str(), p_msg->event, nfa_ce_cb.flags);
 #else
-  NFA_TRACE_EVENT2("nfa_ce_handle_event event: 0x%x, flags: %08x", p_msg->event,
-                   nfa_ce_cb.flags);
+  ALOGD("nfa_ce_handle_event event: 0x%x, flags: %08x", p_msg->event,
+        nfa_ce_cb.flags);
 #endif
 
   /* Get NFA_RW sub-event */
