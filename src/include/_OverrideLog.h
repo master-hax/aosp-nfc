@@ -27,12 +27,11 @@
  ******************************************************************************/
 #pragma once
 
-// Override Android's ALOGD macro by adding a boolean expression.
-#define ALOGD(...) \
-  ((void)ALOGD_IF(appl_trace_level >= BT_TRACE_LEVEL_DEBUG, __VA_ARGS__))
-
-#include <cutils/log.h>  //define Android logging macros
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
 #include "bt_types.h"
+
+using android::base::StringPrintf;
 
 extern unsigned char appl_trace_level;
 extern uint32_t ScrProtocolTraceFlag;

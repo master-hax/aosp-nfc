@@ -19,6 +19,7 @@
 #ifndef NFC_TARGET_H
 #define NFC_TARGET_H
 
+#include "_OverrideLog.h"
 #include "data_types.h"
 
 #ifdef BUILDCFG
