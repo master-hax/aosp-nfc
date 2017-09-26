@@ -336,7 +336,6 @@ uint32_t nfc_task(uint32_t param) {
 
   /* Initialize the nfc control block */
   memset(&nfc_cb, 0, sizeof(tNFC_CB));
-  nfc_cb.trace_level = NFC_INITIAL_TRACE_LEVEL;
 
   ALOGD("NFC_TASK started.");
 
