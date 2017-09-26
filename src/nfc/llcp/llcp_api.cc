@@ -119,7 +119,7 @@ void LLCP_SetConfig(uint16_t link_miu, uint8_t opt, uint8_t wt,
 
   /* if Link MIU is bigger than GKI buffer */
   if (link_miu > LLCP_MIU) {
-    ALOGE("LLCP_SetConfig (): link_miu shall not be bigger than LLCP_MIU (%d)",
+    ALOGE("LLCP_SetConfig (): link_miu shall not be bigger than LLCP_MIU (%lu)",
           LLCP_MIU);
     llcp_cb.lcb.local_link_miu = LLCP_MIU;
   } else
@@ -866,7 +866,7 @@ tLLCP_STATUS LLCP_ConnectReq(uint8_t reg_sap, uint8_t dsap,
 
   if (dsap == LLCP_SAP_SDP) {
     if (strlen(p_params->sn) > LLCP_MAX_SN_LEN) {
-      ALOGE("LLCP_ConnectReq (): Service Name (%d bytes) is too long",
+      ALOGE("LLCP_ConnectReq (): Service Name (%zu bytes) is too long",
             strlen(p_params->sn));
       return LLCP_STATUS_FAIL;
     }

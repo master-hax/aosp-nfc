@@ -122,7 +122,7 @@ void nfc_process_timer_evt(void) {
         nfc_mode_set_ntf_timeout();
         break;
       default:
-        ALOGD("nfc_process_timer_evt: timer:0x%x event (0x%04x)", p_tle,
+        ALOGD("nfc_process_timer_evt: timer:0x%p event (0x%04x)", p_tle,
               p_tle->event);
         ALOGD("nfc_process_timer_evt: unhandled timer event (0x%04x)",
               p_tle->event);

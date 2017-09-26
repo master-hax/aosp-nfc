@@ -86,7 +86,7 @@ void nfa_sys_ptim_timer_update(tPTIM_CB* p_cb) {
          (p_cb->timer_queue.p_first->ticks <= 0)) {
     /* removed expired timer from list */
     p_tle = p_cb->timer_queue.p_first;
-    ALOGD("nfa_sys_ptim_timer_update expired: %08x", p_tle);
+    ALOGD("nfa_sys_ptim_timer_update expired: %p", p_tle);
     GKI_remove_from_timer_list(&p_cb->timer_queue, p_tle);
 
     /* call timer callback */
@@ -121,7 +121,7 @@ void nfa_sys_ptim_timer_update(tPTIM_CB* p_cb) {
 *******************************************************************************/
 void nfa_sys_ptim_start_timer(tPTIM_CB* p_cb, TIMER_LIST_ENT* p_tle,
                               uint16_t type, int32_t timeout) {
-  ALOGD("nfa_sys_ptim_start_timer %08x", p_tle);
+  ALOGD("nfa_sys_ptim_start_timer %p", p_tle);
 
   /* if timer list is currently empty, start periodic GKI timer */
   if (p_cb->timer_queue.p_first == NULL) {
@@ -148,7 +148,7 @@ void nfa_sys_ptim_start_timer(tPTIM_CB* p_cb, TIMER_LIST_ENT* p_tle,
 **
 *******************************************************************************/
 void nfa_sys_ptim_stop_timer(tPTIM_CB* p_cb, TIMER_LIST_ENT* p_tle) {
-  ALOGD("nfa_sys_ptim_stop_timer %08x", p_tle);
+  ALOGD("nfa_sys_ptim_stop_timer %p", p_tle);
 
   GKI_remove_from_timer_list(&p_cb->timer_queue, p_tle);
 

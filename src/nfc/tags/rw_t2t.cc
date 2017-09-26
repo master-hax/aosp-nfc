@@ -74,7 +74,7 @@ static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
 
   if ((p_t2t->state == RW_T2T_STATE_IDLE) || (p_cmd_rsp_info == NULL)) {
 #if (BT_TRACE_VERBOSE == TRUE)
-    ALOGD("RW T2T Raw Frame: Len [0x%X] Status [%s]", &p_pkt->len,
+    ALOGD("RW T2T Raw Frame: Len [0x%X] Status [%s]", p_pkt->len,
           NFC_GetStatusName(p_data->status).c_str());
 #else
     ALOGD("RW T2T Raw Frame: Len [0x%X] Status [0x%X]", p_pkt->len,

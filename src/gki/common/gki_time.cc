@@ -743,7 +743,7 @@ void GKI_add_to_timer_list(TIMER_LIST_Q* p_timer_listq, TIMER_LIST_ENT* p_tle) {
   uint8_t tt;
   TIMER_LIST_ENT* p_temp;
   if (p_tle == NULL || p_timer_listq == NULL) {
-    ALOGD("%s: invalid argument %x, %x****************************<<", __func__,
+    ALOGD("%s: invalid argument %p, %p****************************<<", __func__,
           p_timer_listq, p_tle);
     return;
   }

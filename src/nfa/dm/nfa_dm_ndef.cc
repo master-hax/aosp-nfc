@@ -363,8 +363,7 @@ void nfa_dm_ndef_handle_message(tNFA_STATUS status, uint8_t* p_msg_buf,
   uint8_t rec_count = 0;
   bool record_handled, entire_message_handled;
 
-  ALOGD("nfa_dm_ndef_handle_message status=%i, msgbuf=%08x, len=%i", status,
-        p_msg_buf, len);
+  ALOGD("nfa_dm_ndef_handle_message status=%i, len=%i", status, len);
 
   if (status != NFA_STATUS_OK) {
     /* If problem reading NDEF message, then exit (no action required) */

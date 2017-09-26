@@ -1806,10 +1806,10 @@ static void rw_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 /* Unexpected R-APDU, it should be raw frame response */
 /* forward to upper layer without parsing */
 #if (BT_TRACE_VERBOSE == TRUE)
-      ALOGD("RW T4T Raw Frame: Len [0x%X] Status [%s]", &p_r_apdu->len,
+      ALOGD("RW T4T Raw Frame: Len [0x%X] Status [%s]", p_r_apdu->len,
             NFC_GetStatusName(p_data->data.status).c_str());
 #else
-      ALOGD("RW T4T Raw Frame: Len [0x%X] Status [0x%X]", &p_r_apdu->len,
+      ALOGD("RW T4T Raw Frame: Len [0x%X] Status [0x%X]", p_r_apdu->len,
             p_data->data.status);
 #endif
       if (rw_cb.p_cback) {

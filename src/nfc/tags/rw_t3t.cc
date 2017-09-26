@@ -1446,10 +1446,10 @@ void rw_t3t_act_handle_raw_senddata_rsp(tRW_T3T_CB* p_cb,
   NFC_HDR* p_pkt = p_data->p_data;
 
 #if (BT_TRACE_VERBOSE == TRUE)
-  ALOGD("RW T3T Raw Frame: Len [0x%X] Status [%s]", &p_pkt->len,
+  ALOGD("RW T3T Raw Frame: Len [0x%X] Status [%s]", p_pkt->len,
         NFC_GetStatusName(p_data->status).c_str());
 #else
-  ALOGD("RW T3T Raw Frame: Len [0x%X] Status [0x%X]", &p_pkt->len,
+  ALOGD("RW T3T Raw Frame: Len [0x%X] Status [0x%X]", p_pkt->len,
         p_data->status);
 #endif
 
