@@ -733,8 +733,8 @@ void ce_t3t_data_cback(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
                * more data remaining after reading block list */
               if (remaining) {
                 ALOGE(
-                    "CE: unexpected data after after CHECK command (#i bytes)",
-                    remaining);
+                    "CE: unexpected data after after CHECK command (%u bytes)",
+                    (unsigned int)remaining);
               }
               ce_t3t_handle_check_cmd(p_ce_cb, p_msg);
               msg_processed = true;

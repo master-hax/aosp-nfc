@@ -2862,7 +2862,7 @@ tNFC_STATUS RW_T2tReadNDef(uint8_t* p_buffer, uint16_t buf_len) {
   }
 
   if (!p_t2t->ndef_msg_len) {
-    ALOGW("RW_T2tReadNDef - NDEF Message length is zero ", p_t2t->ndef_msg_len);
+    ALOGW("RW_T2tReadNDef - NDEF Message length is zero");
     return (NFC_STATUS_NOT_INITIALIZED);
   }
 

@@ -1093,7 +1093,7 @@ bool nfa_ce_api_cfg_local_tag(tNFA_CE_MSG* p_ce_msg) {
 
   ALOGD(
       "Configuring local NDEF tag: protocol_mask=%01x cur_size=%i, "
-      "max_size=%i, readonly=%i",
+      "max_size=%i, readonly=%i uid_len=%i",
       p_ce_msg->local_tag.protocol_mask, p_ce_msg->local_tag.ndef_cur_size,
       p_ce_msg->local_tag.ndef_max_size, p_ce_msg->local_tag.read_only,
       p_ce_msg->local_tag.uid_len);

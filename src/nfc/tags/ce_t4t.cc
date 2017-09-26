@@ -649,7 +649,7 @@ static void ce_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
             }
           }
         } else {
-          ALOGE("CET4T: length (%d) must be less than MLe (%d)", length,
+          ALOGE("CET4T: length (%d) must be less than MLe (%lu)", length,
                 CE_T4T_MAX_LE);
           length = 0;
         }
@@ -680,7 +680,7 @@ static void ce_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
             length = 0;
           }
         } else {
-          ALOGE("CET4T: length (%d) must be less than MLc (%d)", length,
+          ALOGE("CET4T: length (%d) must be less than MLc (%lu)", length,
                 CE_T4T_MAX_LC);
           length = 0;
         }

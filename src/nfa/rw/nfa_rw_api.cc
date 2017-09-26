@@ -145,7 +145,7 @@ tNFA_STATUS NFA_RwReadNDef(void) {
 tNFA_STATUS NFA_RwWriteNDef(uint8_t* p_data, uint32_t len) {
   tNFA_RW_OPERATION* p_msg;
 
-  ALOGD("NFA_RwWriteNDef (): ndef p_data=%08x, len: %i", p_data, len);
+  ALOGD("NFA_RwWriteNDef (): ndef len: %i", len);
 
   /* Validate parameters */
   if (p_data == NULL) return (NFA_STATUS_INVALID_PARAM);

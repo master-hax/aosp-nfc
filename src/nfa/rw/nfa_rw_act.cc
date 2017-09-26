@@ -103,11 +103,11 @@ static void nfa_rw_send_data_to_upper(tRW_DATA* p_rw_data) {
 
 #if (BT_TRACE_VERBOSE == TRUE)
   ALOGD("nfa_rw_send_data_to_upper: Len [0x%X] Status [%s]",
-        &p_rw_data->data.p_data->len,
+        p_rw_data->data.p_data->len,
         NFC_GetStatusName(p_rw_data->data.status).c_str());
 #else
   ALOGD("nfa_rw_send_data_to_upper: Len [0x%X] Status [0x%X]",
-        &p_rw_data->data.p_data->len, p_rw_data->data.status);
+        p_rw_data->data.p_data->len, p_rw_data->data.status);
 #endif
 
   /* Notify conn cback of NFA_DATA_EVT */
