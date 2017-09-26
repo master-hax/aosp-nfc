@@ -63,7 +63,7 @@ static std::string nfa_rw_evt_2_str(uint16_t event);
 **
 *******************************************************************************/
 void nfa_rw_init(void) {
-  NFA_TRACE_DEBUG0("nfa_rw_init ()");
+  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << __func__;
 
   /* initialize control block */
   memset(&nfa_rw_cb, 0, sizeof(tNFA_RW_CB));
@@ -173,12 +173,13 @@ bool nfa_rw_handle_event(NFC_HDR* p_msg) {
   uint16_t act_idx;
 
 #if (BT_TRACE_VERBOSE == TRUE)
-  NFA_TRACE_EVENT3("nfa_rw_handle_event event: %s (0x%02x), flags: %08x",
-                   nfa_rw_evt_2_str(p_msg->event).c_str(), p_msg->event,
-                   nfa_rw_cb.flags);
+  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
+      "nfa_rw_handle_event event: %s (0x%02x), flags: %08x",
+      nfa_rw_evt_2_str(p_msg->event).c_str(), p_msg->event, nfa_rw_cb.flags);
 #else
-  NFA_TRACE_EVENT2("nfa_rw_handle_event event: 0x%x, flags: %08x", p_msg->event,
-                   nfa_rw_cb.flags);
+  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
+      << StringPrintf("nfa_rw_handle_event event: 0x%x, flags: %08x",
+                      p_msg->event, nfa_rw_cb.flags);
 #endif
 
   /* Get NFA_RW sub-event */
@@ -186,8 +187,8 @@ bool nfa_rw_handle_event(NFC_HDR* p_msg) {
   if (act_idx < (NFA_RW_MAX_EVT & 0xFF)) {
     return (*nfa_rw_action_tbl[act_idx])((tNFA_RW_MSG*)p_msg);
   } else {
-    NFA_TRACE_ERROR1("nfa_rw_handle_event: unhandled event 0x%02X",
-                     p_msg->event);
+    LOG(ERROR) << StringPrintf("nfa_rw_handle_event: unhandled event 0x%02X",
+                               p_msg->event);
     return true;
   }
 }

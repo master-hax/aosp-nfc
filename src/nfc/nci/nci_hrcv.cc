@@ -51,7 +51,8 @@ bool nci_proc_core_rsp(NFC_HDR* p_msg) {
   p = (uint8_t*)(p_msg + 1) + p_msg->offset;
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
-  NFC_TRACE_DEBUG1("nci_proc_core_rsp opcode:0x%x", op_code);
+  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
+      << StringPrintf("nci_proc_core_rsp opcode:0x%x", op_code);
   len = *pp++;
 
   /* process the message based on the opcode and message type */
@@ -84,7 +85,7 @@ bool nci_proc_core_rsp(NFC_HDR* p_msg) {
       nfc_ncif_event_status(NFC_SET_POWER_SUB_STATE_REVT, *pp);
       break;
     default:
-      NFC_TRACE_ERROR1("unknown opcode:0x%x", op_code);
+      LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
       break;
   }
 
@@ -109,7 +110,8 @@ void nci_proc_core_ntf(NFC_HDR* p_msg) {
   p = (uint8_t*)(p_msg + 1) + p_msg->offset;
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
-  NFC_TRACE_DEBUG1("nci_proc_core_ntf opcode:0x%x", op_code);
+  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
+      << StringPrintf("nci_proc_core_ntf opcode:0x%x", op_code);
   len = *pp++;
 
   /* process the message based on the opcode and message type */
@@ -135,7 +137,7 @@ void nci_proc_core_ntf(NFC_HDR* p_msg) {
       break;
 
     default:
-      NFC_TRACE_ERROR1("unknown opcode:0x%x", op_code);
+      LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
       break;
   }
 }
@@ -206,7 +208,7 @@ void nci_proc_rf_management_rsp(NFC_HDR* p_msg) {
       nfc_ncif_proc_isodep_nak_presence_check_status(*pp, false);
       break;
     default:
-      NFC_TRACE_ERROR1("unknown opcode:0x%x", op_code);
+      LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
       break;
   }
 }
@@ -280,7 +282,7 @@ void nci_proc_rf_management_ntf(NFC_HDR* p_msg) {
       nfc_ncif_proc_isodep_nak_presence_check_status(*pp, true);
       break;
     default:
-      NFC_TRACE_ERROR1("unknown opcode:0x%x", op_code);
+      LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
       break;
   }
 }
@@ -313,7 +315,8 @@ void nci_proc_ee_management_rsp(NFC_HDR* p_msg) {
   p = (uint8_t*)(p_msg + 1) + p_msg->offset;
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
-  NFC_TRACE_DEBUG1("nci_proc_ee_management_rsp opcode:0x%x", op_code);
+  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
+      << StringPrintf("nci_proc_ee_management_rsp opcode:0x%x", op_code);
   len = *pp++;
 
   switch (op_code) {
@@ -350,7 +353,7 @@ void nci_proc_ee_management_rsp(NFC_HDR* p_msg) {
       break;
     default:
       p_cback = NULL;
-      NFC_TRACE_ERROR1("unknown opcode:0x%x", op_code);
+      LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
       break;
   }
 
@@ -384,7 +387,8 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
   p = (uint8_t*)(p_msg + 1) + p_msg->offset;
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
-  NFC_TRACE_DEBUG1("nci_proc_ee_management_ntf opcode:0x%x", op_code);
+  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
+      << StringPrintf("nci_proc_ee_management_ntf opcode:0x%x", op_code);
   len = *pp++;
 
   if (op_code == NCI_MSG_NFCEE_DISCOVER) {
@@ -405,9 +409,9 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
 
     pp = p + yy;
     nfcee_info.num_tlvs = *pp++;
-    NFC_TRACE_DEBUG4("nfcee_id: 0x%x num_interface:0x%x/0x%x, num_tlvs:0x%x",
-                     nfcee_info.nfcee_id, nfcee_info.num_interface, yy,
-                     nfcee_info.num_tlvs);
+    DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
+        "nfcee_id: 0x%x num_interface:0x%x/0x%x, num_tlvs:0x%x",
+        nfcee_info.nfcee_id, nfcee_info.num_interface, yy, nfcee_info.num_tlvs);
 
     if (nfcee_info.num_tlvs > NFC_MAX_EE_TLVS)
       nfcee_info.num_tlvs = NFC_MAX_EE_TLVS;
@@ -417,7 +421,8 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
     for (xx = 0; xx < nfcee_info.num_tlvs; xx++, p_tlv++) {
       p_tlv->tag = *pp++;
       p_tlv->len = yy = *pp++;
-      NFC_TRACE_DEBUG2("tag:0x%x, len:0x%x", p_tlv->tag, p_tlv->len);
+      DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
+          << StringPrintf("tag:0x%x, len:0x%x", p_tlv->tag, p_tlv->len);
       if (p_tlv->len > NFC_MAX_EE_INFO) p_tlv->len = NFC_MAX_EE_INFO;
       p = pp;
       STREAM_TO_ARRAY(p_tlv->info, pp, p_tlv->len);
@@ -439,7 +444,7 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
     nfcee_status.nfcee_status = *pp;
   } else {
     p_cback = NULL;
-    NFC_TRACE_ERROR1("unknown opcode:0x%x", op_code);
+    LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
   }
 
   if (p_cback) (*p_cback)(event, p_evt);
