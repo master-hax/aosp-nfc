@@ -16,12 +16,6 @@
  *
  ******************************************************************************/
 
-/******************************************************************************
- *
- *  Override the ALOGD(), ALOGE(), and other logging macros from
- *  /system/core/include/cutils/log.h
- *
- ******************************************************************************/
 #include <cutils/properties.h>
 #include <string.h>
 #include "_OverrideLog.h"
@@ -66,7 +60,8 @@ unsigned char initializeGlobalAppLogLevel() {
   // 0xFF is a special value used by the stack to query the current
   // trace level; it does not change any trace level
   if (appl_trace_level == 0xFF) appl_trace_level = BT_TRACE_LEVEL_DEBUG;
-  ALOGD("%s: level=%u", __func__, appl_trace_level);
+  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
+      << StringPrintf("%s: level=%u", __func__, appl_trace_level);
 
   if (appl_trace_level < BT_TRACE_LEVEL_DEBUG) {
     // display protocol traces in raw format
@@ -96,5 +91,6 @@ uint32_t initializeProtocolLogLevel() {
 
 void initializeGlobalAppDtaMode() {
   appl_dta_mode_flag = 0x01;
-  ALOGD("%s: DTA Enabled", __func__);
+  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
+      << StringPrintf("%s: DTA Enabled", __func__);
 }
