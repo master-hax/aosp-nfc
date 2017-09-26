@@ -200,10 +200,9 @@ typedef uint8_t tNFC_HAL_LP_EVT;
 
 #if (NFC_HAL_DEBUG == TRUE)
 extern const char* const nfc_hal_init_state_str[];
-#define NFC_HAL_SET_INIT_STATE(state)                           \
-  HAL_TRACE_DEBUG3("init state: %d->%d(%s)",                    \
-                   nfc_hal_cb.dev_cb.initializing_state, state, \
-                   nfc_hal_init_state_str[state]);              \
+#define NFC_HAL_SET_INIT_STATE(state)                                          \
+  ALOGD("init state: %d->%d(%s)", nfc_hal_cb.dev_cb.initializing_state, state, \
+        nfc_hal_init_state_str[state]);                                        \
   nfc_hal_cb.dev_cb.initializing_state = state;
 #else
 #define NFC_HAL_SET_INIT_STATE(state) \
