@@ -17,10 +17,6 @@
  ******************************************************************************/
 #include "gki_int.h"
 
-#ifndef BT_ERROR_TRACE_0
-#define BT_ERROR_TRACE_0(l, m)
-#endif
-
 /* Make sure that this has been defined in target.h */
 #ifndef GKI_NUM_TIMERS
 #error NO TIMERS: Must define at least 1 timer in the system!
@@ -714,13 +710,11 @@ uint32_t GKI_get_remaining_ticks(TIMER_LIST_Q* p_timer_listq,
     if (p_tle == p_target_tle) {
       rem_ticks += p_tle->ticks;
     } else {
-      BT_ERROR_TRACE_0(TRACE_LAYER_GKI,
-                       "GKI_get_remaining_ticks: No timer entry in the list");
+      ALOGE("GKI_get_remaining_ticks: No timer entry in the list");
       return (0);
     }
   } else {
-    BT_ERROR_TRACE_0(TRACE_LAYER_GKI,
-                     "GKI_get_remaining_ticks: timer entry is not active");
+    ALOGE("GKI_get_remaining_ticks: timer entry is not active");
   }
 
   return (rem_ticks);

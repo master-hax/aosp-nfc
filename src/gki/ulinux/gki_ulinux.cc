@@ -105,20 +105,6 @@ void* gki_task_entry(void* params) {
 }
 /* end android */
 
-#ifndef ANDROID
-void GKI_TRACE(char* fmt, ...) {
-  LOCK(gki_cb.os.GKI_trace_mutex);
-  va_list ap;
-
-  va_start(ap, fmt);
-  vfprintf(stderr, fmt, ap);
-  fprintf(stderr, "\n");
-
-  va_end(ap);
-  UNLOCK(gki_cb.os.GKI_trace_mutex);
-}
-#endif
-
 /*******************************************************************************
 **
 ** Function         GKI_init
@@ -383,9 +369,7 @@ void gki_system_tick_start_stop_cback(bool start) {
     *p_run_cond = GKI_TIMER_TICK_STOP_COND;
 /* GKI_enable(); */
 #ifdef GKI_TICK_TIMER_DEBUG
-    BT_TRACE_1(TRACE_LAYER_HCI, TRACE_TYPE_DEBUG,
-               ">>> STOP GKI_timer_update(), wake_lock_count:%d",
-               --wake_lock_count);
+    ALOGD(">>> STOP GKI_timer_update(), wake_lock_count:%d", --wake_lock_count);
 #endif
     release_wake_lock(WAKE_LOCK_ID);
     gki_cb.os.gki_timer_wake_lock_on = 0;
@@ -399,9 +383,8 @@ void gki_system_tick_start_stop_cback(bool start) {
     pthread_mutex_unlock(&p_os->gki_timer_mutex);
 
 #ifdef GKI_TICK_TIMER_DEBUG
-    BT_TRACE_1(TRACE_LAYER_HCI, TRACE_TYPE_DEBUG,
-               ">>> START GKI_timer_update(), wake_lock_count:%d",
-               ++wake_lock_count);
+    ALOGD(">>> START GKI_timer_update(), wake_lock_count:%d",
+          ++wake_lock_count);
 #endif
   }
 }
@@ -504,7 +487,7 @@ void GKI_run(void* p_task_id) {
        * e.g. power saving you may want to provide more ticks
        */
       GKI_timer_update(1);
-      /* BT_TRACE_2( TRACE_LAYER_HCI, TRACE_TYPE_DEBUG, "update: tv_sec: %d,
+      /* ALOGD( TRACE_LAYER_HCI, TRACE_TYPE_DEBUG, "update: tv_sec: %d,
        * tv_nsec: %d", delay.tv_sec, delay.tv_nsec ); */
     } while (GKI_TIMER_TICK_RUN_COND == *p_run_cond);
 
@@ -512,8 +495,7 @@ void GKI_run(void* p_task_id) {
  * GKI_TIMER_TICK_STOP_COND
  * block timer main thread till re-armed by  */
 #ifdef GKI_TICK_TIMER_DEBUG
-    BT_TRACE_0(TRACE_LAYER_HCI, TRACE_TYPE_DEBUG,
-               ">>> SUSPENDED GKI_timer_update()");
+    ALOGD(">>> SUSPENDED GKI_timer_update()");
 #endif
     if (GKI_TIMER_TICK_EXIT_COND != *p_run_cond) {
       ALOGD("%s waiting timer mutex", __func__);
@@ -525,8 +507,7 @@ void GKI_run(void* p_task_id) {
 /* potentially we need to adjust os gki_cb.com.OSTicks */
 
 #ifdef GKI_TICK_TIMER_DEBUG
-    BT_TRACE_1(TRACE_LAYER_HCI, TRACE_TYPE_DEBUG,
-               ">>> RESTARTED GKI_timer_update(): run_cond: %d", *p_run_cond);
+    ALOGD(">>> RESTARTED GKI_timer_update(): run_cond: %d", *p_run_cond);
 #endif
   } /* for */
 #endif
