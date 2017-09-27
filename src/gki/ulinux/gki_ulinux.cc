@@ -89,10 +89,9 @@ gki_pthread_info_t gki_pthread_info[GKI_MAX_TASKS];
 void* gki_task_entry(void* params) {
   pthread_t thread_id = pthread_self();
   gki_pthread_info_t* p_pthread_info = (gki_pthread_info_t*)params;
-  GKI_TRACE_5("gki_task_entry task_id=%i, thread_id=%x/%x, pCond/pMutex=%x/%x",
-              p_pthread_info->task_id,
-              gki_cb.os.thread_id[p_pthread_info->task_id], pthread_self(),
-              p_pthread_info->pCond, p_pthread_info->pMutex);
+  ALOGD("gki_task_entry task_id=%i, thread_id=%x/%x, pCond/pMutex=%x/%x",
+        p_pthread_info->task_id, gki_cb.os.thread_id[p_pthread_info->task_id],
+        pthread_self(), p_pthread_info->pCond, p_pthread_info->pMutex);
 
   gki_cb.os.thread_id[p_pthread_info->task_id] = thread_id;
   /* Call the actual thread entry point */
@@ -104,20 +103,6 @@ void* gki_task_entry(void* params) {
   return NULL;
 }
 /* end android */
-
-#ifndef ANDROID
-void GKI_TRACE(char* fmt, ...) {
-  LOCK(gki_cb.os.GKI_trace_mutex);
-  va_list ap;
-
-  va_start(ap, fmt);
-  vfprintf(stderr, fmt, ap);
-  fprintf(stderr, "\n");
-
-  va_end(ap);
-  UNLOCK(gki_cb.os.GKI_trace_mutex);
-}
-#endif
 
 /*******************************************************************************
 **
@@ -209,9 +194,8 @@ uint8_t GKI_create_task(TASKPTR task_entry, uint8_t task_id, int8_t* taskname,
 
   pthread_condattr_init(&attr);
   pthread_condattr_setclock(&attr, CLOCK_MONOTONIC);
-  GKI_TRACE_5(
-      "GKI_create_task func=0x%x  id=%d  name=%s  stack=0x%x  stackSize=%d",
-      task_entry, task_id, taskname, stack, stacksize);
+  ALOGD("GKI_create_task func=0x%x  id=%d  name=%s  stack=0x%x  stackSize=%d",
+        task_entry, task_id, taskname, stack, stacksize);
 
   if (task_id >= GKI_MAX_TASKS) {
     ALOGD("Error! task ID > max task allowed");
@@ -234,8 +218,7 @@ uint8_t GKI_create_task(TASKPTR task_entry, uint8_t task_id, int8_t* taskname,
 #if (FALSE == GKI_PTHREAD_JOINABLE)
   pthread_attr_setdetachstate(&attr1, PTHREAD_CREATE_DETACHED);
 
-  GKI_TRACE_3("GKI creating task %i, pCond/pMutex=%x/%x", task_id, pCondVar,
-              pMutex);
+  ALOGD("GKI creating task %i, pCond/pMutex=%x/%x", task_id, pCondVar, pMutex);
 #else
   ALOGD("GKI creating JOINABLE task %i", task_id);
 #endif
@@ -273,8 +256,8 @@ uint8_t GKI_create_task(TASKPTR task_entry, uint8_t task_id, int8_t* taskname,
     pthread_setschedparam(gki_cb.os.thread_id[task_id], policy, &param);
   }
 
-  GKI_TRACE_6("Leaving GKI_create_task %x %d %x %s %x %d", task_entry, task_id,
-              gki_cb.os.thread_id[task_id], taskname, stack, stacksize);
+  ALOGD("Leaving GKI_create_task %x %d %x %s %x %d", task_entry, task_id,
+        gki_cb.os.thread_id[task_id], taskname, stack, stacksize);
 
   return (GKI_SUCCESS);
 }
@@ -383,9 +366,7 @@ void gki_system_tick_start_stop_cback(bool start) {
     *p_run_cond = GKI_TIMER_TICK_STOP_COND;
 /* GKI_enable(); */
 #ifdef GKI_TICK_TIMER_DEBUG
-    BT_TRACE_1(TRACE_LAYER_HCI, TRACE_TYPE_DEBUG,
-               ">>> STOP GKI_timer_update(), wake_lock_count:%d",
-               --wake_lock_count);
+    ALOGD(">>> STOP GKI_timer_update(), wake_lock_count:%d", --wake_lock_count);
 #endif
     release_wake_lock(WAKE_LOCK_ID);
     gki_cb.os.gki_timer_wake_lock_on = 0;
@@ -399,9 +380,8 @@ void gki_system_tick_start_stop_cback(bool start) {
     pthread_mutex_unlock(&p_os->gki_timer_mutex);
 
 #ifdef GKI_TICK_TIMER_DEBUG
-    BT_TRACE_1(TRACE_LAYER_HCI, TRACE_TYPE_DEBUG,
-               ">>> START GKI_timer_update(), wake_lock_count:%d",
-               ++wake_lock_count);
+    ALOGD(">>> START GKI_timer_update(), wake_lock_count:%d",
+          ++wake_lock_count);
 #endif
   }
 }
@@ -483,7 +463,7 @@ void GKI_run(void* p_task_id) {
     return GKI_FAILURE;
   }
 #else
-  GKI_TRACE_2("GKI_run, run_cond(%x)=%d ", p_run_cond, *p_run_cond);
+  ALOGD("GKI_run, run_cond(%x)=%d ", p_run_cond, *p_run_cond);
   for (; GKI_TIMER_TICK_EXIT_COND != *p_run_cond;) {
     do {
       /* adjust hear bit tick in btld by changning TICKS_PER_SEC!!!!! this
@@ -504,7 +484,7 @@ void GKI_run(void* p_task_id) {
        * e.g. power saving you may want to provide more ticks
        */
       GKI_timer_update(1);
-      /* BT_TRACE_2( TRACE_LAYER_HCI, TRACE_TYPE_DEBUG, "update: tv_sec: %d,
+      /* ALOGD( TRACE_LAYER_HCI, TRACE_TYPE_DEBUG, "update: tv_sec: %d,
        * tv_nsec: %d", delay.tv_sec, delay.tv_nsec ); */
     } while (GKI_TIMER_TICK_RUN_COND == *p_run_cond);
 
@@ -512,8 +492,7 @@ void GKI_run(void* p_task_id) {
  * GKI_TIMER_TICK_STOP_COND
  * block timer main thread till re-armed by  */
 #ifdef GKI_TICK_TIMER_DEBUG
-    BT_TRACE_0(TRACE_LAYER_HCI, TRACE_TYPE_DEBUG,
-               ">>> SUSPENDED GKI_timer_update()");
+    ALOGD(">>> SUSPENDED GKI_timer_update()");
 #endif
     if (GKI_TIMER_TICK_EXIT_COND != *p_run_cond) {
       ALOGD("%s waiting timer mutex", __func__);
@@ -525,8 +504,7 @@ void GKI_run(void* p_task_id) {
 /* potentially we need to adjust os gki_cb.com.OSTicks */
 
 #ifdef GKI_TICK_TIMER_DEBUG
-    BT_TRACE_1(TRACE_LAYER_HCI, TRACE_TYPE_DEBUG,
-               ">>> RESTARTED GKI_timer_update(): run_cond: %d", *p_run_cond);
+    ALOGD(">>> RESTARTED GKI_timer_update(): run_cond: %d", *p_run_cond);
 #endif
   } /* for */
 #endif
@@ -594,8 +572,8 @@ uint16_t GKI_wait(uint16_t flag, uint32_t timeout) {
   gki_pthread_info_t* p_pthread_info = &gki_pthread_info[rtask];
   if (p_pthread_info->pCond != NULL && p_pthread_info->pMutex != NULL) {
     int ret;
-    GKI_TRACE_3("GKI_wait task=%i, pCond/pMutex = %x/%x", rtask,
-                p_pthread_info->pCond, p_pthread_info->pMutex);
+    ALOGD("GKI_wait task=%i, pCond/pMutex = %x/%x", rtask,
+          p_pthread_info->pCond, p_pthread_info->pMutex);
     ret = pthread_mutex_lock(p_pthread_info->pMutex);
     ret = pthread_cond_signal(p_pthread_info->pCond);
     ret = pthread_mutex_unlock(p_pthread_info->pMutex);
@@ -822,12 +800,12 @@ uint8_t GKI_get_taskid(void) {
   pthread_t thread_id = pthread_self();
   for (i = 0; i < GKI_MAX_TASKS; i++) {
     if (gki_cb.os.thread_id[i] == thread_id) {
-      GKI_TRACE_2("GKI_get_taskid %x %d done", thread_id, i);
+      ALOGD("GKI_get_taskid %x %d done", thread_id, i);
       return (i);
     }
   }
 
-  GKI_TRACE_1("GKI_get_taskid: thread id = %x, task id = -1", thread_id);
+  ALOGD("GKI_get_taskid: thread id = %x, task id = -1", thread_id);
 
   return (-1);
 }
