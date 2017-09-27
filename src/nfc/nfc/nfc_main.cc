@@ -1290,7 +1290,7 @@ tNFC_STATUS NFC_PowerCycleNFCC(void) {
 **
 *******************************************************************************/
 uint8_t NFC_SetTraceLevel(uint8_t new_level) {
-  NFC_TRACE_API1("NFC_SetTraceLevel () new_level = %d", new_level);
+  ALOGD("NFC_SetTraceLevel () new_level = %d", new_level);
 
   if (new_level != 0xFF) nfc_cb.trace_level = new_level;
 
