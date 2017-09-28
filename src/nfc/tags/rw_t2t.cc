@@ -41,10 +41,8 @@ static void rw_t2t_process_frame_error(void);
 static void rw_t2t_handle_presence_check_rsp(tNFC_STATUS status);
 static void rw_t2t_resume_op(void);
 
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string rw_t2t_get_state_name(uint8_t state);
 static std::string rw_t2t_get_substate_name(uint8_t substate);
-#endif
 
 /*******************************************************************************
 **
@@ -68,20 +66,12 @@ static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
   tT2T_CMD_RSP_INFO* p_cmd_rsp_info =
       (tT2T_CMD_RSP_INFO*)rw_cb.tcb.t2t.p_cmd_rsp_info;
   tRW_DETECT_NDEF_DATA ndef_data;
-#if (BT_TRACE_VERBOSE == TRUE)
   uint8_t begin_state = p_t2t->state;
-#endif
 
   if ((p_t2t->state == RW_T2T_STATE_IDLE) || (p_cmd_rsp_info == NULL)) {
-#if (BT_TRACE_VERBOSE == TRUE)
     DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
         << StringPrintf("RW T2T Raw Frame: Len [0x%X] Status [%s]", p_pkt->len,
                         NFC_GetStatusName(p_data->status).c_str());
-#else
-    DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-        << StringPrintf("RW T2T Raw Frame: Len [0x%X] Status [0x%X]",
-                        p_pkt->len, p_data->status);
-#endif
     evt_data.status = p_data->status;
     evt_data.p_data = p_pkt;
     (*rw_cb.p_cback)(RW_T2T_RAW_FRAME_EVT, (tRW_DATA*)&evt_data);
@@ -102,13 +92,8 @@ static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
        (p_pkt->len != p_cmd_rsp_info->nack_rsp_len) &&
        (p_t2t->substate != RW_T2T_SUBSTATE_WAIT_SELECT_SECTOR)) ||
       (p_t2t->state == RW_T2T_STATE_HALT)) {
-#if (BT_TRACE_VERBOSE == TRUE)
     LOG(ERROR) << StringPrintf("T2T Frame error. state=%s ",
                                rw_t2t_get_state_name(p_t2t->state).c_str());
-#else
-    LOG(ERROR) << StringPrintf("T2T Frame error. state=0x%02X command=0x%02X ",
-                               p_t2t->state);
-#endif
     if (p_t2t->state != RW_T2T_STATE_HALT) {
       /* Retrasmit the last sent command if retry-count < max retry */
       rw_t2t_process_frame_error();
@@ -223,14 +208,12 @@ static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
 
   if (b_release) GKI_freebuf(p_pkt);
 
-#if (BT_TRACE_VERBOSE == TRUE)
   if (begin_state != p_t2t->state) {
     DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
         << StringPrintf("RW T2T state changed:<%s> -> <%s>",
                         rw_t2t_get_state_name(begin_state).c_str(),
                         rw_t2t_get_state_name(p_t2t->state).c_str());
   }
-#endif
 }
 
 /*******************************************************************************
@@ -390,16 +373,10 @@ tNFC_STATUS rw_t2t_send_cmd(uint8_t opcode, uint8_t* p_dat) {
             &p_t2t->t2_timer, NFC_TTYPE_RW_T2T_RESPONSE,
             (RW_T2T_TOUT_RESP * QUICK_TIMER_TICKS_PER_SEC) / 1000);
       } else {
-#if (BT_TRACE_VERBOSE == TRUE)
         LOG(ERROR) << StringPrintf(
             "T2T NFC Send data failed. state=%s substate=%s ",
             rw_t2t_get_state_name(p_t2t->state).c_str(),
             rw_t2t_get_substate_name(p_t2t->substate).c_str());
-#else
-        LOG(ERROR) << StringPrintf(
-            "T2T NFC Send data failed. state=0x%02X substate=0x%02X ",
-            p_t2t->state, p_t2t->substate);
-#endif
       }
     } else {
       status = NFC_STATUS_NO_BUFFERS;
@@ -446,12 +423,8 @@ void rw_t2t_process_timeout(TIMER_LIST_ENT* p_tle) {
       rw_t2t_resume_op();
     }
   } else if (p_t2t->state != RW_T2T_STATE_IDLE) {
-#if (BT_TRACE_VERBOSE == TRUE)
     LOG(ERROR) << StringPrintf("T2T timeout. state=%s ",
                                rw_t2t_get_state_name(p_t2t->state).c_str());
-#else
-    LOG(ERROR) << StringPrintf("T2T timeout. state=0x%02X ", p_t2t->state);
-#endif
     /* Handle timeout error as no response to the command sent */
     rw_t2t_process_error();
   }
@@ -1042,7 +1015,6 @@ tNFC_STATUS RW_T2tSectorSelect(uint8_t sector) {
   return status;
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         rw_t2t_get_state_name
@@ -1138,5 +1110,3 @@ static std::string rw_t2t_get_substate_name(uint8_t substate) {
       return "???? UNKNOWN SUBSTATE";
   }
 }
-
-#endif /* (BT_TRACE_VERBOSE == TRUE) */

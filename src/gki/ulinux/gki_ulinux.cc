@@ -23,7 +23,6 @@
 #include <pthread.h> /* must be 1st header defined  */
 #include <time.h>
 #include "_OverrideLog.h"
-#include "bt_trace.h"
 #include "gki_int.h"
 #include "gki_target.h"
 

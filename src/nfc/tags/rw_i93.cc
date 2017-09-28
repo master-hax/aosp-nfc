@@ -80,11 +80,9 @@ enum {
   RW_I93_SUBSTATE_WAIT_LOCK_CC    /* lock block of CC                     */
 };
 
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string rw_i93_get_state_name(uint8_t state);
 static std::string rw_i93_get_sub_state_name(uint8_t sub_state);
 static std::string rw_i93_get_tag_name(uint8_t product_version);
-#endif
 
 static void rw_i93_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
                               tNFC_CONN* p_data);
@@ -169,14 +167,9 @@ void rw_i93_get_product_version(uint8_t* p_uid) {
     p_i93->product_version = RW_I93_UNKNOWN_PRODUCT;
   }
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("product_version = <%s>",
                       rw_i93_get_tag_name(p_i93->product_version).c_str());
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("product_version = %d", p_i93->product_version);
-#endif
 
   switch (p_i93->product_version) {
     case RW_I93_TAG_IT_HF_I_STD_CHIP_INLAY:
@@ -460,9 +453,7 @@ void rw_i93_send_to_upper(NFC_HDR* p_resp) {
 **
 *******************************************************************************/
 bool rw_i93_send_to_lower(NFC_HDR* p_msg) {
-#if (BT_TRACE_PROTOCOL == TRUE)
   DispRWI93Tag(p_msg, false, 0x00);
-#endif
 
   /* store command for retransmitting */
   if (rw_cb.tcb.i93.p_retry_cmd) {
@@ -1381,14 +1372,9 @@ void rw_i93_sm_detect_ndef(NFC_HDR* p_resp) {
   tRW_DATA rw_data;
   tNFC_STATUS status = NFC_STATUS_FAILED;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "sub_state:%s (0x%x)",
       rw_i93_get_sub_state_name(p_i93->sub_state).c_str(), p_i93->sub_state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("sub_state:0x%x", p_i93->sub_state);
-#endif
 
   STREAM_TO_UINT8(flags, p);
   length--;
@@ -1860,14 +1846,9 @@ void rw_i93_sm_update_ndef(NFC_HDR* p_resp) {
   tRW_I93_CB* p_i93 = &rw_cb.tcb.i93;
   tRW_DATA rw_data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "sub_state:%s (0x%x)",
       rw_i93_get_sub_state_name(p_i93->sub_state).c_str(), p_i93->sub_state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("sub_state:0x%x", p_i93->sub_state);
-#endif
 
   STREAM_TO_UINT8(flags, p);
   length--;
@@ -2115,14 +2096,9 @@ void rw_i93_sm_format(NFC_HDR* p_resp) {
   tRW_DATA rw_data;
   tNFC_STATUS status = NFC_STATUS_FAILED;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "sub_state:%s (0x%x)",
       rw_i93_get_sub_state_name(p_i93->sub_state).c_str(), p_i93->sub_state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("sub_state:0x%x", p_i93->sub_state);
-#endif
 
   STREAM_TO_UINT8(flags, p);
   length--;
@@ -2450,14 +2426,9 @@ void rw_i93_sm_set_read_only(NFC_HDR* p_resp) {
   tRW_I93_CB* p_i93 = &rw_cb.tcb.i93;
   tRW_DATA rw_data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "sub_state:%s (0x%x)",
       rw_i93_get_sub_state_name(p_i93->sub_state).c_str(), p_i93->sub_state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("sub_state:0x%x", p_i93->sub_state);
-#endif
 
   STREAM_TO_UINT8(flags, p);
   length--;
@@ -2697,9 +2668,7 @@ static void rw_i93_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   NFC_HDR* p_resp;
   tRW_DATA rw_data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   uint8_t begin_state = p_i93->state;
-#endif
 
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("event = 0x%X", event);
@@ -2757,18 +2726,11 @@ static void rw_i93_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
     p_i93->retry_count = 0;
   }
 
-#if (BT_TRACE_PROTOCOL == TRUE)
   DispRWI93Tag(p_resp, true, p_i93->sent_cmd);
-#endif
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "RW I93 state: <%s (%d)>", rw_i93_get_state_name(p_i93->state).c_str(),
       p_i93->state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("RW I93 state: %d", p_i93->state);
-#endif
 
   switch (p_i93->state) {
     case RW_I93_STATE_IDLE:
@@ -2831,14 +2793,12 @@ static void rw_i93_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
       break;
   }
 
-#if (BT_TRACE_VERBOSE == TRUE)
   if (begin_state != p_i93->state) {
     DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
         << StringPrintf("RW I93 state changed:<%s> -> <%s>",
                         rw_i93_get_state_name(begin_state).c_str(),
                         rw_i93_get_state_name(p_i93->state).c_str());
   }
-#endif
 }
 
 /*******************************************************************************
@@ -3701,7 +3661,6 @@ tNFC_STATUS RW_I93PresenceCheck(void) {
   return (status);
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         rw_i93_get_state_name
@@ -3832,5 +3791,3 @@ static std::string rw_i93_get_tag_name(uint8_t product_version) {
       return "UNKNOWN";
   }
 }
-
-#endif

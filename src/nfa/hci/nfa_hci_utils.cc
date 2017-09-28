@@ -301,17 +301,11 @@ tNFA_STATUS nfa_hciu_send_msg(uint8_t pipe_id, uint8_t type,
   tNFA_STATUS status = NFA_STATUS_OK;
   uint16_t max_seg_hcp_pkt_size = nfa_hci_cb.buff_size - NCI_DATA_HDR_SIZE;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   char buff[100];
 
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "nfa_hciu_send_msg pipe_id:%d   %s  len:%d", pipe_id,
       nfa_hciu_get_type_inst_names(pipe_id, type, instruction, buff), msg_len);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-      "nfa_hciu_send_msg pipe_id:%d   Type: %u  Inst: %u  len: %d", pipe_id,
-      type, instruction, msg_len);
-#endif
 
   if (instruction == NFA_HCI_ANY_GET_PARAMETER)
     nfa_hci_cb.param_in_use = *p_msg;
@@ -353,9 +347,7 @@ tNFA_STATUS nfa_hciu_send_msg(uint8_t pipe_id, uint8_t type,
         if (msg_len > 0) p_msg += data_len;
       }
 
-#if (BT_TRACE_PROTOCOL == TRUE)
       DispHcp(((uint8_t*)(p_buf + 1) + p_buf->offset), p_buf->len, false);
-#endif
 
       if (HCI_LOOPBACK_DEBUG == NFA_HCI_DEBUG_ON)
         handle_debug_loopback(p_buf, pipe_id, type, instruction);
@@ -1115,7 +1107,6 @@ void nfa_hciu_send_to_apps_handling_connectivity_evts(
   }
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_hciu_get_response_name
@@ -1377,7 +1368,6 @@ std::string nfa_hciu_evt_2_str(uint8_t pipe_id, uint8_t evt) {
       return "UNKNOWN";
   }
 }
-#endif
 
 static void handle_debug_loopback(NFC_HDR* p_buf, uint8_t pipe, uint8_t type,
                                   uint8_t instruction) {

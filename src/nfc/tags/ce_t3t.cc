@@ -90,9 +90,7 @@ void ce_t3t_send_to_lower(NFC_HDR* p_msg) {
   UINT8_TO_STREAM(p, (p_msg->len + 1));
   p_msg->len += 1; /* Increment len to include SoD */
 
-#if (BT_TRACE_PROTOCOL == TRUE)
   DispT3TagMessage(p_msg, false);
-#endif
 
   if (NFC_SendData(NFC_RF_CONN_ID, p_msg) != NFC_STATUS_OK) {
     LOG(ERROR) << StringPrintf("failed");
@@ -629,9 +627,7 @@ void ce_t3t_data_cback(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
   uint8_t sod;
   uint8_t cmd_type;
 
-#if (BT_TRACE_PROTOCOL == TRUE)
   DispT3TagMessage(p_msg, true);
-#endif
 
   /* If activate system code is not NDEF, or if no local NDEF contents was set,
    * then pass data up to the app */
