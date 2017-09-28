@@ -165,9 +165,4 @@
 #define NFC_HAL_TRACE_PROTOCOL TRUE
 #endif
 
-/* Legacy protocol-trace-enable macro */
-#ifndef BT_TRACE_PROTOCOL
-#define BT_TRACE_PROTOCOL (NFC_HAL_TRACE_PROTOCOL)
-#endif
-
 #endif /* GKI_TARGET_H */

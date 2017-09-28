@@ -261,13 +261,8 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
   uint8_t dm_cback_evt;
   uint8_t max_ee = 0;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("%s(0x%x)", nfa_dm_nfc_revt_2_str(event).c_str(), event);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("event=0x%x", event);
-#endif
 
   switch (event) {
     case NFC_ENABLE_REVT: /* 0  Enable event */
@@ -1825,7 +1820,6 @@ void nfa_dm_notify_activation_status(tNFA_STATUS status,
   nfa_dm_cb.p_activate_ntf = NULL;
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_dm_nfc_revt_2_str
@@ -1873,4 +1867,3 @@ std::string nfa_dm_nfc_revt_2_str(tNFC_RESPONSE_EVT event) {
       return "unknown revt";
   }
 }
-#endif /* BT_VERBOSE */

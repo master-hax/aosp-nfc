@@ -76,7 +76,6 @@ static const tNCI_DISCOVER_MAPS nfc_interface_mapping[NFC_NUM_INTERFACE_MAP] = {
 #endif
 };
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfc_state_name
@@ -144,7 +143,6 @@ static std::string nfc_hal_event_name(uint8_t event) {
       return "???? UNKNOWN EVENT";
   }
 }
-#endif /* BT_TRACE_VERBOSE == TRUE */
 
 /*******************************************************************************
 **
@@ -314,15 +312,10 @@ void nfc_enabled(tNFC_STATUS nfc_status, NFC_HDR* p_init_rsp_msg) {
 **
 *******************************************************************************/
 void nfc_set_state(tNFC_STATE nfc_state) {
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("nfc_set_state %d (%s)->%d (%s)", nfc_cb.nfc_state,
                       nfc_state_name(nfc_cb.nfc_state).c_str(), nfc_state,
                       nfc_state_name(nfc_state).c_str());
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("nfc_set_state %d->%d", nfc_cb.nfc_state, nfc_state);
-#endif
   nfc_cb.nfc_state = nfc_state;
 }
 
@@ -557,14 +550,9 @@ void nfc_main_post_hal_evt(uint8_t hal_evt, tHAL_NFC_STATUS status) {
 **
 *******************************************************************************/
 static void nfc_main_hal_cback(uint8_t event, tHAL_NFC_STATUS status) {
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("nfc_main_hal_cback event: %s(0x%x), status=%d",
                       nfc_hal_event_name(event).c_str(), event, status);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-      "nfc_main_hal_cback event: 0x%x, status=%d", event, status);
-#endif
 
   switch (event) {
     case HAL_NFC_OPEN_CPLT_EVT:
@@ -1120,15 +1108,9 @@ tNFC_STATUS NFC_Deactivate(tNFC_DEACT_TYPE deactivate_type) {
   tNFC_CONN_CB* p_cb = &nfc_cb.conn_cb[NFC_RF_CONN_ID];
   tNFC_STATUS status = NFC_STATUS_OK;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "NFC_Deactivate %d (%s) deactivate_type:%d", nfc_cb.nfc_state,
       nfc_state_name(nfc_cb.nfc_state).c_str(), deactivate_type);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("NFC_Deactivate %d deactivate_type:%d", nfc_cb.nfc_state,
-                      deactivate_type);
-#endif
 
   if (nfc_cb.flags & NFC_FL_DISCOVER_PENDING) {
     /* the HAL pre-discover is still active - clear the pending flag */
@@ -1354,7 +1336,7 @@ void NFC_SetStaticHciCback(tNFC_CONN_CBACK* p_cback) {
     (*p_cback)(NFC_HCI_CONN_ID, NFC_CONN_CREATE_CEVT, &evt_data);
   }
 }
-#if (BT_TRACE_VERBOSE == TRUE)
+
 /*******************************************************************************
 **
 ** Function         NFC_GetStatusName
@@ -1442,4 +1424,3 @@ std::string NFC_GetStatusName(tNFC_STATUS status) {
       return "UNKNOWN";
   }
 }
-#endif

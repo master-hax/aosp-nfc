@@ -40,11 +40,9 @@ static void rw_t1t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 static void rw_t1t_process_frame_error(void);
 static void rw_t1t_process_error(void);
 static void rw_t1t_handle_presence_check_rsp(tNFC_STATUS status);
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string rw_t1t_get_state_name(uint8_t state);
 static char* rw_t1t_get_sub_state_name(uint8_t sub_state);
 static char* rw_t1t_get_event_name(uint8_t event);
-#endif
 
 /*******************************************************************************
 **
@@ -65,23 +63,16 @@ static void rw_t1t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   uint8_t* p;
   tT1T_CMD_RSP_INFO* p_cmd_rsp_info =
       (tT1T_CMD_RSP_INFO*)rw_cb.tcb.t1t.p_cmd_rsp_info;
-#if (BT_TRACE_VERBOSE == TRUE)
   uint8_t begin_state = p_t1t->state;
-#endif
 
   p_pkt = (NFC_HDR*)(p_data->data.p_data);
   if (p_pkt == NULL) return;
   /* Assume the data is just the response byte sequence */
   p = (uint8_t*)(p_pkt + 1) + p_pkt->offset;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "state:%s (%d)", rw_t1t_get_state_name(p_t1t->state).c_str(),
       p_t1t->state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("state=%d", p_t1t->state);
-#endif
 
   evt_data.status = NFC_STATUS_OK;
 
@@ -146,15 +137,9 @@ static void rw_t1t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
       /* Stop timer as some response to current command is received */
       nfc_stop_quick_timer(&p_t1t->timer);
 /* Retrasmit the last sent command if retry-count < max retry */
-#if (BT_TRACE_VERBOSE == TRUE)
       LOG(ERROR) << StringPrintf(
           "T1T Frame error. state=%s command (opcode) = 0x%02x",
           rw_t1t_get_state_name(p_t1t->state).c_str(), p_cmd_rsp_info->opcode);
-#else
-      LOG(ERROR) << StringPrintf(
-          "T1T Frame error. state=0x%02x command = 0x%02x ", p_t1t->state,
-          p_cmd_rsp_info->opcode);
-#endif
       rw_t1t_process_frame_error();
     }
     GKI_freebuf(p_pkt);
@@ -211,14 +196,12 @@ static void rw_t1t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   } else
     GKI_freebuf(p_pkt);
 
-#if (BT_TRACE_VERBOSE == TRUE)
   if (begin_state != p_t1t->state) {
     DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
         << StringPrintf("RW T1T state changed:<%s> -> <%s>",
                         rw_t1t_get_state_name(begin_state).c_str(),
                         rw_t1t_get_state_name(p_t1t->state).c_str());
   }
-#endif
 }
 
 /*******************************************************************************
@@ -473,15 +456,11 @@ static tRW_EVENT rw_t1t_handle_rid_rsp(NFC_HDR* p_pkt) {
   /* Extract HR and UID from response */
   STREAM_TO_ARRAY(p_t1t->hr, p_rid_rsp, T1T_HR_LEN);
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("hr0:0x%x, hr1:0x%x", p_t1t->hr[0], p_t1t->hr[1]);
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("UID0-3=%02x%02x%02x%02x", p_rid_rsp[0], p_rid_rsp[1],
                       p_rid_rsp[2], p_rid_rsp[3]);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << __func__;
-#endif
 
   /* Fetch UID0-3 from RID response message */
   STREAM_TO_ARRAY(p_t1t->mem, p_rid_rsp, T1T_CMD_UID_LEN);
@@ -539,15 +518,9 @@ tNFC_STATUS rw_t1t_select(uint8_t hr[T1T_HR_LEN],
 void rw_t1t_process_timeout(TIMER_LIST_ENT* p_tle) {
   tRW_T1T_CB* p_t1t = &rw_cb.tcb.t1t;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   LOG(ERROR) << StringPrintf("T1T timeout. state=%s command (opcode)=0x%02x ",
                              rw_t1t_get_state_name(p_t1t->state).c_str(),
                              (rw_cb.tcb.t1t.p_cmd_rsp_info)->opcode);
-#else
-  LOG(ERROR) << StringPrintf("T1T timeout. state=0x%02x command=0x%02x ",
-                             p_t1t->state,
-                             (rw_cb.tcb.t1t.p_cmd_rsp_info)->opcode);
-#endif
 
   if (p_t1t->state == RW_T1T_STATE_CHECK_PRESENCE) {
     /* Tag has moved from range */
@@ -1097,7 +1070,6 @@ tNFC_STATUS RW_T1tWriteNoErase8(uint8_t block, uint8_t* p_new_dat) {
   return status;
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         rw_t1t_get_state_name
@@ -1135,5 +1107,3 @@ static std::string rw_t1t_get_state_name(uint8_t state) {
       return "???? UNKNOWN STATE";
   }
 }
-
-#endif /* (BT_TRACE_VERBOSE == TRUE) */

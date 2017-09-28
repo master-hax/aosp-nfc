@@ -812,12 +812,10 @@ void llcp_util_send_rr_rnr(tLLCP_DLCB* p_dlcb) {
 
     UINT8_TO_BE_STREAM(p, rcv_seq);
 
-#if (BT_TRACE_VERBOSE == TRUE)
     DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
         "LLCP TX - N(S,R):(NA,%d) V(S,SA,R,RA):(%d,%d,%d,%d)",
         p_dlcb->next_rx_seq, p_dlcb->next_tx_seq, p_dlcb->rcvd_ack_seq,
         p_dlcb->next_rx_seq, p_dlcb->sent_ack_seq);
-#endif
     GKI_enqueue(&llcp_cb.lcb.sig_xmit_q, p_msg);
     llcp_link_check_send_data();
   } else {

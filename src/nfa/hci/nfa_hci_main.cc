@@ -683,9 +683,7 @@ static void nfa_hci_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   uint8_t chaining_bit;
   uint8_t pipe;
   uint16_t pkt_len;
-#if (BT_TRACE_VERBOSE == TRUE)
   char buff[100];
-#endif
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "%s State: %u  Cmd: %u", __func__, nfa_hci_cb.hci_state, event);
   if (event == NFC_CONN_CREATE_CEVT) {
@@ -727,9 +725,7 @@ static void nfa_hci_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   p = (uint8_t*)(p_pkt + 1) + p_pkt->offset;
   pkt_len = p_pkt->len;
 
-#if (BT_TRACE_PROTOCOL == TRUE)
   DispHcp(p, pkt_len, true);
-#endif
 
   chaining_bit = ((*p) >> 0x07) & 0x01;
   pipe = (*p++) & 0x7F;
@@ -776,20 +772,12 @@ static void nfa_hci_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
     }
   }
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "nfa_hci_conn_cback Recvd data pipe:%d  %s  chain:%d  assmbl:%d  len:%d",
       (uint8_t)pipe,
       nfa_hciu_get_type_inst_names(pipe, nfa_hci_cb.type, nfa_hci_cb.inst,
                                    buff),
       (uint8_t)chaining_bit, (uint8_t)nfa_hci_cb.assembling, p_pkt->len);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-      "nfa_hci_conn_cback Recvd data pipe:%d  Type: %u  Inst: %u  chain:%d "
-      "reassm:%d len:%d",
-      pipe, nfa_hci_cb.type, nfa_hci_cb.inst, chaining_bit,
-      nfa_hci_cb.assembling, p_pkt->len);
-#endif
 
   /* If still reassembling fragments, just return */
   if (nfa_hci_cb.assembling) {
@@ -1117,18 +1105,12 @@ static void nfa_hci_assemble_msg(uint8_t* p_data, uint16_t data_len) {
 static bool nfa_hci_evt_hdlr(NFC_HDR* p_msg) {
   tNFA_HCI_EVENT_DATA* p_evt_data = (tNFA_HCI_EVENT_DATA*)p_msg;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("nfa_hci_evt_hdlr state: %s (%d) event: %s (0x%04x)",
                       nfa_hciu_get_state_name(nfa_hci_cb.hci_state).c_str(),
                       nfa_hci_cb.hci_state,
                       nfa_hciu_get_event_name(p_evt_data->hdr.event).c_str(),
                       p_evt_data->hdr.event);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("nfa_hci_evt_hdlr state: %d event: 0x%04x",
-                      nfa_hci_cb.hci_state, p_evt_data->hdr.event);
-#endif
 
   /* If this is an API request, queue it up */
   if ((p_msg->event >= NFA_HCI_FIRST_API_EVENT) &&
