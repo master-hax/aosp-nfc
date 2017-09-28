@@ -31,6 +31,9 @@
 #include "nfa_dm_int.h"
 #include "nfc_target.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /*******************************************************************************
 **
 ** Function         llcp_sdp_proc_data

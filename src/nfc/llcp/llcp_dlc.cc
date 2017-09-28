@@ -30,6 +30,9 @@
 #include "nfc_int.h"
 #include "nfc_target.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 static tLLCP_STATUS llcp_dlsm_idle(tLLCP_DLCB* p_dlcb, tLLCP_DLC_EVENT event,
                                    void* p_data);
 static tLLCP_STATUS llcp_dlsm_w4_remote_resp(tLLCP_DLCB* p_dlcb,

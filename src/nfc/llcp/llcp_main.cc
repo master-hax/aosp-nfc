@@ -31,6 +31,9 @@
 #include "nfc_int.h"
 #include "nfc_target.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 tLLCP_CB llcp_cb;
 
 /*******************************************************************************

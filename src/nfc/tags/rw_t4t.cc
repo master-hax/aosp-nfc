@@ -34,6 +34,9 @@
 #include "rw_int.h"
 #include "tags_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* main state */
 /* T4T is not activated                 */
 #define RW_T4T_STATE_NOT_ACTIVATED 0x00

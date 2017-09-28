@@ -32,6 +32,9 @@
 #include "rw_api.h"
 #include "rw_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* Response timeout     */
 #define RW_I93_TOUT_RESP 1000
 /* stay quiet timeout   */

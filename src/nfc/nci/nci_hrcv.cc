@@ -32,6 +32,9 @@
 #include "nfc_api.h"
 #include "nfc_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /*******************************************************************************
 **
 ** Function         nci_proc_core_rsp

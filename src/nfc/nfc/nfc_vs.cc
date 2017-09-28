@@ -26,9 +26,10 @@
 #include <string.h>
 #include "gki.h"
 #include "nfc_target.h"
-
 #include "nfc_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
 /****************************************************************************
 ** Declarations
 ****************************************************************************/

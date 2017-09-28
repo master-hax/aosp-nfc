@@ -28,6 +28,9 @@
 #include "nfa_sys_int.h"
 #include "nfc_target.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /*******************************************************************************
 **
 ** Function         nfa_sys_ptim_init

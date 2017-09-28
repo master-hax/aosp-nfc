@@ -29,6 +29,9 @@
 
 #include "nfc_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /*******************************************************************************
 **
 ** Function         nfc_alloc_conn_cb

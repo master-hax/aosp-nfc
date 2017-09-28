@@ -24,6 +24,9 @@
 #include "nfa_sys.h"
 #include "nfa_sys_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /*******************************************************************************
 **
 ** Function         nfa_sys_cback_reg_enable_complete

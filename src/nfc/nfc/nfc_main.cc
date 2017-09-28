@@ -35,6 +35,9 @@
 #include "nfc_int.h"
 #include "rw_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 #if (NFC_RW_ONLY == FALSE)
 #include "ce_api.h"
 #include "ce_int.h"

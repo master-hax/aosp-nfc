@@ -32,6 +32,9 @@
 #include "nfa_ee_int.h"
 #endif
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /*****************************************************************************
 * Protocol-specific event handlers
 *****************************************************************************/

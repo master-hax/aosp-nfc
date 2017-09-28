@@ -20,6 +20,9 @@
 #include <stdio.h>
 #include "gki_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 #if (GKI_NUM_TOTAL_BUF_POOLS > 16)
 #error Number of pools out of range (16 Max)!
 #endif

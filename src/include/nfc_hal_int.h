@@ -32,6 +32,9 @@
 #include "nfc_hal_int_api.h"
 #include "nfc_hal_target.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /****************************************************************************
 ** NFC HAL TASK transport definitions
 ****************************************************************************/

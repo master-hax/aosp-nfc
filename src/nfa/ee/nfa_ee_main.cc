@@ -29,6 +29,9 @@
 #include "nfa_sys_int.h"
 #include "nfc_api.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 extern void nfa_ee_vs_cback(tNFC_VS_EVT event, NFC_HDR* p_data);
 /*****************************************************************************
 **  Global Variables

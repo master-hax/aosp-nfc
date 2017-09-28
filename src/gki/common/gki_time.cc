@@ -20,6 +20,9 @@
 #include "_OverrideLog.h"
 #include "gki_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* Make sure that this has been defined in target.h */
 #ifndef GKI_NUM_TIMERS
 #error NO TIMERS: Must define at least 1 timer in the system!

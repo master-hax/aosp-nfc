@@ -34,6 +34,9 @@
 #include "nfc_int.h"
 #include "tags_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 enum {
   CE_T3T_COMMAND_INVALID,
   CE_T3T_COMMAND_NFC_FORUM,

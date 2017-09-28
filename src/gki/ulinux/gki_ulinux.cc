@@ -42,6 +42,9 @@
 
 #endif
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* Define the structure that holds the GKI variables
 */
 tGKI_CB gki_cb;

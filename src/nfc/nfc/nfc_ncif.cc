@@ -47,6 +47,9 @@ static tNFC_FW_VERSION nfc_fw_version;
 #define NFC_PB_ATTRIB_REQ_FIXED_BYTES 1
 #define NFC_LB_ATTRIB_REQ_FIXED_BYTES 8
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 extern unsigned char appl_dta_mode_flag;
 /*******************************************************************************
 **

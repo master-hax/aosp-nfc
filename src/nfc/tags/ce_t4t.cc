@@ -34,6 +34,9 @@
 #include "nfc_int.h"
 #include "tags_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 #if (CE_TEST_INCLUDED == TRUE) /* test only */
 bool mapping_aid_test_enabled = false;
 uint8_t ce_test_tag_app_id[T4T_V20_NDEF_TAG_AID_LEN] = {0xD2, 0x76, 0x00, 0x00,

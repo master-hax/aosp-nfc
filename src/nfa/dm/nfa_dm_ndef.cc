@@ -29,6 +29,9 @@
 #include "nfa_sys_int.h"
 #include "nfc_api.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /*******************************************************************************
 * URI Well-known-type prefixes
 *******************************************************************************/

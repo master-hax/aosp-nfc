@@ -30,6 +30,9 @@
 #include "nfc_api.h"
 #include "nfc_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /*******************************************************************************
 **
 ** Function         NFC_NfceeDiscover

@@ -33,6 +33,9 @@
 #include "nfc_api.h"
 #include "trace_api.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 static void handle_debug_loopback(NFC_HDR* p_buf, uint8_t pipe, uint8_t type,
                                   uint8_t instruction);
 uint8_t HCI_LOOPBACK_DEBUG = NFA_HCI_DEBUG_OFF;

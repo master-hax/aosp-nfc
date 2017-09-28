@@ -31,6 +31,9 @@
 #include "llcp_int.h"
 #include "nfc_target.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 #if (LLCP_TEST_INCLUDED == TRUE) /* this is for LLCP testing */
 
 tLLCP_TEST_PARAMS llcp_test_params = {

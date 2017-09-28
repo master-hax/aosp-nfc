@@ -31,6 +31,9 @@
 #include "nfc_target.h"
 #include "trace_api.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /*******************************************************************************
 **
 ** Function         llcp_util_parse_link_params

@@ -33,6 +33,9 @@
 #define NFA_SYS_TIMER_PERIOD 10
 #endif
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* system manager control block definition */
 tNFA_SYS_CB nfa_sys_cb = {
     0,

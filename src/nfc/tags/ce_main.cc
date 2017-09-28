@@ -33,6 +33,9 @@
 #include "nci_hmsgs.h"
 #include "nfc_api.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 tCE_CB ce_cb;
 
 /*******************************************************************************

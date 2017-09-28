@@ -29,6 +29,9 @@
 #include "nfa_sys_int.h"
 #include "rw_api.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 #define NFA_RW_OPTION_INVALID 0xFF
 
 /* Tag sleep req cmd*/

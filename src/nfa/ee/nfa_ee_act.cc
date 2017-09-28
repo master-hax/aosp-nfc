@@ -29,6 +29,9 @@
 #include "nfa_sys_int.h"
 #include "nfc_api.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* the de-bounce timer:
  * The NFA-EE API functions are called to set the routing and VS configuration.
  * When this timer expires, the configuration is sent to NFCC all at once.

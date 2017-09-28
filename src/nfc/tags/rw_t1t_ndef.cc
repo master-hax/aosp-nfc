@@ -32,6 +32,9 @@
 #include "rw_api.h"
 #include "rw_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 #if (RW_NDEF_INCLUDED == TRUE)
 
 /* Local Functions */

@@ -32,6 +32,9 @@
 #include "nfc_target.h"
 #include "trace_api.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 const uint16_t llcp_link_rwt
     [15] = /* RWT = (302us)*2**WT; 302us = 256*16/fc; fc = 13.56MHz */
     {

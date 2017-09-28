@@ -27,6 +27,9 @@
 #include "nfa_sys.h"
 #include "nfa_sys_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /*******************************************************************************
 **
 ** Function         nfa_ce_api_deregister_listen

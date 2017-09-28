@@ -33,6 +33,9 @@
 #include "nfc_api.h"
 #include "trace_api.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* Static local functions       */
 static void nfa_hci_api_register(tNFA_HCI_EVENT_DATA* p_evt_data);
 static void nfa_hci_api_get_gate_pipe_list(tNFA_HCI_EVENT_DATA* p_evt_data);

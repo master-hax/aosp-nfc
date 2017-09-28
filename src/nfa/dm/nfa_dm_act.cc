@@ -43,6 +43,9 @@
 #include "nfa_snep_int.h"
 #endif
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* This is the timeout value to guarantee disable is performed within reasonable
  * amount of time */
 #ifndef NFA_DM_DISABLE_TIMEOUT_VAL

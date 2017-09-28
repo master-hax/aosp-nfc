@@ -32,6 +32,9 @@
 #include "rw_api.h"
 #include "rw_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 extern unsigned char appl_dta_mode_flag;
 /* Local Functions */
 static tRW_EVENT rw_t1t_handle_rid_rsp(NFC_HDR* p_pkt);

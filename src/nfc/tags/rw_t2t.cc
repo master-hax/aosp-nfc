@@ -33,6 +33,9 @@
 #include "rw_api.h"
 #include "rw_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* Static local functions */
 static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data);
 static tNFC_STATUS rw_t2t_send_cmd(uint8_t opcode, uint8_t* p_dat);

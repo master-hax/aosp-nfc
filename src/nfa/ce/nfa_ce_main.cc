@@ -28,6 +28,9 @@
 #include "nfa_sys.h"
 #include "nfa_sys_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* NFA_CE control block */
 tNFA_CE_CB nfa_ce_cb;
 

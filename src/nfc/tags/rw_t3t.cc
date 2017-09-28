@@ -35,6 +35,9 @@
 #include "rw_int.h"
 #include "tags_int.h"
 
+#undef LOG_TAG
+#define LOG_TAG "libnfc-nci"
+
 /* Definitions for constructing t3t command messages */
 #define RW_T3T_FL_PADDING 0x01 /* Padding needed for last NDEF block */
 /* Maximum number of NDEF blocks updates that can fit into one command (when all
