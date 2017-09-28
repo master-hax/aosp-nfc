@@ -50,10 +50,8 @@ static void nfa_p2p_sys_disable(void);
 static void nfa_p2p_update_active_listen(void);
 
 /* debug functions type */
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string nfa_p2p_llcp_state_code(tNFA_P2P_LLCP_STATE state_code);
 static std::string nfa_p2p_evt_code(uint16_t evt_code);
-#endif
 
 /*****************************************************************************
 **  Constants
@@ -731,15 +729,10 @@ static bool nfa_p2p_evt_hdlr(NFC_HDR* p_hdr) {
 
   tNFA_P2P_MSG* p_msg = (tNFA_P2P_MSG*)p_hdr;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("LLCP State [%s], Event [%s]",
                       nfa_p2p_llcp_state_code(nfa_p2p_cb.llcp_state).c_str(),
                       nfa_p2p_evt_code(p_msg->hdr.event).c_str());
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-      "State 0x%02x, Event 0x%02x", nfa_p2p_cb.llcp_state, p_msg->hdr.event);
-#endif
 
   event = p_msg->hdr.event & 0x00ff;
 
@@ -753,7 +746,6 @@ static bool nfa_p2p_evt_hdlr(NFC_HDR* p_hdr) {
   return delete_msg;
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_p2p_llcp_state_code
@@ -819,4 +811,3 @@ static std::string nfa_p2p_evt_code(uint16_t evt_code) {
       return "Unknown event";
   }
 }
-#endif /* Debug Functions */

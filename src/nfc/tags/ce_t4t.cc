@@ -50,9 +50,7 @@ uint8_t ce_test_tag_app_id[T4T_V20_NDEF_TAG_AID_LEN] = {0xD2, 0x76, 0x00, 0x00,
 **
 *******************************************************************************/
 static bool ce_t4t_send_to_lower(NFC_HDR* p_r_apdu) {
-#if (BT_TRACE_PROTOCOL == TRUE)
   DispCET4Tags(p_r_apdu, false);
-#endif
 
   if (NFC_SendData(NFC_RF_CONN_ID, p_r_apdu) != NFC_STATUS_OK) {
     LOG(ERROR) << StringPrintf("failed");
@@ -560,9 +558,7 @@ static void ce_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 
   p_c_apdu = (NFC_HDR*)p_data->data.p_data;
 
-#if (BT_TRACE_PROTOCOL == TRUE)
   DispCET4Tags(p_c_apdu, true);
-#endif
 
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("conn_id = 0x%02X", conn_id);

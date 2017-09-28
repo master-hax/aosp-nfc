@@ -44,10 +44,8 @@ static tLLCP_STATUS llcp_dlsm_w4_remote_dm(tLLCP_DLCB* p_dlcb,
                                            tLLCP_DLC_EVENT event, void* p_data);
 extern unsigned char appl_dta_mode_flag;
 
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string llcp_dlsm_get_state_name(tLLCP_DLC_STATE state);
 static std::string llcp_dlsm_get_event_name(tLLCP_DLC_EVENT event);
-#endif
 
 /*******************************************************************************
 **
@@ -63,16 +61,10 @@ tLLCP_STATUS llcp_dlsm_execute(tLLCP_DLCB* p_dlcb, tLLCP_DLC_EVENT event,
                                void* p_data) {
   tLLCP_STATUS status;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("DLC (0x%02X) - state: %s, evt: %s", p_dlcb->local_sap,
                       llcp_dlsm_get_state_name(p_dlcb->state).c_str(),
                       llcp_dlsm_get_event_name(event).c_str());
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("DLC (0x%02X) - state: %d, evt: %d", p_dlcb->local_sap,
-                      p_dlcb->state, event);
-#endif
 
   switch (p_dlcb->state) {
     case LLCP_DLC_STATE_IDLE:
@@ -893,12 +885,10 @@ void llcp_dlc_proc_i_pdu(uint8_t dsap, uint8_t ssap, uint16_t i_pdu_length,
     send_seq = LLCP_GET_NS(*p);
     rcv_seq = LLCP_GET_NR(*p);
 
-#if (BT_TRACE_VERBOSE == TRUE)
     DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
         "LLCP RX I PDU - N(S,R):(%d,%d) V(S,SA,R,RA):(%d,%d,%d,%d)", send_seq,
         rcv_seq, p_dlcb->next_tx_seq, p_dlcb->rcvd_ack_seq, p_dlcb->next_rx_seq,
         p_dlcb->sent_ack_seq);
-#endif
 
     /* if send sequence number, N(S) is not expected one, V(R) */
     if (p_dlcb->next_rx_seq != send_seq) {
@@ -1093,12 +1083,10 @@ static void llcp_dlc_proc_rr_rnr_pdu(uint8_t dsap, uint8_t ptype, uint8_t ssap,
     } else {
       p_dlcb->rcvd_ack_seq = rcv_seq;
 
-#if (BT_TRACE_VERBOSE == TRUE)
       DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
           << StringPrintf("LLCP RX - N(S,R):(NA,%d) V(S,SA,R,RA):(%d,%d,%d,%d)",
                           rcv_seq, p_dlcb->next_tx_seq, p_dlcb->rcvd_ack_seq,
                           p_dlcb->next_rx_seq, p_dlcb->sent_ack_seq);
-#endif
       old_remote_busy = p_dlcb->remote_busy;
       if (ptype == LLCP_PDU_RNR_TYPE) {
         p_dlcb->remote_busy = true;
@@ -1293,9 +1281,7 @@ NFC_HDR* llcp_dlc_get_next_pdu(tLLCP_DLCB* p_dlcb) {
   bool flush = true;
   tLLCP_SAP_CBACK_DATA data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   uint8_t send_seq = p_dlcb->next_tx_seq;
-#endif
 
   /* if there is data to send and remote device can receive it */
   if ((p_dlcb->i_xmit_q.count) && (!p_dlcb->remote_busy) &&
@@ -1310,12 +1296,10 @@ NFC_HDR* llcp_dlc_get_next_pdu(tLLCP_DLCB* p_dlcb) {
 
       p_dlcb->next_tx_seq = (p_dlcb->next_tx_seq + 1) % LLCP_SEQ_MODULO;
 
-#if (BT_TRACE_VERBOSE == TRUE)
       DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
           "LLCP TX - N(S,R):(%d,%d) V(S,SA,R,RA):(%d,%d,%d,%d)", send_seq,
           p_dlcb->next_rx_seq, p_dlcb->next_tx_seq, p_dlcb->rcvd_ack_seq,
           p_dlcb->next_rx_seq, p_dlcb->sent_ack_seq);
-#endif
     } else {
       LOG(ERROR) << StringPrintf("offset (%d) must be %d at least",
                                  p_msg->offset, LLCP_MIN_OFFSET);
@@ -1371,7 +1355,6 @@ uint16_t llcp_dlc_get_next_pdu_length(tLLCP_DLCB* p_dlcb) {
   return 0;
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         llcp_dlsm_get_state_name
@@ -1439,4 +1422,3 @@ static std::string llcp_dlsm_get_event_name(tLLCP_DLC_EVENT event) {
       return "???? UNKNOWN EVENT";
   }
 }
-#endif /* (BT_TRACE_VERBOSE == TRUE) */

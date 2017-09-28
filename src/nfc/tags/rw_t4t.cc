@@ -82,10 +82,8 @@
 #define RW_T4T_SUBSTATE_WAIT_WRITE_CC 0x0F
 #define RW_T4T_SUBSTATE_WAIT_WRITE_NDEF 0x10
 
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string rw_t4t_get_state_name(uint8_t state);
 static std::string rw_t4t_get_sub_state_name(uint8_t sub_state);
-#endif
 
 static bool rw_t4t_send_to_lower(NFC_HDR* p_c_apdu);
 static bool rw_t4t_select_file(uint16_t file_id);
@@ -124,9 +122,7 @@ static void rw_t4t_sm_ndef_format(NFC_HDR* p_r_apdu);
 **
 *******************************************************************************/
 static bool rw_t4t_send_to_lower(NFC_HDR* p_c_apdu) {
-#if (BT_TRACE_PROTOCOL == TRUE)
   DispRWT4Tags(p_c_apdu, false);
-#endif
 
   if (NFC_SendData(NFC_RF_CONN_ID, p_c_apdu) != NFC_STATUS_OK) {
     LOG(ERROR) << StringPrintf("failed");
@@ -1070,14 +1066,9 @@ static void rw_t4t_sm_ndef_format(NFC_HDR* p_r_apdu) {
   uint16_t status_words, nlen;
   tRW_DATA rw_data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "sub_state:%s (%d)", rw_t4t_get_sub_state_name(p_t4t->sub_state).c_str(),
       p_t4t->sub_state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("sub_state=%d", p_t4t->sub_state);
-#endif
 
   /* get status words */
   p = (uint8_t*)(p_r_apdu + 1) + p_r_apdu->offset;
@@ -1255,14 +1246,9 @@ static void rw_t4t_sm_detect_ndef(NFC_HDR* p_r_apdu) {
   uint16_t status_words, nlen;
   tRW_DATA rw_data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "sub_state:%s (%d)", rw_t4t_get_sub_state_name(p_t4t->sub_state).c_str(),
       p_t4t->sub_state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("sub_state=%d", p_t4t->sub_state);
-#endif
 
   /* get status words */
   p = (uint8_t*)(p_r_apdu + 1) + p_r_apdu->offset;
@@ -1331,7 +1317,6 @@ static void rw_t4t_sm_detect_ndef(NFC_HDR* p_r_apdu) {
           BE_STREAM_TO_UINT8(p_t4t->cc_file.ndef_fc.read_access, p);
           BE_STREAM_TO_UINT8(p_t4t->cc_file.ndef_fc.write_access, p);
 
-#if (BT_TRACE_VERBOSE == TRUE)
           DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
               << StringPrintf("Capability Container (CC) file");
           DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
@@ -1356,7 +1341,6 @@ static void rw_t4t_sm_detect_ndef(NFC_HDR* p_r_apdu) {
           DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
               << StringPrintf("    WriteAccess: 0x%02X",
                               p_t4t->cc_file.ndef_fc.write_access);
-#endif
 
           if (rw_t4t_validate_cc_file()) {
             if (!rw_t4t_select_file(p_t4t->cc_file.ndef_fc.file_id)) {
@@ -1487,14 +1471,9 @@ static void rw_t4t_sm_read_ndef(NFC_HDR* p_r_apdu) {
   uint16_t status_words;
   tRW_DATA rw_data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "sub_state:%s (%d)", rw_t4t_get_sub_state_name(p_t4t->sub_state).c_str(),
       p_t4t->sub_state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("sub_state=%d", p_t4t->sub_state);
-#endif
 
   /* get status words */
   p = (uint8_t*)(p_r_apdu + 1) + p_r_apdu->offset;
@@ -1575,14 +1554,9 @@ static void rw_t4t_sm_update_ndef(NFC_HDR* p_r_apdu) {
   uint16_t status_words;
   tRW_DATA rw_data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "sub_state:%s (%d)", rw_t4t_get_sub_state_name(p_t4t->sub_state).c_str(),
       p_t4t->sub_state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("sub_state=%d", p_t4t->sub_state);
-#endif
 
   /* Get status words */
   p = (uint8_t*)(p_r_apdu + 1) + p_r_apdu->offset;
@@ -1662,14 +1636,9 @@ static void rw_t4t_sm_set_readonly(NFC_HDR* p_r_apdu) {
   uint16_t status_words;
   tRW_DATA rw_data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "sub_state:%s (%d)", rw_t4t_get_sub_state_name(p_t4t->sub_state).c_str(),
       p_t4t->sub_state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("sub_state=%d", p_t4t->sub_state);
-#endif
 
   /* Get status words */
   p = (uint8_t*)(p_r_apdu + 1) + p_r_apdu->offset;
@@ -1782,9 +1751,7 @@ static void rw_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   NFC_HDR* p_r_apdu;
   tRW_DATA rw_data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   uint8_t begin_state = p_t4t->state;
-#endif
 
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("event = 0x%X", event);
@@ -1823,37 +1790,24 @@ static void rw_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
       return;
   }
 
-#if (BT_TRACE_PROTOCOL == TRUE)
   if (p_t4t->state != RW_T4T_STATE_IDLE) DispRWT4Tags(p_r_apdu, true);
-#endif
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "RW T4T state: <%s (%d)>", rw_t4t_get_state_name(p_t4t->state).c_str(),
       p_t4t->state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("RW T4T state: %d", p_t4t->state);
-#endif
 
   switch (p_t4t->state) {
     case RW_T4T_STATE_IDLE:
 /* Unexpected R-APDU, it should be raw frame response */
 /* forward to upper layer without parsing */
-#if (BT_TRACE_VERBOSE == TRUE)
-      DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-          "RW T4T Raw Frame: Len [0x%X] Status [%s]", p_r_apdu->len,
-          NFC_GetStatusName(p_data->data.status).c_str());
-#else
-      DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-          << StringPrintf("RW T4T Raw Frame: Len [0x%X] Status [0x%X]",
-                          p_r_apdu->len, p_data->data.status);
-#endif
-      if (rw_cb.p_cback) {
-        rw_data.raw_frame.status = p_data->data.status;
-        rw_data.raw_frame.p_data = p_r_apdu;
-        (*(rw_cb.p_cback))(RW_T4T_RAW_FRAME_EVT, &rw_data);
-        p_r_apdu = NULL;
+DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
+    << StringPrintf("RW T4T Raw Frame: Len [0x%X] Status [%s]", p_r_apdu->len,
+                    NFC_GetStatusName(p_data->data.status).c_str());
+if (rw_cb.p_cback) {
+  rw_data.raw_frame.status = p_data->data.status;
+  rw_data.raw_frame.p_data = p_r_apdu;
+  (*(rw_cb.p_cback))(RW_T4T_RAW_FRAME_EVT, &rw_data);
+  p_r_apdu = NULL;
       } else {
         GKI_freebuf(p_r_apdu);
       }
@@ -1891,14 +1845,12 @@ static void rw_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
       break;
   }
 
-#if (BT_TRACE_VERBOSE == TRUE)
   if (begin_state != p_t4t->state) {
     DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
         << StringPrintf("RW T4T state changed:<%s> -> <%s>",
                         rw_t4t_get_state_name(begin_state).c_str(),
                         rw_t4t_get_state_name(p_t4t->state).c_str());
   }
-#endif
 }
 
 /*******************************************************************************
@@ -2235,7 +2187,6 @@ tNFC_STATUS RW_T4tSetNDefReadOnly(void) {
   return (retval);
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         rw_t4t_get_state_name
@@ -2317,4 +2268,3 @@ static std::string rw_t4t_get_sub_state_name(uint8_t sub_state) {
       return "???? UNKNOWN SUBSTATE";
   }
 }
-#endif

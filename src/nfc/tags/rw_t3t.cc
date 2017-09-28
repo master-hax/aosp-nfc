@@ -121,10 +121,8 @@ enum {
                                   block-write to complete */
 };
 
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string rw_t3t_cmd_str(uint8_t cmd_id);
 static std::string rw_t3t_state_str(uint8_t state_id);
-#endif
 
 /* Local static functions */
 static void rw_t3t_update_ndef_flag(uint8_t* p_flag);
@@ -480,17 +478,12 @@ void rw_t3t_process_timeout(TIMER_LIST_ENT* p_tle) {
   /* Check which timer timed out */
   if (p_tle == &p_cb->timer) {
 /* UPDATE/CHECK response timeout */
-#if (BT_TRACE_VERBOSE == TRUE)
-    LOG(ERROR) << StringPrintf("T3T timeout. state=%s cur_cmd=0x%02X (%s)",
-                               rw_t3t_state_str(rw_cb.tcb.t3t.rw_state).c_str(),
-                               rw_cb.tcb.t3t.cur_cmd,
-                               rw_t3t_cmd_str(rw_cb.tcb.t3t.cur_cmd).c_str());
-#else
-    LOG(ERROR) << StringPrintf("T3T timeout. state=0x%02X cur_cmd=0x%02X",
-                               rw_cb.tcb.t3t.rw_state, rw_cb.tcb.t3t.cur_cmd);
-#endif
+LOG(ERROR) << StringPrintf("T3T timeout. state=%s cur_cmd=0x%02X (%s)",
+                           rw_t3t_state_str(rw_cb.tcb.t3t.rw_state).c_str(),
+                           rw_cb.tcb.t3t.cur_cmd,
+                           rw_t3t_cmd_str(rw_cb.tcb.t3t.cur_cmd).c_str());
 
-    rw_t3t_process_error(NFC_STATUS_TIMEOUT);
+rw_t3t_process_error(NFC_STATUS_TIMEOUT);
   } else {
     LOG(ERROR) << StringPrintf("T3T POLL timeout.");
 
@@ -538,15 +531,10 @@ void rw_t3t_process_timeout(TIMER_LIST_ENT* p_tle) {
 **
 *******************************************************************************/
 void rw_t3t_process_frame_error(void) {
-#if (BT_TRACE_VERBOSE == TRUE)
   LOG(ERROR) << StringPrintf("T3T frame error. state=%s cur_cmd=0x%02X (%s)",
                              rw_t3t_state_str(rw_cb.tcb.t3t.rw_state).c_str(),
                              rw_cb.tcb.t3t.cur_cmd,
                              rw_t3t_cmd_str(rw_cb.tcb.t3t.cur_cmd).c_str());
-#else
-  LOG(ERROR) << StringPrintf("T3T frame error. state=0x%02X cur_cmd=0x%02X",
-                             rw_cb.tcb.t3t.rw_state, rw_cb.tcb.t3t.cur_cmd);
-#endif
 
 #if (RW_STATS_INCLUDED == TRUE)
   /* Update stats */
@@ -581,9 +569,7 @@ tNFC_STATUS rw_t3t_send_to_lower(NFC_HDR* p_msg) {
   UINT8_TO_STREAM(p, (p_msg->len + 1));
   p_msg->len += 1; /* Increment len to include SoD */
 
-#if (BT_TRACE_PROTOCOL == TRUE)
   DispT3TagMessage(p_msg, false);
-#endif
 
   return (NFC_SendData(NFC_RF_CONN_ID, p_msg));
 }
@@ -1455,14 +1441,9 @@ void rw_t3t_act_handle_raw_senddata_rsp(tRW_T3T_CB* p_cb,
   tRW_READ_DATA evt_data;
   NFC_HDR* p_pkt = p_data->p_data;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("RW T3T Raw Frame: Len [0x%X] Status [%s]", p_pkt->len,
                       NFC_GetStatusName(p_data->status).c_str());
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-      "RW T3T Raw Frame: Len [0x%X] Status [0x%X]", p_pkt->len, p_data->status);
-#endif
 
   /* Copy incoming data into buffer */
   evt_data.status = p_data->status;
@@ -2169,9 +2150,7 @@ void rw_t3t_data_cback(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
       return;
     }
 
-#if (BT_TRACE_PROTOCOL == TRUE)
     DispT3TagMessage(p_msg, true);
-#endif
 
     /* Skip over SoD */
     p_msg->offset++;
@@ -2396,7 +2375,6 @@ static void rw_t3t_update_ndef_flag(uint8_t* p_flag) {
   }
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         rw_t3t_cmd_str
@@ -2448,7 +2426,6 @@ static std::string rw_t3t_state_str(uint8_t state_id) {
       return "Unknown";
   }
 }
-#endif
 
 /*****************************************************************************
 **  Type3 Tag API Functions

@@ -2540,7 +2540,6 @@ tNFC_STATUS RW_T1tSetTagReadOnly(bool b_hard_lock) {
   return status;
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         rw_t1t_get_sub_state_name
@@ -2580,6 +2579,5 @@ static std::string rw_t1t_get_sub_state_name(uint8_t sub_state) {
       return "???? UNKNOWN SUBSTATE";
   }
 }
-#endif /* (BT_TRACE_VERBOSE == TRUE) */
 
 #endif /* (RW_NDEF_INCLUDED == TRUE) */

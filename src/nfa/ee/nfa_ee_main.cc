@@ -518,7 +518,6 @@ void nfa_ee_reg_cback_enable_done(tNFA_EE_ENABLE_DONE_CBACK* p_cback) {
   nfa_ee_cb.p_enable_cback = p_cback;
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_ee_sm_st_2_str
@@ -604,7 +603,6 @@ static std::string nfa_ee_sm_evt_2_str(uint16_t event) {
       return "Unknown";
   }
 }
-#endif /* BT_TRACE_VERBOSE */
 
 /*******************************************************************************
 **
@@ -621,15 +619,10 @@ bool nfa_ee_evt_hdlr(NFC_HDR* p_msg) {
   uint16_t event = p_msg->event & 0x00ff;
   bool act = false;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "Event %s(0x%02x), State: %s(%d)",
       nfa_ee_sm_evt_2_str(p_evt_data->hdr.event).c_str(), p_evt_data->hdr.event,
       nfa_ee_sm_st_2_str(nfa_ee_cb.em_state).c_str(), nfa_ee_cb.em_state);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-      "Event 0x%02x, State: %d", p_evt_data->hdr.event, nfa_ee_cb.em_state);
-#endif
 
   switch (nfa_ee_cb.em_state) {
     case NFA_EE_EM_STATE_INIT_DONE:

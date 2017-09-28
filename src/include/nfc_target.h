@@ -29,9 +29,6 @@
 #include "gki_target.h"
 
 #include "bt_types.h" /* This must be defined AFTER buildcfg.h */
-#ifndef LMP_TEST
-#include "bt_trace.h"
-#endif
 
 #ifndef USERIAL_DEBUG
 #define USERIAL_DEBUG FALSE
