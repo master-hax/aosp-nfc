@@ -1412,7 +1412,6 @@ extern tNFC_STATUS NFC_NfceePLConfig(uint8_t nfcee_id,
 *******************************************************************************/
 extern void NFC_SetStaticHciCback(tNFC_CONN_CBACK* p_cback);
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         NFC_GetStatusName
@@ -1425,6 +1424,5 @@ extern void NFC_SetStaticHciCback(tNFC_CONN_CBACK* p_cback);
 **
 *******************************************************************************/
 extern std::string NFC_GetStatusName(tNFC_STATUS status);
-#endif
 
 #endif /* NFC_API_H */

@@ -57,10 +57,8 @@ static void nfa_dm_disc_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 static void nfa_dm_disc_kovio_timeout_cback(TIMER_LIST_ENT* p_tle);
 static void nfa_dm_disc_report_kovio_presence_check(tNFC_STATUS status);
 
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string nfa_dm_disc_state_2_str(uint8_t state);
 static std::string nfa_dm_disc_event_2_str(uint8_t event);
-#endif
 
 typedef struct nfa_dm_p2p_prio_logic {
   bool isodep_detected;      /* flag to check if ISO-DEP is detected */
@@ -1697,18 +1695,12 @@ void nfa_dm_disc_new_state(tNFA_DM_RF_DISC_STATE new_state) {
   tNFA_CONN_EVT_DATA evt_data;
   tNFA_DM_RF_DISC_STATE old_state = nfa_dm_cb.disc_cb.disc_state;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "old_state: %s (%d), new_state: %s (%d) "
       "disc_flags: 0x%x",
       nfa_dm_disc_state_2_str(nfa_dm_cb.disc_cb.disc_state).c_str(),
       nfa_dm_cb.disc_cb.disc_state, nfa_dm_disc_state_2_str(new_state).c_str(),
       new_state, nfa_dm_cb.disc_cb.disc_flags);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-      "old_state: %d, new_state: %d disc_flags: 0x%x",
-      nfa_dm_cb.disc_cb.disc_state, new_state, nfa_dm_cb.disc_cb.disc_flags);
-#endif
 
   nfa_dm_cb.disc_cb.disc_state = new_state;
 
@@ -2518,18 +2510,12 @@ static void nfa_dm_disc_sm_lp_active(tNFA_DM_RF_DISC_SM_EVENT event,
 *******************************************************************************/
 void nfa_dm_disc_sm_execute(tNFA_DM_RF_DISC_SM_EVENT event,
                             tNFA_DM_RF_DISC_DATA* p_data) {
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "state: %s (%d), event: %s(%d) disc_flags: "
       "0x%x",
       nfa_dm_disc_state_2_str(nfa_dm_cb.disc_cb.disc_state).c_str(),
       nfa_dm_cb.disc_cb.disc_state, nfa_dm_disc_event_2_str(event).c_str(),
       event, nfa_dm_cb.disc_cb.disc_flags);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-      "state: %d, event:%d disc_flags: 0x%x", nfa_dm_cb.disc_cb.disc_state,
-      event, nfa_dm_cb.disc_cb.disc_flags);
-#endif
 
   switch (nfa_dm_cb.disc_cb.disc_state) {
     /*  RF Discovery State - Idle */
@@ -2577,16 +2563,10 @@ void nfa_dm_disc_sm_execute(tNFA_DM_RF_DISC_SM_EVENT event,
       nfa_dm_disc_sm_lp_active(event, p_data);
       break;
   }
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "new state: %s (%d), disc_flags: 0x%x",
       nfa_dm_disc_state_2_str(nfa_dm_cb.disc_cb.disc_state).c_str(),
       nfa_dm_cb.disc_cb.disc_state, nfa_dm_cb.disc_cb.disc_flags);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-      "new state: %d,  disc_flags: 0x%x", nfa_dm_cb.disc_cb.disc_state,
-      nfa_dm_cb.disc_cb.disc_flags);
-#endif
 }
 
 /*******************************************************************************
@@ -2807,7 +2787,6 @@ tNFA_STATUS nfa_dm_rf_deactivate(tNFA_DEACTIVATE_TYPE deactivate_type) {
   }
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_dm_disc_state_2_str
@@ -2882,7 +2861,6 @@ static std::string nfa_dm_disc_event_2_str(uint8_t event) {
       return "Unknown";
   }
 }
-#endif /* BT_TRACE_VERBOSE */
 
 /*******************************************************************************
 **

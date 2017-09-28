@@ -80,9 +80,7 @@ extern tLLCP_TEST_PARAMS llcp_test_params;
 extern unsigned char appl_dta_mode_flag;
 
 /* debug functions type */
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string llcp_pdu_type(uint8_t ptype);
-#endif
 
 /*******************************************************************************
 **
@@ -1146,12 +1144,10 @@ static void llcp_link_proc_agf_pdu(NFC_HDR* p_agf) {
     ptype = (uint8_t)(LLCP_GET_PTYPE(pdu_hdr));
     ssap = LLCP_GET_SSAP(pdu_hdr);
 
-#if (BT_TRACE_VERBOSE == TRUE)
     DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
         "Rx DSAP:0x%x, PTYPE:%s (0x%x), SSAP:0x%x "
         "in AGF",
         dsap, llcp_pdu_type(ptype).c_str(), ptype, ssap);
-#endif
 
     if ((ptype == LLCP_PDU_DISC_TYPE) && (dsap == LLCP_SAP_LM) &&
         (ssap == LLCP_SAP_LM)) {
@@ -1312,13 +1308,11 @@ static void llcp_link_proc_rx_data(NFC_HDR* p_msg) {
 
           frame_error = true;
         } else {
-#if (BT_TRACE_VERBOSE == TRUE)
           DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
               << StringPrintf(
                      "DSAP:0x%x, PTYPE:%s (0x%x), "
                      "SSAP:0x%x",
                      dsap, llcp_pdu_type(ptype).c_str(), ptype, ssap);
-#endif
 
           if (ptype == LLCP_PDU_SYMM_TYPE) {
             if (info_length > 0) {
@@ -1576,9 +1570,7 @@ static NFC_HDR* llcp_link_build_next_pdu(NFC_HDR* p_pdu) {
 **
 *******************************************************************************/
 static void llcp_link_send_to_lower(NFC_HDR* p_pdu) {
-#if (BT_TRACE_PROTOCOL == TRUE)
   DispLLCP(p_pdu, false);
-#endif
 
   llcp_cb.lcb.symm_state = LLCP_LINK_SYMM_REMOTE_XMIT_NEXT;
 
@@ -1597,9 +1589,7 @@ static void llcp_link_send_to_lower(NFC_HDR* p_pdu) {
 void llcp_link_connection_cback(uint8_t conn_id, tNFC_CONN_EVT event,
                                 tNFC_CONN* p_data) {
   if (event == NFC_DATA_CEVT) {
-#if (BT_TRACE_PROTOCOL == TRUE)
     DispLLCP((NFC_HDR*)p_data->data.p_data, true);
-#endif
     if (llcp_cb.lcb.link_state == LLCP_LINK_STATE_DEACTIVATED) {
       /* respoding SYMM while LLCP is deactivated but RF link is not deactivated
        * yet */
@@ -1649,7 +1639,6 @@ void llcp_link_connection_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   */
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         llcp_pdu_type
@@ -1691,5 +1680,3 @@ static std::string llcp_pdu_type(uint8_t ptype) {
       return "RESERVED";
   }
 }
-
-#endif

@@ -1320,19 +1320,11 @@ void nfa_hci_handle_admin_gate_rsp(uint8_t* p_data, uint8_t data_len) {
   uint8_t host_id = 0;
   uint32_t os_tick;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "nfa_hci_handle_admin_gate_rsp - LastCmdSent: %s  App: 0x%04x  Gate: "
       "0x%02x  Pipe: 0x%02x",
       nfa_hciu_instr_2_str(nfa_hci_cb.cmd_sent).c_str(), nfa_hci_cb.app_in_use,
       nfa_hci_cb.local_gate_in_use, nfa_hci_cb.pipe_in_use);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
-      "nfa_hci_handle_admin_gate_rsp LastCmdSent: %u  App: 0x%04x  Gate: "
-      "0x%02x  Pipe: 0x%02x",
-      nfa_hci_cb.cmd_sent, nfa_hci_cb.app_in_use, nfa_hci_cb.local_gate_in_use,
-      nfa_hci_cb.pipe_in_use);
-#endif
 
   /* If starting up, handle events here */
   if ((nfa_hci_cb.hci_state == NFA_HCI_STATE_STARTUP) ||

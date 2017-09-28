@@ -49,9 +49,7 @@ const tNFA_RW_ACTION nfa_rw_action_tbl[] = {
 /*****************************************************************************
 ** Local function prototypes
 *****************************************************************************/
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string nfa_rw_evt_2_str(uint16_t event);
-#endif
 
 /*******************************************************************************
 **
@@ -172,15 +170,9 @@ tNFA_STATUS nfa_rw_send_raw_frame(NFC_HDR* p_data) {
 bool nfa_rw_handle_event(NFC_HDR* p_msg) {
   uint16_t act_idx;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "nfa_rw_handle_event event: %s (0x%02x), flags: %08x",
       nfa_rw_evt_2_str(p_msg->event).c_str(), p_msg->event, nfa_rw_cb.flags);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("nfa_rw_handle_event event: 0x%x, flags: %08x",
-                      p_msg->event, nfa_rw_cb.flags);
-#endif
 
   /* Get NFA_RW sub-event */
   act_idx = (p_msg->event & 0x00FF);
@@ -193,7 +185,6 @@ bool nfa_rw_handle_event(NFC_HDR* p_msg) {
   }
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_rw_evt_2_str
@@ -217,4 +208,3 @@ static std::string nfa_rw_evt_2_str(uint16_t event) {
       return "Unknown";
   }
 }
-#endif /* BT_TRACE_VERBOSE */

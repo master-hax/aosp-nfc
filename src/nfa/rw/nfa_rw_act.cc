@@ -101,16 +101,10 @@ static void nfa_rw_send_data_to_upper(tRW_DATA* p_rw_data) {
       (p_rw_data->data.p_data == NULL))
     return;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("nfa_rw_send_data_to_upper: Len [0x%X] Status [%s]",
                       p_rw_data->data.p_data->len,
                       NFC_GetStatusName(p_rw_data->data.status).c_str());
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("nfa_rw_send_data_to_upper: Len [0x%X] Status [0x%X]",
-                      p_rw_data->data.p_data->len, p_rw_data->data.status);
-#endif
 
   /* Notify conn cback of NFA_DATA_EVT */
   conn_evt_data.data.status = p_rw_data->data.status;

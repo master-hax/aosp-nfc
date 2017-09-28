@@ -80,9 +80,7 @@ const tNFA_DM_ACTION nfa_dm_action[] = {
 /*****************************************************************************
 ** Local function prototypes
 *****************************************************************************/
-#if (BT_TRACE_VERBOSE == TRUE)
 static std::string nfa_dm_evt_2_str(uint16_t event);
-#endif
 /*******************************************************************************
 **
 ** Function         nfa_dm_init
@@ -117,13 +115,8 @@ bool nfa_dm_evt_hdlr(NFC_HDR* p_msg) {
   bool freebuf = true;
   uint16_t event = p_msg->event & 0x00ff;
 
-#if (BT_TRACE_VERBOSE == TRUE)
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG) << StringPrintf(
       "event: %s (0x%02x)", nfa_dm_evt_2_str(event).c_str(), event);
-#else
-  DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
-      << StringPrintf("event: 0x%x", event);
-#endif
 
   /* execute action functions */
   if (event < NFA_DM_NUM_ACTIONS) {
@@ -448,7 +441,6 @@ tNFA_STATUS nfa_dm_check_set_config(uint8_t tlv_list_len, uint8_t* p_tlv_list,
   }
 }
 
-#if (BT_TRACE_VERBOSE == TRUE)
 /*******************************************************************************
 **
 ** Function         nfa_dm_nfc_revt_2_str
@@ -512,4 +504,3 @@ static std::string nfa_dm_evt_2_str(uint16_t event) {
 
   return "Unknown or Vendor Specific";
 }
-#endif /* BT_TRACE_VERBOSE */
