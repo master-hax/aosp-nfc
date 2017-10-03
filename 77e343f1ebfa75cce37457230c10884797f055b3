@@ -22,6 +22,30 @@
       "revId": "77e343f1ebfa75cce37457230c10884797f055b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8b31eaf_92a3d7a0",
+        "filename": "halimpl/pn54x/hal/phNxpNciHal.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1047473
+      },
+      "writtenOn": "2017-10-03T23:16:14Z",
+      "side": 1,
+      "message": "sorry, I am wrong.",
+      "parentUuid": "cdef005f_8aa68462",
+      "range": {
+        "startLine": 419,
+        "startChar": 6,
+        "endLine": 419,
+        "endChar": 48
+      },
+      "revId": "77e343f1ebfa75cce37457230c10884797f055b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
