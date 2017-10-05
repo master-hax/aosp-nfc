@@ -33,7 +33,7 @@
 #include "nfc_api.h"
 #include "trace_api.h"
 
-static void handle_debug_loopback(NFC_HDR* p_buf, uint8_t pipe, uint8_t type,
+static void handle_debug_loopback(NFC_HDR* p_buf, uint8_t type,
                                   uint8_t instruction);
 uint8_t HCI_LOOPBACK_DEBUG = NFA_HCI_DEBUG_OFF;
 
@@ -350,7 +350,7 @@ tNFA_STATUS nfa_hciu_send_msg(uint8_t pipe_id, uint8_t type,
       DispHcp(((uint8_t*)(p_buf + 1) + p_buf->offset), p_buf->len, false);
 
       if (HCI_LOOPBACK_DEBUG == NFA_HCI_DEBUG_ON)
-        handle_debug_loopback(p_buf, pipe_id, type, instruction);
+        handle_debug_loopback(p_buf, type, instruction);
       else
         status = NFC_SendData(nfa_hci_cb.conn_id, p_buf);
     } else {
@@ -1369,7 +1369,7 @@ std::string nfa_hciu_evt_2_str(uint8_t pipe_id, uint8_t evt) {
   }
 }
 
-static void handle_debug_loopback(NFC_HDR* p_buf, uint8_t pipe, uint8_t type,
+static void handle_debug_loopback(NFC_HDR* p_buf, uint8_t type,
                                   uint8_t instruction) {
   uint8_t* p = (uint8_t*)(p_buf + 1) + p_buf->offset;
   static uint8_t next_pipe = 0x10;
