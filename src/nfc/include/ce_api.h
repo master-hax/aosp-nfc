@@ -201,8 +201,7 @@ extern void CE_T4tDeregisterAID(tCE_T4T_AID_HANDLE aid_handle);
 ** Returns          NFC_STATUS_OK if success
 **
 *******************************************************************************/
-extern tNFC_STATUS CE_T4TTestSetCC(uint16_t cc_len, uint8_t version,
-                                   uint16_t max_le, uint16_t max_lc);
+extern tNFC_STATUS CE_T4TTestSetCC();
 
 /*******************************************************************************
 **
@@ -213,11 +212,7 @@ extern tNFC_STATUS CE_T4TTestSetCC(uint16_t cc_len, uint8_t version,
 ** Returns          NFC_STATUS_OK if success
 **
 *******************************************************************************/
-extern tNFC_STATUS CE_T4TTestSetNDEFCtrlTLV(uint8_t type, uint8_t length,
-                                            uint16_t file_id,
-                                            uint16_t max_file_size,
-                                            uint8_t read_access,
-                                            uint8_t write_access);
+extern tNFC_STATUS CE_T4TTestSetNDEFCtrlTLV();
 
 /*******************************************************************************
 **
