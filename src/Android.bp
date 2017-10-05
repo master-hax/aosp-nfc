@@ -27,12 +27,6 @@ cc_library_shared {
         "-DBUILDCFG=1",
         "-Wall",
         "-Werror",
-        "-Wno-error=unused-const-variable",
-        "-Wno-error=unused-function",
-        "-Wno-error=unused-variable",
-        "-Wno-deprecated-register",
-        "-Wno-unused-parameter",
-        "-Wno-missing-field-initializers",
     ],
     local_include_dirs: [
         "include",
