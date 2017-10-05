@@ -304,7 +304,7 @@ void NfcAdaptation::signal() { mCondVar.signal(); }
 ** Returns:     none
 **
 *******************************************************************************/
-uint32_t NfcAdaptation::NFCA_TASK(uint32_t arg) {
+uint32_t NfcAdaptation::NFCA_TASK(__attribute__((unused)) uint32_t arg) {
   const char* func = "NfcAdaptation::NFCA_TASK";
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("%s: enter", func);
@@ -323,7 +323,7 @@ uint32_t NfcAdaptation::NFCA_TASK(uint32_t arg) {
 ** Returns:     none
 **
 *******************************************************************************/
-uint32_t NfcAdaptation::Thread(uint32_t arg) {
+uint32_t NfcAdaptation::Thread(__attribute__((unused)) uint32_t arg) {
   const char* func = "NfcAdaptation::Thread";
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("%s: enter", func);
@@ -368,7 +368,6 @@ void NfcAdaptation::InitializeHalDeviceContext() {
   const char* func = "NfcAdaptation::InitializeHalDeviceContext";
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("%s: enter", func);
-  int ret = 0;  // 0 means success
 
   mHalEntryFuncs.initialize = HalInitialize;
   mHalEntryFuncs.terminate = HalTerminate;
@@ -600,7 +599,6 @@ void NfcAdaptation::HalPowerCycle() {
 *******************************************************************************/
 uint8_t NfcAdaptation::HalGetMaxNfcee() {
   const char* func = "NfcAdaptation::HalPowerCycle";
-  uint8_t maxNfcee = 0;
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
       << StringPrintf("%s", func);
 
@@ -649,6 +647,7 @@ void NfcAdaptation::DownloadFirmware() {
 **
 *******************************************************************************/
 void NfcAdaptation::HalDownloadFirmwareCallback(nfc_event_t event,
+                                                __attribute__((unused))
                                                 nfc_status_t event_status) {
   const char* func = "NfcAdaptation::HalDownloadFirmwareCallback";
   DLOG_IF(INFO, appl_trace_level >= BT_TRACE_LEVEL_DEBUG)
@@ -678,7 +677,9 @@ void NfcAdaptation::HalDownloadFirmwareCallback(nfc_event_t event,
 ** Returns:     None.
 **
 *******************************************************************************/
-void NfcAdaptation::HalDownloadFirmwareDataCallback(uint16_t data_len,
+void NfcAdaptation::HalDownloadFirmwareDataCallback(__attribute__((unused))
+                                                    uint16_t data_len,
+                                                    __attribute__((unused))
                                                     uint8_t* p_data) {}
 
 /*******************************************************************************
