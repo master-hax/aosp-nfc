@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00e327bc_d530c3e2",
+        "filename": "src/nfc/tags/rw_i93.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-10-09T22:21:50Z",
+      "side": 1,
+      "message": "use __func__",
+      "range": {
+        "startLine": 212,
+        "startChar": 19,
+        "endLine": 212,
+        "endChar": 50
+      },
+      "revId": "d479d76022b6055d5e98b808f584824cdbb73305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
