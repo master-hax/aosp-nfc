@@ -93,6 +93,10 @@
 #define NFC_HAL_PRE_I2C_PATCH_INCLUDED TRUE
 #endif
 
+/* Mininum payload size for SPD NCI commands (used to validate
+ *  * HAL_NfcPrmSetSpdNciCmdPayloadSize) */
+/* Default is 32, as required by the NCI specifications; however this value may
+ *  * be          */
 /* over-riden for platforms that have transport packet limitations */
 #ifndef NFC_HAL_PRM_MIN_NCI_CMD_PAYLOAD_SIZE
 #define NFC_HAL_PRM_MIN_NCI_CMD_PAYLOAD_SIZE (32)
@@ -116,7 +120,6 @@
 
 /* Data rate for 15693 command/response, it must be same as
  * RW_I93_FLAG_DATA_RATE in nfc_target.h */
-#define NFC_HAL_I93_FLAG_DATA_RATE_LOW 0x00
 #define NFC_HAL_I93_FLAG_DATA_RATE_HIGH 0x02
 
 #ifndef NFC_HAL_I93_FLAG_DATA_RATE

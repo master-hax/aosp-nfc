@@ -81,7 +81,6 @@ typedef uint16_t tNFA_HANDLE;
 /* NFA Handle definitions */
 
 /* The upper byte of NFA_HANDLE signifies the handle group */
-/* Connection handles           */
 /* NDEF Type Handler handles    */
 #define NFA_HANDLE_GROUP_NDEF_HANDLER 0x0200
 /* DH Card Emulation handles    */
@@ -162,7 +161,6 @@ typedef uint8_t tNFA_PROTOCOL_MASK;
 #define NFA_T1T_HR_LEN T1T_HR_LEN
 /* Max UID length of T1/T2  */
 #define NFA_MAX_UID_LEN TAG_MAX_UID_LEN
-/* T1T UID length           */
 /* UID len for T1T cmds     */
 #define NFA_T1T_CMD_UID_LEN T1T_CMD_UID_LEN
 /* T2T UID length           */
