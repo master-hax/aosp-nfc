@@ -24,14 +24,6 @@
 
 #include "data_types.h"
 
-/* Operating System Selection */
-#ifndef BTE_SIM_APP
-#define _GKI_ARM
-#define _GKI_STANDALONE
-#else
-#define _BT_WIN32
-#endif
-
 /******************************************************************************
 **
 ** Task configuration
@@ -360,7 +352,5 @@ over HCI data and intentionally kept out of order */
 #ifndef GKI_BUF8_MAX
 #define GKI_BUF8_MAX 30
 #endif
-
-extern void LogMsg(uint32_t trace_set_mask, const char* fmt_str, ...);
 
 #endif /* GKI_TARGET_H */
