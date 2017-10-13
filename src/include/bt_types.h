@@ -60,8 +60,8 @@
 #define TRACE_ORG_APPL 0x00000500
 
 #define DEV_CLASS_LEN 3
-typedef uint8_t DEV_CLASS[DEV_CLASS_LEN]; /* Device class */
+/* Device class */
 
 #define BD_ADDR_LEN 6                 /* Device address length */
-typedef uint8_t BD_ADDR[BD_ADDR_LEN]; /* Device address */
+/* Device address */
 #endif
