@@ -48,8 +48,6 @@ uint8_t ce_test_tag_app_id[T4T_V20_NDEF_TAG_AID_LEN] = {0xD2, 0x76, 0x00, 0x00,
 **
 *******************************************************************************/
 static bool ce_t4t_send_to_lower(NFC_HDR* p_r_apdu) {
-  DispCET4Tags(p_r_apdu, false);
-
   if (NFC_SendData(NFC_RF_CONN_ID, p_r_apdu) != NFC_STATUS_OK) {
     LOG(ERROR) << StringPrintf("failed");
     return false;
@@ -549,8 +547,6 @@ static void ce_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 
   p_c_apdu = (NFC_HDR*)p_data->data.p_data;
 
-  DispCET4Tags(p_c_apdu, true);
-
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("conn_id = 0x%02X", conn_id);
 
   p_cmd = (uint8_t*)(p_c_apdu + 1) + p_c_apdu->offset;
@@ -945,8 +941,7 @@ extern void CE_T4tDeregisterAID(tCE_T4T_AID_HANDLE aid_handle) {
 ** Returns          NFC_STATUS_OK if success
 **
 *******************************************************************************/
-tNFC_STATUS CE_T4TTestSetCC(uint16_t cc_len, uint8_t version, uint16_t max_le,
-                            uint16_t max_lc) {
+tNFC_STATUS CE_T4TTestSetCC() {
 #if (CE_TEST_INCLUDED == TRUE)
   tCE_T4T_MEM* p_t4t = &ce_cb.mem.t4t;
   uint8_t* p;
@@ -1004,10 +999,7 @@ tNFC_STATUS CE_T4TTestSetCC(uint16_t cc_len, uint8_t version, uint16_t max_le,
 ** Returns          NFC_STATUS_OK if success
 **
 *******************************************************************************/
-tNFC_STATUS CE_T4TTestSetNDEFCtrlTLV(uint8_t type, uint8_t length,
-                                     uint16_t file_id, uint16_t max_file_size,
-                                     uint8_t read_access,
-                                     uint8_t write_access) {
+tNFC_STATUS CE_T4TTestSetNDEFCtrlTLV() {
 #if (CE_TEST_INCLUDED == TRUE)
   tCE_T4T_MEM* p_t4t = &ce_cb.mem.t4t;
   uint8_t* p;

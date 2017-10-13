@@ -831,7 +831,8 @@ static tNFC_STATUS nfa_dm_disc_force_to_idle(void) {
 ** Returns          void
 **
 *******************************************************************************/
-static void nfa_dm_disc_deact_ntf_timeout_cback(TIMER_LIST_ENT* p_tle) {
+static void nfa_dm_disc_deact_ntf_timeout_cback(__attribute__((unused))
+                                                TIMER_LIST_ENT* p_tle) {
   LOG(ERROR) << __func__;
 
   nfa_dm_disc_force_to_idle();
@@ -1567,7 +1568,8 @@ static void nfa_dm_disc_end_sleep_wakeup(tNFC_STATUS status) {
 ** Returns          void
 **
 *******************************************************************************/
-static void nfa_dm_disc_kovio_timeout_cback(TIMER_LIST_ENT* p_tle) {
+static void nfa_dm_disc_kovio_timeout_cback(__attribute__((unused))
+                                            TIMER_LIST_ENT* p_tle) {
   tNFC_DEACTIVATE_DEVT deact;
 
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
@@ -1667,8 +1669,8 @@ static void nfa_dm_disc_report_kovio_presence_check(tNFC_STATUS status) {
 ** Returns          void
 **
 *******************************************************************************/
-static void nfa_dm_disc_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
-                                   tNFC_CONN* p_data) {
+static void nfa_dm_disc_data_cback(__attribute__((unused)) uint8_t conn_id,
+                                   tNFC_CONN_EVT event, tNFC_CONN* p_data) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   /* if selection failed */
