@@ -79,6 +79,9 @@ LOCAL_C_INCLUDES += \
 LOCAL_CFLAGS += -DANDROID \
         -DNXP_UICC_ENABLE -DNXP_HW_SELF_TEST
 LOCAL_CFLAGS += -DNFC_NXP_HFO_SETTINGS=FALSE
+LOCAL_CFLAGS += -Wall -Werror
+# hal/phNxpNciHal.c has logical-op-parentheses warning to fix.
+LOCAL_CFLAGS += -Wno-logical-op-parentheses
 #LOCAL_CFLAGS += -DFELICA_CLT_ENABLE
 
 
