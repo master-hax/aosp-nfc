@@ -23,7 +23,10 @@ cc_library_shared {
     ],
     cflags: [
         "-DBUILDCFG=1",
+        "-Wall",
+        "-Werror",
         "-Wno-deprecated-register",
+        "-Wno-unused-function",
         "-Wno-unused-parameter",
         "-Wno-missing-field-initializers",
     ],

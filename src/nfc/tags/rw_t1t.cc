@@ -42,8 +42,6 @@ static void rw_t1t_process_error(void);
 static void rw_t1t_handle_presence_check_rsp(tNFC_STATUS status);
 #if (BT_TRACE_VERBOSE == TRUE)
 static std::string rw_t1t_get_state_name(uint8_t state);
-static char* rw_t1t_get_sub_state_name(uint8_t sub_state);
-static char* rw_t1t_get_event_name(uint8_t event);
 #endif
 
 /*******************************************************************************

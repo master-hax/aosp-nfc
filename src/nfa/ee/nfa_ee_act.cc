@@ -1881,7 +1881,6 @@ void nfa_ee_check_set_routing(uint16_t new_size, int* p_max_len, uint8_t* p,
   uint8_t max_tlv = (uint8_t)((*p_max_len > NFA_EE_ROUT_MAX_TLV_SIZE)
                                   ? NFA_EE_ROUT_MAX_TLV_SIZE
                                   : *p_max_len);
-  tNFA_STATUS status = NFA_STATUS_OK;
 
   if (new_size + *p_cur_offset > max_tlv) {
     if (NFC_SetRouting(true, *p, *p_cur_offset, p + 1) == NFA_STATUS_OK) {

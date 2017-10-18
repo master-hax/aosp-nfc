@@ -97,7 +97,6 @@ static void phNxpNciHal_read_complete(void* pContext,
                                       phTmlNfc_TransactInfo_t* pInfo);
 static void phNxpNciHal_close_complete(NFCSTATUS status);
 static void phNxpNciHal_core_initialized_complete(NFCSTATUS status);
-static void phNxpNciHal_pre_discover_complete(NFCSTATUS status);
 static void phNxpNciHal_power_cycle_complete(NFCSTATUS status);
 static void phNxpNciHal_kill_client_thread(
     phNxpNciHal_Control_t* p_nxpncihal_ctrl);
@@ -1032,8 +1031,10 @@ int phNxpNciHal_core_initialized(uint8_t* p_core_init_rsp_params) {
   long bufflen = 260;
   long retlen = 0;
   int isfound;
+#if (NFC_NXP_HFO_SETTINGS == TRUE)
   /* Temp fix to re-apply the proper clock setting */
   int temp_fix = 1;
+#endif
   unsigned long num = 0;
 #if (NFC_NXP_CHIP_TYPE != PN547C2)
   // initialize dummy FW recovery variables
@@ -1866,6 +1867,7 @@ int phNxpNciHal_pre_discover(void) {
   return NFCSTATUS_SUCCESS;
 }
 
+#if 0
 /******************************************************************************
  * Function         phNxpNciHal_pre_discover_complete
  *
@@ -1890,6 +1892,7 @@ static void phNxpNciHal_pre_discover_complete(NFCSTATUS status) {
 
   return;
 }
+#endif
 
 /******************************************************************************
  * Function         phNxpNciHal_close
@@ -2119,7 +2122,6 @@ static NFCSTATUS phNxpNciHal_get_mw_eeprom(void) {
   NFCSTATUS status = NFCSTATUS_SUCCESS;
   uint8_t retry_cnt = 0;
   static uint8_t get_mw_eeprom_cmd[] = {0x20, 0x03, 0x03, 0x01, 0xA0, 0x0F};
-  uint8_t bConfig;
 
 retry_send_ext:
   if (retry_cnt > 3) {
@@ -2357,7 +2359,6 @@ retry_send_ext:
 }
 
 int check_config_parameter() {
-  NFCSTATUS status = NFCSTATUS_FAILED;
   uint8_t param_clock_src = CLK_SRC_PLL;
   if (nxpprofile_ctrl.bClkSrcVal == CLK_SRC_PLL) {
 #if (NFC_NXP_CHIP_TYPE != PN553)

@@ -350,7 +350,6 @@ tHAL_NFC_ENTRY* NfcAdaptation::GetHalEntryFuncs() { return &mHalEntryFuncs; }
 void NfcAdaptation::InitializeHalDeviceContext() {
   const char* func = "NfcAdaptation::InitializeHalDeviceContext";
   ALOGD("%s: enter", func);
-  int ret = 0;  // 0 means success
 
   mHalEntryFuncs.initialize = HalInitialize;
   mHalEntryFuncs.terminate = HalTerminate;
@@ -569,7 +568,6 @@ void NfcAdaptation::HalPowerCycle() {
 *******************************************************************************/
 uint8_t NfcAdaptation::HalGetMaxNfcee() {
   const char* func = "NfcAdaptation::HalPowerCycle";
-  uint8_t maxNfcee = 0;
   ALOGD("%s", func);
 
   return nfa_ee_max_ee_cfg;

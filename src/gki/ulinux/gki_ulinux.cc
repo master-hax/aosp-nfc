@@ -200,8 +200,6 @@ uint32_t GKI_get_os_tick_count(void) {
 uint8_t GKI_create_task(TASKPTR task_entry, uint8_t task_id, int8_t* taskname,
                         uint16_t* stack, uint16_t stacksize, void* pCondVar,
                         void* pMutex) {
-  uint16_t i;
-  uint8_t* p;
   struct sched_param param;
   int policy, ret = 0;
   pthread_condattr_t attr;
@@ -373,7 +371,9 @@ void GKI_shutdown(void) {
 void gki_system_tick_start_stop_cback(bool start) {
   tGKI_OS* p_os = &gki_cb.os;
   volatile int* p_run_cond = &p_os->no_timer_suspend;
+#ifdef GKI_TICK_TIMER_DEBUG
   static volatile int wake_lock_count;
+#endif
   if (start == false) {
     /* this can lead to a race condition. however as we only read this variable
      * in the timer loop
@@ -919,7 +919,6 @@ void GKI_disable(void) {
 
 void GKI_exception(uint16_t code, std::string msg) {
   uint8_t task_id;
-  int i = 0;
 
   GKI_TRACE_ERROR_0("GKI_exception(): Task State Table");
 
