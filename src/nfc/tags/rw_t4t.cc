@@ -1067,8 +1067,8 @@ static void rw_t4t_handle_error(tNFC_STATUS status, uint8_t sw1, uint8_t sw2) {
 *******************************************************************************/
 static void rw_t4t_sm_ndef_format(NFC_HDR* p_r_apdu) {
   tRW_T4T_CB* p_t4t = &rw_cb.tcb.t4t;
-  uint8_t *p, type, length;
-  uint16_t status_words, nlen;
+  uint8_t* p;
+  uint16_t status_words;
   tRW_DATA rw_data;
 
 #if (BT_TRACE_VERBOSE == TRUE)
