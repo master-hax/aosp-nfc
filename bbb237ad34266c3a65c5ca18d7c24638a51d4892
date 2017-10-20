@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "716fcfc3_3edc8bb6",
+        "filename": "src/nfa/dm/nfa_dm_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-10-20T14:36:04Z",
+      "side": 1,
+      "message": "no, they point to the same thing (see line 324), but if you pass p_nfa_get_config here, you need to cast it.",
+      "parentUuid": "7e9d136b_1f5166af",
+      "range": {
+        "startLine": 328,
+        "startChar": 56,
+        "endLine": 328,
+        "endChar": 69
+      },
+      "revId": "bbb237ad34266c3a65c5ca18d7c24638a51d4892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74abc41a_2cfa975a",
         "filename": "src/nfa/ee/nfa_ee_act.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T00:48:09Z",
       "side": 1,
       "message": "let\u0027s bring this closer to the call to nfa_ee_build_discover_req_evt?",
+      "range": {
+        "startLine": 1479,
+        "startChar": 1,
+        "endLine": 1479,
+        "endChar": 39
+      },
+      "revId": "bbb237ad34266c3a65c5ca18d7c24638a51d4892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4852c7a4_859fd481",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-10-20T14:36:04Z",
+      "side": 1,
+      "message": "good idea",
+      "parentUuid": "74abc41a_2cfa975a",
       "range": {
         "startLine": 1479,
         "startChar": 1,
@@ -64,6 +112,29 @@
         "startChar": 4,
         "endLine": 355,
         "endChar": 32
+      },
+      "revId": "bbb237ad34266c3a65c5ca18d7c24638a51d4892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1989528_10fa7a7b",
+        "filename": "src/nfa/ee/nfa_ee_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-10-20T14:36:04Z",
+      "side": 1,
+      "message": "The first thing nfa_ee_evt_hdlr does is cast it back to tNFA_EE_MSG, so it seemed cleaner to me to be passing it this way.\n\nbool nfa_ee_evt_hdlr(NFC_HDR* p_msg) {\n  tNFA_EE_MSG* p_evt_data \u003d (tNFA_EE_MSG*)p_msg;",
+      "range": {
+        "startLine": 355,
+        "startChar": 4,
+        "endLine": 355,
+        "endChar": 19
       },
       "revId": "bbb237ad34266c3a65c5ca18d7c24638a51d4892",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
