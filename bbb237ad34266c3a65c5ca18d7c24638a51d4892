@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e9d136b_1f5166af",
+        "filename": "src/nfa/dm/nfa_dm_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-10-20T00:48:09Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be p_nfa_get_config?",
+      "range": {
+        "startLine": 328,
+        "startChar": 56,
+        "endLine": 328,
+        "endChar": 69
+      },
+      "revId": "bbb237ad34266c3a65c5ca18d7c24638a51d4892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74abc41a_2cfa975a",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-10-20T00:48:09Z",
+      "side": 1,
+      "message": "let\u0027s bring this closer to the call to nfa_ee_build_discover_req_evt?",
+      "range": {
+        "startLine": 1479,
+        "startChar": 1,
+        "endLine": 1479,
+        "endChar": 39
+      },
+      "revId": "bbb237ad34266c3a65c5ca18d7c24638a51d4892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "032729b0_a8e703ac",
+        "filename": "src/nfa/ee/nfa_ee_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-10-20T00:48:09Z",
+      "side": 1,
+      "message": "why not \u0026cbk.hdr?",
+      "range": {
+        "startLine": 352,
+        "startChar": 4,
+        "endLine": 355,
+        "endChar": 32
+      },
+      "revId": "bbb237ad34266c3a65c5ca18d7c24638a51d4892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
