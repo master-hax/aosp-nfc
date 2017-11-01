@@ -16,7 +16,6 @@
  *
  ******************************************************************************/
 
-
 /******************************************************************************
  *
  *  This is the public interface file for NFA HCI, Broadcom's NFC
@@ -33,253 +32,265 @@
 *****************************************************************************/
 
 /* NFA HCI Debug constants */
-#define NFA_HCI_DEBUG_DISPLAY_CB                0
-#define NFA_HCI_DEBUG_SIM_HCI_EVENT             1
-#define NFA_HCI_DEBUG_ENABLE_LOOPBACK           101
-#define NFA_HCI_DEBUG_DISABLE_LOOPBACK          102
+#define NFA_HCI_DEBUG_DISPLAY_CB 0
+#define NFA_HCI_DEBUG_SIM_HCI_EVENT 1
+#define NFA_HCI_DEBUG_ENABLE_LOOPBACK 101
+#define NFA_HCI_DEBUG_DISABLE_LOOPBACK 102
 
 /* NFA HCI callback events */
-#define NFA_HCI_REGISTER_EVT	                0x00    /* Application registered                       */
-#define NFA_HCI_DEREGISTER_EVT                  0x01    /* Application deregistered                     */
-#define NFA_HCI_GET_GATE_PIPE_LIST_EVT          0x02    /* Retrieved gates,pipes assoc. to application  */
-#define NFA_HCI_ALLOCATE_GATE_EVT	            0x03    /* A generic gate allocated to the application  */
-#define NFA_HCI_DEALLOCATE_GATE_EVT	            0x04    /* A generic gate is released                   */
-#define NFA_HCI_CREATE_PIPE_EVT         	    0x05    /* Pipe is created                              */
-#define NFA_HCI_OPEN_PIPE_EVT         	        0x06    /* Pipe is opened / could not open              */
-#define NFA_HCI_CLOSE_PIPE_EVT         	        0x07    /* Pipe is closed / could not close             */
-#define NFA_HCI_DELETE_PIPE_EVT         	    0x08    /* Pipe is deleted                              */
-#define NFA_HCI_HOST_LIST_EVT       	        0x09    /* Received list of Host from Host controller   */
-#define NFA_HCI_INIT_EVT                        0x0A    /* HCI subsytem initialized                     */
-#define NFA_HCI_EXIT_EVT                        0x0B    /* HCI subsytem exited                          */
-#define NFA_HCI_RSP_RCVD_EVT                    0x0C    /* Response recvd to cmd sent on app owned pipe */
-#define NFA_HCI_RSP_SENT_EVT                    0x0D    /* Response sent on app owned pipe              */
-#define NFA_HCI_CMD_SENT_EVT                    0x0E    /* Command sent on app owned pipe               */
-#define NFA_HCI_EVENT_SENT_EVT                  0x0F    /* Event sent on app owned pipe                 */
-#define NFA_HCI_CMD_RCVD_EVT                    0x10    /* Command received on app owned pipe           */
-#define NFA_HCI_EVENT_RCVD_EVT                  0x11    /* Event received on app owned pipe             */
-#define NFA_HCI_GET_REG_CMD_EVT                 0x12    /* Registry read command sent                   */
-#define NFA_HCI_SET_REG_CMD_EVT                 0x13    /* Registry write command sent                  */
-#define NFA_HCI_GET_REG_RSP_EVT                 0x14    /* Received response to read registry command   */
-#define NFA_HCI_SET_REG_RSP_EVT                 0x15    /* Received response to write registry command  */
-#define NFA_HCI_ADD_STATIC_PIPE_EVT             0x16    /* A static pipe is added                       */
+#define NFA_HCI_REGISTER_EVT \
+  0x00 /* Application registered                       */
+/* Application deregistered                     */
+#define NFA_HCI_DEREGISTER_EVT 0x01
+/* Retrieved gates,pipes assoc. to application  */
+#define NFA_HCI_GET_GATE_PIPE_LIST_EVT 0x02
+#define NFA_HCI_ALLOCATE_GATE_EVT \
+  0x03 /* A generic gate allocated to the application  */
+#define NFA_HCI_DEALLOCATE_GATE_EVT \
+  0x04 /* A generic gate is released                   */
+#define NFA_HCI_CREATE_PIPE_EVT \
+  0x05 /* Pipe is created                              */
+#define NFA_HCI_OPEN_PIPE_EVT \
+  0x06 /* Pipe is opened / could not open              */
+#define NFA_HCI_CLOSE_PIPE_EVT \
+  0x07 /* Pipe is closed / could not close             */
+#define NFA_HCI_DELETE_PIPE_EVT \
+  0x08 /* Pipe is deleted                              */
+#define NFA_HCI_HOST_LIST_EVT \
+  0x09 /* Received list of Host from Host controller   */
+/* HCI subsytem initialized                     */
+#define NFA_HCI_INIT_EVT 0x0A
+/* HCI subsytem exited                          */
+#define NFA_HCI_EXIT_EVT 0x0B
+/* Response recvd to cmd sent on app owned pipe */
+#define NFA_HCI_RSP_RCVD_EVT 0x0C
+/* Response sent on app owned pipe              */
+#define NFA_HCI_RSP_SENT_EVT 0x0D
+/* Command sent on app owned pipe               */
+#define NFA_HCI_CMD_SENT_EVT 0x0E
+/* Event sent on app owned pipe                 */
+#define NFA_HCI_EVENT_SENT_EVT 0x0F
+/* Command received on app owned pipe           */
+#define NFA_HCI_CMD_RCVD_EVT 0x10
+/* Event received on app owned pipe             */
+#define NFA_HCI_EVENT_RCVD_EVT 0x11
+/* Registry read command sent                   */
+#define NFA_HCI_GET_REG_CMD_EVT 0x12
+/* Registry write command sent                  */
+#define NFA_HCI_SET_REG_CMD_EVT 0x13
+/* Received response to read registry command   */
+#define NFA_HCI_GET_REG_RSP_EVT 0x14
+/* Received response to write registry command  */
+#define NFA_HCI_SET_REG_RSP_EVT 0x15
+/* A static pipe is added                       */
+#define NFA_HCI_ADD_STATIC_PIPE_EVT 0x16
 
 typedef uint8_t tNFA_HCI_EVT;
 
-#define NFA_MAX_HCI_APP_NAME_LEN                0x10    /* Max application name length */
-#define NFA_MAX_HCI_CMD_LEN                     255     /* Max HCI command length */
-#define NFA_MAX_HCI_RSP_LEN                     255     /* Max HCI event length */
-#define NFA_MAX_HCI_EVENT_LEN                   260     /* Max HCI event length */
-#define NFA_MAX_HCI_DATA_LEN                    260     /* Max HCI data length */
+/* Max application name length */
+#define NFA_MAX_HCI_APP_NAME_LEN 0x10
+/* Max HCI command length */
+#define NFA_MAX_HCI_CMD_LEN 255
+/* Max HCI event length */
+#define NFA_MAX_HCI_RSP_LEN 255
+/* Max HCI event length */
+#define NFA_MAX_HCI_EVENT_LEN 260
+/* Max HCI data length */
+#define NFA_MAX_HCI_DATA_LEN 260
 
 /* NFA HCI PIPE states */
-#define NFA_HCI_PIPE_CLOSED                     0x00    /* Pipe is closed */
-#define NFA_HCI_PIPE_OPENED                     0x01    /* Pipe is opened */
+#define NFA_HCI_PIPE_CLOSED 0x00 /* Pipe is closed */
+#define NFA_HCI_PIPE_OPENED 0x01 /* Pipe is opened */
 
 typedef uint8_t tNFA_HCI_PIPE_STATE;
 /* Dynamic pipe control block */
-typedef struct
-{
-    uint8_t                 pipe_id;                    /* Pipe ID */
-    tNFA_HCI_PIPE_STATE     pipe_state;                 /* State of the Pipe */
-    uint8_t                 local_gate;                 /* local gate id */
-    uint8_t                 dest_host;                  /* Peer host to which this pipe is connected */
-    uint8_t                 dest_gate;                  /* Peer gate to which this pipe is connected */
+typedef struct {
+  uint8_t pipe_id;                /* Pipe ID */
+  tNFA_HCI_PIPE_STATE pipe_state; /* State of the Pipe */
+  uint8_t local_gate;             /* local gate id */
+  uint8_t dest_host; /* Peer host to which this pipe is connected */
+  uint8_t dest_gate; /* Peer gate to which this pipe is connected */
 } tNFA_HCI_PIPE_INFO;
 
 /* Data for NFA_HCI_REGISTER_EVT */
-typedef struct
-{
-    tNFA_STATUS         status;                         /* Status of registration */
-    tNFA_HANDLE         hci_handle;                     /* Handle assigned to the application */
-    uint8_t             num_pipes;                      /* Number of dynamic pipes exist for the application */
-    uint8_t             num_gates;                      /* Number of generic gates exist for the application */
+typedef struct {
+  tNFA_STATUS status;     /* Status of registration */
+  tNFA_HANDLE hci_handle; /* Handle assigned to the application */
+  uint8_t num_pipes; /* Number of dynamic pipes exist for the application */
+  uint8_t num_gates; /* Number of generic gates exist for the application */
 } tNFA_HCI_REGISTER;
 
 /* Data for NFA_HCI_DEREGISTER_EVT */
-typedef struct
-{
-    tNFA_STATUS         status;                         /* Status of deregistration */
+typedef struct {
+  tNFA_STATUS status; /* Status of deregistration */
 } tNFA_HCI_DEREGISTER;
 
 /* Data for NFA_HCI_GET_GATE_PIPE_LIST_EVT */
-typedef struct
-{
-    tNFA_STATUS         status;
-    uint8_t             num_pipes;                      /* Number of dynamic pipes exist for the application */
-    tNFA_HCI_PIPE_INFO  pipe[NFA_HCI_MAX_PIPE_CB];      /* List of pipe created for the application */
-    uint8_t             num_gates;                      /* Number of generic gates exist for the application */
-    uint8_t             gate[NFA_HCI_MAX_GATE_CB];      /* List of generic gates allocated to the application */
-    uint8_t             num_uicc_created_pipes;         /* Number of pipes created by UICC host */
-    tNFA_HCI_PIPE_INFO  uicc_created_pipe[NFA_HCI_MAX_PIPE_CB]; /* Pipe information of the UICC created pipe */
+typedef struct {
+  tNFA_STATUS status;
+  uint8_t num_pipes; /* Number of dynamic pipes exist for the application */
+  tNFA_HCI_PIPE_INFO
+      pipe[NFA_HCI_MAX_PIPE_CB]; /* List of pipe created for the application */
+  uint8_t num_gates; /* Number of generic gates exist for the application */
+  uint8_t gate[NFA_HCI_MAX_GATE_CB]; /* List of generic gates allocated to the
+                                        application */
+  uint8_t num_uicc_created_pipes;    /* Number of pipes created by UICC host */
+  tNFA_HCI_PIPE_INFO uicc_created_pipe
+      [NFA_HCI_MAX_PIPE_CB]; /* Pipe information of the UICC created pipe */
 } tNFA_HCI_GET_GATE_PIPE_LIST;
 
 /* Data for NFA_HCI_ALLOCATE_GATE_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of response to allocate gate request */
-    uint8_t         gate;                               /* The gate allocated to the application */
+typedef struct {
+  tNFA_STATUS status; /* Status of response to allocate gate request */
+  uint8_t gate;       /* The gate allocated to the application */
 } tNFA_HCI_ALLOCATE_GATE;
 
 /* Data for NFA_HCI_DEALLOCATE_GATE_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of response to deallocate gate request */
-    uint8_t         gate;                               /* The gate deallocated from the application */
+typedef struct {
+  tNFA_STATUS status; /* Status of response to deallocate gate request */
+  uint8_t gate;       /* The gate deallocated from the application */
 } tNFA_HCI_DEALLOCATE_GATE;
 
 /* Data for NFA_HCI_CREATE_PIPE_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of creating dynamic pipe for the application */
-    uint8_t         pipe;                               /* The pipe created for the application */
-    uint8_t         source_gate;                        /* DH host gate to which the one end of pipe is attached */
-    uint8_t         dest_host;                          /* Destination host whose gate is the other end of the pipe is attached to */
-    uint8_t         dest_gate;                          /* Destination host gate to which the other end of pipe is attached */
+typedef struct {
+  tNFA_STATUS status; /* Status of creating dynamic pipe for the application */
+  uint8_t pipe;       /* The pipe created for the application */
+  uint8_t
+      source_gate; /* DH host gate to which the one end of pipe is attached */
+  uint8_t
+      dest_host; /* Destination host whose gate is the other end of the pipe is
+                    attached to */
+  uint8_t dest_gate; /* Destination host gate to which the other end of pipe is
+                        attached */
 } tNFA_HCI_CREATE_PIPE;
 
 /* Data for NFA_HCI_OPEN_PIPE_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of open pipe operation */
-    uint8_t         pipe;                               /* The dynamic pipe for open operation */
-}tNFA_HCI_OPEN_PIPE;
+typedef struct {
+  tNFA_STATUS status; /* Status of open pipe operation */
+  uint8_t pipe;       /* The dynamic pipe for open operation */
+} tNFA_HCI_OPEN_PIPE;
 
 /* Data for NFA_HCI_CLOSE_PIPE_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of close pipe operation */
-    uint8_t         pipe;                               /* The dynamic pipe for close operation */
-}tNFA_HCI_CLOSE_PIPE;
+typedef struct {
+  tNFA_STATUS status; /* Status of close pipe operation */
+  uint8_t pipe;       /* The dynamic pipe for close operation */
+} tNFA_HCI_CLOSE_PIPE;
 
 /* Data for NFA_HCI_DELETE_PIPE_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of delete pipe operation */
-    uint8_t         pipe;                               /* The dynamic pipe for delete operation */
+typedef struct {
+  tNFA_STATUS status; /* Status of delete pipe operation */
+  uint8_t pipe;       /* The dynamic pipe for delete operation */
 } tNFA_HCI_DELETE_PIPE;
 
 /* Data for NFA_HCI_HOST_LIST_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status og get host list operation */
-    uint8_t         num_hosts;                          /* Number of hosts in the host network */
-    uint8_t         host[NFA_HCI_MAX_HOST_IN_NETWORK];  /* List of host in the host network */
+typedef struct {
+  tNFA_STATUS status; /* Status og get host list operation */
+  uint8_t num_hosts;  /* Number of hosts in the host network */
+  uint8_t
+      host[NFA_HCI_MAX_HOST_IN_NETWORK]; /* List of host in the host network */
 } tNFA_HCI_HOST_LIST;
 
 /* Data for NFA_HCI_RSP_RCVD_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of RSP to HCP CMD sent */
-    uint8_t         pipe;                               /* The pipe on which HCP packet is exchanged */
-    uint8_t         rsp_code;                           /* Response id */
-    uint16_t        rsp_len;                            /* Response parameter length */
-    uint8_t         rsp_data[NFA_MAX_HCI_RSP_LEN];      /* Response received */
+typedef struct {
+  tNFA_STATUS status; /* Status of RSP to HCP CMD sent */
+  uint8_t pipe;       /* The pipe on which HCP packet is exchanged */
+  uint8_t rsp_code;   /* Response id */
+  uint16_t rsp_len;   /* Response parameter length */
+  uint8_t rsp_data[NFA_MAX_HCI_RSP_LEN]; /* Response received */
 } tNFA_HCI_RSP_RCVD;
 
 /* Data for NFA_HCI_EVENT_RCVD_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of Event received */
-    uint8_t         pipe;                               /* The pipe on which HCP EVT packet is received */
-    uint8_t         evt_code;                           /* HCP EVT id */
-    uint16_t        evt_len;                            /* HCP EVT parameter length */
-    uint8_t         *p_evt_buf;                         /* HCP EVT Parameter */
+typedef struct {
+  tNFA_STATUS status; /* Status of Event received */
+  uint8_t pipe;       /* The pipe on which HCP EVT packet is received */
+  uint8_t evt_code;   /* HCP EVT id */
+  uint16_t evt_len;   /* HCP EVT parameter length */
+  uint8_t* p_evt_buf; /* HCP EVT Parameter */
 } tNFA_HCI_EVENT_RCVD;
 
 /* Data for NFA_HCI_CMD_RCVD_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of Command received */
-    uint8_t         pipe;                               /* The pipe on which HCP CMD packet is received */
-    uint8_t         cmd_code;                           /* HCP CMD id */
-    uint16_t        cmd_len;                            /* HCP CMD parameter length */
-    uint8_t         cmd_data[NFA_MAX_HCI_CMD_LEN];      /* HCP CMD Parameter */
+typedef struct {
+  tNFA_STATUS status; /* Status of Command received */
+  uint8_t pipe;       /* The pipe on which HCP CMD packet is received */
+  uint8_t cmd_code;   /* HCP CMD id */
+  uint16_t cmd_len;   /* HCP CMD parameter length */
+  uint8_t cmd_data[NFA_MAX_HCI_CMD_LEN]; /* HCP CMD Parameter */
 } tNFA_HCI_CMD_RCVD;
 
 /* Data for NFA_HCI_INIT_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of Enabling HCI Network */
+typedef struct {
+  tNFA_STATUS status; /* Status of Enabling HCI Network */
 } tNFA_HCI_INIT;
 
 /* Data for NFA_HCI_EXIT_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of Disabling HCI Network */
+typedef struct {
+  tNFA_STATUS status; /* Status of Disabling HCI Network */
 } tNFA_HCI_EXIT;
 
 /* Data for NFA_HCI_RSP_SENT_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of HCP response send operation */
+typedef struct {
+  tNFA_STATUS status; /* Status of HCP response send operation */
 } tNFA_HCI_RSP_SENT;
 
 /* Data for NFA_HCI_CMD_SENT_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of Command send operation */
+typedef struct {
+  tNFA_STATUS status; /* Status of Command send operation */
 } tNFA_HCI_CMD_SENT;
 
 /* Data for NFA_HCI_EVENT_SENT_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of Event send operation */
+typedef struct {
+  tNFA_STATUS status; /* Status of Event send operation */
 } tNFA_HCI_EVENT_SENT;
 
 /* Data for NFA_HCI_ADD_STATIC_PIPE_EVT */
-typedef struct
-{
-    tNFA_STATUS     status;                             /* Status of adding proprietary pipe */
+typedef struct {
+  tNFA_STATUS status; /* Status of adding proprietary pipe */
 } tNFA_HCI_ADD_STATIC_PIPE_EVT;
 
 /* data type for all registry-related events */
-typedef struct
-{
-    tNFA_STATUS         status;                         /* Status of Registry operation */
-    uint8_t             pipe;                           /* Pipe on whose registry is of interest */
-    uint8_t             index;                          /* Index of the registry operated */
-    uint8_t             data_len;                       /* length of the registry parameter */
-    uint8_t             reg_data[NFA_MAX_HCI_DATA_LEN]; /* Registry parameter */
+typedef struct {
+  tNFA_STATUS status; /* Status of Registry operation */
+  uint8_t pipe;       /* Pipe on whose registry is of interest */
+  uint8_t index;      /* Index of the registry operated */
+  uint8_t data_len;   /* length of the registry parameter */
+  uint8_t reg_data[NFA_MAX_HCI_DATA_LEN]; /* Registry parameter */
 } tNFA_HCI_REGISTRY;
 
-
 /* Union of all hci callback structures */
-typedef union
-{
-    tNFA_HCI_REGISTER               hci_register;   /* NFA_HCI_REGISTER_EVT           */
-    tNFA_HCI_DEREGISTER             hci_deregister; /* NFA_HCI_DEREGISTER_EVT         */
-    tNFA_HCI_GET_GATE_PIPE_LIST     gates_pipes;    /* NFA_HCI_GET_GATE_PIPE_LIST_EVT */
-    tNFA_HCI_ALLOCATE_GATE          allocated;      /* NFA_HCI_ALLOCATE_GATE_EVT      */
-    tNFA_HCI_DEALLOCATE_GATE        deallocated;    /* NFA_HCI_DEALLOCATE_GATE_EVT    */
-    tNFA_HCI_CREATE_PIPE            created;        /* NFA_HCI_CREATE_PIPE_EVT        */
-    tNFA_HCI_OPEN_PIPE              opened;         /* NFA_HCI_OPEN_PIPE_EVT          */
-    tNFA_HCI_CLOSE_PIPE             closed;         /* NFA_HCI_CLOSE_PIPE_EVT         */
-    tNFA_HCI_DELETE_PIPE            deleted;        /* NFA_HCI_DELETE_PIPE_EVT        */
-    tNFA_HCI_HOST_LIST              hosts;          /* NFA_HCI_HOST_LIST_EVT          */
-    tNFA_HCI_RSP_RCVD               rsp_rcvd;       /* NFA_HCI_RSP_RCVD_EVT           */
-    tNFA_HCI_RSP_SENT               rsp_sent;       /* NFA_HCI_RSP_SENT_EVT           */
-    tNFA_HCI_CMD_SENT               cmd_sent;       /* NFA_HCI_CMD_SENT_EVT           */
-    tNFA_HCI_EVENT_SENT             evt_sent;       /* NFA_HCI_EVENT_SENT_EVT         */
-    tNFA_HCI_CMD_RCVD               cmd_rcvd;       /* NFA_HCI_CMD_RCVD_EVT           */
-    tNFA_HCI_EVENT_RCVD             rcvd_evt;       /* NFA_HCI_EVENT_RCVD_EVT         */
-    tNFA_STATUS                     status;         /* status of api command request  */
-    tNFA_HCI_REGISTRY               registry;       /* all registry-related events - NFA_HCI_GET_REG_CMD_EVT, NFA_HCI_SET_REG_CMD_EVT, NFA_HCI_GET_REG_RSP_EVT, NFA_HCI_SET_REG_RSP_EVT */
-    tNFA_HCI_INIT                   hci_init;       /* NFA_HCI_INIT_EVT               */
-    tNFA_HCI_EXIT                   hci_exit;       /* NFA_HCI_EXIT_EVT               */
-    tNFA_HCI_ADD_STATIC_PIPE_EVT    pipe_added;     /* NFA_HCI_ADD_STATIC_PIPE_EVT    */
+typedef union {
+  tNFA_HCI_REGISTER hci_register;          /* NFA_HCI_REGISTER_EVT           */
+  tNFA_HCI_DEREGISTER hci_deregister;      /* NFA_HCI_DEREGISTER_EVT         */
+  tNFA_HCI_GET_GATE_PIPE_LIST gates_pipes; /* NFA_HCI_GET_GATE_PIPE_LIST_EVT */
+  tNFA_HCI_ALLOCATE_GATE allocated;        /* NFA_HCI_ALLOCATE_GATE_EVT      */
+  tNFA_HCI_DEALLOCATE_GATE deallocated;    /* NFA_HCI_DEALLOCATE_GATE_EVT    */
+  tNFA_HCI_CREATE_PIPE created;            /* NFA_HCI_CREATE_PIPE_EVT        */
+  tNFA_HCI_OPEN_PIPE opened;               /* NFA_HCI_OPEN_PIPE_EVT          */
+  tNFA_HCI_CLOSE_PIPE closed;              /* NFA_HCI_CLOSE_PIPE_EVT         */
+  tNFA_HCI_DELETE_PIPE deleted;            /* NFA_HCI_DELETE_PIPE_EVT        */
+  tNFA_HCI_HOST_LIST hosts;                /* NFA_HCI_HOST_LIST_EVT          */
+  tNFA_HCI_RSP_RCVD rsp_rcvd;              /* NFA_HCI_RSP_RCVD_EVT           */
+  tNFA_HCI_RSP_SENT rsp_sent;              /* NFA_HCI_RSP_SENT_EVT           */
+  tNFA_HCI_CMD_SENT cmd_sent;              /* NFA_HCI_CMD_SENT_EVT           */
+  tNFA_HCI_EVENT_SENT evt_sent;            /* NFA_HCI_EVENT_SENT_EVT         */
+  tNFA_HCI_CMD_RCVD cmd_rcvd;              /* NFA_HCI_CMD_RCVD_EVT           */
+  tNFA_HCI_EVENT_RCVD rcvd_evt;            /* NFA_HCI_EVENT_RCVD_EVT         */
+  tNFA_STATUS status;                      /* status of api command request  */
+  tNFA_HCI_REGISTRY registry;              /* all registry-related events -
+                                              NFA_HCI_GET_REG_CMD_EVT,
+                                              NFA_HCI_SET_REG_CMD_EVT,
+                                              NFA_HCI_GET_REG_RSP_EVT,
+                                              NFA_HCI_SET_REG_RSP_EVT */
+  tNFA_HCI_INIT hci_init;                  /* NFA_HCI_INIT_EVT               */
+  tNFA_HCI_EXIT hci_exit;                  /* NFA_HCI_EXIT_EVT               */
+  tNFA_HCI_ADD_STATIC_PIPE_EVT pipe_added; /* NFA_HCI_ADD_STATIC_PIPE_EVT    */
 } tNFA_HCI_EVT_DATA;
 
 /* NFA HCI callback */
-typedef void (tNFA_HCI_CBACK) (tNFA_HCI_EVT event, tNFA_HCI_EVT_DATA *p_data);
+typedef void(tNFA_HCI_CBACK)(tNFA_HCI_EVT event, tNFA_HCI_EVT_DATA* p_data);
 
 /*****************************************************************************
 **  External Function Declarations
 *****************************************************************************/
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 
 /*******************************************************************************
 **
@@ -287,17 +298,19 @@ extern "C"
 **
 ** Description      This function will register an application with hci and
 **                  returns an application handle and provides a mechanism to
-**                  register a callback with HCI to receive NFA HCI event notification.
-**                  When the application is registered (or if an error occurs),
-**                  the app will be notified with NFA_HCI_REGISTER_EVT. Previous
-**                  session information including allocated gates, created pipes
-**                  and pipes states will be returned as part of tNFA_HCI_REGISTER data.
+**                  register a callback with HCI to receive NFA HCI event
+**                  notification. When the application is registered (or if an
+**                  error occurs), the app will be notified with
+**                  NFA_HCI_REGISTER_EVT. Previous session information
+**                  including allocated gates, created pipes and pipes states
+**                  will be returned as part of tNFA_HCI_REGISTER data.
 **
 ** Returns          NFA_STATUS_OK if successfully initiated
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciRegister (char *p_app_name, tNFA_HCI_CBACK *p_cback, bool    b_send_conn_evts);
+extern tNFA_STATUS NFA_HciRegister(char* p_app_name, tNFA_HCI_CBACK* p_cback,
+                                   bool b_send_conn_evts);
 
 /*******************************************************************************
 **
@@ -315,7 +328,7 @@ NFC_API extern tNFA_STATUS NFA_HciRegister (char *p_app_name, tNFA_HCI_CBACK *p_
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciGetGateAndPipeList (tNFA_HANDLE hci_handle);
+extern tNFA_STATUS NFA_HciGetGateAndPipeList(tNFA_HANDLE hci_handle);
 
 /*******************************************************************************
 **
@@ -323,19 +336,20 @@ NFC_API extern tNFA_STATUS NFA_HciGetGateAndPipeList (tNFA_HANDLE hci_handle);
 **
 ** Description      This function is called to deregister an application
 **                  from HCI. The app will be notified by NFA_HCI_DEREGISTER_EVT
-**                  after deleting all the pipes owned by the app and deallocating
-**                  all the gates allocated to the app or if an error occurs.
-**                  The app can release the buffer provided for collecting long
-**                  APDUs after receiving NFA_HCI_DEREGISTER_EVT.
-**                  Even if deregistration fails, the app has to register again
-**                  to provide a new cback function and event buffer for receiving
-**                  long APDUs.
+**                  after deleting all the pipes owned by the app and
+**                  deallocating all the gates allocated to the app or if an
+**                  error occurs. The app can release the buffer provided for
+**                  collecting long APDUs after receiving
+**                  NFA_HCI_DEREGISTER_EVT. Even if deregistration fails, the
+**                  app has to register again to provide a new cback function
+**                  and event buffer for receiving long APDUs.
 **
-** Returns          NFA_STATUS_OK if the application is deregistered successfully
+** Returns          NFA_STATUS_OK if the application is deregistered
+**                  successfully
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciDeregister (char *p_app_name);
+extern tNFA_STATUS NFA_HciDeregister(char* p_app_name);
 
 /*******************************************************************************
 **
@@ -346,14 +360,15 @@ NFC_API extern tNFA_STATUS NFA_HciDeregister (char *p_app_name);
 **                  for a particular service to other host or to establish
 **                  communication with other host. When the gate is
 **                  allocated (or if an error occurs), the app will be notified
-**                  with NFA_HCI_ALLOCATE_GATE_EVT with the gate id. The allocated
-**                  Gate information will be stored in non volatile memory.
+**                  with NFA_HCI_ALLOCATE_GATE_EVT with the gate id. The
+**                  allocated Gate information will be stored in non volatile
+**                  memory.
 **
 ** Returns          NFA_STATUS_OK if this API started
 **                  NFA_STATUS_FAILED if no generic gate is available
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciAllocGate (tNFA_HANDLE hci_handle, uint8_t gate);
+extern tNFA_STATUS NFA_HciAllocGate(tNFA_HANDLE hci_handle, uint8_t gate);
 
 /*******************************************************************************
 **
@@ -372,7 +387,7 @@ NFC_API extern tNFA_STATUS NFA_HciAllocGate (tNFA_HANDLE hci_handle, uint8_t gat
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciDeallocGate (tNFA_HANDLE conn_handle, uint8_t gate);
+extern tNFA_STATUS NFA_HciDeallocGate(tNFA_HANDLE conn_handle, uint8_t gate);
 
 /*******************************************************************************
 **
@@ -388,7 +403,7 @@ NFC_API extern tNFA_STATUS NFA_HciDeallocGate (tNFA_HANDLE conn_handle, uint8_t 
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciGetHostList (tNFA_HANDLE hci_handle);
+extern tNFA_STATUS NFA_HciGetHostList(tNFA_HANDLE hci_handle);
 
 /*******************************************************************************
 **
@@ -410,10 +425,9 @@ NFC_API extern tNFA_STATUS NFA_HciGetHostList (tNFA_HANDLE hci_handle);
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciCreatePipe (tNFA_HANDLE  hci_handle,
-                                              uint8_t      source_gate_id,
-                                              uint8_t      dest_host,
-                                              uint8_t      dest_gate);
+extern tNFA_STATUS NFA_HciCreatePipe(tNFA_HANDLE hci_handle,
+                                     uint8_t source_gate_id, uint8_t dest_host,
+                                     uint8_t dest_gate);
 
 /*******************************************************************************
 **
@@ -428,7 +442,7 @@ NFC_API extern tNFA_STATUS NFA_HciCreatePipe (tNFA_HANDLE  hci_handle,
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciOpenPipe (tNFA_HANDLE  hci_handle, uint8_t pipe);
+extern tNFA_STATUS NFA_HciOpenPipe(tNFA_HANDLE hci_handle, uint8_t pipe);
 
 /*******************************************************************************
 **
@@ -446,7 +460,8 @@ NFC_API extern tNFA_STATUS NFA_HciOpenPipe (tNFA_HANDLE  hci_handle, uint8_t pip
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciGetRegistry (tNFA_HANDLE hci_handle, uint8_t pipe, uint8_t reg_inx);
+extern tNFA_STATUS NFA_HciGetRegistry(tNFA_HANDLE hci_handle, uint8_t pipe,
+                                      uint8_t reg_inx);
 
 /*******************************************************************************
 **
@@ -464,11 +479,9 @@ NFC_API extern tNFA_STATUS NFA_HciGetRegistry (tNFA_HANDLE hci_handle, uint8_t p
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciSetRegistry (tNFA_HANDLE   hci_handle,
-                                               uint8_t       pipe,
-                                               uint8_t       reg_inx,
-                                               uint8_t       data_size,
-                                               uint8_t       *p_data);
+extern tNFA_STATUS NFA_HciSetRegistry(tNFA_HANDLE hci_handle, uint8_t pipe,
+                                      uint8_t reg_inx, uint8_t data_size,
+                                      uint8_t* p_data);
 
 /*******************************************************************************
 **
@@ -485,11 +498,9 @@ NFC_API extern tNFA_STATUS NFA_HciSetRegistry (tNFA_HANDLE   hci_handle,
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciSendCommand (tNFA_HANDLE hci_handle,
-                                               uint8_t     pipe,
-                                               uint8_t     cmd_code,
-                                               uint16_t    cmd_size,
-                                               uint8_t     *p_data);
+extern tNFA_STATUS NFA_HciSendCommand(tNFA_HANDLE hci_handle, uint8_t pipe,
+                                      uint8_t cmd_code, uint16_t cmd_size,
+                                      uint8_t* p_data);
 
 /*******************************************************************************
 **
@@ -504,11 +515,9 @@ NFC_API extern tNFA_STATUS NFA_HciSendCommand (tNFA_HANDLE hci_handle,
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciSendResponse (tNFA_HANDLE   hci_handle,
-                                                uint8_t       pipe,
-                                                uint8_t       response,
-                                                uint8_t       data_size,
-                                                uint8_t       *p_data);
+extern tNFA_STATUS NFA_HciSendResponse(tNFA_HANDLE hci_handle, uint8_t pipe,
+                                       uint8_t response, uint8_t data_size,
+                                       uint8_t* p_data);
 
 /*******************************************************************************
 **
@@ -536,14 +545,10 @@ NFC_API extern tNFA_STATUS NFA_HciSendResponse (tNFA_HANDLE   hci_handle,
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciSendEvent (tNFA_HANDLE hci_handle,
-                                            uint8_t      pipe,
-                                            uint8_t      evt_code,
-                                            uint16_t     evt_size,
-                                            uint8_t      *p_data,
-                                            uint16_t     rsp_size,
-                                            uint8_t      *p_rsp_buf,
-                                            uint16_t     rsp_timeout);
+tNFA_STATUS NFA_HciSendEvent(tNFA_HANDLE hci_handle, uint8_t pipe,
+                             uint8_t evt_code, uint16_t evt_size,
+                             uint8_t* p_data, uint16_t rsp_size,
+                             uint8_t* p_rsp_buf, uint16_t rsp_timeout);
 
 /*******************************************************************************
 **
@@ -558,7 +563,7 @@ NFC_API extern tNFA_STATUS NFA_HciSendEvent (tNFA_HANDLE hci_handle,
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciClosePipe (tNFA_HANDLE  hci_handle, uint8_t pipe);
+extern tNFA_STATUS NFA_HciClosePipe(tNFA_HANDLE hci_handle, uint8_t pipe);
 
 /*******************************************************************************
 **
@@ -577,22 +582,23 @@ NFC_API extern tNFA_STATUS NFA_HciClosePipe (tNFA_HANDLE  hci_handle, uint8_t pi
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciDeletePipe (tNFA_HANDLE  hci_handle, uint8_t pipe);
+extern tNFA_STATUS NFA_HciDeletePipe(tNFA_HANDLE hci_handle, uint8_t pipe);
 
 /*******************************************************************************
 **
 ** Function         NFA_HciAddStaticPipe
 **
 ** Description      This function is called to add a static pipe for sending
-**                  7816 APDUs. When the static pipe is added (or if an error occurs),
-**                  the app will be notified with NFA_HCI_ADD_STATIC_PIPE_EVT with
-**                  status.
+**                  7816 APDUs. When the static pipe is added (or if an error
+**                  occurs), the app will be notified with
+**                  NFA_HCI_ADD_STATIC_PIPE_EVT with status.
 **
 ** Returns          NFA_STATUS_OK if successfully initiated
 **                  NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-NFC_API extern tNFA_STATUS NFA_HciAddStaticPipe (tNFA_HANDLE hci_handle, uint8_t host, uint8_t gate, uint8_t pipe);
+extern tNFA_STATUS NFA_HciAddStaticPipe(tNFA_HANDLE hci_handle, uint8_t host,
+                                        uint8_t gate, uint8_t pipe);
 
 /*******************************************************************************
 **
@@ -601,11 +607,6 @@ NFC_API extern tNFA_STATUS NFA_HciAddStaticPipe (tNFA_HANDLE hci_handle, uint8_t
 ** Description      Debug function.
 **
 *******************************************************************************/
-NFC_API extern void NFA_HciDebug (uint8_t action, uint8_t size, uint8_t *p_data);
-
-#ifdef __cplusplus
-}
-#endif
+extern void NFA_HciDebug(uint8_t action, uint8_t size, uint8_t* p_data);
 
 #endif /* NFA_P2P_API_H */
-
