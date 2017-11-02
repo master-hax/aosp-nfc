@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "adae9d72_421ff399",
+        "filename": "src/adaptation/android_logmsg.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-02T21:14:27Z",
+      "side": 1,
+      "message": "This is removed in the subsequent patch.",
+      "parentUuid": "ede220a8_1edf188b",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "095d5536cd48eeb7b93cc4515d41b7d42133d680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4d6a994_39e3a40d",
         "filename": "src/include/nfc_hal_int.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "47fe4fa1_06a75027",
+        "filename": "src/include/nfc_hal_int.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-02T21:14:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4d6a994_39e3a40d",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 21
+      },
+      "revId": "095d5536cd48eeb7b93cc4515d41b7d42133d680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7770aea8_eed96ce3",
         "filename": "src/include/nfc_hal_int.h",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-02T21:02:42Z",
       "side": 1,
       "message": "can be delete.",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 17
+      },
+      "revId": "095d5536cd48eeb7b93cc4515d41b7d42133d680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eff799b5_a52340b2",
+        "filename": "src/include/nfc_hal_int.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-02T21:14:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7770aea8_eed96ce3",
       "range": {
         "startLine": 181,
         "startChar": 2,
