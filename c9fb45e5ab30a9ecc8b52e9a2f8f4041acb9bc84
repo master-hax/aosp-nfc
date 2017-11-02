@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96fd225b_1c9e2d46",
+        "filename": "src/nfc/llcp/llcp_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-02T21:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4527b5ad_915b506b",
+      "range": {
+        "startLine": 126,
+        "startChar": 54,
+        "endLine": 126,
+        "endChar": 56
+      },
+      "revId": "c9fb45e5ab30a9ecc8b52e9a2f8f4041acb9bc84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df38a5e2_1f3005c6",
         "filename": "src/nfc/tags/ce_t4t.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2ed4d7e9_f0f3231e",
+        "filename": "src/nfc/tags/ce_t4t.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-02T21:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df38a5e2_1f3005c6",
+      "range": {
+        "startLine": 655,
+        "startChar": 58,
+        "endLine": 655,
+        "endChar": 60
+      },
+      "revId": "c9fb45e5ab30a9ecc8b52e9a2f8f4041acb9bc84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c45966d5_d075fdaa",
         "filename": "src/nfc/tags/ce_t4t.cc",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-02T19:53:47Z",
       "side": 1,
       "message": "%zu",
+      "range": {
+        "startLine": 687,
+        "startChar": 57,
+        "endLine": 687,
+        "endChar": 60
+      },
+      "revId": "c9fb45e5ab30a9ecc8b52e9a2f8f4041acb9bc84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6622658_573ad342",
+        "filename": "src/nfc/tags/ce_t4t.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-02T21:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c45966d5_d075fdaa",
       "range": {
         "startLine": 687,
         "startChar": 57,
