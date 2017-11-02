@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5b92c34_0baba583",
+        "filename": "src/nfa/hci/nfa_hci_ci.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1019433
+      },
+      "writtenOn": "2017-11-02T21:21:51Z",
+      "side": 1,
+      "message": "unsafe cast? \nNFA_NV_CO_FAIL \u003d\u003d NFA_STATUS_REJECTED \u003d\u003d 1\n\nHow about this change?\np_msg-\u003env_write.status \u003d (status \u003d\u003d NFA_NV_CO_OK) ? NFA_STATUS_OK : NFA_STATUS_FAILED;",
+      "range": {
+        "startLine": 72,
+        "startChar": 29,
+        "endLine": 72,
+        "endChar": 35
+      },
+      "revId": "c526446d9627ad8e55a4402f225f065cca439cde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad6c75fb_82a5b03b",
+        "filename": "src/nfc/include/ce_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1019433
+      },
+      "writtenOn": "2017-11-02T21:21:51Z",
+      "side": 1,
+      "message": "no reference. Shall we remove it?",
+      "range": {
+        "startLine": 194,
+        "startChar": 19,
+        "endLine": 194,
+        "endChar": 34
+      },
+      "revId": "c526446d9627ad8e55a4402f225f065cca439cde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b27775d9_cafc5fe5",
+        "filename": "src/nfc/include/ce_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1019433
+      },
+      "writtenOn": "2017-11-02T21:21:51Z",
+      "side": 1,
+      "message": "no reference. Shall we remove it?",
+      "range": {
+        "startLine": 205,
+        "startChar": 19,
+        "endLine": 205,
+        "endChar": 43
+      },
+      "revId": "c526446d9627ad8e55a4402f225f065cca439cde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abbc70ca_ed14b21b",
+        "filename": "src/nfc/tags/ce_t4t.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1019433
+      },
+      "writtenOn": "2017-11-02T21:21:51Z",
+      "side": 1,
+      "message": "no reference. Shall we remove it?",
+      "range": {
+        "startLine": 944,
+        "startChar": 12,
+        "endLine": 944,
+        "endChar": 27
+      },
+      "revId": "c526446d9627ad8e55a4402f225f065cca439cde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "508c0762_2345f1ed",
+        "filename": "src/nfc/tags/ce_t4t.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1019433
+      },
+      "writtenOn": "2017-11-02T21:21:51Z",
+      "side": 1,
+      "message": "no reference. Shall we remove it?",
+      "range": {
+        "startLine": 1002,
+        "startChar": 12,
+        "endLine": 1002,
+        "endChar": 36
+      },
+      "revId": "c526446d9627ad8e55a4402f225f065cca439cde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
