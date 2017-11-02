@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af9c4c7_f479c2fe",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1019433
+      },
+      "writtenOn": "2017-11-02T18:19:07Z",
+      "side": 1,
+      "message": "the event RW_T2T_TLV_DETECT_EVT requires tRW_DETECT_TLV_DATA, not tRW_T2T_DETECT. \nDon\u0027t know how this proprietary command works. Shall we remove this code?",
+      "range": {
+        "startLine": 279,
+        "startChar": 4,
+        "endLine": 279,
+        "endChar": 66
+      },
+      "revId": "1361d5216ba2017a629dc7438395ca47eede2175",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
