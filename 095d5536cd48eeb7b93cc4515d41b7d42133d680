@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede220a8_1edf188b",
+        "filename": "src/adaptation/android_logmsg.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1019433
+      },
+      "writtenOn": "2017-11-02T21:02:42Z",
+      "side": 1,
+      "message": "do we still keep this function?",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "095d5536cd48eeb7b93cc4515d41b7d42133d680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4d6a994_39e3a40d",
+        "filename": "src/include/nfc_hal_int.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1019433
+      },
+      "writtenOn": "2017-11-02T21:02:42Z",
+      "side": 1,
+      "message": "Since HAL_NfcPrmDownloadStart() was removed. tNFC_HAL_PRM_CB can be deleted. this also has no reference anymore.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 21
+      },
+      "revId": "095d5536cd48eeb7b93cc4515d41b7d42133d680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7770aea8_eed96ce3",
+        "filename": "src/include/nfc_hal_int.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1019433
+      },
+      "writtenOn": "2017-11-02T21:02:42Z",
+      "side": 1,
+      "message": "can be delete.",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 17
+      },
+      "revId": "095d5536cd48eeb7b93cc4515d41b7d42133d680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
