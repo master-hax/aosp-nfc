@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "586af4ac_61f945e3",
+        "filename": "src/nfc/include/tags_defs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-03T01:46:00Z",
+      "side": 1,
+      "message": "If they aren\u0027t used, please remove them.",
+      "range": {
+        "startLine": 691,
+        "startChar": 0,
+        "endLine": 698,
+        "endChar": 39
+      },
+      "revId": "a2c6163af1856d5ab274d56a30f35a907d05a0a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
