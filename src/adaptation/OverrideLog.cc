@@ -56,25 +56,6 @@ unsigned char initializeGlobalAppLogLevel() {
   return nfc_debug_enabled;
 }
 
-uint32_t initializeProtocolLogLevel() {
-  uint32_t num = 0;
-  char valueStr[PROPERTY_VALUE_MAX] = {0};
-
-  if (GetNumValue(NAME_PROTOCOL_TRACE_LEVEL, &num, sizeof(num)))
-    ScrProtocolTraceFlag = num;
-
-  int len = property_get("nfc.enable_protocol_log", valueStr, "");
-  if (len > 0) {
-    if (strncmp("0", valueStr, 1) == 0) {
-      ScrProtocolTraceFlag = 0;
-    } else {
-      ScrProtocolTraceFlag = ~0;
-    }
-  }
-
-  return ScrProtocolTraceFlag;
-}
-
 void initializeGlobalAppDtaMode() {
   appl_dta_mode_flag = 0x01;
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: DTA Enabled", __func__);
