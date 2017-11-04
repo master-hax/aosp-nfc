@@ -21,12 +21,8 @@
 #include "android_logmsg.h"
 #include "buildcfg.h"
 
-extern uint32_t ScrProtocolTraceFlag;
 #define MAX_NCI_PACKET_SIZE 259
-#define BTE_LOG_BUF_SIZE 1024
-#define BTE_LOG_MAX_SIZE (BTE_LOG_BUF_SIZE - 12)
 #define MAX_LOGCAT_LINE 4096
-#define PRINT(s) __android_log_write(ANDROID_LOG_DEBUG, "BrcmNci", s)
 static char log_line[MAX_LOGCAT_LINE];
 static const char* sTable = "0123456789abcdef";
 
@@ -35,8 +31,6 @@ static void ToHex(const uint8_t* data, uint16_t len, char* hexString,
 
 void ProtoDispAdapterDisplayNciPacket(uint8_t* nciPacket, uint16_t nciPacketLen,
                                       bool is_recv) {
-  // Protocol decoder is not available, so decode NCI packet into hex numbers.
-  if (!(ScrProtocolTraceFlag & SCR_PROTO_TRACE_NCI)) return;
   char line_buf[(MAX_NCI_PACKET_SIZE * 2) + 1];
   ToHex(nciPacket, nciPacketLen, line_buf, sizeof(line_buf));
   DLOG_IF(INFO, nfc_debug_enabled)
@@ -97,9 +91,6 @@ void DispHcp(uint8_t* data, uint16_t len, bool is_recv) {
   uint32_t nBytes = (len * 2) + 1;
 
   if (!nfc_debug_enabled) return;
-
-  // Only trace HCP if we're tracing HCI as well
-  if (!(ScrProtocolTraceFlag & SCR_PROTO_TRACE_HCI_SUMMARY)) return;
 
   if (nBytes > sizeof(log_line)) return;
 

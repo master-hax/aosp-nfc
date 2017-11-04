@@ -19,13 +19,11 @@
 #define __CONFIG_H
 
 int GetStrValue(const char* name, char* p_value, unsigned long len);
-int GetNumValue(const char* name, void* p_value, unsigned long len);
+bool GetVecValue(const char* name, std::vector<uint8_t>& p_value);
+bool GetNumValue(const char* name, void* p_value, unsigned long len);
 
 #define NAME_POLLING_TECH_MASK "POLLING_TECH_MASK"
-#define NAME_APPL_TRACE_LEVEL "APPL_TRACE_LEVEL"
-#define NAME_USE_RAW_NCI_TRACE "USE_RAW_NCI_TRACE"
-#define NAME_PROTOCOL_TRACE_LEVEL "PROTOCOL_TRACE_LEVEL"
-#define NAME_NFA_DM_CFG "NFA_DM_CFG"
+#define NAME_NFC_DEBUG_LOG_ENABLED "NFC_DEBUG_LOG_ENABLED"
 #define NAME_SCREEN_OFF_POWER_STATE "SCREEN_OFF_POWER_STATE"
 #define NAME_NFA_STORAGE "NFA_STORAGE"
 #define NAME_UICC_LISTEN_TECH_MASK "UICC_LISTEN_TECH_MASK"

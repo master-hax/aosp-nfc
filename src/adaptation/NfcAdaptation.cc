@@ -53,20 +53,16 @@ ThreadCondVar NfcAdaptation::mHalCloseCompletedEvent;
 sp<INfc> NfcAdaptation::mHal;
 INfcClientCallback* NfcAdaptation::mCallback;
 
-uint32_t ScrProtocolTraceFlag = SCR_PROTO_TRACE_ALL;  // 0x017F00;
 bool nfc_debug_enabled = false;
 uint8_t appl_dta_mode_flag = 0x00;
 char bcm_nfc_location[120];
 
-static uint8_t nfa_dm_cfg[sizeof(tNFA_DM_CFG)];
-static uint8_t nfa_proprietary_cfg[sizeof(tNFA_PROPRIETARY_CFG)];
-extern tNFA_DM_CFG* p_nfa_dm_cfg;
 extern tNFA_PROPRIETARY_CFG* p_nfa_proprietary_cfg;
 extern uint8_t nfa_ee_max_ee_cfg;
 extern const uint8_t nfca_version_string[];
 extern const uint8_t nfa_version_string[];
-static uint8_t deviceHostWhiteList[NFA_HCI_MAX_HOST_IN_NETWORK];
-static tNFA_HCI_CFG jni_nfa_hci_cfg;
+std::vector<uint8_t> deviceHostWhiteList(NFA_HCI_MAX_HOST_IN_NETWORK);
+static tNFA_PROPRIETARY_CFG nfa_proprietary_cfg;
 extern tNFA_HCI_CFG* p_nfa_hci_cfg;
 extern bool nfa_poll_bail_out_mode;
 
@@ -159,21 +155,10 @@ void NfcAdaptation::Initialize() {
   LOG(INFO) << StringPrintf("%s: ver=%s nfa=%s", func, nfca_version_string,
                             nfa_version_string);
 
-  if (GetNumValue(NAME_USE_RAW_NCI_TRACE, &num, sizeof(num))) {
-    if (num == 1) {
-      DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("%s: logging protocol in raw format", func);
-    }
-  }
   if (!GetStrValue(NAME_NFA_STORAGE, bcm_nfc_location,
                    sizeof(bcm_nfc_location))) {
     strlcpy(bcm_nfc_location, "/data/nfc", sizeof(bcm_nfc_location));
   }
-
-  initializeProtocolLogLevel();
-
-  if (GetStrValue(NAME_NFA_DM_CFG, (char*)nfa_dm_cfg, sizeof(nfa_dm_cfg)))
-    p_nfa_dm_cfg = (tNFA_DM_CFG*)&nfa_dm_cfg[0];
 
   if (GetNumValue(NAME_NFA_MAX_EE_SUPPORTED, &num, sizeof(num))) {
     nfa_ee_max_ee_cfg = num;
@@ -188,23 +173,30 @@ void NfcAdaptation::Initialize() {
                         nfa_poll_bail_out_mode);
   }
 
-  if (GetStrValue(NAME_NFA_PROPRIETARY_CFG, (char*)nfa_proprietary_cfg,
-                  sizeof(tNFA_PROPRIETARY_CFG))) {
-    p_nfa_proprietary_cfg = (tNFA_PROPRIETARY_CFG*)&nfa_proprietary_cfg[0];
+  std::vector<uint8_t> nfa_proprietary_cfg_vec;
+  if (GetVecValue(NAME_NFA_PROPRIETARY_CFG, nfa_proprietary_cfg_vec)) {
+    DLOG_IF(INFO, nfc_debug_enabled) << nfa_proprietary_cfg_vec.size();
+    nfa_proprietary_cfg.pro_protocol_18092_active = nfa_proprietary_cfg_vec[0];
+    nfa_proprietary_cfg.pro_protocol_b_prime = nfa_proprietary_cfg_vec[1];
+    nfa_proprietary_cfg.pro_protocol_dual = nfa_proprietary_cfg_vec[2];
+    nfa_proprietary_cfg.pro_protocol_15693 = nfa_proprietary_cfg_vec[3];
+    nfa_proprietary_cfg.pro_protocol_kovio = nfa_proprietary_cfg_vec[4];
+    nfa_proprietary_cfg.pro_protocol_mfc = nfa_proprietary_cfg_vec[5];
+    nfa_proprietary_cfg.pro_discovery_kovio_poll = nfa_proprietary_cfg_vec[6];
+    nfa_proprietary_cfg.pro_discovery_b_prime_poll = nfa_proprietary_cfg_vec[7];
+    nfa_proprietary_cfg.pro_discovery_b_prime_listen =
+        nfa_proprietary_cfg_vec[8];
+    p_nfa_proprietary_cfg = &nfa_proprietary_cfg;
   }
 
   // configure device host whitelist of HCI host ID's; see specification ETSI TS
   // 102 622 V11.1.10
   //(2012-10), section 6.1.3.1
-  num = GetStrValue(NAME_DEVICE_HOST_WHITE_LIST, (char*)deviceHostWhiteList,
-                    sizeof(deviceHostWhiteList));
-  if (num) {
-    memmove(&jni_nfa_hci_cfg, p_nfa_hci_cfg, sizeof(jni_nfa_hci_cfg));
-    jni_nfa_hci_cfg.num_whitelist_host =
-        (uint8_t)num;  // number of HCI host ID's in the whitelist
-    jni_nfa_hci_cfg.p_whitelist = deviceHostWhiteList;  // array of HCI host
-                                                        // ID's
-    p_nfa_hci_cfg = &jni_nfa_hci_cfg;
+  if (GetVecValue(NAME_DEVICE_HOST_WHITE_LIST, deviceHostWhiteList)) {
+    // number of HCI host ID's in the whitelist
+    p_nfa_hci_cfg->num_whitelist_host = deviceHostWhiteList.size();
+    // array of HCI host ID's
+    p_nfa_hci_cfg->p_whitelist = &deviceHostWhiteList[0];
   }
 
   initializeGlobalAppLogLevel();
