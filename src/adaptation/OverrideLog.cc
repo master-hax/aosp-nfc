@@ -39,11 +39,10 @@ unsigned char initializeGlobalAppLogLevel() {
   unsigned long num = 0;
   char valueStr[PROPERTY_VALUE_MAX] = {0};
 
-  num = 1;
-  if (GetNumValue(NAME_APPL_TRACE_LEVEL, &num, sizeof(num)))
+  if (GetNumValue(NAME_NFC_DEBUG_LOG_ENABLED, &num, sizeof(num)))
     nfc_debug_enabled = (num == 0) ? false : true;
 
-  int len = property_get("nfc.app_log_level", valueStr, "");
+  int len = property_get("nfc.debug_log_enabled", valueStr, "");
   if (len > 0) {
     // let Android property override .conf variable
     sscanf(valueStr, "%lu", &num);
@@ -54,25 +53,6 @@ unsigned char initializeGlobalAppLogLevel() {
       << StringPrintf("%s: level=%u", __func__, nfc_debug_enabled);
 
   return nfc_debug_enabled;
-}
-
-uint32_t initializeProtocolLogLevel() {
-  uint32_t num = 0;
-  char valueStr[PROPERTY_VALUE_MAX] = {0};
-
-  if (GetNumValue(NAME_PROTOCOL_TRACE_LEVEL, &num, sizeof(num)))
-    ScrProtocolTraceFlag = num;
-
-  int len = property_get("nfc.enable_protocol_log", valueStr, "");
-  if (len > 0) {
-    if (strncmp("0", valueStr, 1) == 0) {
-      ScrProtocolTraceFlag = 0;
-    } else {
-      ScrProtocolTraceFlag = ~0;
-    }
-  }
-
-  return ScrProtocolTraceFlag;
 }
 
 void initializeGlobalAppDtaMode() {

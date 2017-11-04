@@ -17,58 +17,33 @@
  ******************************************************************************/
 #include <stdio.h>
 #include <sys/stat.h>
-#include <list>
+#include <map>
 #include <string>
 #include <vector>
 #include "_OverrideLog.h"
 
-const char* transport_config_paths[] = {"/odm/etc/", "/vendor/etc/", "/etc/"};
+const char* transport_config_paths[] = {"/vendor/etc/", "/odm/etc/", "/etc/"};
 const int transport_config_path_size =
     (sizeof(transport_config_paths) / sizeof(transport_config_paths[0]));
 
-#define config_name "libnfc-brcm.conf"
-#define extra_config_base "libnfc-brcm-"
-#define extra_config_ext ".conf"
+#define config_name "libnfc-nci.conf"
 #define IsStringValue 0x80000000
 
 using namespace ::std;
 
-class CNfcParam : public string {
- public:
-  CNfcParam();
-  CNfcParam(const char* name, const string& value);
-  CNfcParam(const char* name, unsigned long value);
-  virtual ~CNfcParam();
-  unsigned long numValue() const { return m_numValue; }
-  const char* str_value() const { return m_str_value.c_str(); }
-  size_t str_len() const { return m_str_value.length(); }
-
- private:
-  string m_str_value;
-  unsigned long m_numValue;
-};
-
-class CNfcConfig : public vector<const CNfcParam*> {
+class CNfcConfig {
  public:
   virtual ~CNfcConfig();
   static CNfcConfig& GetInstance();
-  friend void readOptionalConfig(const char* optional);
-
-  bool getValue(const char* name, char* pValue, size_t& len) const;
-  bool getValue(const char* name, unsigned long& rValue) const;
-  bool getValue(const char* name, unsigned short& rValue) const;
-  const CNfcParam* find(const char* p_name) const;
+  bool find(const char* name, vector<uint8_t>& vecValue);
   void clean();
 
  private:
   CNfcConfig();
-  bool readConfig(const char* name, bool bResetContent);
-  void moveFromList();
-  void moveToList();
-  void add(const CNfcParam* pParam);
-  list<const CNfcParam*> m_list;
-  bool mValidFile;
+  bool readConfig(const char* name);
 
+  std::map<string, vector<uint8_t>> mParamMap;
+  bool mValidFile;
   unsigned long state;
 
   inline bool Is(unsigned long f) { return (state & f) == f; }
@@ -160,7 +135,7 @@ void findConfigFilePathFromTransportConfigPaths(const string& configName,
 ** Returns:     none
 **
 *******************************************************************************/
-bool CNfcConfig::readConfig(const char* name, bool bResetContent) {
+bool CNfcConfig::readConfig(const char* name) {
   enum {
     BEGIN_LINE = 1,
     TOKEN,
@@ -173,36 +148,24 @@ bool CNfcConfig::readConfig(const char* name, bool bResetContent) {
 
   FILE* fd = NULL;
   string token;
-  string strValue;
+  vector<uint8_t> strValue;
   unsigned long numValue = 0;
-  CNfcParam* pParam = NULL;
   int i = 0;
   int base = 0;
   char c = 0;
 
   state = BEGIN_LINE;
-  /* open config file, read it into a buffer */
   if ((fd = fopen(name, "rb")) == NULL) {
     DLOG_IF(INFO, nfc_debug_enabled)
         << StringPrintf("%s Cannot open config file %s", __func__, name);
-    if (bResetContent) {
-      DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("%s Using default value for all settings", __func__);
-      mValidFile = false;
-    }
+    mValidFile = false;
     return false;
   }
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s Opened %s config %s", __func__,
-                      (bResetContent ? "base" : "optional"), name);
+      << StringPrintf("%s Opened config %s", __func__, name);
 
   mValidFile = true;
-  if (size() > 0) {
-    if (bResetContent)
-      clean();
-    else
-      moveToList();
-  }
+  clean();
 
   for (;;) {
     if (feof(fd) || fread(&c, 1, 1, fd) != 1) {
@@ -221,14 +184,13 @@ bool CNfcConfig::readConfig(const char* name, bool bResetContent) {
         else if (isPrintable(c)) {
           i = 0;
           token.erase();
-          strValue.erase();
+          strValue.clear();
           state = TOKEN;
           token.push_back(c);
         }
         break;
       case TOKEN:
         if (c == '=') {
-          token.push_back('\0');
           state = BEGIN_QUOTE;
         } else if (isPrintable(c))
           token.push_back(c);
@@ -282,7 +244,7 @@ bool CNfcConfig::readConfig(const char* name, bool bResetContent) {
           if (i > 0) {
             int n = (i + 1) / 2;
             while (n-- > 0) {
-              unsigned char c = (numValue >> (n * 8)) & 0xFF;
+              uint8_t c = (numValue >> (n * 8)) & 0xFF;
               strValue.push_back(c);
             }
           }
@@ -298,21 +260,22 @@ bool CNfcConfig::readConfig(const char* name, bool bResetContent) {
             int n = (i + 1) / 2;
             while (n-- > 0) strValue.push_back(((numValue >> (n * 8)) & 0xFF));
           }
-          if (strValue.length() > 0)
-            pParam = new CNfcParam(token.c_str(), strValue);
-          else
-            pParam = new CNfcParam(token.c_str(), numValue);
-          add(pParam);
-          strValue.erase();
+          if (strValue.size() == 0) {
+            while (numValue != 0) {
+              strValue.push_back(numValue & 0xFF);
+              numValue >>= 8;
+            }
+          }
+          mParamMap[token] = strValue;
+          strValue.clear();
           numValue = 0;
         }
         break;
       case STR_VALUE:
         if (c == '"') {
           strValue.push_back('\0');
+          mParamMap[token] = strValue;
           state = END_LINE;
-          pParam = new CNfcParam(token.c_str(), strValue);
-          add(pParam);
         } else if (isPrintable(c))
           strValue.push_back(c);
         break;
@@ -328,8 +291,7 @@ bool CNfcConfig::readConfig(const char* name, bool bResetContent) {
 
   fclose(fd);
 
-  moveFromList();
-  return size() > 0;
+  return (mParamMap.size() > 0);
 }
 
 /*******************************************************************************
@@ -366,107 +328,12 @@ CNfcConfig::~CNfcConfig() {}
 CNfcConfig& CNfcConfig::GetInstance() {
   static CNfcConfig theInstance;
 
-  if (theInstance.size() == 0 && theInstance.mValidFile) {
+  if (theInstance.mParamMap.empty() && theInstance.mValidFile) {
     string strPath;
     findConfigFilePathFromTransportConfigPaths(config_name, strPath);
-    theInstance.readConfig(strPath.c_str(), true);
+    theInstance.readConfig(strPath.c_str());
   }
-
   return theInstance;
-}
-
-/*******************************************************************************
-**
-** Function:    CNfcConfig::getValue()
-**
-** Description: get a string value of a setting
-**
-** Returns:     true if setting exists
-**              false if setting does not exist
-**
-*******************************************************************************/
-bool CNfcConfig::getValue(const char* name, char* pValue, size_t& len) const {
-  const CNfcParam* pParam = find(name);
-  if (pParam == NULL) return false;
-
-  if (pParam->str_len() > 0) {
-    memset(pValue, 0, len);
-    if (len > pParam->str_len()) len = pParam->str_len();
-    memcpy(pValue, pParam->str_value(), len);
-    return true;
-  }
-  return false;
-}
-
-/*******************************************************************************
-**
-** Function:    CNfcConfig::getValue()
-**
-** Description: get a long numerical value of a setting
-**
-** Returns:     true if setting exists
-**              false if setting does not exist
-**
-*******************************************************************************/
-bool CNfcConfig::getValue(const char* name, unsigned long& rValue) const {
-  const CNfcParam* pParam = find(name);
-  if (pParam == NULL) return false;
-
-  if (pParam->str_len() == 0) {
-    rValue = static_cast<unsigned long>(pParam->numValue());
-    return true;
-  }
-  return false;
-}
-
-/*******************************************************************************
-**
-** Function:    CNfcConfig::getValue()
-**
-** Description: get a short numerical value of a setting
-**
-** Returns:     true if setting exists
-**              false if setting does not exist
-**
-*******************************************************************************/
-bool CNfcConfig::getValue(const char* name, unsigned short& rValue) const {
-  const CNfcParam* pParam = find(name);
-  if (pParam == NULL) return false;
-
-  if (pParam->str_len() == 0) {
-    rValue = static_cast<unsigned short>(pParam->numValue());
-    return true;
-  }
-  return false;
-}
-
-/*******************************************************************************
-**
-** Function:    CNfcConfig::find()
-**
-** Description: search if a setting exist in the setting array
-**
-** Returns:     pointer to the setting object
-**
-*******************************************************************************/
-const CNfcParam* CNfcConfig::find(const char* p_name) const {
-  if (size() == 0) return NULL;
-
-  for (const_iterator it = begin(), itEnd = end(); it != itEnd; ++it) {
-    if (**it < p_name)
-      continue;
-    else if (**it == p_name) {
-      if ((*it)->str_len() > 0)
-        DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-            "%s found %s=%s", __func__, p_name, (*it)->str_value());
-      else
-        DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-            "%s found %s=(0x%lX)", __func__, p_name, (*it)->numValue());
-      return *it;
-    } else
-      break;
-  }
-  return NULL;
 }
 
 /*******************************************************************************
@@ -478,118 +345,25 @@ const CNfcParam* CNfcConfig::find(const char* p_name) const {
 ** Returns:     none
 **
 *******************************************************************************/
-void CNfcConfig::clean() {
-  if (size() == 0) return;
-
-  for (iterator it = begin(), itEnd = end(); it != itEnd; ++it) delete *it;
-  clear();
-}
+void CNfcConfig::clean() { mParamMap.clear(); }
 
 /*******************************************************************************
 **
-** Function:    CNfcConfig::Add()
+** Function:    CNfcConfig::find()
 **
-** Description: add a setting object to the list
+** Description: find and return if the config is present
 **
-** Returns:     none
+** Returns:     True/False if the config was found
 **
 *******************************************************************************/
-void CNfcConfig::add(const CNfcParam* pParam) {
-  if (m_list.size() == 0) {
-    m_list.push_back(pParam);
-    return;
+bool CNfcConfig::find(const char* name, vector<uint8_t>& vectorValue) {
+  auto value = mParamMap.find(name);
+  if (value != mParamMap.end()) {
+    vectorValue = mParamMap[name];
+    return true;
   }
-  for (list<const CNfcParam*>::iterator it = m_list.begin(),
-                                        itEnd = m_list.end();
-       it != itEnd; ++it) {
-    if (**it < pParam->c_str()) continue;
-    m_list.insert(it, pParam);
-    return;
-  }
-  m_list.push_back(pParam);
+  return false;
 }
-
-/*******************************************************************************
-**
-** Function:    CNfcConfig::moveFromList()
-**
-** Description: move the setting object from list to array
-**
-** Returns:     none
-**
-*******************************************************************************/
-void CNfcConfig::moveFromList() {
-  if (m_list.size() == 0) return;
-
-  for (list<const CNfcParam*>::iterator it = m_list.begin(),
-                                        itEnd = m_list.end();
-       it != itEnd; ++it)
-    push_back(*it);
-  m_list.clear();
-}
-
-/*******************************************************************************
-**
-** Function:    CNfcConfig::moveToList()
-**
-** Description: move the setting object from array to list
-**
-** Returns:     none
-**
-*******************************************************************************/
-void CNfcConfig::moveToList() {
-  if (m_list.size() != 0) m_list.clear();
-
-  for (iterator it = begin(), itEnd = end(); it != itEnd; ++it)
-    m_list.push_back(*it);
-  clear();
-}
-
-/*******************************************************************************
-**
-** Function:    CNfcParam::CNfcParam()
-**
-** Description: class constructor
-**
-** Returns:     none
-**
-*******************************************************************************/
-CNfcParam::CNfcParam() : m_numValue(0) {}
-
-/*******************************************************************************
-**
-** Function:    CNfcParam::~CNfcParam()
-**
-** Description: class destructor
-**
-** Returns:     none
-**
-*******************************************************************************/
-CNfcParam::~CNfcParam() {}
-
-/*******************************************************************************
-**
-** Function:    CNfcParam::CNfcParam()
-**
-** Description: class copy constructor
-**
-** Returns:     none
-**
-*******************************************************************************/
-CNfcParam::CNfcParam(const char* name, const string& value)
-    : string(name), m_str_value(value), m_numValue(0) {}
-
-/*******************************************************************************
-**
-** Function:    CNfcParam::CNfcParam()
-**
-** Description: class copy constructor
-**
-** Returns:     none
-**
-*******************************************************************************/
-CNfcParam::CNfcParam(const char* name, unsigned long value)
-    : string(name), m_numValue(value) {}
 
 /*******************************************************************************
 **
@@ -597,15 +371,53 @@ CNfcParam::CNfcParam(const char* name, unsigned long value)
 **
 ** Description: API function for getting a string value of a setting
 **
-** Returns:     none
+** Returns:     size of the string
 **
 *******************************************************************************/
 extern int GetStrValue(const char* name, char* pValue, unsigned long l) {
   size_t len = l;
   CNfcConfig& rConfig = CNfcConfig::GetInstance();
+  vector<uint8_t> vecValue;
+  if (!rConfig.find(name, vecValue)) return 0;
 
-  bool b = rConfig.getValue(name, pValue, len);
-  return b ? len : 0;
+  unsigned long vecSize = vecValue.size();
+  if (vecSize > 0) {
+    std::string str(vecValue.begin(), vecValue.end());
+    memset(pValue, 0, len);
+    if (len > vecSize) len = vecSize;
+    memcpy(pValue, str.c_str(), len);
+    DLOG_IF(INFO, nfc_debug_enabled)
+        << StringPrintf("%s found %s=%s", __func__, name, pValue);
+    return len;
+  }
+  return 0;
+}
+
+/*******************************************************************************
+**
+** Function:    GetVecValue
+**
+** Description: API function for getting a vector value of a setting
+**
+** Returns:     boolean if the value is found
+**
+*******************************************************************************/
+extern bool GetVecValue(const char* name, vector<uint8_t>& vecValue) {
+  CNfcConfig& rConfig = CNfcConfig::GetInstance();
+  if (!rConfig.find(name, vecValue)) return false;
+
+  if (vecValue.size() > 0) {
+    string stringFormat = "";
+    for (unsigned long i = 0; i < vecValue.size(); i++) {
+      char temp[3];
+      sprintf(temp, "%02x", vecValue[i]);
+      stringFormat = stringFormat + temp;
+    }
+    DLOG_IF(INFO, nfc_debug_enabled)
+        << StringPrintf("%s found %s=%s", __func__, name, stringFormat.c_str());
+    return true;
+  }
+  return false;
 }
 
 /*******************************************************************************
@@ -614,33 +426,33 @@ extern int GetStrValue(const char* name, char* pValue, unsigned long l) {
 **
 ** Description: API function for getting a numerical value of a setting
 **
-** Returns:     none
+** Returns:     boolean if the value is found
 **
 *******************************************************************************/
-extern int GetNumValue(const char* name, void* pValue, unsigned long len) {
+extern bool GetNumValue(const char* name, void* pValue, unsigned long len) {
   if (!pValue) return false;
 
   CNfcConfig& rConfig = CNfcConfig::GetInstance();
-  const CNfcParam* pParam = rConfig.find(name);
+  vector<uint8_t> vecValue;
+  if (!rConfig.find(name, vecValue)) return false;
 
-  if (pParam == NULL) return false;
-  unsigned long v = pParam->numValue();
-  if (v == 0 && pParam->str_len() > 0 && pParam->str_len() < 4) {
-    const unsigned char* p = (const unsigned char*)pParam->str_value();
-    for (size_t i = 0; i < pParam->str_len(); ++i) {
-      v *= 256;
-      v += *p++;
-    }
+  unsigned long value = 0;
+  for (unsigned long i = vecValue.size(); i > 0; i--) {
+    value <<= 8;
+    value += vecValue[i - 1];
   }
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("%s found %s=(0x%lX)", __func__, name, value);
+
   switch (len) {
     case sizeof(unsigned long):
-      *(static_cast<unsigned long*>(pValue)) = (unsigned long)v;
+      *(static_cast<unsigned long*>(pValue)) = (unsigned long)value;
       break;
     case sizeof(unsigned short):
-      *(static_cast<unsigned short*>(pValue)) = (unsigned short)v;
+      *(static_cast<unsigned short*>(pValue)) = (unsigned short)value;
       break;
     case sizeof(unsigned char):
-      *(static_cast<unsigned char*>(pValue)) = (unsigned char)v;
+      *(static_cast<unsigned char*>(pValue)) = (unsigned char)value;
       break;
     default:
       return false;
@@ -659,25 +471,5 @@ extern int GetNumValue(const char* name, void* pValue, unsigned long len) {
 *******************************************************************************/
 extern void resetConfig() {
   CNfcConfig& rConfig = CNfcConfig::GetInstance();
-
   rConfig.clean();
-}
-
-/*******************************************************************************
-**
-** Function:    readOptionalConfig()
-**
-** Description: read Config settings from an optional conf file
-**
-** Returns:     none
-**
-*******************************************************************************/
-void readOptionalConfig(const char* extra) {
-  string strPath;
-  string configName(extra_config_base);
-  configName += extra;
-  configName += extra_config_ext;
-
-  findConfigFilePathFromTransportConfigPaths(configName, strPath);
-  CNfcConfig::GetInstance().readConfig(strPath.c_str(), false);
 }
