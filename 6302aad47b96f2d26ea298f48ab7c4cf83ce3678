@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Andre Eisenbach <eisenbach@google.com>
+Code-Review+1: Jizhou Liao <jizhou.liao@gmail.com>
+Verified+1: Ruchi Kandoi <kandoiruchi@google.com>
+Submitted-by: Ruchi Kandoi <kandoiruchi@google.com>
+Submitted-at: Wed, 08 Nov 2017 21:53:15 +0000
+Reviewed-on: https://android-review.googlesource.com/495931
+Project: platform/system/nfc
+Branch: refs/heads/master
