@@ -25,7 +25,6 @@
  ******************************************************************************/
 #include "bt_types.h"
 #include "nfc_api.h"
-#include "nfc_target.h"
 
 #include "nfc_int.h"
 
@@ -74,7 +73,8 @@ void nfc_set_conn_id(tNFC_CONN_CB* p_cb, uint8_t conn_id) {
   p_cb->conn_id = conn_id;
   handle = (uint8_t)(p_cb - nfc_cb.conn_cb + 1);
   nfc_cb.conn_id[conn_id] = handle;
-  NFC_TRACE_DEBUG2("nfc_set_conn_id conn_id:%d, handle:%d", conn_id, handle);
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("nfc_set_conn_id conn_id:%d, handle:%d", conn_id, handle);
 }
 
 /*******************************************************************************
@@ -178,9 +178,12 @@ extern void nfc_reset_all_conn_cbs(void) {
   deact.is_ntf = TRUE;
   for (xx = 0; xx < NCI_MAX_CONN_CBS; xx++, p_conn_cb++) {
     if (p_conn_cb->conn_id != NFC_ILLEGAL_CONN_ID) {
-      if (p_conn_cb->p_cback)
+      if (p_conn_cb->p_cback) {
+        tNFC_CONN nfc_conn;
+        nfc_conn.deactivate = deact;
         (*p_conn_cb->p_cback)(p_conn_cb->conn_id, NFC_DEACTIVATE_CEVT,
-                              (tNFC_CONN*)&deact);
+                              &nfc_conn);
+      }
       nfc_free_conn_cb(p_conn_cb);
     }
   }

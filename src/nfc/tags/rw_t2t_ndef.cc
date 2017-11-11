@@ -25,10 +25,8 @@
 #include <string.h>
 #include "nfc_target.h"
 
-#include "gki.h"
 #include "nci_hmsgs.h"
 #include "nfc_api.h"
-#include "nfc_int.h"
 #include "rw_api.h"
 #include "rw_int.h"
 
@@ -107,7 +105,7 @@ void rw_t2t_handle_rsp(uint8_t* p_data) {
           if (p_t2t->tag_hdr[T2T_CC0_NMN_BYTE] == T2T_CC0_NMN) {
             rw_t2t_handle_cc_read_rsp();
           } else {
-            RW_TRACE_WARNING3(
+            LOG(WARNING) << StringPrintf(
                 "NDEF Detection failed!, CC[0]: 0x%02x, CC[1]: 0x%02x, CC[3]: "
                 "0x%02x",
                 p_t2t->tag_hdr[T2T_CC0_NMN_BYTE],
@@ -237,15 +235,13 @@ static void rw_t2t_handle_cc_read_rsp(void) {
 *******************************************************************************/
 static void rw_t2t_ntf_tlv_detect_complete(tNFC_STATUS status) {
   tRW_T2T_CB* p_t2t = &rw_cb.tcb.t2t;
-  tRW_DETECT_NDEF_DATA ndef_data = {
-      0,
-  };
-  tRW_DETECT_TLV_DATA tlv_data;
-  tRW_T2T_DETECT evt_data;
   uint8_t xx;
 
   if (p_t2t->tlv_detect == TAG_NDEF_TLV) {
     /* Notify upper layer the result of NDEF detect op */
+    tRW_DETECT_NDEF_DATA ndef_data = {
+        0,
+    };
     ndef_data.status = status;
     ndef_data.protocol = NFC_PROTOCOL_T2T;
     ndef_data.flags = rw_t2t_get_ndef_flags();
@@ -269,14 +265,19 @@ static void rw_t2t_ntf_tlv_detect_complete(tNFC_STATUS status) {
     }
 
     rw_t2t_handle_op_complete();
-    (*rw_cb.p_cback)(RW_T2T_NDEF_DETECT_EVT, (tRW_DATA*)&ndef_data);
+    tRW_DATA rw_data;
+    rw_data.ndef = ndef_data;
+    (*rw_cb.p_cback)(RW_T2T_NDEF_DETECT_EVT, &rw_data);
   } else if (p_t2t->tlv_detect == TAG_PROPRIETARY_TLV) {
+    tRW_T2T_DETECT evt_data;
     evt_data.msg_len = p_t2t->prop_msg_len;
     evt_data.status = status;
     rw_t2t_handle_op_complete();
+    /* FIXME: Unsafe cast */
     (*rw_cb.p_cback)(RW_T2T_TLV_DETECT_EVT, (tRW_DATA*)&evt_data);
   } else {
     /* Notify upper layer the result of Lock/Mem TLV detect op */
+    tRW_DETECT_TLV_DATA tlv_data;
     tlv_data.protocol = NFC_PROTOCOL_T2T;
     if (p_t2t->tlv_detect == TAG_LOCK_CTRL_TLV) {
       tlv_data.num_bytes = p_t2t->num_lockbytes;
@@ -288,7 +289,9 @@ static void rw_t2t_ntf_tlv_detect_complete(tNFC_STATUS status) {
     }
     tlv_data.status = status;
     rw_t2t_handle_op_complete();
-    (*rw_cb.p_cback)(RW_T2T_TLV_DETECT_EVT, (tRW_DATA*)&tlv_data);
+    tRW_DATA rw_data;
+    rw_data.tlv = tlv_data;
+    (*rw_cb.p_cback)(RW_T2T_TLV_DETECT_EVT, &rw_data);
   }
 }
 
@@ -633,7 +636,7 @@ static void rw_t2t_handle_tlv_detect_rsp(uint8_t* p_data) {
               p_t2t->tlv_value[2 - p_t2t->bytes_count] = p_data[offset];
               if (p_t2t->bytes_count == 0) {
                 if (p_t2t->num_mem_tlvs >= RW_T2T_MAX_MEM_TLVS) {
-                  RW_TRACE_ERROR0(
+                  LOG(ERROR) << StringPrintf(
                       "rw_t2t_handle_tlv_detect_rsp - Maximum buffer allocated "
                       "for Memory tlv has reached");
                   failed = true;
@@ -1480,7 +1483,9 @@ static void rw_t2t_handle_ndef_read_rsp(uint8_t* p_data) {
     evt_data.status = failed ? NFC_STATUS_FAILED : NFC_STATUS_OK;
     evt_data.p_data = NULL;
     rw_t2t_handle_op_complete();
-    (*rw_cb.p_cback)(RW_T2T_NDEF_READ_EVT, (tRW_DATA*)&evt_data);
+    tRW_DATA rw_data;
+    rw_data.data = evt_data;
+    (*rw_cb.p_cback)(RW_T2T_NDEF_READ_EVT, &rw_data);
   }
 }
 
@@ -1646,7 +1651,9 @@ static void rw_t2t_handle_ndef_write_rsp(uint8_t* p_data) {
       p_t2t->ndef_msg_len = p_t2t->new_ndef_msg_len;
     }
     rw_t2t_handle_op_complete();
-    (*rw_cb.p_cback)(RW_T2T_NDEF_WRITE_EVT, (tRW_DATA*)&evt_data);
+    tRW_DATA rw_data;
+    rw_data.data = evt_data;
+    (*rw_cb.p_cback)(RW_T2T_NDEF_WRITE_EVT, &rw_data);
   }
 }
 
@@ -1691,7 +1698,6 @@ static void rw_t2t_handle_config_tag_readonly(uint8_t* p_data) {
   tNFC_STATUS status = NFC_STATUS_FAILED;
   bool b_notify = false;
   uint8_t write_block[T2T_BLOCK_SIZE];
-  tRW_DATA evt;
   bool b_pending = false;
   uint8_t read_lock = 0;
   uint8_t num_locks = 0;
@@ -1775,9 +1781,10 @@ static void rw_t2t_handle_config_tag_readonly(uint8_t* p_data) {
 
   if (status != NFC_STATUS_OK || b_notify) {
     /* Notify upper layer the result of Configuring Tag as Read only */
+    tRW_DATA evt;
     evt.status = status;
     rw_t2t_handle_op_complete();
-    (*rw_cb.p_cback)(RW_T2T_SET_TAG_RO_EVT, (tRW_DATA*)&evt);
+    (*rw_cb.p_cback)(RW_T2T_SET_TAG_RO_EVT, &evt);
   }
 }
 
@@ -1791,7 +1798,6 @@ static void rw_t2t_handle_config_tag_readonly(uint8_t* p_data) {
 **
 *******************************************************************************/
 static void rw_t2t_handle_format_tag_rsp(uint8_t* p_data) {
-  tRW_DATA evt;
   uint8_t* p;
   tRW_T2T_CB* p_t2t = &rw_cb.tcb.t2t;
   tNFC_STATUS status = NFC_STATUS_FAILED;
@@ -1893,9 +1899,10 @@ static void rw_t2t_handle_format_tag_rsp(uint8_t* p_data) {
 
   if (status != NFC_STATUS_OK || b_notify) {
     /* Notify upper layer the result of Format op */
+    tRW_DATA evt;
     evt.status = status;
     rw_t2t_handle_op_complete();
-    (*rw_cb.p_cback)(RW_T2T_FORMAT_CPLT_EVT, (tRW_DATA*)&evt);
+    (*rw_cb.p_cback)(RW_T2T_FORMAT_CPLT_EVT, &evt);
   }
 }
 
@@ -2545,7 +2552,7 @@ tNFC_STATUS rw_t2t_format_tag(void) {
 
   p_ret = t2t_tag_init_data(p_t2t->tag_hdr[0], false, 0);
   if (p_ret == NULL) {
-    RW_TRACE_WARNING1(
+    LOG(WARNING) << StringPrintf(
         "rw_t2t_format_tag - Unknown Manufacturer ID: %u, Cannot Format the "
         "tag!",
         p_t2t->tag_hdr[0]);
@@ -2555,7 +2562,7 @@ tNFC_STATUS rw_t2t_format_tag(void) {
   if (p_t2t->tag_hdr[T2T_CC2_TMS_BYTE] != 0) {
     /* If OTP tag has valid NDEF Message, cannot format the tag */
     if ((p_t2t->ndef_msg_len > 0) && (p_ret->b_otp)) {
-      RW_TRACE_WARNING0(
+      LOG(WARNING) << StringPrintf(
           "rw_t2t_format_tag - Cannot Format a OTP tag with NDEF Message!");
       return (NFC_STATUS_FAILED);
     }
@@ -2566,7 +2573,8 @@ tNFC_STATUS rw_t2t_format_tag(void) {
          (p_t2t->tag_hdr[T2T_CC1_VNO_BYTE] != T2T_CC1_LEGACY_VNO) &&
          (p_t2t->tag_hdr[T2T_CC1_VNO_BYTE] != T2T_CC1_VNO) &&
          (p_t2t->tag_hdr[T2T_CC1_VNO_BYTE] != T2T_CC1_NEW_VNO))) {
-      RW_TRACE_WARNING0("rw_t2t_format_tag - Tag not blank to Format!");
+      LOG(WARNING) << StringPrintf(
+          "rw_t2t_format_tag - Tag not blank to Format!");
       return (NFC_STATUS_FAILED);
     } else {
       tms = p_t2t->tag_hdr[T2T_CC2_TMS_BYTE];
@@ -2617,7 +2625,7 @@ tNFC_STATUS rw_t2t_soft_lock_tag(void) {
 
   /* If CC block is read and cc3 is soft locked, reject the command */
   if ((p_t2t->tag_hdr[T2T_CC3_RWA_BYTE] & T2T_CC3_RWA_RO) == T2T_CC3_RWA_RO) {
-    RW_TRACE_ERROR1(
+    LOG(ERROR) << StringPrintf(
         "rw_t2t_soft_lock_tag: Error: Type 2 tag is in Read only state, CC3: "
         "%u",
         p_t2t->tag_hdr[T2T_CC3_RWA_BYTE]);
@@ -2632,7 +2640,7 @@ tNFC_STATUS rw_t2t_soft_lock_tag(void) {
 
     if ((p_t2t->tag_hdr[T2T_CC2_TMS_BYTE] != T2T_CC2_TMS_STATIC) &&
         (p_t2t->num_lockbytes == 0)) {
-      RW_TRACE_ERROR0(
+      LOG(ERROR) << StringPrintf(
           "rw_t2t_soft_lock_tag: Error: Lock TLV not detected! Cannot hard "
           "lock the tag");
       return (NFC_STATUS_FAILED);
@@ -2680,8 +2688,9 @@ tNFC_STATUS RW_T2tFormatNDef(void) {
   tNFC_STATUS status = NFC_STATUS_FAILED;
 
   if (p_t2t->state != RW_T2T_STATE_IDLE) {
-    RW_TRACE_WARNING1("RW_T2tFormatNDef - Tag not initialized/ Busy! State: %u",
-                      p_t2t->state);
+    LOG(WARNING) << StringPrintf(
+        "RW_T2tFormatNDef - Tag not initialized/ Busy! State: %u",
+        p_t2t->state);
     return (NFC_STATUS_FAILED);
   }
 
@@ -2724,21 +2733,22 @@ tNFC_STATUS RW_T2tLocateTlv(uint8_t tlv_type) {
   uint16_t block;
 
   if (p_t2t->state != RW_T2T_STATE_IDLE) {
-    RW_TRACE_ERROR1("Error: Type 2 tag not activated or Busy - State: %u",
-                    p_t2t->state);
+    LOG(ERROR) << StringPrintf(
+        "Error: Type 2 tag not activated or Busy - State: %u", p_t2t->state);
     return (NFC_STATUS_BUSY);
   }
 
   if ((tlv_type != TAG_LOCK_CTRL_TLV) && (tlv_type != TAG_MEM_CTRL_TLV) &&
       (tlv_type != TAG_NDEF_TLV) && (tlv_type != TAG_PROPRIETARY_TLV)) {
-    RW_TRACE_API1("RW_T2tLocateTlv - Cannot search TLV: 0x%02x", tlv_type);
+    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+        "RW_T2tLocateTlv - Cannot search TLV: 0x%02x", tlv_type);
     return (NFC_STATUS_FAILED);
   }
 
   if ((tlv_type == TAG_LOCK_CTRL_TLV) && (p_t2t->b_read_hdr) &&
       (p_t2t->tag_hdr[T2T_CC2_TMS_BYTE] == T2T_CC2_TMS_STATIC)) {
     p_t2t->b_read_hdr = false;
-    RW_TRACE_API1(
+    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
         "RW_T2tLocateTlv - No Lock tlv in static structure tag, CC[0]: 0x%02x",
         p_t2t->tag_hdr[T2T_CC2_TMS_BYTE]);
     return (NFC_STATUS_FAILED);
@@ -2747,7 +2757,7 @@ tNFC_STATUS RW_T2tLocateTlv(uint8_t tlv_type) {
   if ((tlv_type == TAG_NDEF_TLV) && (p_t2t->b_read_hdr) &&
       (p_t2t->tag_hdr[T2T_CC0_NMN_BYTE] != T2T_CC0_NMN)) {
     p_t2t->b_read_hdr = false;
-    RW_TRACE_WARNING3(
+    LOG(WARNING) << StringPrintf(
         "RW_T2tLocateTlv - Invalid NDEF Magic Number!, CC[0]: 0x%02x, CC[1]: "
         "0x%02x, CC[3]: 0x%02x",
         p_t2t->tag_hdr[T2T_CC0_NMN_BYTE], p_t2t->tag_hdr[T2T_CC1_VNO_BYTE],
@@ -2848,26 +2858,27 @@ tNFC_STATUS RW_T2tReadNDef(uint8_t* p_buffer, uint16_t buf_len) {
   uint16_t block;
 
   if (p_t2t->state != RW_T2T_STATE_IDLE) {
-    RW_TRACE_ERROR1("Error: Type 2 tag not activated or Busy - State: %u",
-                    p_t2t->state);
+    LOG(ERROR) << StringPrintf(
+        "Error: Type 2 tag not activated or Busy - State: %u", p_t2t->state);
     return (NFC_STATUS_FAILED);
   }
 
   if (p_t2t->ndef_status == T2T_NDEF_NOT_DETECTED) {
-    RW_TRACE_ERROR0("RW_T2tReadNDef - Error: NDEF detection not performed yet");
+    LOG(ERROR) << StringPrintf(
+        "RW_T2tReadNDef - Error: NDEF detection not performed yet");
     return (NFC_STATUS_FAILED);
   }
 
   if (buf_len < p_t2t->ndef_msg_len) {
-    RW_TRACE_WARNING2(
+    LOG(WARNING) << StringPrintf(
         "RW_T2tReadNDef - buffer size: %u  less than NDEF msg sise: %u",
         buf_len, p_t2t->ndef_msg_len);
     return (NFC_STATUS_FAILED);
   }
 
   if (!p_t2t->ndef_msg_len) {
-    RW_TRACE_WARNING1("RW_T2tReadNDef - NDEF Message length is zero ",
-                      p_t2t->ndef_msg_len);
+    LOG(WARNING) << StringPrintf(
+        "RW_T2tReadNDef - NDEF Message length is zero");
     return (NFC_STATUS_NOT_INITIALIZED);
   }
 
@@ -2925,25 +2936,27 @@ tNFC_STATUS RW_T2tWriteNDef(uint16_t msg_len, uint8_t* p_msg) {
   tNFC_STATUS status = NFC_STATUS_OK;
 
   if (p_t2t->state != RW_T2T_STATE_IDLE) {
-    RW_TRACE_ERROR1("Error: Type 2 tag not activated or Busy - State: %u",
-                    p_t2t->state);
+    LOG(ERROR) << StringPrintf(
+        "Error: Type 2 tag not activated or Busy - State: %u", p_t2t->state);
     return (NFC_STATUS_FAILED);
   }
 
   if (p_t2t->ndef_status == T2T_NDEF_NOT_DETECTED) {
-    RW_TRACE_ERROR0("RW_T2tWriteNDef - Error: NDEF detection not performed!");
+    LOG(ERROR) << StringPrintf(
+        "RW_T2tWriteNDef - Error: NDEF detection not performed!");
     return (NFC_STATUS_FAILED);
   }
 
   if (p_t2t->tag_hdr[T2T_CC3_RWA_BYTE] != T2T_CC3_RWA_RW) {
-    RW_TRACE_ERROR1("RW_T2tWriteNDef - Write access not granted - CC3: %u",
-                    p_t2t->tag_hdr[T2T_CC3_RWA_BYTE]);
+    LOG(ERROR) << StringPrintf(
+        "RW_T2tWriteNDef - Write access not granted - CC3: %u",
+        p_t2t->tag_hdr[T2T_CC3_RWA_BYTE]);
     return (NFC_STATUS_REFUSED);
   }
 
   /* Check if there is enough memory on the tag */
   if (msg_len > p_t2t->max_ndef_msg_len) {
-    RW_TRACE_ERROR1(
+    LOG(ERROR) << StringPrintf(
         "RW_T2tWriteNDef - Cannot write NDEF of size greater than %u bytes",
         p_t2t->max_ndef_msg_len);
     return (NFC_STATUS_FAILED);
@@ -2954,7 +2967,7 @@ tNFC_STATUS RW_T2tWriteNDef(uint16_t msg_len, uint8_t* p_msg) {
   if ((p_t2t->ndef_msg_len > 0) &&
       ((p_ret = t2t_tag_init_data(p_t2t->tag_hdr[0], false, 0)) != NULL) &&
       (p_ret->b_otp)) {
-    RW_TRACE_WARNING0(
+    LOG(WARNING) << StringPrintf(
         "RW_T2tWriteNDef - Cannot Overwrite NDEF Message on a OTP tag!");
     return (NFC_STATUS_FAILED);
   }
@@ -3001,7 +3014,7 @@ tNFC_STATUS RW_T2tSetTagReadOnly(bool b_hard_lock) {
   tRW_T2T_CB* p_t2t = &rw_cb.tcb.t2t;
 
   if (p_t2t->state != RW_T2T_STATE_IDLE) {
-    RW_TRACE_ERROR1(
+    LOG(ERROR) << StringPrintf(
         "RW_T2tSetTagReadOnly: Error: Type 2 tag not activated or Busy - "
         "State: %u",
         p_t2t->state);

@@ -31,14 +31,6 @@
 #include "tags_int.h"
 
 /* Proprietary definitions for HR0 and HR1 */
-/* HI NIB Tag                                               */
-#define RW_T1T_HR0_HI_NIB 0xF0
-/* Jewel 64 Tag                                             */
-#define RW_T1T_IS_JEWEL64 0x20
-/* Jewel Tag                                                */
-#define RW_T1T_IS_JEWEL 0x00
-/* TOPAZ Tag                                                */
-#define RW_T1T_IS_TOPAZ 0x10
 /* TOPAZ96 Tag                                              */
 #define RW_T1T_IS_TOPAZ96 0x11
 /* TOPAZ512 Tag                                             */
@@ -256,11 +248,6 @@ typedef struct {
 #define T2T_NDEF_NOT_DETECTED 0x00
 #define T2T_NDEF_DETECTED 0x01
 #define T2T_NDEF_READ 0x02
-
-/* Max offset of an NDEF message in a T2 tag */
-#define T2T_MAX_NDEF_OFFSET 128
-#define T2T_MAX_RESERVED_BYTES_IN_TAG 0x64
-#define T2T_MAX_LOCK_BYTES_IN_TAG 0x64
 
 /* Maximum supported Memory control TLVS in the tag         */
 #define RW_T2T_MAX_MEM_TLVS 0x05
@@ -632,6 +619,8 @@ typedef uint8_t tRW_I93_RW_SUBSTATE;
 #define RW_I93_FLAG_RESET_AFI 0x08
 /* use 2 bytes for number of blocks        */
 #define RW_I93_FLAG_16BIT_NUM_BLOCK 0x10
+/* use extended commands */
+#define RW_I93_FLAG_EXT_COMMANDS 0x20
 
 /* searching for type                      */
 #define RW_I93_TLV_DETECT_STATE_TYPE 0x01
@@ -660,6 +649,8 @@ enum {
   RW_I93_STM_M24LR04E_R,             /* STM M24LR04E-R                   */
   RW_I93_STM_M24LR16E_R,             /* STM M24LR16E-R                   */
   RW_I93_STM_M24LR64E_R,             /* STM M24LR64E-R                   */
+  RW_I93_STM_ST25DV04K,              /* STM ST25DV04K                    */
+  RW_I93_STM_ST25DVHIK,              /* STM ST25DV 16K OR 64K            */
   RW_I93_UNKNOWN_PRODUCT             /* Unknwon product version          */
 };
 
@@ -713,7 +704,6 @@ typedef struct {
 #if (RW_STATS_INCLUDED == TRUE)
   tRW_STATS stats;
 #endif /* RW_STATS_INCLUDED */
-  uint8_t trace_level;
 } tRW_CB;
 
 /*****************************************************************************
