@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3ba6637_fbd9fc64",
+        "filename": "src/nfc/nci/nci_hrcv.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-14T23:52:58Z",
+      "side": 1,
+      "message": "error reporting is already checked into metrics.\n\nnfc_ncif_error_status() has the logic.",
+      "range": {
+        "startLine": 126,
+        "startChar": 5,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "ed6aa8984b0b9a550414b520af8f9d244db8decc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
