@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6affe22_84b103a8",
+        "filename": "src/adaptation/config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-15T00:44:07Z",
+      "side": 1,
+      "message": "Not sure we need to keep the old BRCM headers either. If the function name is good enough, no need. Description should only explain side-effects, not state the obvious.",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 80
+      },
+      "revId": "4066ec621fee96ad819e789fe65a30d26b30bfe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e350f547_df9155cf",
+        "filename": "src/adaptation/config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-15T00:44:07Z",
+      "side": 1,
+      "message": "if (vecValue.empty()) return false;",
+      "range": {
+        "startLine": 409,
+        "startChar": 3,
+        "endLine": 409,
+        "endChar": 28
+      },
+      "revId": "4066ec621fee96ad819e789fe65a30d26b30bfe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f575738f_f4a10e13",
+        "filename": "src/adaptation/config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-15T00:44:07Z",
+      "side": 1,
+      "message": "C++14 gave us \"for (uint8_t v : vecValue)\"",
+      "range": {
+        "startLine": 411,
+        "startChar": 9,
+        "endLine": 411,
+        "endChar": 54
+      },
+      "revId": "4066ec621fee96ad819e789fe65a30d26b30bfe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7e88fab_7a110cdf",
+        "filename": "src/adaptation/config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-15T00:44:07Z",
+      "side": 1,
+      "message": "GetLongValue? Pass in pValue as reference instead and remove pointer shenanigans below....",
+      "range": {
+        "startLine": 432,
+        "startChar": 12,
+        "endLine": 432,
+        "endChar": 23
+      },
+      "revId": "4066ec621fee96ad819e789fe65a30d26b30bfe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
