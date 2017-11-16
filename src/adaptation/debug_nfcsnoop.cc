@@ -22,8 +22,8 @@
 
 #include "bt_types.h"
 #include "include/debug_nfcsnoop.h"
-#include "include/ringbuffer.h"
 #include "nfc_int.h"
+#include "utils/include/ringbuffer.h"
 
 #define USEC_PER_SEC 1000000ULL
 
