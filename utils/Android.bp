@@ -1,0 +1,56 @@
+cc_defaults {
+    name: "nfc_utils_defaults",
+    include_dirs: [
+	"system/nfc",
+	"system/nfc/utils/include",
+    ]
+}
+
+cc_library_static {
+    name: "libnfcutils",
+    defaults: ["nfc_utils_defaults"],
+    srcs: [
+        "ringbuffer.cc",
+    ],
+    shared_libs: [
+        "liblog",
+    ],
+    host_supported: true,
+    target: {
+        darwin: {
+            enabled: false,
+        },
+        linux_glibc: {
+            cflags: [
+                "-D_GNU_SOURCE",
+                "-DOS_GENERIC",
+            ],
+        },
+    },
+}
+
+cc_test {
+    name: "nfc_test_utils",
+    defaults: ["nfc_utils_defaults"],
+    test_suites: ["device-tests"],
+    host_supported: true,
+    srcs: [
+        "test/ringbuffer_test.cc",
+    ],
+    shared_libs: [
+        "liblog",
+        "libcutils",
+    ],
+    static_libs: [
+	"libnfcutils",
+        "libgmock",
+    ],
+    target: {
+        linux_glibc: {
+            cflags: ["-DOS_GENERIC"],
+        },
+        darwin: {
+            enabled: false,
+        }
+    },
+}
