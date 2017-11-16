@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4bb393b_827ae144",
+        "filename": "utils/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-11-16T18:43:21Z",
+      "side": 1,
+      "message": "Nit: This doesn\u0027t need to be here if we have\n  export_include_dirs \u003d [\"include\"]\nin libnfcutils\n\nWith export_include_dirs label, libraries that depends on this library can obtain the include path automatically when dependency is declared. Thus it can just do\n  #include \u003cringbuffer.h\u003e\ninstead of\n  #include \"utils/include/ringbuffer.h\"",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "3812d25a2cd2258123e8242db5fdea28e1214561",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
