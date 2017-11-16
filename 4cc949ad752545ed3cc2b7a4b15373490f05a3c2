@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c18739a_4bf62092",
+        "filename": "utils/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-11-16T05:39:41Z",
+      "side": 1,
+      "message": "This section can be removed.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "4cc949ad752545ed3cc2b7a4b15373490f05a3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "561de8ae_ab8181d3",
+        "filename": "utils/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-11-16T05:39:41Z",
+      "side": 1,
+      "message": "This section can be removed.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 6
+      },
+      "revId": "4cc949ad752545ed3cc2b7a4b15373490f05a3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41454aa2_236a5cf0",
+        "filename": "utils/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-11-16T05:39:41Z",
+      "side": 1,
+      "message": "This section can be removed.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 6
+      },
+      "revId": "4cc949ad752545ed3cc2b7a4b15373490f05a3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "349904b6_24e610b0",
+        "filename": "utils/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-11-16T05:39:41Z",
+      "side": 1,
+      "message": "This section can be removed.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 6
+      },
+      "revId": "4cc949ad752545ed3cc2b7a4b15373490f05a3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
