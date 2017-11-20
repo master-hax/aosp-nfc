@@ -58,6 +58,7 @@ enum {
   NFA_EE_ACTION_EVT, /* An action happened in NFCEE                           */
   NFA_EE_DISCOVER_REQ_EVT, /* NFCEE Discover Request Notification */
   NFA_EE_NO_MEM_ERR_EVT,   /* Error - out of GKI buffers */
+  NFA_EE_AID_MAX_SIZE_EVT, /* The max size of AID-based routing table */
   NFA_EE_NO_CB_ERR_EVT /* Error - Can not find control block or wrong state */
 };
 typedef uint8_t tNFA_EE_EVT;
@@ -172,6 +173,11 @@ typedef struct {
   uint8_t* p_buf;     /* Data buffer       */
 } tNFA_EE_DATA;
 
+/* Data for NFA_EE_LMRT_STATUS_EVT */
+typedef struct {
+  uint16_t available_size;
+} tNFA_EE_AID_MAX_SIZE;
+
 /* Union of all EE callback structures */
 typedef union {
   tNFA_STATUS
@@ -191,6 +197,7 @@ typedef union {
   tNFA_EE_MODE_SET mode_set;
   tNFA_EE_INFO new_ee;
   tNFA_EE_DISCOVER_REQ discover_req;
+  tNFA_EE_AID_MAX_SIZE ee_aid_size;
 } tNFA_EE_CBACK_DATA;
 
 /* EE callback */
@@ -456,5 +463,19 @@ extern tNFA_STATUS NFA_EeSendData(tNFA_HANDLE ee_handle, uint16_t data_len,
 **
 *******************************************************************************/
 extern tNFA_STATUS NFA_EeDisconnect(tNFA_HANDLE ee_handle);
+
+/*******************************************************************************
+**
+** Function         NFA_EeGetAidRoutingSize
+**
+** Description      This function is called to get available size of the
+**                  AID-based Routing Table.
+**                  The max size is reported in NFA_EE_AID_MAX_SIZE_EVT
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**
+*******************************************************************************/
+extern tNFA_STATUS NFA_EeGetAidRoutingSize (void);
 
 #endif /* NFA_EE_API_H */

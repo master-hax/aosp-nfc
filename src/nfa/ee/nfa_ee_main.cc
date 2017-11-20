@@ -57,6 +57,7 @@ const tNFA_EE_SM_ACT nfa_ee_actions[] = {
     nfa_ee_api_connect,       /* NFA_EE_API_CONNECT_EVT       */
     nfa_ee_api_send_data,     /* NFA_EE_API_SEND_DATA_EVT     */
     nfa_ee_api_disconnect,    /* NFA_EE_API_DISCONNECT_EVT    */
+    nfa_ee_api_aid_max_size,  /* NFA_EE_API_AID_MAX_SIZE_EVT  */
     nfa_ee_nci_disc_rsp,      /* NFA_EE_NCI_DISC_RSP_EVT      */
     nfa_ee_nci_disc_ntf,      /* NFA_EE_NCI_DISC_NTF_EVT      */
     nfa_ee_nci_mode_set_rsp,  /* NFA_EE_NCI_MODE_SET_RSP_EVT  */

@@ -1048,6 +1048,61 @@ void nfa_ee_api_disconnect(tNFA_EE_MSG* p_data) {
 
 /*******************************************************************************
 **
+** Function         nfa_ee_used_aid_size
+**
+** Description      the total used aid routing table size
+**
+** Returns          uint16_t
+**
+*******************************************************************************/
+static uint16_t nfa_ee_used_aid_size(void)
+{
+    int xx;
+    uint16_t used_size = 0;
+    tNFA_EE_ECB          *p_cb;
+
+    p_cb = &nfa_ee_cb.ecb[NFA_EE_CB_4_DH];
+    used_size += p_cb->size_aid;
+    p_cb = &nfa_ee_cb.ecb[nfa_ee_cb.cur_ee - 1];
+    for (xx = 0; xx < nfa_ee_cb.cur_ee; xx++, p_cb--)
+    {
+        if (p_cb->ee_status == NFC_NFCEE_STATUS_ACTIVE)
+        {
+            used_size += p_cb->size_aid;
+        }
+    }
+    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("nfa_ee_used_aid_size size:%d", used_size);
+    return used_size;
+}
+
+/*******************************************************************************
+**
+** Function         nfa_ee_api_aid_max_size
+**
+** Description      Reports the available size of AID-based routing table
+**
+** Returns          void
+**
+*******************************************************************************/
+void nfa_ee_api_aid_max_size(tNFA_EE_MSG* p_data) {
+    tNFA_EE_CBACK_DATA evt_data = {0};
+    uint16_t used_size = 0;
+
+    used_size = nfa_ee_used_aid_size();
+    if (used_size >= NFA_EE_MAX_AID_CFG_LEN) {
+        evt_data.ee_aid_size.available_size = 0;
+    } else {
+        evt_data.ee_aid_size.available_size = NFA_EE_MAX_AID_CFG_LEN - used_size;
+    }
+
+    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("nfa_ee_api_aid_max_size available_size=%d",
+                      evt_data.ee_aid_size.available_size);
+
+    nfa_ee_report_event(NULL, NFA_EE_AID_MAX_SIZE_EVT, &evt_data);
+}
+
+/*******************************************************************************
+**
 ** Function         nfa_ee_report_disc_done
 **
 ** Description      Process the callback for NFCEE discovery response

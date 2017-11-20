@@ -58,6 +58,7 @@ enum {
   NFA_EE_API_CONNECT_EVT,
   NFA_EE_API_SEND_DATA_EVT,
   NFA_EE_API_DISCONNECT_EVT,
+  NFA_EE_API_AID_MAX_SIZE_EVT,
 
   NFA_EE_NCI_DISC_RSP_EVT,
   NFA_EE_NCI_DISC_NTF_EVT,
@@ -250,6 +251,9 @@ typedef struct {
 /* data type for NFA_EE_API_LMRT_SIZE_EVT */
 typedef NFC_HDR tNFA_EE_API_LMRT_SIZE;
 
+/* data type for NFA_EE_API_AID_MAX_SIZE_EVT */
+typedef NFC_HDR tNFA_EE_API_AID_MAX_SIZE;
+
 /* data type for NFA_EE_API_CONNECT_EVT */
 typedef struct {
   NFC_HDR hdr;
@@ -343,6 +347,7 @@ typedef union {
   tNFA_EE_API_CONNECT connect;
   tNFA_EE_API_SEND_DATA send_data;
   tNFA_EE_API_DISCONNECT disconnect;
+  tNFA_EE_API_AID_MAX_SIZE aid_size;
   tNFA_EE_NCI_DISC_RSP disc_rsp;
   tNFA_EE_NCI_DISC_NTF disc_ntf;
   tNFA_EE_NCI_MODE_SET mode_set_rsp;
@@ -464,6 +469,7 @@ void nfa_ee_api_update_now(tNFA_EE_MSG* p_data);
 void nfa_ee_api_connect(tNFA_EE_MSG* p_data);
 void nfa_ee_api_send_data(tNFA_EE_MSG* p_data);
 void nfa_ee_api_disconnect(tNFA_EE_MSG* p_data);
+void nfa_ee_api_aid_max_size (tNFA_EE_MSG *p_data);
 void nfa_ee_report_disc_done(bool notify_sys);
 void nfa_ee_nci_disc_rsp(tNFA_EE_MSG* p_data);
 void nfa_ee_nci_disc_ntf(tNFA_EE_MSG* p_data);

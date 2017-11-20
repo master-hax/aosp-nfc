@@ -513,6 +513,32 @@ tNFA_STATUS NFA_EeGetLmrtRemainingSize(void) {
   return status;
 }
 
+/*******************************************************************************
+**
+** Function         NFA_EeGetAidRoutingSize
+**
+** Description      This function is called to get the available size of the
+**                  AID-based Routing Table.
+**                  The status is reported in NFA_EE_AID_MAX_SIZE_EVT
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**
+*******************************************************************************/
+tNFA_STATUS NFA_EeGetAidRoutingSize(void) {
+  tNFA_EE_API_AID_MAX_SIZE* p_msg;
+  tNFA_STATUS status = NFA_STATUS_FAILED;
+
+  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  if ((p_msg = (tNFA_EE_API_AID_MAX_SIZE*)GKI_getbuf(
+           sizeof(tNFA_EE_API_AID_MAX_SIZE))) != NULL) {
+    p_msg->event = NFA_EE_API_AID_MAX_SIZE_EVT;
+    nfa_sys_sendmsg(p_msg);
+    status = NFA_STATUS_OK;
+  }
+  return status;
+}
+
 /******************************************************************************
 **
 ** Function         NFA_EeUpdateNow
