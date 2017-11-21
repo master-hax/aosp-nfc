@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "378ba394_133102ac",
+        "filename": "utils/test/config_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-11-21T23:47:33Z",
+      "side": 1,
+      "message": "void WriteConfigFile() {\n\nA problem in this function shouldn\u0027t break the tests that don\u0027t depend on a file.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "ad32681cf3fc09a86f2528a3ec449a1b7d0b868c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e02ea0fb_22b9cc6c",
+        "filename": "utils/test/config_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-11-21T23:47:33Z",
+      "side": 1,
+      "message": "WriteConfigFile();",
+      "range": {
+        "startLine": 96,
+        "startChar": 1,
+        "endLine": 96,
+        "endChar": 2
+      },
+      "revId": "ad32681cf3fc09a86f2528a3ec449a1b7d0b868c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
