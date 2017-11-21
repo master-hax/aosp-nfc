@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9f27df1_d81af2d4",
+        "filename": "utils/config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-21T23:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc3cba4c_663af114",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 17
+      },
+      "revId": "b90c96b8a622adae9135fed1bb9ddcac795b4864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "609b2990_943541be",
         "filename": "utils/config.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-21T00:51:01Z",
       "side": 1,
       "message": "nit: Remove.  parse \u003d\u003e string input",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "b90c96b8a622adae9135fed1bb9ddcac795b4864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e275577e_78dfb209",
+        "filename": "utils/config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-21T23:44:13Z",
+      "side": 1,
+      "message": "Denied.",
+      "parentUuid": "609b2990_943541be",
       "range": {
         "startLine": 30,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "575b1271_4bd00999",
+        "filename": "utils/include/nfc_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-21T23:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71fd29e4_d8a7f323",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 35
+      },
+      "revId": "b90c96b8a622adae9135fed1bb9ddcac795b4864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d4300c9_37ec4d3b",
         "filename": "utils/test/config_test.cc",
         "patchSetId": 3
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "aa47a707_4b3412be",
+        "filename": "utils/test/config_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-21T23:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d4300c9_37ec4d3b",
+      "revId": "b90c96b8a622adae9135fed1bb9ddcac795b4864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8f15a44_7f6e497e",
         "filename": "utils/test/config_test.cc",
         "patchSetId": 3
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-21T00:51:01Z",
       "side": 1,
       "message": "Do you want to test other widths?\n\n{0:2:123:ABC}",
+      "range": {
+        "startLine": 12,
+        "startChar": 16,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "b90c96b8a622adae9135fed1bb9ddcac795b4864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8a2c4f4_9f48ff74",
+        "filename": "utils/test/config_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-21T23:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8f15a44_7f6e497e",
       "range": {
         "startLine": 12,
         "startChar": 16,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "b776b031_abb54bd8",
+        "filename": "utils/test/config_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-21T23:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbf8add2_a9398702",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 6
+      },
+      "revId": "b90c96b8a622adae9135fed1bb9ddcac795b4864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4351b2c8_e0d71ff0",
         "filename": "utils/test/config_test.cc",
         "patchSetId": 3
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "0be7a368_1767fcb0",
+        "filename": "utils/test/config_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-21T23:44:13Z",
+      "side": 1,
+      "message": "Denied.",
+      "parentUuid": "4351b2c8_e0d71ff0",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 14
+      },
+      "revId": "b90c96b8a622adae9135fed1bb9ddcac795b4864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "933eadd4_8f1a5ee2",
         "filename": "utils/test/config_test.cc",
         "patchSetId": 3
@@ -168,6 +330,30 @@
       "writtenOn": "2017-11-21T00:51:01Z",
       "side": 1,
       "message": "If you use EXPECT_EQ(10, bytes[0]), you will get more helpful debugging messages, because it will tell you what the value of bytes[0] is when it\u0027s not 10.",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 13
+      },
+      "revId": "b90c96b8a622adae9135fed1bb9ddcac795b4864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf00f0af_56217716",
+        "filename": "utils/test/config_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-21T23:44:13Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "933eadd4_8f1a5ee2",
       "range": {
         "startLine": 63,
         "startChar": 2,
