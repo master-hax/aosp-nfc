@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "320b0f91_ffe80e1d",
+        "filename": "utils/test/config_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-22T00:10:15Z",
+      "side": 1,
+      "message": "Done. Changed by separating test harness classes.",
+      "parentUuid": "378ba394_133102ac",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "ad32681cf3fc09a86f2528a3ec449a1b7d0b868c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e02ea0fb_22b9cc6c",
         "filename": "utils/test/config_test.cc",
         "patchSetId": 4
