@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0cd9098_1084cecb",
+        "filename": "utils/nfc_config.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-22T20:27:29Z",
+      "side": 1,
+      "message": "Could we add some debug logs as to which config was read and what the value were? It\u0027s easier to debug with that.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 1
+      },
+      "revId": "3800328fbae6b01a9935e3b1fc4fb29133537562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
