@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc86c2a_ae013832",
+        "filename": "src/adaptation/android_logmsg.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-27T23:43:34Z",
+      "side": 1,
+      "message": "Can we please remove this as well?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "df8564fe82c33dafd304bf024926940b912664f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf7b5ec5_fbe1e99a",
+        "filename": "src/adaptation/android_logmsg.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-27T23:43:34Z",
+      "side": 1,
+      "message": "same as above. This isn\u0027t used anywhere. Thanks!",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 69
+      },
+      "revId": "df8564fe82c33dafd304bf024926940b912664f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
