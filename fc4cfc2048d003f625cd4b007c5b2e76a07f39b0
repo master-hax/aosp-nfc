@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a27b97_1e57d885",
+        "filename": "src/adaptation/libmain.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-27T23:43:11Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 182,
+        "startChar": 4,
+        "endLine": 182,
+        "endChar": 46
+      },
+      "revId": "fc4cfc2048d003f625cd4b007c5b2e76a07f39b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e277700_18b4b7f5",
+        "filename": "utils/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-27T23:43:11Z",
+      "side": 1,
+      "message": "Please make this NFC_DEBUG_ENABLED.",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 48
+      },
+      "revId": "fc4cfc2048d003f625cd4b007c5b2e76a07f39b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aaa8b001_6431d981",
+        "filename": "utils/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-27T23:43:11Z",
+      "side": 1,
+      "message": "Not used. Please remove. Either this patch or the following one.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 56
+      },
+      "revId": "fc4cfc2048d003f625cd4b007c5b2e76a07f39b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
