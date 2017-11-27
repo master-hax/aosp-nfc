@@ -22,6 +22,30 @@
       "revId": "3800328fbae6b01a9935e3b1fc4fb29133537562",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1babe637_48af5e24",
+        "filename": "utils/nfc_config.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-11-27T21:36:25Z",
+      "side": 1,
+      "message": "Done in separate CL.",
+      "parentUuid": "d0cd9098_1084cecb",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 1
+      },
+      "revId": "3800328fbae6b01a9935e3b1fc4fb29133537562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
