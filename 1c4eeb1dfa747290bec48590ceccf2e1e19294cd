@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b32eee67_53d85e43",
+        "filename": "halimpl/pn54x/hal/phNxpNciHal.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 2488,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2017-11-29T22:39:07Z",
+      "side": 0,
+      "message": "Nit: fix indentation now that you\u0027re removing brackets.",
+      "range": {
+        "startLine": 2470,
+        "startChar": 0,
+        "endLine": 2488,
+        "endChar": 5
+      },
+      "revId": "1c4eeb1dfa747290bec48590ceccf2e1e19294cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
