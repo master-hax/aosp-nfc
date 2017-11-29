@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "977f72e3_e6281735",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-29T00:39:28Z",
+      "side": 1,
+      "message": "why not use nfa_ee_total_lmrt_size()?",
+      "range": {
+        "startLine": 1050,
+        "startChar": 2,
+        "endLine": 1076,
+        "endChar": 1
+      },
+      "revId": "4654f7841d368eadab3acec9c6fe7af9c41d73ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fccde01a_89ebc7f5",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-11-29T00:39:28Z",
+      "side": 1,
+      "message": "NFC_GetLmrtSize() should give the size of the routing table.",
+      "range": {
+        "startLine": 1095,
+        "startChar": 46,
+        "endLine": 1095,
+        "endChar": 68
+      },
+      "revId": "4654f7841d368eadab3acec9c6fe7af9c41d73ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
