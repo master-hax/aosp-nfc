@@ -24,7 +24,6 @@
 
 #include "NfcAdaptation.h"
 
-#include "android_logmsg.h"
 #include "debug_nfcsnoop.h"
 #include "nfa_api.h"
 #include "nfc_config.h"
@@ -79,7 +78,11 @@ static std::vector<uint8_t> host_whitelist;
 namespace {
 void initializeGlobalDebugEnabledFlag() {
   nfc_debug_enabled =
+<<<<<<< HEAD
       (NfcConfig::getUnsigned(NAME_NFC_DEBUG_ENABLED, 0) != 0) ? true : false;
+=======
+      (NfcConfig::getUnsigned(NAME_APPL_TRACE_LEVEL, 0) != 0) ? true : false;
+>>>>>>> 8c59204... Remove android_logmsg and trace_api
 
   char valueStr[PROPERTY_VALUE_MAX] = {0};
   int len = property_get("nfc.debug_enabled", valueStr, "");
