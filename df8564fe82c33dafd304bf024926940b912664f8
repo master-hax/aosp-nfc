@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "ce6017e8_2a1e252a",
+        "filename": "src/adaptation/android_logmsg.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-12-05T20:56:56Z",
+      "side": 1,
+      "message": "How about I do one better and remove the whole file? :)\ngo/aog/556705",
+      "parentUuid": "dbc86c2a_ae013832",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "df8564fe82c33dafd304bf024926940b912664f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf7b5ec5_fbe1e99a",
         "filename": "src/adaptation/android_logmsg.cc",
         "patchSetId": 5
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-27T23:43:34Z",
       "side": 1,
       "message": "same as above. This isn\u0027t used anywhere. Thanks!",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 69
+      },
+      "revId": "df8564fe82c33dafd304bf024926940b912664f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a315803e_883b5d60",
+        "filename": "src/adaptation/android_logmsg.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-12-05T20:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf7b5ec5_fbe1e99a",
       "range": {
         "startLine": 33,
         "startChar": 0,
