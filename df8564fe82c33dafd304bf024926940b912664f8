@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9245913d_6daeee13",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-12-05T20:43:28Z",
+      "side": 1,
+      "message": "this is no longer app_log_level.\n\nCan we please change this to something more meaningful. nfc.debug_enabled perhaps?",
+      "range": {
+        "startLine": 85,
+        "startChar": 26,
+        "endLine": 85,
+        "endChar": 44
+      },
+      "revId": "df8564fe82c33dafd304bf024926940b912664f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbc86c2a_ae013832",
         "filename": "src/adaptation/android_logmsg.cc",
         "patchSetId": 5
