@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "147891be_3143c4c8",
+        "filename": "src/nfa/hci/nfa_hci_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-12-06T21:35:07Z",
+      "side": 1,
+      "message": "where is the host_index used?",
+      "range": {
+        "startLine": 1485,
+        "startChar": 10,
+        "endLine": 1485,
+        "endChar": 33
+      },
+      "revId": "38e5aa7b7e47ee2e9a646dcc4d3eb7c2fb7d2716",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fbed792_b257a287",
+        "filename": "src/nfa/hci/nfa_hci_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-12-06T21:35:07Z",
+      "side": 1,
+      "message": "There can be multiple hosts apart from proprietary ones?\n\ncheck for (NFA_HCI_HOST_ID_UICC0 + NFA_HCI_MAX_HOST_IN_NETWORK) as well and not just NFA_HCI_HOST_ID_UICC0?",
+      "range": {
+        "startLine": 1495,
+        "startChar": 51,
+        "endLine": 1495,
+        "endChar": 53
+      },
+      "revId": "38e5aa7b7e47ee2e9a646dcc4d3eb7c2fb7d2716",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a09a7a6_6bbbce45",
+        "filename": "src/nfa/hci/nfa_hci_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-12-06T21:35:07Z",
+      "side": 1,
+      "message": "shouldn\u0027t the reset_host be set to only the active hosts and not all?",
+      "range": {
+        "startLine": 1499,
+        "startChar": 13,
+        "endLine": 1500,
+        "endChar": 62
+      },
+      "revId": "38e5aa7b7e47ee2e9a646dcc4d3eb7c2fb7d2716",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
