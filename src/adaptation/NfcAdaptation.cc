@@ -81,7 +81,7 @@ void initializeGlobalDebugEnabledFlag() {
       (NfcConfig::getUnsigned(NAME_APPL_TRACE_LEVEL, 0) != 0) ? true : false;
 
   char valueStr[PROPERTY_VALUE_MAX] = {0};
-  int len = property_get("nfc.app_log_level", valueStr, "");
+  int len = property_get("nfc.debug_enabled", valueStr, "");
   if (len > 0) {
     // let Android property override .conf variable
     unsigned trace_level = 0;
