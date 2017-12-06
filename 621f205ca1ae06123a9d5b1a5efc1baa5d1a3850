@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25758ade_ccab8a6f",
+        "filename": "src/adaptation/android_logmsg.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-12-06T21:09:19Z",
+      "side": 0,
+      "message": "same as below.",
+      "range": {
+        "startLine": 86,
+        "startChar": 1,
+        "endLine": 87,
+        "endChar": 70
+      },
+      "revId": "621f205ca1ae06123a9d5b1a5efc1baa5d1a3850",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d67f3b3c_4e46fe6d",
+        "filename": "src/adaptation/android_logmsg.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-12-06T21:09:19Z",
+      "side": 0,
+      "message": "This might still be useful. Can we keep the log statements, maybe in the caller file? We can still delete the file.",
+      "range": {
+        "startLine": 106,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 68
+      },
+      "revId": "621f205ca1ae06123a9d5b1a5efc1baa5d1a3850",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
