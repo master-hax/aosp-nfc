@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6891494e_bffbbd3a",
+        "filename": "src/nfa/hci/nfa_hci_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-12-06T21:36:03Z",
+      "side": 1,
+      "message": "disregard this comment.",
+      "parentUuid": "147891be_3143c4c8",
+      "range": {
+        "startLine": 1485,
+        "startChar": 10,
+        "endLine": 1485,
+        "endChar": 33
+      },
+      "revId": "38e5aa7b7e47ee2e9a646dcc4d3eb7c2fb7d2716",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fbed792_b257a287",
         "filename": "src/nfa/hci/nfa_hci_act.cc",
         "patchSetId": 2
