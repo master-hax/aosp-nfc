@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2d6a876_e45062cc",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-12-07T03:12:46Z",
+      "side": 1,
+      "message": "Merge conflicts?",
+      "range": {
+        "startLine": 81,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 21
+      },
+      "revId": "74bb4564a3fcc36e00c4bc7acf15ad21e0fd0e8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
