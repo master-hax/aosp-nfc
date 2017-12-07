@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cbcd82ce_260efbdc",
+        "filename": "src/nfa/hci/nfa_hci_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-12-07T09:53:57Z",
+      "side": 1,
+      "message": "Following the HCI specification (ETSI TS 102 622),the values ‘03’ to ‘BF’ are RFU. Therefore cannot be used.\n\nHost                     HID\nhost controller         \u002700\u0027\nterminal host           \u002701\u0027\nUICC host               \u002702\u0027\nRFU                     \u002703\u0027 to \u0027BF\u0027\nProprietary             \u0027C0\u0027 to \u0027FF\u0027\n\nAll the hosts - other than host controller, terminal host and UICC host- should have a value starting at 0xC0 i.e. NFA_HCI_HOST_ID_FIRST_PROPRIETARY.",
+      "parentUuid": "6fbed792_b257a287",
+      "range": {
+        "startLine": 1495,
+        "startChar": 51,
+        "endLine": 1495,
+        "endChar": 53
+      },
+      "revId": "38e5aa7b7e47ee2e9a646dcc4d3eb7c2fb7d2716",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a09a7a6_6bbbce45",
         "filename": "src/nfa/hci/nfa_hci_act.cc",
         "patchSetId": 2
@@ -83,6 +107,30 @@
       "writtenOn": "2017-12-06T21:35:07Z",
       "side": 1,
       "message": "shouldn\u0027t the reset_host be set to only the active hosts and not all?",
+      "range": {
+        "startLine": 1499,
+        "startChar": 13,
+        "endLine": 1500,
+        "endChar": 62
+      },
+      "revId": "38e5aa7b7e47ee2e9a646dcc4d3eb7c2fb7d2716",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6946f117_d7d21f75",
+        "filename": "src/nfa/hci/nfa_hci_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2017-12-07T09:53:57Z",
+      "side": 1,
+      "message": "reset_host is the list of host reseting. (a host is reseting when receiving the NFA_HCI_ADM_NOTIFY_ALL_PIPE_CLEARED above)\nThe behavior didn\u0027t change : if an active host was previously listed as a reseting host, clear it in reset_host list as it is now active (and no  more reseting).",
+      "parentUuid": "4a09a7a6_6bbbce45",
       "range": {
         "startLine": 1499,
         "startChar": 13,
