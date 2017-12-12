@@ -22,9 +22,17 @@
  *
  ******************************************************************************/
 #include <string>
+
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
+
 #include "llcp_api.h"
 #include "nfa_dm_int.h"
 #include "nfa_p2p_int.h"
+
+using android::base::StringPrintf;
+
+extern bool nfc_debug_enabled;
 
 /*****************************************************************************
 **  Global Variables
@@ -158,7 +166,8 @@ void nfa_p2p_discovery_cback(tNFA_DM_RF_DISC_EVT event, tNFC_DISCOVER* p_data) {
 ** Returns          void
 **
 *******************************************************************************/
-static void nfa_p2p_update_active_listen_timeout_cback(TIMER_LIST_ENT* p_tle) {
+static void nfa_p2p_update_active_listen_timeout_cback(__attribute__((unused))
+                                                       TIMER_LIST_ENT* p_tle) {
   LOG(ERROR) << __func__;
 
   /* restore active listen mode */

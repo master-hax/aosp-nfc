@@ -22,6 +22,10 @@
  *
  ******************************************************************************/
 #include <string>
+
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
+
 #include "nci_hmsgs.h"
 #include "nfa_api.h"
 #include "nfa_dm_int.h"
@@ -34,10 +38,14 @@
 #include "nfa_rw_int.h"
 
 #include "nfc_int.h"
+
+using android::base::StringPrintf;
+
+extern bool nfc_debug_enabled;
+
 /*
 **  static functions
 */
-
 static uint8_t nfa_dm_get_rf_discover_config(
     tNFA_DM_DISC_TECH_PROTO_MASK dm_disc_mask,
     tNFC_DISCOVER_PARAMS disc_params[], uint8_t max_params);
@@ -833,7 +841,8 @@ static tNFC_STATUS nfa_dm_disc_force_to_idle(void) {
 ** Returns          void
 **
 *******************************************************************************/
-static void nfa_dm_disc_deact_ntf_timeout_cback(TIMER_LIST_ENT* p_tle) {
+static void nfa_dm_disc_deact_ntf_timeout_cback(__attribute__((unused))
+                                                TIMER_LIST_ENT* p_tle) {
   LOG(ERROR) << __func__;
 
   nfa_dm_disc_force_to_idle();
@@ -1570,7 +1579,8 @@ static void nfa_dm_disc_end_sleep_wakeup(tNFC_STATUS status) {
 ** Returns          void
 **
 *******************************************************************************/
-static void nfa_dm_disc_kovio_timeout_cback(TIMER_LIST_ENT* p_tle) {
+static void nfa_dm_disc_kovio_timeout_cback(__attribute__((unused))
+                                            TIMER_LIST_ENT* p_tle) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   /* notify presence check failure, if presence check is pending */
@@ -1671,8 +1681,8 @@ static void nfa_dm_disc_report_kovio_presence_check(tNFC_STATUS status) {
 ** Returns          void
 **
 *******************************************************************************/
-static void nfa_dm_disc_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
-                                   tNFC_CONN* p_data) {
+static void nfa_dm_disc_data_cback(__attribute__((unused)) uint8_t conn_id,
+                                   tNFC_CONN_EVT event, tNFC_CONN* p_data) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   /* if selection failed */

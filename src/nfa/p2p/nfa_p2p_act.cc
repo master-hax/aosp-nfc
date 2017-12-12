@@ -21,11 +21,17 @@
  *  This is the implementation file for the NFA P2P.
  *
  ******************************************************************************/
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
 
 #include "llcp_api.h"
 #include "nfa_dm_int.h"
 #include "nfa_p2p_api.h"
 #include "nfa_p2p_int.h"
+
+using android::base::StringPrintf;
+
+extern bool nfc_debug_enabled;
 
 /*****************************************************************************
 **  Global Variables
@@ -1120,7 +1126,7 @@ bool nfa_p2p_set_llcp_cfg(tNFA_P2P_MSG* p_msg) {
 ** Returns          TRUE to deallocate buffer
 **
 *******************************************************************************/
-bool nfa_p2p_restart_rf_discovery(tNFA_P2P_MSG* p_msg) {
+bool nfa_p2p_restart_rf_discovery(__attribute__((unused)) tNFA_P2P_MSG* p_msg) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   nfa_dm_rf_deactivate(NFA_DEACTIVATE_TYPE_IDLE);

@@ -15,23 +15,27 @@
  *  limitations under the License.
  *
  ******************************************************************************/
-#include "NfcAdaptation.h"
+#include <android-base/stringprintf.h>
 #include <android/hardware/nfc/1.0/INfc.h>
 #include <base/command_line.h>
+#include <base/logging.h>
+#include <cutils/properties.h>
 #include <hwbinder/ProcessState.h>
-#include "debug_nfcsnoop.h"
 
-#include "nfa_api.h"
-#include "nfc_int.h"
+#include "NfcAdaptation.h"
 
 #include "android_logmsg.h"
-#include "config.h"
+#include "debug_nfcsnoop.h"
+#include "nfa_api.h"
+#include "nfc_config.h"
+#include "nfc_int.h"
 #include "nfca_version.h"
 
 using android::OK;
 using android::sp;
 using android::status_t;
 
+using android::base::StringPrintf;
 using android::hardware::ProcessState;
 using android::hardware::Return;
 using android::hardware::Void;
@@ -39,8 +43,9 @@ using android::hardware::nfc::V1_0::INfc;
 using android::hardware::nfc::V1_0::INfcClientCallback;
 using android::hardware::hidl_vec;
 
+extern bool nfc_debug_enabled;
+
 extern void GKI_shutdown();
-extern void resetConfig();
 extern void verify_stack_non_volatile_store();
 extern void delete_stack_non_volatile_store(bool forceDelete);
 
@@ -53,22 +58,42 @@ ThreadCondVar NfcAdaptation::mHalCloseCompletedEvent;
 sp<INfc> NfcAdaptation::mHal;
 INfcClientCallback* NfcAdaptation::mCallback;
 
-uint32_t ScrProtocolTraceFlag = SCR_PROTO_TRACE_ALL;  // 0x017F00;
 bool nfc_debug_enabled = false;
+std::string nfc_storage_path;
 uint8_t appl_dta_mode_flag = 0x00;
-char bcm_nfc_location[120];
 
-static uint8_t nfa_dm_cfg[sizeof(tNFA_DM_CFG)];
-static uint8_t nfa_proprietary_cfg[sizeof(tNFA_PROPRIETARY_CFG)];
-extern tNFA_DM_CFG* p_nfa_dm_cfg;
-extern tNFA_PROPRIETARY_CFG* p_nfa_proprietary_cfg;
+extern tNFA_DM_CFG nfa_dm_cfg;
+extern tNFA_PROPRIETARY_CFG nfa_proprietary_cfg;
+extern tNFA_HCI_CFG nfa_hci_cfg;
 extern uint8_t nfa_ee_max_ee_cfg;
+extern bool nfa_poll_bail_out_mode;
+
 extern const uint8_t nfca_version_string[];
 extern const uint8_t nfa_version_string[];
-static uint8_t deviceHostWhiteList[NFA_HCI_MAX_HOST_IN_NETWORK];
-static tNFA_HCI_CFG jni_nfa_hci_cfg;
-extern tNFA_HCI_CFG* p_nfa_hci_cfg;
-extern bool nfa_poll_bail_out_mode;
+
+// Whitelist for hosts allowed to create a pipe
+// See ADM_CREATE_PIPE command in the ETSI test specification
+// ETSI TS 102 622, section 6.1.3.1
+static std::vector<uint8_t> host_whitelist;
+
+namespace {
+void initializeGlobalDebugEnabledFlag() {
+  nfc_debug_enabled =
+      (NfcConfig::getUnsigned(NAME_NFC_DEBUG_ENABLED, 0) != 0) ? true : false;
+
+  char valueStr[PROPERTY_VALUE_MAX] = {0};
+  int len = property_get("nfc.app_log_level", valueStr, "");
+  if (len > 0) {
+    // let Android property override .conf variable
+    unsigned trace_level = 0;
+    sscanf(valueStr, "%u", &trace_level);
+    nfc_debug_enabled = (trace_level == 0) ? false : true;
+  }
+
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("%s: level=%u", __func__, nfc_debug_enabled);
+}
+}  // namespace
 
 class NfcClientCallback : public INfcClientCallback {
  public:
@@ -147,7 +172,6 @@ NfcAdaptation& NfcAdaptation::GetInstance() {
 *******************************************************************************/
 void NfcAdaptation::Initialize() {
   const char* func = "NfcAdaptation::Initialize";
-  unsigned long num;
   const char* argv[] = {"libnfc_nci"};
   // Init log tag
   base::CommandLine::Init(1, argv);
@@ -159,64 +183,73 @@ void NfcAdaptation::Initialize() {
   LOG(INFO) << StringPrintf("%s: ver=%s nfa=%s", func, nfca_version_string,
                             nfa_version_string);
 
-  if (GetNumValue(NAME_USE_RAW_NCI_TRACE, &num, sizeof(num))) {
-    if (num == 1) {
-      // display protocol traces in raw format
-      ProtoDispAdapterUseRawOutput(TRUE);
-      DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("%s: logging protocol in raw format", func);
-    }
+  nfc_storage_path = NfcConfig::getString(NAME_NFA_STORAGE, "/data/nfc");
+
+  if (NfcConfig::hasKey(NAME_NFA_DM_CFG)) {
+    std::vector<uint8_t> dm_config = NfcConfig::getBytes(NAME_NFA_DM_CFG);
+    if (dm_config.size() > 0) nfa_dm_cfg.auto_detect_ndef = dm_config[0];
+    if (dm_config.size() > 1) nfa_dm_cfg.auto_read_ndef = dm_config[1];
+    if (dm_config.size() > 2) nfa_dm_cfg.auto_presence_check = dm_config[2];
+    if (dm_config.size() > 3) nfa_dm_cfg.presence_check_option = dm_config[3];
+    // NOTE: The timeout value is not configurable here because the endianess
+    // of a byte array is ambiguous and needlessly difficult to configure.
+    // If this value needs to be configgurable, a numeric config option should
+    // be used.
   }
-  if (!GetStrValue(NAME_NFA_STORAGE, bcm_nfc_location,
-                   sizeof(bcm_nfc_location))) {
-    strlcpy(bcm_nfc_location, "/data/nfc", sizeof(bcm_nfc_location));
-  }
 
-  initializeProtocolLogLevel();
-
-  if (GetStrValue(NAME_NFA_DM_CFG, (char*)nfa_dm_cfg, sizeof(nfa_dm_cfg)))
-    p_nfa_dm_cfg = (tNFA_DM_CFG*)&nfa_dm_cfg[0];
-
-  if (GetNumValue(NAME_NFA_MAX_EE_SUPPORTED, &num, sizeof(num))) {
-    nfa_ee_max_ee_cfg = num;
+  if (NfcConfig::hasKey(NAME_NFA_MAX_EE_SUPPORTED)) {
+    nfa_ee_max_ee_cfg = NfcConfig::getUnsigned(NAME_NFA_MAX_EE_SUPPORTED);
     DLOG_IF(INFO, nfc_debug_enabled)
         << StringPrintf("%s: Overriding NFA_EE_MAX_EE_SUPPORTED to use %d",
                         func, nfa_ee_max_ee_cfg);
   }
-  if (GetNumValue(NAME_NFA_POLL_BAIL_OUT_MODE, &num, sizeof(num))) {
-    nfa_poll_bail_out_mode = num;
+
+  if (NfcConfig::hasKey(NAME_NFA_POLL_BAIL_OUT_MODE)) {
+    nfa_poll_bail_out_mode =
+        NfcConfig::getUnsigned(NAME_NFA_POLL_BAIL_OUT_MODE);
     DLOG_IF(INFO, nfc_debug_enabled)
         << StringPrintf("%s: Overriding NFA_POLL_BAIL_OUT_MODE to use %d", func,
                         nfa_poll_bail_out_mode);
   }
 
-  if (GetStrValue(NAME_NFA_PROPRIETARY_CFG, (char*)nfa_proprietary_cfg,
-                  sizeof(tNFA_PROPRIETARY_CFG))) {
-    p_nfa_proprietary_cfg = (tNFA_PROPRIETARY_CFG*)&nfa_proprietary_cfg[0];
+  if (NfcConfig::hasKey(NAME_NFA_PROPRIETARY_CFG)) {
+    std::vector<uint8_t> p_config =
+        NfcConfig::getBytes(NAME_NFA_PROPRIETARY_CFG);
+    if (p_config.size() > 0)
+      nfa_proprietary_cfg.pro_protocol_18092_active = p_config[0];
+    if (p_config.size() > 1)
+      nfa_proprietary_cfg.pro_protocol_b_prime = p_config[1];
+    if (p_config.size() > 2)
+      nfa_proprietary_cfg.pro_protocol_dual = p_config[2];
+    if (p_config.size() > 3)
+      nfa_proprietary_cfg.pro_protocol_15693 = p_config[3];
+    if (p_config.size() > 4)
+      nfa_proprietary_cfg.pro_protocol_kovio = p_config[4];
+    if (p_config.size() > 5) nfa_proprietary_cfg.pro_protocol_mfc = p_config[5];
+    if (p_config.size() > 6)
+      nfa_proprietary_cfg.pro_discovery_kovio_poll = p_config[6];
+    if (p_config.size() > 7)
+      nfa_proprietary_cfg.pro_discovery_b_prime_poll = p_config[7];
+    if (p_config.size() > 8)
+      nfa_proprietary_cfg.pro_discovery_b_prime_listen = p_config[8];
   }
 
-  // configure device host whitelist of HCI host ID's; see specification ETSI TS
-  // 102 622 V11.1.10
-  //(2012-10), section 6.1.3.1
-  num = GetStrValue(NAME_DEVICE_HOST_WHITE_LIST, (char*)deviceHostWhiteList,
-                    sizeof(deviceHostWhiteList));
-  if (num) {
-    memmove(&jni_nfa_hci_cfg, p_nfa_hci_cfg, sizeof(jni_nfa_hci_cfg));
-    jni_nfa_hci_cfg.num_whitelist_host =
-        (uint8_t)num;  // number of HCI host ID's in the whitelist
-    jni_nfa_hci_cfg.p_whitelist = deviceHostWhiteList;  // array of HCI host
-                                                        // ID's
-    p_nfa_hci_cfg = &jni_nfa_hci_cfg;
+  // Configure whitelist of HCI host ID's
+  // See specification: ETSI TS 102 622, section 6.1.3.1
+  if (NfcConfig::hasKey(NAME_DEVICE_HOST_WHITE_LIST)) {
+    host_whitelist = NfcConfig::getBytes(NAME_DEVICE_HOST_WHITE_LIST);
+    nfa_hci_cfg.num_whitelist_host = host_whitelist.size();
+    nfa_hci_cfg.p_whitelist = &host_whitelist[0];
   }
 
-  initializeGlobalAppLogLevel();
+  initializeGlobalDebugEnabledFlag();
 
   verify_stack_non_volatile_store();
-  if (GetNumValue(NAME_PRESERVE_STORAGE, (char*)&num, sizeof(num)) &&
-      (num == 1))
+  if (NfcConfig::hasKey(NAME_PRESERVE_STORAGE) &&
+      NfcConfig::getUnsigned(NAME_PRESERVE_STORAGE) == 1) {
     DLOG_IF(INFO, nfc_debug_enabled)
         << StringPrintf("%s: preserve stack NV store", __func__);
-  else {
+  } else {
     delete_stack_non_volatile_store(FALSE);
   }
 
@@ -254,7 +287,7 @@ void NfcAdaptation::Finalize() {
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: enter", func);
   GKI_shutdown();
 
-  resetConfig();
+  NfcConfig::clear();
 
   mCallback = NULL;
   memset(&mHalEntryFuncs, 0, sizeof(mHalEntryFuncs));
@@ -294,7 +327,7 @@ void NfcAdaptation::signal() { mCondVar.signal(); }
 ** Returns:     none
 **
 *******************************************************************************/
-uint32_t NfcAdaptation::NFCA_TASK(uint32_t arg) {
+uint32_t NfcAdaptation::NFCA_TASK(__attribute__((unused)) uint32_t arg) {
   const char* func = "NfcAdaptation::NFCA_TASK";
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: enter", func);
   GKI_run(0);
@@ -311,7 +344,7 @@ uint32_t NfcAdaptation::NFCA_TASK(uint32_t arg) {
 ** Returns:     none
 **
 *******************************************************************************/
-uint32_t NfcAdaptation::Thread(uint32_t arg) {
+uint32_t NfcAdaptation::Thread(__attribute__((unused)) uint32_t arg) {
   const char* func = "NfcAdaptation::Thread";
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: enter", func);
 
@@ -353,7 +386,6 @@ tHAL_NFC_ENTRY* NfcAdaptation::GetHalEntryFuncs() { return &mHalEntryFuncs; }
 void NfcAdaptation::InitializeHalDeviceContext() {
   const char* func = "NfcAdaptation::InitializeHalDeviceContext";
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: enter", func);
-  int ret = 0;  // 0 means success
 
   mHalEntryFuncs.initialize = HalInitialize;
   mHalEntryFuncs.terminate = HalTerminate;
@@ -574,7 +606,6 @@ void NfcAdaptation::HalPowerCycle() {
 *******************************************************************************/
 uint8_t NfcAdaptation::HalGetMaxNfcee() {
   const char* func = "NfcAdaptation::HalPowerCycle";
-  uint8_t maxNfcee = 0;
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s", func);
 
   return nfa_ee_max_ee_cfg;
@@ -618,6 +649,7 @@ void NfcAdaptation::DownloadFirmware() {
 **
 *******************************************************************************/
 void NfcAdaptation::HalDownloadFirmwareCallback(nfc_event_t event,
+                                                __attribute__((unused))
                                                 nfc_status_t event_status) {
   const char* func = "NfcAdaptation::HalDownloadFirmwareCallback";
   DLOG_IF(INFO, nfc_debug_enabled)
@@ -647,7 +679,9 @@ void NfcAdaptation::HalDownloadFirmwareCallback(nfc_event_t event,
 ** Returns:     None.
 **
 *******************************************************************************/
-void NfcAdaptation::HalDownloadFirmwareDataCallback(uint16_t data_len,
+void NfcAdaptation::HalDownloadFirmwareDataCallback(__attribute__((unused))
+                                                    uint16_t data_len,
+                                                    __attribute__((unused))
                                                     uint8_t* p_data) {}
 
 /*******************************************************************************

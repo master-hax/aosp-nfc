@@ -22,11 +22,15 @@
  *
  ******************************************************************************/
 #include <string.h>
-#include "bt_types.h"
-#include "gki.h"
+
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
+
 #include "nfc_target.h"
 
+#include "bt_types.h"
 #include "ce_int.h"
+#include "gki.h"
 #include "nci_hmsgs.h"
 #include "nfc_int.h"
 #include "rw_int.h"
@@ -37,6 +41,10 @@
 #endif
 
 #include "nfa_dm_int.h"
+
+using android::base::StringPrintf;
+
+extern bool nfc_debug_enabled;
 
 /*******************************************************************************
 **
@@ -245,7 +253,7 @@ void nfc_process_quick_timer_evt(void) {
         rw_t1t_process_timeout(p_tle);
         break;
       case NFC_TTYPE_RW_T2T_RESPONSE:
-        rw_t2t_process_timeout(p_tle);
+        rw_t2t_process_timeout();
         break;
       case NFC_TTYPE_RW_T3T_RESPONSE:
         rw_t3t_process_timeout(p_tle);
@@ -329,7 +337,7 @@ void nfc_task_shutdown_nfcc(void) {
 ** Returns          nothing
 **
 *******************************************************************************/
-uint32_t nfc_task(uint32_t param) {
+uint32_t nfc_task(__attribute__((unused)) uint32_t arg) {
   uint16_t event;
   NFC_HDR* p_msg;
   bool free_buf;

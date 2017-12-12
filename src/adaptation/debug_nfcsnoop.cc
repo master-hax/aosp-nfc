@@ -16,13 +16,15 @@
  *
  ******************************************************************************/
 
+#include <android-base/logging.h>
 #include <resolv.h>
 #include <zlib.h>
 #include <mutex>
 
+#include <ringbuffer.h>
+
 #include "bt_types.h"
 #include "include/debug_nfcsnoop.h"
-#include "include/ringbuffer.h"
 #include "nfc_int.h"
 
 #define USEC_PER_SEC 1000000ULL
@@ -67,8 +69,8 @@ static void nfcsnoop_cb(const uint8_t* data, const size_t length,
 }
 
 static bool nfcsnoop_compress(ringbuffer_t* rb_dst, ringbuffer_t* rb_src) {
-  assert(rb_dst != NULL);
-  assert(rb_src != NULL);
+  CHECK(rb_dst != NULL);
+  CHECK(rb_src != NULL);
 
   z_stream zs;
   zs.zalloc = Z_NULL;

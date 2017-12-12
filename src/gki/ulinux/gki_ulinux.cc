@@ -17,10 +17,16 @@
  ******************************************************************************/
 #include <errno.h>
 #include <malloc.h>
-
 #include <pthread.h> /* must be 1st header defined  */
-#include "_OverrideLog.h"
+
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
+
 #include "gki_int.h"
+
+using android::base::StringPrintf;
+
+extern bool nfc_debug_enabled;
 
 /* Temp android logging...move to android tgt config file */
 
@@ -178,8 +184,6 @@ uint32_t GKI_get_os_tick_count(void) {
 uint8_t GKI_create_task(TASKPTR task_entry, uint8_t task_id, int8_t* taskname,
                         uint16_t* stack, uint16_t stacksize, void* pCondVar,
                         void* pMutex) {
-  uint16_t i;
-  uint8_t* p;
   struct sched_param param;
   int policy, ret = 0;
   pthread_condattr_t attr;
@@ -359,7 +363,9 @@ void GKI_shutdown(void) {
 void gki_system_tick_start_stop_cback(bool start) {
   tGKI_OS* p_os = &gki_cb.os;
   volatile int* p_run_cond = &p_os->no_timer_suspend;
+#ifdef GKI_TICK_TIMER_DEBUG
   static volatile int wake_lock_count;
+#endif
   if (start == false) {
     /* this can lead to a race condition. however as we only read this variable
      * in the timer loop
@@ -440,7 +446,7 @@ void timer_thread(signed long id) {
 **                  one step, If your OS does it in one step, this function
 **                  should be empty.
 *******************************************************************************/
-void GKI_run(void* p_task_id) {
+void GKI_run(__attribute__((unused)) void* p_task_id) {
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s enter", __func__);
   struct timespec delay;
   int err = 0;
@@ -501,13 +507,9 @@ void GKI_run(void* p_task_id) {
     DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(">>> SUSPENDED");
 #endif
     if (GKI_TIMER_TICK_EXIT_COND != *p_run_cond) {
-      DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("%s waiting timer mutex", __func__);
       pthread_mutex_lock(&gki_cb.os.gki_timer_mutex);
       pthread_cond_wait(&gki_cb.os.gki_timer_cond, &gki_cb.os.gki_timer_mutex);
       pthread_mutex_unlock(&gki_cb.os.gki_timer_mutex);
-      DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("%s exited timer mutex", __func__);
     }
 /* potentially we need to adjust os gki_cb.com.OSTicks */
 
@@ -571,8 +573,6 @@ uint16_t GKI_wait(uint16_t flag, uint32_t timeout) {
   int nano_sec;
 
   rtask = GKI_get_taskid();
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("GKI_wait %d %x %d", rtask, flag, timeout);
   if (rtask >= GKI_MAX_TASKS) {
     LOG(ERROR) << StringPrintf("%s() Exiting thread; rtask %d >= %d", __func__,
                                rtask, GKI_MAX_TASKS);
@@ -683,9 +683,6 @@ uint16_t GKI_wait(uint16_t flag, uint32_t timeout) {
   /* unlock thread_evt_mutex as pthread_cond_wait() does auto lock mutex when
    * cond is met */
   pthread_mutex_unlock(&gki_cb.os.thread_evt_mutex[rtask]);
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "GKI_wait %d %x %d %x resumed", rtask, flag, timeout, evt);
-
   return (evt);
 }
 
@@ -749,9 +746,6 @@ void GKI_delay(uint32_t timeout) {
 **
 *******************************************************************************/
 uint8_t GKI_send_event(uint8_t task_id, uint16_t event) {
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("GKI_send_event %d %x", task_id, event);
-
   /* use efficient coding to avoid pipeline stalls */
   if (task_id < GKI_MAX_TASKS) {
     /* protect OSWaitEvt[task_id] from manipulation in GKI_wait() */
@@ -764,8 +758,6 @@ uint8_t GKI_send_event(uint8_t task_id, uint16_t event) {
 
     pthread_mutex_unlock(&gki_cb.os.thread_evt_mutex[task_id]);
 
-    DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("GKI_send_event %d %x done", task_id, event);
     return (GKI_SUCCESS);
   }
   return (GKI_FAILURE);
@@ -815,19 +807,12 @@ uint8_t GKI_isend_event(uint8_t task_id, uint16_t event) {
 *******************************************************************************/
 uint8_t GKI_get_taskid(void) {
   int i;
-
   pthread_t thread_id = pthread_self();
   for (i = 0; i < GKI_MAX_TASKS; i++) {
     if (gki_cb.os.thread_id[i] == thread_id) {
-      DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("GKI_get_taskid %lx %d done", thread_id, i);
       return (i);
     }
   }
-
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "GKI_get_taskid: thread id = %lx, task id = -1", thread_id);
-
   return (-1);
 }
 
@@ -873,11 +858,9 @@ int8_t* GKI_map_taskname(uint8_t task_id) {
 **
 *******************************************************************************/
 void GKI_enable(void) {
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("GKI_enable");
   pthread_mutex_unlock(&gki_cb.os.GKI_mutex);
   /* 	pthread_mutex_xx is nesting save, no need for this: already_disabled =
    * 0; */
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("Leaving GKI_enable");
   return;
 }
 
@@ -921,7 +904,6 @@ void GKI_disable(void) {
 
 void GKI_exception(uint16_t code, std::string msg) {
   uint8_t task_id;
-  int i = 0;
 
   LOG(ERROR) << StringPrintf("Task State Table");
 
@@ -1116,6 +1098,9 @@ uint8_t GKI_resume_task(uint8_t task_id) {
 **
 *******************************************************************************/
 void GKI_exit_task(uint8_t task_id) {
+  if (task_id >= GKI_MAX_TASKS) {
+    return;
+  }
   GKI_disable();
   gki_cb.com.OSRdyTbl[task_id] = TASK_DEAD;
 
@@ -1181,9 +1166,9 @@ void GKI_sched_unlock(void) {
 **
 *******************************************************************************/
 void GKI_shiftdown(uint8_t* p_mem, uint32_t len, uint32_t shift_amount) {
-  register uint8_t* ps = p_mem + len - 1;
-  register uint8_t* pd = ps + shift_amount;
-  register uint32_t xx;
+  uint8_t* ps = p_mem + len - 1;
+  uint8_t* pd = ps + shift_amount;
+  uint32_t xx;
 
   for (xx = 0; xx < len; xx++) *pd-- = *ps--;
 }
@@ -1196,9 +1181,9 @@ void GKI_shiftdown(uint8_t* p_mem, uint32_t len, uint32_t shift_amount) {
 **
 *******************************************************************************/
 void GKI_shiftup(uint8_t* p_dest, uint8_t* p_src, uint32_t len) {
-  register uint8_t* ps = p_src;
-  register uint8_t* pd = p_dest;
-  register uint32_t xx;
+  uint8_t* ps = p_src;
+  uint8_t* pd = p_dest;
+  uint32_t xx;
 
   for (xx = 0; xx < len; xx++) *pd++ = *ps++;
 }

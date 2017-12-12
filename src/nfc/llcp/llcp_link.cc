@@ -23,6 +23,10 @@
  ******************************************************************************/
 
 #include <string.h>
+
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
+
 #include "bt_types.h"
 #include "gki.h"
 #include "llcp_defs.h"
@@ -30,6 +34,8 @@
 #include "nfa_dm_int.h"
 #include "nfc_int.h"
 #include "trace_api.h"
+
+using android::base::StringPrintf;
 
 const uint16_t llcp_link_rwt
     [15] = /* RWT = (302us)*2**WT; 302us = 256*16/fc; fc = 13.56MHz */
@@ -76,6 +82,7 @@ static void llcp_link_send_to_lower(NFC_HDR* p_msg);
 extern tLLCP_TEST_PARAMS llcp_test_params;
 #endif
 
+extern bool nfc_debug_enabled;
 extern unsigned char appl_dta_mode_flag;
 
 /* debug functions type */
@@ -1579,8 +1586,8 @@ static void llcp_link_send_to_lower(NFC_HDR* p_pdu) {
 ** Returns          void
 **
 *******************************************************************************/
-void llcp_link_connection_cback(uint8_t conn_id, tNFC_CONN_EVT event,
-                                tNFC_CONN* p_data) {
+void llcp_link_connection_cback(__attribute__((unused)) uint8_t conn_id,
+                                tNFC_CONN_EVT event, tNFC_CONN* p_data) {
   if (event == NFC_DATA_CEVT) {
     DispLLCP((NFC_HDR*)p_data->data.p_data, true);
     if (llcp_cb.lcb.link_state == LLCP_LINK_STATE_DEACTIVATED) {

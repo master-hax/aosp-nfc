@@ -23,11 +23,19 @@
  ******************************************************************************/
 
 #include <string.h>
+
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
+
 #include "bt_types.h"
 #include "gki.h"
 #include "llcp_api.h"
 #include "llcp_int.h"
 #include "nfa_dm_int.h"
+
+using android::base::StringPrintf;
+
+extern bool nfc_debug_enabled;
 
 /*******************************************************************************
 **
@@ -39,7 +47,7 @@
 ** Returns          void
 **
 *******************************************************************************/
-void llcp_sdp_proc_data(tLLCP_SAP_CBACK_DATA* p_data) {
+void llcp_sdp_proc_data(__attribute__((unused)) tLLCP_SAP_CBACK_DATA* p_data) {
   /*
   ** Do nothing
   ** llcp_sdp_proc_SNL () is called by link layer

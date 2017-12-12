@@ -23,14 +23,22 @@
  *
  ******************************************************************************/
 #include <string.h>
-#include "bt_types.h"
-#include "nfc_target.h"
-#include "trace_api.h"
 
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
+
+#include "nfc_target.h"
+
+#include "bt_types.h"
 #include "ce_api.h"
 #include "ce_int.h"
 #include "nfc_int.h"
 #include "tags_int.h"
+#include "trace_api.h"
+
+using android::base::StringPrintf;
+
+extern bool nfc_debug_enabled;
 
 #if (CE_TEST_INCLUDED == TRUE) /* test only */
 bool mapping_aid_test_enabled = false;
@@ -48,8 +56,6 @@ uint8_t ce_test_tag_app_id[T4T_V20_NDEF_TAG_AID_LEN] = {0xD2, 0x76, 0x00, 0x00,
 **
 *******************************************************************************/
 static bool ce_t4t_send_to_lower(NFC_HDR* p_r_apdu) {
-  DispCET4Tags(p_r_apdu, false);
-
   if (NFC_SendData(NFC_RF_CONN_ID, p_r_apdu) != NFC_STATUS_OK) {
     LOG(ERROR) << StringPrintf("failed");
     return false;
@@ -548,8 +554,6 @@ static void ce_t4t_data_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   }
 
   p_c_apdu = (NFC_HDR*)p_data->data.p_data;
-
-  DispCET4Tags(p_c_apdu, true);
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("conn_id = 0x%02X", conn_id);
 

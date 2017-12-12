@@ -23,12 +23,20 @@
  *
  ******************************************************************************/
 #include <string.h>
+
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
+
 #include "nfc_target.h"
 
 #include "nci_hmsgs.h"
 #include "nfc_api.h"
 #include "rw_api.h"
 #include "rw_int.h"
+
+using android::base::StringPrintf;
+
+extern bool nfc_debug_enabled;
 
 #if (RW_NDEF_INCLUDED == TRUE)
 
@@ -239,9 +247,7 @@ static void rw_t2t_ntf_tlv_detect_complete(tNFC_STATUS status) {
 
   if (p_t2t->tlv_detect == TAG_NDEF_TLV) {
     /* Notify upper layer the result of NDEF detect op */
-    tRW_DETECT_NDEF_DATA ndef_data = {
-        0,
-    };
+    tRW_DETECT_NDEF_DATA ndef_data = {};
     ndef_data.status = status;
     ndef_data.protocol = NFC_PROTOCOL_T2T;
     ndef_data.flags = rw_t2t_get_ndef_flags();

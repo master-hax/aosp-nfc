@@ -16,10 +16,17 @@
  *
  ******************************************************************************/
 #include "CrcChecksum.h"
+
 #include <fcntl.h>
 #include <unistd.h>
 #include <string>
-#include "_OverrideLog.h"
+
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
+
+using android::base::StringPrintf;
+
+extern bool nfc_debug_enabled;
 
 static const unsigned short crctab[256] = {
     0x0000, 0xc0c1, 0xc181, 0x0140, 0xc301, 0x03c0, 0x0280, 0xc241, 0xc601,
@@ -63,9 +70,9 @@ static const unsigned short crctab[256] = {
 **
 *******************************************************************************/
 unsigned short crcChecksumCompute(const unsigned char* buffer, int bufferLen) {
-  register unsigned short crc = 0;
-  const register unsigned char* cp = buffer;
-  register int cnt = bufferLen;
+  unsigned short crc = 0;
+  const unsigned char* cp = buffer;
+  int cnt = bufferLen;
 
   while (cnt--) {
     crc = ((crc >> 8) & 0xff) ^ crctab[(crc & 0xff) ^ *cp++];
@@ -86,7 +93,7 @@ unsigned short crcChecksumCompute(const unsigned char* buffer, int bufferLen) {
 bool crcChecksumVerifyIntegrity(const char* filename) {
   DLOG_IF(INFO, nfc_debug_enabled)
       << StringPrintf("%s: filename=%s", __func__, filename);
-  bool isGood = FALSE;
+  bool isGood = false;
   int fileStream = open(filename, O_RDONLY);
   if (fileStream >= 0) {
     unsigned short checksum = 0;
@@ -106,12 +113,12 @@ bool crcChecksumVerifyIntegrity(const char* filename) {
           << StringPrintf("%s: data size=%zu", __func__, data.size());
       if (checksum ==
           crcChecksumCompute((const unsigned char*)data.data(), data.size()))
-        isGood = TRUE;
+        isGood = true;
       else
         LOG(ERROR) << StringPrintf("%s: checksum mismatch", __func__);
     } else
       LOG(ERROR) << StringPrintf("%s: invalid length", __func__);
   } else
-    isGood = TRUE;  // assume file does not exist
+    isGood = true;  // assume file does not exist
   return isGood;
 }

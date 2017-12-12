@@ -21,10 +21,17 @@
  *  This is the main implementation file for the NFA device manager.
  *
  ******************************************************************************/
-
 #include <string>
+
+#include <android-base/stringprintf.h>
+#include <base/logging.h>
+
 #include "nfa_api.h"
 #include "nfa_dm_int.h"
+
+using android::base::StringPrintf;
+
+extern bool nfc_debug_enabled;
 
 /*****************************************************************************
 ** Constants and types
@@ -33,9 +40,7 @@ static const tNFA_SYS_REG nfa_dm_sys_reg = {nfa_dm_sys_enable, nfa_dm_evt_hdlr,
                                             nfa_dm_sys_disable,
                                             nfa_dm_proc_nfcc_power_mode};
 
-tNFA_DM_CB nfa_dm_cb = {
-    0,
-};
+tNFA_DM_CB nfa_dm_cb = {};
 
 #define NFA_DM_NUM_ACTIONS (NFA_DM_MAX_EVT & 0x00ff)
 
