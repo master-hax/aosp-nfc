@@ -387,6 +387,7 @@ typedef uint8_t tNCI_DISCOVERY_TYPE;
 /* Protocol based routing  */
 #define NCI_ROUTE_TAG_PROTO 0x01
 #define NCI_ROUTE_TAG_AID 0x02 /* AID routing */
+#define NCI_ROUTE_TAG_SYSCODE 0x03 /* SystemCode routing*/
 
 #define NCI_ROUTE_PWR_STATE_ON 0x01 /* The device is on */
 /* The device is switched off */
