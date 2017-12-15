@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1780ba8d_d2182558",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1103651
+      },
+      "writtenOn": "2017-12-15T06:37:40Z",
+      "side": 1,
+      "message": "nfa_ee_total_lmrt_size () includes not only the size of AID but also the size of \"the size for technology and protocol routing\".\nSince the expected value is only the size that can be used with AID, nfa_ee_total_lmrt_size() is not used.",
+      "parentUuid": "977f72e3_e6281735",
+      "range": {
+        "startLine": 1050,
+        "startChar": 2,
+        "endLine": 1076,
+        "endChar": 1
+      },
+      "revId": "4654f7841d368eadab3acec9c6fe7af9c41d73ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fccde01a_89ebc7f5",
         "filename": "src/nfa/ee/nfa_ee_act.cc",
         "patchSetId": 1
