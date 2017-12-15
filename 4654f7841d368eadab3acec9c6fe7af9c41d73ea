@@ -69,6 +69,30 @@
       "revId": "4654f7841d368eadab3acec9c6fe7af9c41d73ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77d1cc39_f893467d",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1103651
+      },
+      "writtenOn": "2017-12-15T06:39:01Z",
+      "side": 1,
+      "message": "NFC_GetLmrtSize () is not an AID-based routing registration upper limit byte number but an API to acquire the \"Listen Mode Routing table\" size.\nI want to know the value of AID-based routing.",
+      "parentUuid": "fccde01a_89ebc7f5",
+      "range": {
+        "startLine": 1095,
+        "startChar": 46,
+        "endLine": 1095,
+        "endChar": 68
+      },
+      "revId": "4654f7841d368eadab3acec9c6fe7af9c41d73ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
