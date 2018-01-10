@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d7010c_86a487b2",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "declare within the for loop?",
+      "range": {
+        "startLine": 233,
+        "startChar": 1,
+        "endLine": 233,
+        "endChar": 9
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7578d4f5_b72ca5ce",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 427,
+        "startChar": 0,
+        "endLine": 427,
+        "endChar": 23
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b8a29c_df1cbd29",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "within for loop.",
+      "range": {
+        "startLine": 538,
+        "startChar": 15,
+        "endLine": 538,
+        "endChar": 18
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829bb7aa_56c1acf2",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 559,
+        "startChar": 2,
+        "endLine": 559,
+        "endChar": 14
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634def1e_feb1852d",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "can be declared in the loop.",
+      "range": {
+        "startLine": 561,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 27
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37010a6_c1c87036",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "declare them closer to the usage. if possible on the same line as definition.",
+      "range": {
+        "startLine": 625,
+        "startChar": 2,
+        "endLine": 626,
+        "endChar": 36
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85eb1f9_9067ef46",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "return if not null?",
+      "range": {
+        "startLine": 640,
+        "startChar": 12,
+        "endLine": 640,
+        "endChar": 26
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e706caa_7bca09f4",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "please declare them closer to definition/usage.",
+      "range": {
+        "startLine": 1109,
+        "startChar": 2,
+        "endLine": 1115,
+        "endChar": 13
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3aab13b_d940a961",
+        "filename": "src/nfa/ee/nfa_ee_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "declare in the if()",
+      "range": {
+        "startLine": 519,
+        "startChar": 2,
+        "endLine": 519,
+        "endChar": 32
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "351826b6_0cb21449",
+        "filename": "src/nfa/ee/nfa_ee_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "declare closer to the definition.",
+      "range": {
+        "startLine": 521,
+        "startChar": 2,
+        "endLine": 521,
+        "endChar": 20
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "701d2a3b_4db78915",
+        "filename": "src/nfa/ee/nfa_ee_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "Formatting?",
+      "range": {
+        "startLine": 554,
+        "startChar": 0,
+        "endLine": 557,
+        "endChar": 12
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d7305d_c6683fbb",
+        "filename": "src/nfa/ee/nfa_ee_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "Missing implementation or not needed?",
+      "range": {
+        "startLine": 572,
+        "startChar": 0,
+        "endLine": 577,
+        "endChar": 1
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7827702c_bb347601",
+        "filename": "src/nfa/ee/nfa_ee_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "formatting",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 65
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e9bf72_b7c1e54e",
+        "filename": "src/nfc/include/nfc_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "space?",
+      "range": {
+        "startLine": 145,
+        "startChar": 59,
+        "endLine": 145,
+        "endChar": 63
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e77629_3018f843",
+        "filename": "utils/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T01:03:29Z",
+      "side": 1,
+      "message": "Where is this used?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "6b8f16fbb00c04358ade35da36a98911b1d26811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
