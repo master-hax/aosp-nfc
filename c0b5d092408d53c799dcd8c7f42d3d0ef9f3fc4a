@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b03db92_270aed38",
+        "filename": "src/nfa/ce/nfa_ce_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T23:41:43Z",
+      "side": 1,
+      "message": "declare it within the for loop and maybe rename to idx?",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "c0b5d092408d53c799dcd8c7f42d3d0ef9f3fc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9941a030_0108981c",
+        "filename": "src/nfa/ce/nfa_ce_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T23:41:43Z",
+      "side": 1,
+      "message": "true",
+      "range": {
+        "startLine": 866,
+        "startChar": 36,
+        "endLine": 866,
+        "endChar": 40
+      },
+      "revId": "c0b5d092408d53c799dcd8c7f42d3d0ef9f3fc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4391c127_cbbcfecf",
+        "filename": "src/nfa/ce/nfa_ce_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-10T23:41:43Z",
+      "side": 1,
+      "message": "return true?",
+      "range": {
+        "startLine": 878,
+        "startChar": 14,
+        "endLine": 878,
+        "endChar": 17
+      },
+      "revId": "c0b5d092408d53c799dcd8c7f42d3d0ef9f3fc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
