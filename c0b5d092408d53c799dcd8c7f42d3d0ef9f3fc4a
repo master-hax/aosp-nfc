@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0cbbc1a8_92bf359c",
+        "filename": "src/nfa/ce/nfa_ce_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-01-11T13:25:49Z",
+      "side": 1,
+      "message": "listen_info_idx is being used later to get the selected tech for CE. Refer Line: 954,960",
+      "parentUuid": "0b03db92_270aed38",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "c0b5d092408d53c799dcd8c7f42d3d0ef9f3fc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9941a030_0108981c",
         "filename": "src/nfa/ce/nfa_ce_act.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "37747af9_6bdf9864",
+        "filename": "src/nfa/ce/nfa_ce_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-01-11T13:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9941a030_0108981c",
+      "range": {
+        "startLine": 866,
+        "startChar": 36,
+        "endLine": 866,
+        "endChar": 40
+      },
+      "revId": "c0b5d092408d53c799dcd8c7f42d3d0ef9f3fc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4391c127_cbbcfecf",
         "filename": "src/nfa/ce/nfa_ce_act.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-10T23:41:43Z",
       "side": 1,
       "message": "return true?",
+      "range": {
+        "startLine": 878,
+        "startChar": 14,
+        "endLine": 878,
+        "endChar": 17
+      },
+      "revId": "c0b5d092408d53c799dcd8c7f42d3d0ef9f3fc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cf5a43_7f7fc14e",
+        "filename": "src/nfa/ce/nfa_ce_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-01-11T13:25:49Z",
+      "side": 1,
+      "message": "Take early exit and do not invoke the connection callback for this activation, wait till reader/writer selects a target (DH/offhost)",
+      "parentUuid": "4391c127_cbbcfecf",
       "range": {
         "startLine": 878,
         "startChar": 14,
