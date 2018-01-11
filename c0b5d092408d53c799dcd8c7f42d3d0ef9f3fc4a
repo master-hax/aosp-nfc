@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fad97894_649e8de1",
+        "filename": "src/nfa/ce/nfa_ce_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-11T18:12:30Z",
+      "side": 1,
+      "message": "That\u0027s a different function. Local variables of one function wouldn\u0027t be available in another? :)",
+      "parentUuid": "0cbbc1a8_92bf359c",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "c0b5d092408d53c799dcd8c7f42d3d0ef9f3fc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9941a030_0108981c",
         "filename": "src/nfa/ce/nfa_ce_act.cc",
         "patchSetId": 1
