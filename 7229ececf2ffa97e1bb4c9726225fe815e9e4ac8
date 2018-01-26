@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b3c8599_89d6a907",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-26T00:08:19Z",
+      "side": 1,
+      "message": "p_cb is going to be null here?",
+      "range": {
+        "startLine": 1148,
+        "startChar": 15,
+        "endLine": 1148,
+        "endChar": 19
+      },
+      "revId": "7229ececf2ffa97e1bb4c9726225fe815e9e4ac8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acac7146_e303ed28",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-26T00:08:19Z",
+      "side": 1,
+      "message": "same comment as before. please define them closer to usage.",
+      "range": {
+        "startLine": 1202,
+        "startChar": 2,
+        "endLine": 1208,
+        "endChar": 0
+      },
+      "revId": "7229ececf2ffa97e1bb4c9726225fe815e9e4ac8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffa9047_30fdfb96",
+        "filename": "src/nfa/include/nfa_ee_int.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-26T00:08:19Z",
+      "side": 1,
+      "message": "comment on the previous line?",
+      "range": {
+        "startLine": 204,
+        "startChar": 1,
+        "endLine": 205,
+        "endChar": 79
+      },
+      "revId": "7229ececf2ffa97e1bb4c9726225fe815e9e4ac8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
