@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "888c3944_02551218",
+        "filename": "src/nfa/ee/nfa_ee_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-29T21:48:50Z",
+      "side": 1,
+      "message": "LOG(ERROR) \u003c\u003c \"Bad ee_handle or System Code\";",
+      "range": {
+        "startLine": 526,
+        "startChar": 4,
+        "endLine": 526,
+        "endChar": 63
+      },
+      "revId": "4db2ecaed1b150a521c49c5a24ffe74b9497969e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa87e73_d8f780d1",
+        "filename": "src/nfa/ee/nfa_ee_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-01-29T21:48:50Z",
+      "side": 1,
+      "message": "LOG(ERROR) \u003c\u003c \"Invalid NCI Version\";",
+      "range": {
+        "startLine": 529,
+        "startChar": 4,
+        "endLine": 529,
+        "endChar": 54
+      },
+      "revId": "4db2ecaed1b150a521c49c5a24ffe74b9497969e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
