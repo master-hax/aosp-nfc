@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1873dc8_8996f683",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-02-02T23:43:08Z",
+      "side": 1,
+      "message": "leftover TODO from Martijn, but is there a plan to fix the implementation to not do this? These should be checked to be in bounds or use the actual types everywhere",
+      "range": {
+        "startLine": 111,
+        "startChar": 19,
+        "endLine": 111,
+        "endChar": 28
+      },
+      "revId": "b28b7ca6933355c3382c5c53a87aea9cffc464ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
