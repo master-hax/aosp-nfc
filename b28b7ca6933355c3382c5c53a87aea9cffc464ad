@@ -22,6 +22,30 @@
       "revId": "b28b7ca6933355c3382c5c53a87aea9cffc464ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d077d7ba_1e119f9a",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-02-02T23:47:35Z",
+      "side": 1,
+      "message": "Yes long term goal is to use the actual types.",
+      "parentUuid": "f1873dc8_8996f683",
+      "range": {
+        "startLine": 111,
+        "startChar": 19,
+        "endLine": 111,
+        "endChar": 28
+      },
+      "revId": "b28b7ca6933355c3382c5c53a87aea9cffc464ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
