@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed9b0aa2_daf74ed5",
+        "filename": "src/nfc/nfc/nfc_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1047473
+      },
+      "writtenOn": "2018-02-03T01:14:16Z",
+      "side": 0,
+      "message": "add HCE_NETWORK_RESET name here?",
+      "range": {
+        "startLine": 132,
+        "startChar": 19,
+        "endLine": 132,
+        "endChar": 37
+      },
+      "revId": "d1b7a7e9a6bdb649cc551720db36171dcd373e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
