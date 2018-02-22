@@ -148,6 +148,8 @@ static std::string nfc_hal_event_name(uint8_t event) {
       return "HAL_NFC_RELEASE_CONTROL_EVT";
     case HAL_NFC_ERROR_EVT:
       return "HAL_NFC_ERROR_EVT";
+    case (uint32_t)NfcEvent::HCI_NETWORK_RESET:
+      return "HCI_NETWORK_RESET";
     default:
       return "???? UNKNOWN EVENT";
   }
