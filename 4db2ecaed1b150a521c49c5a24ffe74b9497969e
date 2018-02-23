@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "d1659926_29cba6bc",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1150263
+      },
+      "writtenOn": "2018-02-23T10:46:15Z",
+      "side": 1,
+      "message": "0x02%X is more understandable",
+      "range": {
+        "startLine": 1106,
+        "startChar": 26,
+        "endLine": 1106,
+        "endChar": 47
+      },
+      "revId": "4db2ecaed1b150a521c49c5a24ffe74b9497969e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12fd4304_7c2e6a87",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1150263
+      },
+      "writtenOn": "2018-02-23T10:46:15Z",
+      "side": 1,
+      "message": "INFO?",
+      "range": {
+        "startLine": 1181,
+        "startChar": 6,
+        "endLine": 1181,
+        "endChar": 11
+      },
+      "revId": "4db2ecaed1b150a521c49c5a24ffe74b9497969e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0f29057_23a8ae56",
         "filename": "src/nfa/ee/nfa_ee_act.cc",
         "patchSetId": 3
