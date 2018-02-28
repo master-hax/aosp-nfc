@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e60974_9ce9d925",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-02-28T18:28:15Z",
+      "side": 1,
+      "message": "The GSMA spec v 12 requires NFCC to support the HCI v 13 or higher.To support the GSMA requirement HCI HID should be allowed as per the Table 1 (updated HCI v 12 on wards) defined in specification. \n\nHere we need check the RFU range from 03 to 7F and allow HCI HID from 80 to BF.\n\nUpdated Reference from HCI spec\nTable 1\nHost HID\nhost controller \u002700\u0027\nterminal host \u002701\u0027\nUICC host \u002702\u0027\nRFU \u002703\u0027 to \u00277F\u0027\nDynamically allocated \u002780\u0027 to \u0027BF\u0027\nProprietary \u0027C0\u0027 to \u0027FF\u0027",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 68
+      },
+      "revId": "eb7ac26c4892eea6c5c922b8249dd7c20a2452b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
