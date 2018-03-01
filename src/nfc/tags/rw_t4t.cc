@@ -2110,9 +2110,7 @@ tNFC_STATUS RW_T4tPresenceCheck(uint8_t option) {
     } else {
       /* use read binary on the given channel */
       rw_cb.tcb.t4t.channel = 0;
-      if (option <= RW_T4T_CHK_READ_BINARY_CH3) rw_cb.tcb.t4t.channel = option;
       status = rw_t4t_read_file(0, 1, false);
-      rw_cb.tcb.t4t.channel = 0;
     }
 
     if (status == true) {
