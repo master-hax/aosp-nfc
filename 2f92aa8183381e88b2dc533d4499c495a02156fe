@@ -22,6 +22,30 @@
       "revId": "2f92aa8183381e88b2dc533d4499c495a02156fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7a3fda_d385637e",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-01T21:33:49Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "ec35b3bf_b0eef9d0",
+      "range": {
+        "startLine": 2110,
+        "startChar": 6,
+        "endLine": 2116,
+        "endChar": 5
+      },
+      "revId": "2f92aa8183381e88b2dc533d4499c495a02156fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
