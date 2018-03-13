@@ -182,7 +182,7 @@ tNFC_STATUS RW_SendRawFrame(uint8_t* p_raw_data, uint16_t data_len) {
       p_data->len = data_len;
 
       DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("RW SENT raw frame (0x%x)", data_len);
+          << StringPrintf("RW SENT raw frame (0x%02x)", data_len);
       status = NFC_SendData(NFC_RF_CONN_ID, p_data);
     }
   }

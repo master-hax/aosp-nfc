@@ -108,7 +108,7 @@ static void nfa_rw_send_data_to_upper(tRW_DATA* p_rw_data) {
     return;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nfa_rw_send_data_to_upper: Len [0x%X] Status [%s]",
+      << StringPrintf("nfa_rw_send_data_to_upper: Len [0x%02x] Status [%s]",
                       p_rw_data->data.p_data->len,
                       NFC_GetStatusName(p_rw_data->data.status).c_str());
 
@@ -197,7 +197,7 @@ static void nfa_rw_handle_ndef_detect(tRW_DATA* p_rw_data) {
   tNFA_CONN_EVT_DATA conn_evt_data;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "NDEF Detection completed: cur_size=%i, max_size=%i, flags=0x%x",
+      "NDEF Detection completed: cur_size=%i, max_size=%i, flags=0x%02x",
       p_rw_data->ndef.cur_size, p_rw_data->ndef.max_size,
       p_rw_data->ndef.flags);
 
@@ -971,7 +971,7 @@ static void nfa_rw_handle_t3t_evt(tRW_EVENT event, tRW_DATA* p_rw_data) {
 
     default:
       DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("; Unhandled RW event 0x%X", event);
+          << StringPrintf("; Unhandled RW event 0x%02x", event);
       break;
   }
 }
@@ -1104,7 +1104,7 @@ static void nfa_rw_handle_t4t_evt(tRW_EVENT event, tRW_DATA* p_rw_data) {
 
     default:
       DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("; Unhandled RW event 0x%X", event);
+          << StringPrintf("; Unhandled RW event 0x%02x", event);
       break;
   }
 }
@@ -1378,7 +1378,7 @@ static void nfa_rw_handle_i93_evt(tRW_EVENT event, tRW_DATA* p_rw_data) {
 
     default:
       DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("; Unhandled RW event 0x%X", event);
+          << StringPrintf("; Unhandled RW event 0x%02x", event);
       break;
   }
 }
@@ -2400,7 +2400,7 @@ static void nfa_rw_raw_mode_data_cback(__attribute__((unused)) uint8_t conn_id,
   NFC_HDR* p_msg;
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event = 0x%X", event);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event = 0x%02x", event);
 
   if ((event == NFC_DATA_CEVT) &&
       ((p_data->data.status == NFC_STATUS_OK) ||

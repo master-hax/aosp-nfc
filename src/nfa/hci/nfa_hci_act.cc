@@ -603,7 +603,7 @@ static bool nfa_hci_api_create_pipe(tNFA_HCI_EVENT_DATA* p_evt_data) {
     report_failed = true;
     LOG(ERROR) << StringPrintf(
         "nfa_hci_api_create_pipe Cannot create pipe! APP: 0x%02x does not own "
-        "the gate:0x%x",
+        "the gate:0x%02x",
         p_evt_data->create_pipe.hci_handle,
         p_evt_data->create_pipe.source_gate);
   } else if (nfa_hciu_check_pipe_between_gates(

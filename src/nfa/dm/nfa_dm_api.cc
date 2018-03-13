@@ -184,7 +184,7 @@ uint8_t NFA_GetNCIVersion() { return NFC_GetNCIVersion(); }
 *******************************************************************************/
 tNFA_STATUS NFA_SetPowerSubStateForScreenState(uint8_t screenState) {
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s: state:0x%X", __func__, screenState);
+      << StringPrintf("%s: state:0x%02x", __func__, screenState);
 
   uint8_t nci_scren_state = 0xFF;
   uint16_t buf_size = sizeof(tNFA_DM_API_SET_POWER_SUB_STATE);
@@ -241,7 +241,7 @@ tNFA_STATUS NFA_SetPowerSubStateForScreenState(uint8_t screenState) {
 tNFA_STATUS NFA_SetConfig(tNFA_PMID param_id, uint8_t length, uint8_t* p_data) {
   tNFA_DM_API_SET_CONFIG* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("param_id:0x%X", param_id);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("param_id:0x%02x", param_id);
 
   p_msg = (tNFA_DM_API_SET_CONFIG*)GKI_getbuf(
       (uint16_t)(sizeof(tNFA_DM_API_SET_CONFIG) + length));
@@ -340,7 +340,8 @@ tNFA_STATUS NFA_RequestExclusiveRfControl(tNFA_TECHNOLOGY_MASK poll_mask,
                                           tNFA_NDEF_CBACK* p_ndef_cback) {
   tNFA_DM_API_REQ_EXCL_RF_CTRL* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("poll_mask=0x%x", poll_mask);
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("poll_mask=0x%02x", poll_mask);
 
   if (!p_conn_cback) {
     LOG(ERROR) << StringPrintf("error null callback");
@@ -439,7 +440,7 @@ tNFA_STATUS NFA_ReleaseExclusiveRfControl(void) {
 tNFA_STATUS NFA_EnablePolling(tNFA_TECHNOLOGY_MASK poll_mask) {
   tNFA_DM_API_ENABLE_POLL* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("0x%X", poll_mask);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("0x%02x", poll_mask);
 
   p_msg = (tNFA_DM_API_ENABLE_POLL*)GKI_getbuf(sizeof(tNFA_DM_API_ENABLE_POLL));
   if (p_msg != NULL) {
@@ -654,7 +655,8 @@ tNFA_STATUS NFA_ResumeP2p(void) {
 tNFA_STATUS NFA_SetP2pListenTech(tNFA_TECHNOLOGY_MASK tech_mask) {
   tNFA_DM_API_SET_P2P_LISTEN_TECH* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("tech_mask:0x%X", tech_mask);
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("tech_mask:0x%02x", tech_mask);
 
   p_msg = (tNFA_DM_API_SET_P2P_LISTEN_TECH*)GKI_getbuf(
       sizeof(tNFA_DM_API_SET_P2P_LISTEN_TECH));
@@ -798,7 +800,7 @@ tNFA_STATUS NFA_Select(uint8_t rf_disc_id, tNFA_NFC_PROTOCOL protocol,
   tNFA_DM_API_SELECT* p_msg;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("rf_disc_id:0x%X, protocol:0x%X, rf_interface:0x%X",
+      << StringPrintf("rf_disc_id:0x%02x, protocol:0x%02x, rf_interface:0x%02x",
                       rf_disc_id, protocol, rf_interface);
 
   if (((rf_interface == NFA_INTERFACE_ISO_DEP) &&
@@ -1222,7 +1224,7 @@ tNFA_STATUS NFA_SendVsCommand(uint8_t oid, uint8_t cmd_params_len,
   tNFA_DM_API_SEND_VSC* p_msg;
   uint16_t size = sizeof(tNFA_DM_API_SEND_VSC) + cmd_params_len;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("oid=0x%x", oid);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("oid=0x%02x", oid);
 
   p_msg = (tNFA_DM_API_SEND_VSC*)GKI_getbuf(size);
   if (p_msg != NULL) {
@@ -1301,7 +1303,7 @@ tNFA_STATUS NFA_SendRawVsCommand(uint8_t cmd_params_len, uint8_t* p_cmd_params,
 *******************************************************************************/
 void NFA_EnableDtamode(tNFA_eDtaModes eDtaMode) {
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s: 0x%x ", __func__, eDtaMode);
+      << StringPrintf("%s: 0x%02x ", __func__, eDtaMode);
   appl_dta_mode_flag = 0x01;
   nfa_dm_cb.eDtaMode = eDtaMode;
 }

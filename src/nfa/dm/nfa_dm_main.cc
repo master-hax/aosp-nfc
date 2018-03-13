@@ -150,7 +150,7 @@ void nfa_dm_sys_disable(void) {
       nfa_dm_disable_complete();
     } else {
       /* probably waiting to be disabled */
-      LOG(WARNING) << StringPrintf("DM disc_state state = %d disc_flags:0x%x",
+      LOG(WARNING) << StringPrintf("DM disc_state state = %d disc_flags:0x%02x",
                                    nfa_dm_cb.disc_cb.disc_state,
                                    nfa_dm_cb.disc_cb.disc_flags);
     }
@@ -190,7 +190,7 @@ bool nfa_dm_is_protocol_supported(tNFC_PROTOCOL protocol, uint8_t sel_res) {
 *******************************************************************************/
 bool nfa_dm_is_active(void) {
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("flags:0x%x", nfa_dm_cb.flags);
+      << StringPrintf("flags:0x%02x", nfa_dm_cb.flags);
   if ((nfa_dm_cb.flags & NFA_DM_FLAGS_DM_IS_ACTIVE) &&
       ((nfa_dm_cb.flags &
         (NFA_DM_FLAGS_ENABLE_EVT_PEND | NFA_DM_FLAGS_NFCC_IS_RESTORING |

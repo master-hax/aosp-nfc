@@ -116,7 +116,7 @@ tNFA_STATUS NFA_EeGetInfo(uint8_t* p_num_nfcee, tNFA_EE_INFO* p_info) {
   /* compose output */
   for (xx = 0; (xx < ret) && (num_ret < max_ret); xx++, p_cb++) {
     DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("xx:%d max_ret:%d, num_ret:%d ee_status:0x%x", xx,
+        << StringPrintf("xx:%d max_ret:%d, num_ret:%d ee_status:0x%02x", xx,
                         max_ret, num_ret, p_cb->ee_status);
     if ((p_cb->ee_status & NFA_EE_STATUS_INT_MASK) ||
         (p_cb->ee_status == NFA_EE_STATUS_REMOVED)) {
@@ -244,7 +244,7 @@ tNFA_STATUS NFA_EeModeSet(tNFA_HANDLE ee_handle, tNFA_EE_MD mode) {
     }
   }
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("handle:<0x%x>, mode:0x%02X", ee_handle, mode);
+      << StringPrintf("handle:<0x%02x>, mode:0x%02X", ee_handle, mode);
 
   if (p_found == NULL) {
     LOG(ERROR) << StringPrintf("invalid NFCEE:0x%04x", ee_handle);
@@ -298,7 +298,7 @@ tNFA_STATUS NFA_EeSetDefaultTechRouting(
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
       ""
-      "handle:<0x%x>technology_mask:<0x%x>/<0x%x>/<0x%x>",
+      "handle:<0x%02x>technology_mask:<0x%02x>/<0x%02x>/<0x%02x>",
       ee_handle, technologies_switch_on, technologies_switch_off,
       technologies_battery_off);
   p_cb = nfa_ee_find_ecb(nfcee_id);
@@ -358,7 +358,7 @@ tNFA_STATUS NFA_EeSetDefaultProtoRouting(
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
       ""
-      "handle:<0x%x>protocol_mask:<0x%x>/<0x%x>/<0x%x>",
+      "handle:<0x%02x>protocol_mask:<0x%02x>/<0x%02x>/<0x%02x>",
       ee_handle, protocols_switch_on, protocols_switch_off,
       protocols_battery_off);
   p_cb = nfa_ee_find_ecb(nfcee_id);
@@ -415,7 +415,8 @@ tNFA_STATUS NFA_EeAddAidRouting(tNFA_HANDLE ee_handle, uint8_t aid_len,
   uint8_t nfcee_id = (uint8_t)(ee_handle & 0xFF);
   tNFA_EE_ECB* p_cb;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("handle:<0x%x>", ee_handle);
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("handle:<0x%02x>", ee_handle);
   p_cb = nfa_ee_find_ecb(nfcee_id);
 
   /* validate parameters - make sure the AID is in valid length range */
@@ -490,6 +491,100 @@ tNFA_STATUS NFA_EeRemoveAidRouting(uint8_t aid_len, uint8_t* p_aid) {
     }
   }
 
+  return status;
+}
+
+/*******************************************************************************
+**
+** Function         NFA_EeAddSystemCodeRouting
+**
+** Description      This function is called to add an system code entry in the
+**                  listen mode routing table in NFCC. The status of this
+**                  operation is reported as the NFA_EE_ADD_SYSCODE_EVT.
+**
+** Note:            If RF discovery is started,
+**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
+**                  happen before calling this function
+**
+** Note:            NFA_EeUpdateNow() should be called after last NFA-EE
+**                  function to change the listen mode routing is called.
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**                  NFA_STATUS_INVALID_PARAM If bad parameter
+**
+*******************************************************************************/
+tNFA_STATUS NFA_EeAddSystemCodeRouting(uint8_t* p_systemcode,
+                                       tNFA_HANDLE ee_handle,
+                                       tNFA_EE_PWR_STATE power_state) {
+  tNFA_STATUS status = NFA_STATUS_FAILED;
+  uint8_t nfcee_id = (uint8_t)(ee_handle & 0xFF);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      "NFA_EeAddSystemCodeRouting(): handle:<0x%02x>", ee_handle);
+  tNFA_EE_ECB* p_cb = nfa_ee_find_ecb(nfcee_id);
+
+  if (p_cb == NULL || p_systemcode == NULL) {
+    LOG(ERROR) << "Bad ee_handle or System Code";
+    status = NFA_STATUS_INVALID_PARAM;
+  } else if (NFA_GetNCIVersion() != NCI_VERSION_2_0) {
+    LOG(ERROR) << "Invalid NCI Version";
+    status = NFA_STATUS_FAILED;
+  } else {
+    tNFA_EE_API_ADD_SYSCODE* p_msg =
+        (tNFA_EE_API_ADD_SYSCODE*)GKI_getbuf(sizeof(tNFA_EE_API_ADD_SYSCODE));
+    if (p_msg != NULL) {
+      p_msg->hdr.event = NFA_EE_API_ADD_SYSCODE_EVT;
+      p_msg->power_state = power_state;
+      p_msg->nfcee_id = nfcee_id;
+      p_msg->p_cb = p_cb;
+      memcpy(p_msg->p_syscode, p_systemcode, NFA_EE_SYSTEM_CODE_LEN);
+      nfa_sys_sendmsg(p_msg);
+      status = NFA_STATUS_OK;
+    }
+  }
+  return status;
+}
+
+/*******************************************************************************
+**
+** Function         NFA_EeRemoveSystemCodeRouting
+**
+** Description      This function is called to remove the given System Code
+**                  based entry from the listen mode routing table. The status
+**                  of this operation is reported as the
+**                  NFA_EE_REMOVE_SYSCODE_EVT.
+**
+** Note:            If RF discovery is started,
+**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
+**                  happen before calling this function
+**
+** Note:            NFA_EeUpdateNow() should be called after last NFA-EE
+**                  function to change the listen mode routing is called.
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**                  NFA_STATUS_INVALID_PARAM If bad parameter
+**
+*******************************************************************************/
+tNFA_STATUS NFA_EeRemoveSystemCodeRouting(uint8_t* p_systemcode) {
+  tNFA_STATUS status = NFA_STATUS_FAILED;
+
+  if (p_systemcode == NULL) {
+    LOG(ERROR) << "Bad ee_handle or System Code";
+    status = NFA_STATUS_INVALID_PARAM;
+  } else if (NFA_GetNCIVersion() != NCI_VERSION_2_0) {
+    LOG(ERROR) << "Invalid NCI Version";
+    status = NFA_STATUS_FAILED;
+  } else {
+    tNFA_EE_API_REMOVE_SYSCODE* p_msg = (tNFA_EE_API_REMOVE_SYSCODE*)GKI_getbuf(
+        sizeof(tNFA_EE_API_REMOVE_SYSCODE));
+    if (p_msg != NULL) {
+      p_msg->hdr.event = NFA_EE_API_REMOVE_SYSCODE_EVT;
+      memcpy(p_msg->p_syscode, p_systemcode, NFA_EE_SYSTEM_CODE_LEN);
+      nfa_sys_sendmsg(p_msg);
+      status = NFA_STATUS_OK;
+    }
+  }
   return status;
 }
 
@@ -580,7 +675,7 @@ tNFA_STATUS NFA_EeConnect(tNFA_HANDLE ee_handle, uint8_t ee_interface,
   tNFA_EE_ECB* p_cb;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "handle:<0x%x> ee_interface:0x%x", ee_handle, ee_interface);
+      "handle:<0x%02x> ee_interface:0x%02x", ee_handle, ee_interface);
   p_cb = nfa_ee_find_ecb(nfcee_id);
 
   if ((p_cb == NULL) || (p_cback == NULL)) {
@@ -625,7 +720,8 @@ tNFA_STATUS NFA_EeSendData(tNFA_HANDLE ee_handle, uint16_t data_len,
   uint8_t nfcee_id = (uint8_t)(ee_handle & 0xFF);
   tNFA_EE_ECB* p_cb;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("handle:<0x%x>", ee_handle);
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("handle:<0x%02x>", ee_handle);
 
   p_cb = nfa_ee_find_ecb(nfcee_id);
 
@@ -672,7 +768,8 @@ tNFA_STATUS NFA_EeDisconnect(tNFA_HANDLE ee_handle) {
   uint8_t nfcee_id = (uint8_t)(ee_handle & 0xFF);
   tNFA_EE_ECB* p_cb;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("handle:<0x%x>", ee_handle);
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("handle:<0x%02x>", ee_handle);
   p_cb = nfa_ee_find_ecb(nfcee_id);
 
   if ((p_cb == NULL) || (p_cb->conn_st != NFA_EE_CONN_ST_CONN)) {

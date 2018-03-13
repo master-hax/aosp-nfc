@@ -76,8 +76,8 @@ static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
 
   if ((p_t2t->state == RW_T2T_STATE_IDLE) || (p_cmd_rsp_info == NULL)) {
     DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("RW T2T Raw Frame: Len [0x%X] Status [%s]", p_pkt->len,
-                        NFC_GetStatusName(p_data->status).c_str());
+        << StringPrintf("RW T2T Raw Frame: Len [0x%02x] Status [%s]",
+                        p_pkt->len, NFC_GetStatusName(p_data->status).c_str());
     evt_data.status = p_data->status;
     evt_data.p_data = p_pkt;
     tRW_DATA rw_data;
@@ -93,8 +93,8 @@ static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
   nfc_stop_quick_timer(&p_t2t->t2_timer);
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("RW RECV [%s]:0x%x RSP", t2t_info_to_str(p_cmd_rsp_info),
-                      p_cmd_rsp_info->opcode);
+      << StringPrintf("RW RECV [%s]:0x%02x RSP",
+                      t2t_info_to_str(p_cmd_rsp_info), p_cmd_rsp_info->opcode);
 
   if (((p_pkt->len != p_cmd_rsp_info->rsp_len) &&
        (p_pkt->len != p_cmd_rsp_info->nack_rsp_len) &&
@@ -130,7 +130,7 @@ static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
         evt_data.status = NFC_STATUS_FAILED;
     } else {
       DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-          "rw_t2t_proc_data - Received NACK response(0x%x) to SEC-SELCT CMD",
+          "rw_t2t_proc_data - Received NACK response(0x%02x) to SEC-SELCT CMD",
           (*p & 0x0f));
       evt_data.status = NFC_STATUS_REJECTED;
     }
@@ -144,7 +144,7 @@ static void rw_t2t_proc_data(uint8_t conn_id, tNFC_DATA_CEVT* p_data) {
     if (p_t2t->state == RW_T2T_STATE_READ) b_release = false;
 
     DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-        "rw_t2t_proc_data - Received NACK response(0x%x)", (*p & 0x0f));
+        "rw_t2t_proc_data - Received NACK response(0x%02x)", (*p & 0x0f));
 
     if (!p_t2t->check_tag_halt) {
       /* Just received first NACK. Retry just one time to find if tag went in to
@@ -378,7 +378,7 @@ tNFC_STATUS rw_t2t_send_cmd(uint8_t opcode, uint8_t* p_dat) {
       rw_main_update_tx_stats(p_data->len, false);
 #endif
       DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-          "RW SENT [%s]:0x%x CMD", t2t_info_to_str(p_cmd_rsp_info),
+          "RW SENT [%s]:0x%02x CMD", t2t_info_to_str(p_cmd_rsp_info),
           p_cmd_rsp_info->opcode);
 
       status = NFC_SendData(NFC_RF_CONN_ID, p_data);

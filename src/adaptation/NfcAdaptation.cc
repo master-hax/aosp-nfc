@@ -675,7 +675,7 @@ void NfcAdaptation::HalDownloadFirmwareCallback(nfc_event_t event,
                                                 nfc_status_t event_status) {
   const char* func = "NfcAdaptation::HalDownloadFirmwareCallback";
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s: event=0x%X", func, event);
+      << StringPrintf("%s: event=0x%02x", func, event);
   switch (event) {
     case HAL_NFC_OPEN_CPLT_EVT: {
       DLOG_IF(INFO, nfc_debug_enabled)

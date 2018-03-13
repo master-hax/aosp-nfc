@@ -445,7 +445,7 @@ static tLLCP_STATUS llcp_dlsm_connected(tLLCP_DLCB* p_dlcb,
              p_dlcb->remote_rw)) /*if enough data to send next round */
         {
           DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-              "Data link (SSAP:DSAP=0x%X:0x%X) "
+              "Data link (SSAP:DSAP=0x%02x:0x%02x) "
               "congested: xmit_q.count=%d",
               p_dlcb->local_sap, p_dlcb->remote_sap, p_dlcb->i_xmit_q.count);
 
@@ -635,7 +635,7 @@ static void llcp_dlc_proc_connect_pdu(uint8_t dsap, uint8_t ssap,
 
   if ((p_app_cb == NULL) || (p_app_cb->p_app_cback == NULL) ||
       ((p_app_cb->link_type & LLCP_LINK_TYPE_DATA_LINK_CONNECTION) == 0)) {
-    LOG(ERROR) << StringPrintf("Unregistered SAP:0x%x", dsap);
+    LOG(ERROR) << StringPrintf("Unregistered SAP:0x%02x", dsap);
     llcp_util_send_dm(ssap, dsap, LLCP_SAP_DM_REASON_NO_SERVICE);
     return;
   }
@@ -694,7 +694,7 @@ static void llcp_dlc_proc_connect_pdu(uint8_t dsap, uint8_t ssap,
       if ((p_app_cb == NULL) || (p_app_cb->p_app_cback == NULL) ||
           ((p_app_cb->link_type & LLCP_LINK_TYPE_DATA_LINK_CONNECTION) == 0)) {
         LOG(ERROR) << StringPrintf(
-            "SAP(0x%x) doesn't support "
+            "SAP(0x%02x) doesn't support "
             "connection-oriented",
             dsap);
         llcp_util_send_dm(ssap, dsap, LLCP_SAP_DM_REASON_NO_SERVICE);
@@ -758,7 +758,8 @@ static void llcp_dlc_proc_disc_pdu(uint8_t dsap, uint8_t ssap,
       llcp_dlsm_execute(p_dlcb, LLCP_DLC_EVENT_PEER_DISCONNECT_IND, NULL);
     }
   } else {
-    LOG(ERROR) << StringPrintf("No data link for SAP (0x%x,0x%x)", dsap, ssap);
+    LOG(ERROR) << StringPrintf("No data link for SAP (0x%02x,0x%02x)", dsap,
+                               ssap);
   }
 }
 
@@ -801,7 +802,8 @@ static void llcp_dlc_proc_cc_pdu(uint8_t dsap, uint8_t ssap, uint16_t length,
       llcp_dlsm_execute(p_dlcb, LLCP_DLC_EVENT_FRAME_ERROR, NULL);
     }
   } else {
-    LOG(ERROR) << StringPrintf("No data link for SAP (0x%x,0x%x)", dsap, ssap);
+    LOG(ERROR) << StringPrintf("No data link for SAP (0x%02x,0x%02x)", dsap,
+                               ssap);
   }
 }
 
@@ -836,7 +838,7 @@ static void llcp_dlc_proc_dm_pdu(uint8_t dsap, uint8_t ssap, uint16_t length,
       llcp_dlsm_execute(p_dlcb, LLCP_DLC_EVENT_PEER_DISCONNECT_RESP,
                         p_data); /* passing reason */
     } else {
-      LOG(ERROR) << StringPrintf("No data link for SAP (0x%x,0x%x)", dsap,
+      LOG(ERROR) << StringPrintf("No data link for SAP (0x%02x,0x%02x)", dsap,
                                  ssap);
     }
   }
@@ -1030,7 +1032,8 @@ void llcp_dlc_proc_i_pdu(uint8_t dsap, uint8_t ssap, uint16_t i_pdu_length,
       }
     }
   } else {
-    LOG(ERROR) << StringPrintf("No data link for SAP (0x%x,0x%x)", dsap, ssap);
+    LOG(ERROR) << StringPrintf("No data link for SAP (0x%02x,0x%02x)", dsap,
+                               ssap);
     llcp_util_send_dm(ssap, dsap, LLCP_SAP_DM_REASON_NO_ACTIVE_CONNECTION);
   }
 
@@ -1096,7 +1099,7 @@ static void llcp_dlc_proc_rr_rnr_pdu(uint8_t dsap, uint8_t ptype, uint8_t ssap,
         /* if upper layer hasn't get congestion started notification */
         if ((!old_remote_busy) && (!p_dlcb->is_tx_congested)) {
           LOG(WARNING) << StringPrintf(
-              "Data link (SSAP:DSAP=0x%X:0x%X) "
+              "Data link (SSAP:DSAP=0x%02x:0x%02x) "
               "congestion start: i_xmit_q.count=%d",
               p_dlcb->local_sap, p_dlcb->remote_sap, p_dlcb->i_xmit_q.count);
 
@@ -1114,7 +1117,7 @@ static void llcp_dlc_proc_rr_rnr_pdu(uint8_t dsap, uint8_t ptype, uint8_t ssap,
          * is not congested */
         if ((old_remote_busy) && (!p_dlcb->is_tx_congested)) {
           LOG(WARNING) << StringPrintf(
-              "Data link (SSAP:DSAP=0x%X:0x%X) "
+              "Data link (SSAP:DSAP=0x%02x:0x%02x) "
               "congestion end: i_xmit_q.count=%d",
               p_dlcb->local_sap, p_dlcb->remote_sap, p_dlcb->i_xmit_q.count);
 
@@ -1140,7 +1143,8 @@ static void llcp_dlc_proc_rr_rnr_pdu(uint8_t dsap, uint8_t ptype, uint8_t ssap,
       }
     }
   } else {
-    LOG(ERROR) << StringPrintf("No data link for SAP (0x%x,0x%x)", dsap, ssap);
+    LOG(ERROR) << StringPrintf("No data link for SAP (0x%02x,0x%02x)", dsap,
+                               ssap);
   }
 }
 
@@ -1157,11 +1161,12 @@ void llcp_dlc_proc_rx_pdu(uint8_t dsap, uint8_t ptype, uint8_t ssap,
                           uint16_t length, uint8_t* p_data) {
   tLLCP_DLCB* p_dlcb;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("DSAP:0x%x, PTYPE:0x%x, SSAP:0x%x", dsap, ptype, ssap);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      "DSAP:0x%02x, PTYPE:0x%02x, SSAP:0x%02x", dsap, ptype, ssap);
 
   if (dsap == LLCP_SAP_LM) {
-    LOG(ERROR) << StringPrintf("Invalid SAP:0x%x for PTYPE:0x%x", dsap, ptype);
+    LOG(ERROR) << StringPrintf("Invalid SAP:0x%02x for PTYPE:0x%02x", dsap,
+                               ptype);
     return;
   }
 
@@ -1195,7 +1200,7 @@ void llcp_dlc_proc_rx_pdu(uint8_t dsap, uint8_t ptype, uint8_t ssap,
       break;
 
     default:
-      LOG(ERROR) << StringPrintf("Unexpected PDU type (0x%x)", ptype);
+      LOG(ERROR) << StringPrintf("Unexpected PDU type (0x%02x)", ptype);
 
       p_dlcb = llcp_dlc_find_dlcb_by_sap(dsap, ssap);
       if (p_dlcb) {

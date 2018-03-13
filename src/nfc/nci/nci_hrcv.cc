@@ -60,7 +60,7 @@ bool nci_proc_core_rsp(NFC_HDR* p_msg) {
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nci_proc_core_rsp opcode:0x%x", op_code);
+      << StringPrintf("nci_proc_core_rsp opcode:0x%02x", op_code);
   len = *pp++;
 
   /* process the message based on the opcode and message type */
@@ -93,7 +93,7 @@ bool nci_proc_core_rsp(NFC_HDR* p_msg) {
       nfc_ncif_event_status(NFC_SET_POWER_SUB_STATE_REVT, *pp);
       break;
     default:
-      LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
+      LOG(ERROR) << StringPrintf("unknown opcode:0x%02x", op_code);
       break;
   }
 
@@ -119,7 +119,7 @@ void nci_proc_core_ntf(NFC_HDR* p_msg) {
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nci_proc_core_ntf opcode:0x%x", op_code);
+      << StringPrintf("nci_proc_core_ntf opcode:0x%02x", op_code);
   len = *pp++;
 
   /* process the message based on the opcode and message type */
@@ -145,7 +145,7 @@ void nci_proc_core_ntf(NFC_HDR* p_msg) {
       break;
 
     default:
-      LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
+      LOG(ERROR) << StringPrintf("unknown opcode:0x%02x", op_code);
       break;
   }
 }
@@ -216,7 +216,7 @@ void nci_proc_rf_management_rsp(NFC_HDR* p_msg) {
       nfc_ncif_proc_isodep_nak_presence_check_status(*pp, false);
       break;
     default:
-      LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
+      LOG(ERROR) << StringPrintf("unknown opcode:0x%02x", op_code);
       break;
   }
 }
@@ -290,7 +290,7 @@ void nci_proc_rf_management_ntf(NFC_HDR* p_msg) {
       nfc_ncif_proc_isodep_nak_presence_check_status(*pp, true);
       break;
     default:
-      LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
+      LOG(ERROR) << StringPrintf("unknown opcode:0x%02x", op_code);
       break;
   }
 }
@@ -320,7 +320,7 @@ void nci_proc_ee_management_rsp(NFC_HDR* p_msg) {
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nci_proc_ee_management_rsp opcode:0x%x", op_code);
+      << StringPrintf("nci_proc_ee_management_rsp opcode:0x%02x", op_code);
   len = *pp++;
 
   switch (op_code) {
@@ -355,7 +355,7 @@ void nci_proc_ee_management_rsp(NFC_HDR* p_msg) {
       break;
     default:
       p_cback = NULL;
-      LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
+      LOG(ERROR) << StringPrintf("unknown opcode:0x%02x", op_code);
       break;
   }
 
@@ -386,7 +386,7 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nci_proc_ee_management_ntf opcode:0x%x", op_code);
+      << StringPrintf("nci_proc_ee_management_ntf opcode:0x%02x", op_code);
   len = *pp++;
 
   if (op_code == NCI_MSG_NFCEE_DISCOVER) {
@@ -407,7 +407,7 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
     pp = p + yy;
     nfc_response.nfcee_info.num_tlvs = *pp++;
     DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-        "nfcee_id: 0x%x num_interface:0x%x/0x%x, num_tlvs:0x%x",
+        "nfcee_id: 0x%02x num_interface:0x%02x/0x%02x, num_tlvs:0x%02x",
         nfc_response.nfcee_info.nfcee_id, nfc_response.nfcee_info.num_interface,
         yy, nfc_response.nfcee_info.num_tlvs);
 
@@ -420,7 +420,7 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
       p_tlv->tag = *pp++;
       p_tlv->len = yy = *pp++;
       DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("tag:0x%x, len:0x%x", p_tlv->tag, p_tlv->len);
+          << StringPrintf("tag:0x%02x, len:0x%02x", p_tlv->tag, p_tlv->len);
       if (p_tlv->len > NFC_MAX_EE_INFO) p_tlv->len = NFC_MAX_EE_INFO;
       p = pp;
       STREAM_TO_ARRAY(p_tlv->info, pp, p_tlv->len);
@@ -440,7 +440,7 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
     nfc_response.nfcee_status.nfcee_status = *pp;
   } else {
     p_cback = NULL;
-    LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
+    LOG(ERROR) << StringPrintf("unknown opcode:0x%02x", op_code);
   }
 
   if (p_cback) (*p_cback)(event, &nfc_response);

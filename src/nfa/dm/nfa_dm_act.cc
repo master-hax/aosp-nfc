@@ -94,7 +94,7 @@ static void nfa_dm_nfcc_power_mode_proc_complete_cback(void) {
   tNFA_DM_PWR_MODE_CHANGE power_mode_change;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nfcc_pwr_mode = 0x%x", nfa_dm_cb.nfcc_pwr_mode);
+      << StringPrintf("nfcc_pwr_mode = 0x%02x", nfa_dm_cb.nfcc_pwr_mode);
 
   /* if NFCC power state is change to full power */
   if (nfa_dm_cb.nfcc_pwr_mode != NFA_DM_PWR_MODE_OFF_SLEEP) {
@@ -215,7 +215,7 @@ void nfa_dm_proc_nfcc_power_mode(uint8_t nfcc_power_mode) {
   if (nfcc_power_mode == NFA_DM_PWR_MODE_FULL) {
     memset(&nfa_dm_cb.params, 0x00, sizeof(tNFA_DM_PARAMS));
     DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-        "setcfg_pending_mask=0x%x, setcfg_pending_num=%d",
+        "setcfg_pending_mask=0x%02x, setcfg_pending_num=%d",
         nfa_dm_cb.setcfg_pending_mask, nfa_dm_cb.setcfg_pending_num);
     nfa_dm_cb.setcfg_pending_mask = 0;
     nfa_dm_cb.setcfg_pending_num = 0;
@@ -265,8 +265,8 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
   uint8_t dm_cback_evt;
   uint8_t max_ee = 0;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s(0x%x)", nfa_dm_nfc_revt_2_str(event).c_str(), event);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      "%s(0x%02x)", nfa_dm_nfc_revt_2_str(event).c_str(), event);
 
   switch (event) {
     case NFC_ENABLE_REVT: /* 0  Enable event */
@@ -1372,7 +1372,7 @@ bool nfa_dm_act_disable_timeout(__attribute__((unused)) tNFA_DM_MSG* p_data) {
 **
 *******************************************************************************/
 void nfa_dm_act_conn_cback_notify(uint8_t event, tNFA_CONN_EVT_DATA* p_data) {
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event:0x%X", event);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event:0x%02x", event);
 
   /* Notify event using appropriate CONN_CBACK */
   nfa_dm_conn_cback_event_notify(event, p_data);
@@ -1411,7 +1411,7 @@ static void nfa_dm_act_data_cback(__attribute__((unused)) uint8_t conn_id,
   NFC_HDR* p_msg;
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event = 0x%X", event);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event = 0x%02x", event);
 
   if (event == NFC_DATA_CEVT) {
     p_msg = (NFC_HDR*)p_data->data.p_data;
@@ -1702,7 +1702,7 @@ void nfa_dm_notify_activation_status(tNFA_STATUS status,
   tNFC_RF_TECH_PARAMS* p_tech_params;
   uint8_t *p_nfcid = NULL, nfcid_len;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("status:0x%X", status);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("status:0x%02x", status);
 
   if (!nfa_dm_cb.p_activate_ntf) {
     /* this is for NFA P2P listen */

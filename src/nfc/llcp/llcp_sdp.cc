@@ -131,7 +131,7 @@ tLLCP_STATUS llcp_sdp_send_sdreq(uint8_t tid, char* p_name) {
   uint16_t available_bytes;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("tid=0x%x, ServiceName=%s", tid, p_name);
+      << StringPrintf("tid=0x%02x, ServiceName=%s", tid, p_name);
 
   /* if there is no pending SNL */
   if (!llcp_cb.sdp_cb.p_snl) {
@@ -226,7 +226,7 @@ static tLLCP_STATUS llcp_sdp_send_sdres(uint8_t tid, uint8_t sap) {
   uint16_t available_bytes;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("tid=0x%x, SAP=0x%x", tid, sap);
+      << StringPrintf("tid=0x%02x, SAP=0x%02x", tid, sap);
 
   /* if there is no pending SNL */
   if (!llcp_cb.sdp_cb.p_snl) {
@@ -326,7 +326,7 @@ static void llcp_sdp_return_sap(uint8_t tid, uint8_t sap) {
   uint8_t i;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("tid=0x%x, SAP=0x%x", tid, sap);
+      << StringPrintf("tid=0x%02x, SAP=0x%02x", tid, sap);
 
   for (i = 0; i < LLCP_MAX_SDP_TRANSAC; i++) {
     if ((llcp_cb.sdp_cb.transac[i].p_cback) &&
@@ -454,7 +454,7 @@ tLLCP_STATUS llcp_sdp_proc_snl(uint16_t sdu_length, uint8_t* p) {
         break;
 
       default:
-        LOG(WARNING) << StringPrintf("Unknown type (0x%x) is ignored", type);
+        LOG(WARNING) << StringPrintf("Unknown type (0x%02x) is ignored", type);
         break;
     }
 

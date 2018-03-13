@@ -575,7 +575,7 @@ tNFA_HCI_DYN_PIPE* nfa_hciu_find_active_pipe_by_owner(tNFA_HANDLE app_handle) {
   int xx;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("app_handle:0x%x", app_handle);
+      << StringPrintf("app_handle:0x%02x", app_handle);
 
   /* Loop through all pipes looking for the owner */
   for (xx = 0, pp = nfa_hci_cb.cfg.dyn_pipes; xx < NFA_HCI_MAX_PIPE_CB;
@@ -644,7 +644,7 @@ tNFA_HCI_DYN_PIPE* nfa_hciu_find_pipe_by_owner(tNFA_HANDLE app_handle) {
   int xx;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("app_handle:0x%x", app_handle);
+      << StringPrintf("app_handle:0x%02x", app_handle);
 
   /* Loop through all pipes looking for the owner */
   for (xx = 0, pp = nfa_hci_cb.cfg.dyn_pipes; xx < NFA_HCI_MAX_PIPE_CB;
@@ -674,7 +674,7 @@ tNFA_HCI_DYN_PIPE* nfa_hciu_find_pipe_on_gate(uint8_t gate_id) {
   tNFA_HCI_DYN_PIPE* pp;
   int xx;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("Gate:0x%x", gate_id);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("Gate:0x%02x", gate_id);
 
   /* Loop through all pipes looking for the owner */
   for (xx = 0, pp = nfa_hci_cb.cfg.dyn_pipes; xx < NFA_HCI_MAX_PIPE_CB;
@@ -764,7 +764,7 @@ tNFA_HCI_DYN_PIPE* nfa_hciu_find_active_pipe_on_gate(uint8_t gate_id) {
   tNFA_HCI_DYN_PIPE* pp;
   int xx;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("Gate:0x%x", gate_id);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("Gate:0x%02x", gate_id);
 
   /* Loop through all pipes looking for the owner */
   for (xx = 0, pp = nfa_hci_cb.cfg.dyn_pipes; xx < NFA_HCI_MAX_PIPE_CB;

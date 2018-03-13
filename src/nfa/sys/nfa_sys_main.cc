@@ -131,7 +131,7 @@ void nfa_sys_register(uint8_t id, const tNFA_SYS_REG* p_reg) {
   }
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "id=%i, enable_cplt_mask=0x%x", id, nfa_sys_cb.enable_cplt_mask);
+      "id=%i, enable_cplt_mask=0x%02x", id, nfa_sys_cb.enable_cplt_mask);
 }
 
 /*******************************************************************************
