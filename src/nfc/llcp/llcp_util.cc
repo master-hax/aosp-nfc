@@ -93,7 +93,7 @@ bool llcp_util_parse_link_params(uint16_t length, uint8_t* p_bytes) {
         break;
 
       default:
-        LOG(ERROR) << StringPrintf("Unexpected type 0x%x", param_type);
+        LOG(ERROR) << StringPrintf("Unexpected type 0x%02x", param_type);
         BE_STREAM_TO_UINT8(param_len, p);
         p += param_len;
         break;
@@ -280,7 +280,7 @@ tLLCP_STATUS llcp_util_send_ui(uint8_t ssap, uint8_t dsap,
     p_app_cb->is_ui_tx_congested = true;
 
     LOG(WARNING) << StringPrintf(
-        "Logical link (SAP=0x%X) congested: ui_xmit_q.count=%d", ssap,
+        "Logical link (SAP=0x%02x) congested: ui_xmit_q.count=%d", ssap,
         p_app_cb->ui_xmit_q.count);
 
     status = LLCP_STATUS_CONGESTED;
@@ -329,8 +329,8 @@ tLLCP_DLCB* llcp_util_allocate_data_link(uint8_t reg_sap, uint8_t remote_sap) {
   tLLCP_DLCB* p_dlcb = NULL;
   int idx;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("reg_sap = 0x%x, remote_sap = 0x%x", reg_sap, remote_sap);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      "reg_sap = 0x%02x, remote_sap = 0x%02x", reg_sap, remote_sap);
 
   for (idx = 0; idx < LLCP_MAX_DATA_LINK; idx++) {
     if (llcp_cb.dlcb[idx].state == LLCP_DLC_STATE_IDLE) {
@@ -353,7 +353,7 @@ tLLCP_DLCB* llcp_util_allocate_data_link(uint8_t reg_sap, uint8_t remote_sap) {
     llcp_cb.num_data_link_connection++;
 
     DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-        "local_sap = 0x%x, remote_sap = 0x%x, "
+        "local_sap = 0x%02x, remote_sap = 0x%02x, "
         "num_data_link_connection = %d",
         p_dlcb->local_sap, p_dlcb->remote_sap,
         llcp_cb.num_data_link_connection);
@@ -373,7 +373,7 @@ tLLCP_DLCB* llcp_util_allocate_data_link(uint8_t reg_sap, uint8_t remote_sap) {
 void llcp_util_deallocate_data_link(tLLCP_DLCB* p_dlcb) {
   if (p_dlcb) {
     DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("local_sap = 0x%x", p_dlcb->local_sap);
+        << StringPrintf("local_sap = 0x%02x", p_dlcb->local_sap);
 
     if (p_dlcb->state != LLCP_DLC_STATE_IDLE) {
       nfc_stop_quick_timer(&p_dlcb->timer);
@@ -518,7 +518,7 @@ tLLCP_STATUS llcp_util_parse_connect(uint8_t* p_bytes, uint16_t length,
         break;
 
       default:
-        LOG(ERROR) << StringPrintf("Unexpected type 0x%x", param_type);
+        LOG(ERROR) << StringPrintf("Unexpected type 0x%02x", param_type);
         BE_STREAM_TO_UINT8(param_len, p);
         p += param_len;
         break;
@@ -632,7 +632,7 @@ tLLCP_STATUS llcp_util_parse_cc(uint8_t* p_bytes, uint16_t length,
         break;
 
       default:
-        LOG(ERROR) << StringPrintf("Unexpected type 0x%x", param_type);
+        LOG(ERROR) << StringPrintf("Unexpected type 0x%02x", param_type);
         BE_STREAM_TO_UINT8(param_len, p);
         p += param_len;
         break;

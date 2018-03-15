@@ -415,7 +415,7 @@ void nfa_dm_ndef_handle_message(tNFA_STATUS status, uint8_t* p_msg_buf,
   ndef_status = NDEF_MsgValidate(p_msg_buf, len, true);
   if (ndef_status != NDEF_OK) {
     LOG(ERROR) << StringPrintf(
-        "Received invalid NDEF message. NDEF status=0x%x", ndef_status);
+        "Received invalid NDEF message. NDEF status=0x%02x", ndef_status);
     return;
   }
 

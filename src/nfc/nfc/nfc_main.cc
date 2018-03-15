@@ -377,7 +377,7 @@ void nfc_main_handle_hal_evt(tNFC_HAL_EVT_MSG* p_msg) {
   uint8_t* ps;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("HAL event=0x%x", p_msg->hal_evt);
+      << StringPrintf("HAL event=0x%02x", p_msg->hal_evt);
 
   switch (p_msg->hal_evt) {
     case HAL_NFC_OPEN_CPLT_EVT: /* only for failure case */
@@ -497,7 +497,7 @@ void nfc_main_handle_hal_evt(tNFC_HAL_EVT_MSG* p_msg) {
       break;
 
     default:
-      LOG(ERROR) << StringPrintf("unhandled event (0x%x).", p_msg->hal_evt);
+      LOG(ERROR) << StringPrintf("unhandled event (0x%02x).", p_msg->hal_evt);
       break;
   }
 }
@@ -566,7 +566,7 @@ void nfc_main_post_hal_evt(uint8_t hal_evt, tHAL_NFC_STATUS status) {
 *******************************************************************************/
 static void nfc_main_hal_cback(uint8_t event, tHAL_NFC_STATUS status) {
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nfc_main_hal_cback event: %s(0x%x), status=%d",
+      << StringPrintf("nfc_main_hal_cback event: %s(0x%02x), status=%d",
                       nfc_hal_event_name(event).c_str(), event, status);
 
   switch (event) {
@@ -839,22 +839,22 @@ tNFC_STATUS NFC_DiscoveryMap(uint8_t num, tNFC_DISCOVER_MAPS* p_maps,
           is_supported = true;
       }
       DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("[%d]: vs intf_type:0x%x is_supported:%d", xx,
+          << StringPrintf("[%d]: vs intf_type:0x%02x is_supported:%d", xx,
                           p_maps[xx].intf_type, is_supported);
     } else {
       intf_mask = (1 << (p_maps[xx].intf_type));
       if (intf_mask & nfc_cb.nci_interfaces) {
         is_supported = true;
       }
-      DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("[%d]: intf_type:%d intf_mask: 0x%x is_supported:%d",
-                          xx, p_maps[xx].intf_type, intf_mask, is_supported);
+      DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+          "[%d]: intf_type:%d intf_mask: 0x%02x is_supported:%d", xx,
+          p_maps[xx].intf_type, intf_mask, is_supported);
     }
     if (is_supported)
       memcpy(&max_maps[num_intf++], &p_maps[xx], sizeof(tNFC_DISCOVER_MAPS));
     else {
       LOG(WARNING) << StringPrintf(
-          "NFC_DiscoveryMap interface=0x%x is not supported by NFCC",
+          "NFC_DiscoveryMap interface=0x%02x is not supported by NFCC",
           p_maps[xx].intf_type);
     }
   }
@@ -906,7 +906,7 @@ tNFC_STATUS NFC_DiscoveryStart(uint8_t num_params,
   }
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("NFC_DiscoveryStart status: 0x%x", status);
+      << StringPrintf("NFC_DiscoveryStart status: 0x%02x", status);
   return status;
 }
 

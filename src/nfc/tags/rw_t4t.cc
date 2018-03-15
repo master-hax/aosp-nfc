@@ -861,7 +861,7 @@ static bool rw_t4t_select_application(uint8_t version) {
   NFC_HDR* p_c_apdu;
   uint8_t* p;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("version:0x%X", version);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("version:0x%02x", version);
 
   p_c_apdu = (NFC_HDR*)GKI_getpoolbuf(NFC_RW_POOL_ID);
 
@@ -998,7 +998,7 @@ static void rw_t4t_handle_error(tNFC_STATUS status, uint8_t sw1, uint8_t sw2) {
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
       "status:0x%02X, sw1:0x%02X, sw2:0x%02X, "
-      "state:0x%X",
+      "state:0x%02x",
       status, sw1, sw2, p_t4t->state);
 
   nfc_stop_quick_timer(&p_t4t->timer);
@@ -1749,7 +1749,7 @@ static void rw_t4t_data_cback(__attribute__((unused)) uint8_t conn_id,
 
   uint8_t begin_state = p_t4t->state;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event = 0x%X", event);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event = 0x%02x", event);
   nfc_stop_quick_timer(&p_t4t->timer);
 
   switch (event) {
@@ -1794,7 +1794,7 @@ static void rw_t4t_data_cback(__attribute__((unused)) uint8_t conn_id,
 /* Unexpected R-APDU, it should be raw frame response */
 /* forward to upper layer without parsing */
 DLOG_IF(INFO, nfc_debug_enabled)
-    << StringPrintf("RW T4T Raw Frame: Len [0x%X] Status [%s]", p_r_apdu->len,
+    << StringPrintf("RW T4T Raw Frame: Len [0x%x] Status [%s]", p_r_apdu->len,
                     NFC_GetStatusName(p_data->data.status).c_str());
 if (rw_cb.p_cback) {
   rw_data.raw_frame.status = p_data->data.status;
@@ -1859,7 +1859,7 @@ tNFC_STATUS RW_T4tFormatNDef(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.t4t.state != RW_T4T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.t4t.state);
     return NFC_STATUS_FAILED;
   }
@@ -1921,7 +1921,7 @@ tNFC_STATUS RW_T4tDetectNDef(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.t4t.state != RW_T4T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.t4t.state);
     return NFC_STATUS_FAILED;
   }
@@ -1966,7 +1966,7 @@ tNFC_STATUS RW_T4tReadNDef(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.t4t.state != RW_T4T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.t4t.state);
     return NFC_STATUS_FAILED;
   }
@@ -2010,7 +2010,7 @@ tNFC_STATUS RW_T4tUpdateNDef(uint16_t length, uint8_t* p_data) {
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("length:%d", length);
 
   if (rw_cb.tcb.t4t.state != RW_T4T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.t4t.state);
     return NFC_STATUS_FAILED;
   }
@@ -2139,7 +2139,7 @@ tNFC_STATUS RW_T4tSetNDefReadOnly(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.t4t.state != RW_T4T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.t4t.state);
     return NFC_STATUS_FAILED;
   }
