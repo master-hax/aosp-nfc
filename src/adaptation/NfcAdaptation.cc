@@ -203,6 +203,8 @@ void NfcAdaptation::GetVendorConfigs(
                         ConfigValue(config.offHostESEPipeId));
       configMap.emplace(NAME_ISO_DEP_MAX_TRANSCEIVE,
                         ConfigValue(config.maxIsoDepTransceiveLength));
+      configMap.emplace(NAME_DEFAULT_SYS_CODE,
+                        ConfigValue(config.defaultSystemCode));
       /* For Backwards compatibility */
       if (config.presenceCheckAlgorithm ==
           PresenceCheckAlgorithm::ISO_DEP_NAK) {
@@ -718,7 +720,7 @@ void NfcAdaptation::HalDownloadFirmwareCallback(nfc_event_t event,
                                                 nfc_status_t event_status) {
   const char* func = "NfcAdaptation::HalDownloadFirmwareCallback";
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s: event=0x%X", func, event);
+      << StringPrintf("%s: event=0x%02x", func, event);
   switch (event) {
     case HAL_NFC_OPEN_CPLT_EVT: {
       DLOG_IF(INFO, nfc_debug_enabled)

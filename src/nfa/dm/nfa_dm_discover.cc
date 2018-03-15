@@ -698,8 +698,8 @@ static tNFA_DM_DISC_TECH_PROTO_MASK nfa_dm_disc_get_disc_mask(
   }
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "tech_n_mode:0x%X, protocol:0x%X, "
-      "disc_mask:0x%X",
+      "tech_n_mode:0x%02x, protocol:0x%02x, "
+      "disc_mask:0x%x",
       tech_n_mode, protocol, disc_mask);
   return (disc_mask);
 }
@@ -717,7 +717,7 @@ static void nfa_dm_disc_discovery_cback(tNFC_DISCOVER_EVT event,
                                         tNFC_DISCOVER* p_data) {
   tNFA_DM_RF_DISC_SM_EVENT dm_disc_event = NFA_DM_DISC_SM_MAX_EVENT;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event:0x%X", event);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event:0x%x", event);
 
   switch (event) {
     case NFC_START_DEVT:
@@ -1213,8 +1213,8 @@ static tNFA_STATUS nfa_dm_disc_notify_activation(tNFC_DISCOVER* p_data) {
 
   tNFA_DM_DISC_TECH_PROTO_MASK activated_disc_mask;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("tech_n_mode:0x%X, proto:0x%X", tech_n_mode, protocol);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      "tech_n_mode:0x%02x, proto:0x%02x", tech_n_mode, protocol);
 
   if (nfa_dm_cb.disc_cb.excl_disc_entry.in_use) {
     nfa_dm_cb.disc_cb.activated_tech_mode = tech_n_mode;
@@ -1252,7 +1252,7 @@ static tNFA_STATUS nfa_dm_disc_notify_activation(tNFC_DISCOVER* p_data) {
         nfa_dm_cb.disc_cb.activated_handle = xx;
 
         DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-            "activated_rf_interface:0x%x, activated_handle: 0x%x",
+            "activated_rf_interface:0x%02x, activated_handle: 0x%x",
             nfa_dm_cb.disc_cb.activated_rf_interface,
             nfa_dm_cb.disc_cb.activated_handle);
 
@@ -1342,7 +1342,7 @@ static tNFA_STATUS nfa_dm_disc_notify_activation(tNFC_DISCOVER* p_data) {
     nfa_dm_cb.disc_cb.activated_handle = xx;
 
     DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("activated_protocol:0x%x, activated_handle: 0x%x",
+        << StringPrintf("activated_protocol:0x%02x, activated_handle: 0x%x",
                         nfa_dm_cb.disc_cb.activated_protocol,
                         nfa_dm_cb.disc_cb.activated_handle);
 
@@ -2728,7 +2728,7 @@ void nfa_dm_rf_discover_select(uint8_t rf_disc_id, tNFA_NFC_PROTOCOL protocol,
   tNFA_CONN_EVT_DATA conn_evt;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("rf_disc_id:0x%X, protocol:0x%X, rf_interface:0x%X",
+      << StringPrintf("rf_disc_id:0x%02x, protocol:0x%02x, rf_interface:0x%02x",
                       rf_disc_id, protocol, rf_interface);
 
   if (nfa_dm_cb.disc_cb.disc_state == NFA_DM_RFST_W4_HOST_SELECT) {
@@ -2759,7 +2759,7 @@ void nfa_dm_rf_discover_select(uint8_t rf_disc_id, tNFA_NFC_PROTOCOL protocol,
 *******************************************************************************/
 tNFA_STATUS nfa_dm_rf_deactivate(tNFA_DEACTIVATE_TYPE deactivate_type) {
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("deactivate_type:0x%X", deactivate_type);
+      << StringPrintf("deactivate_type:0x%02x", deactivate_type);
 
   if (deactivate_type == NFA_DEACTIVATE_TYPE_SLEEP) {
     if (nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_NFC_DEP)
@@ -2940,8 +2940,8 @@ bool nfa_dm_p2p_prio_logic(uint8_t event, uint8_t* p, uint8_t event_type) {
       protocol = *p++;
       tech_mode = *p++;
     }
-    DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("nfa_dm_p2p_prio_logic event_type = 0x%x", event_type);
+    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+        "nfa_dm_p2p_prio_logic event_type = 0x%02x", event_type);
 
     if (event == NCI_MSG_RF_INTF_ACTIVATED && tech_mode >= 0x80) {
       DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(

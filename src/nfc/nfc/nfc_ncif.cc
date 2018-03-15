@@ -389,8 +389,8 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
        * command window */
       if ((old_gid != gid) || (old_oid != oid)) {
         LOG(ERROR) << StringPrintf(
-            "nfc_ncif_process_event unexpected rsp: gid:0x%x, oid:0x%x", gid,
-            oid);
+            "nfc_ncif_process_event unexpected rsp: gid:0x%02x, oid:0x%02x",
+            gid, oid);
         return true;
       }
 
@@ -447,7 +447,7 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
 
     default:
       DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("NFC received unknown mt:0x%x, gid:%d", mt, gid);
+          << StringPrintf("NFC received unknown mt:0x%02x, gid:%d", mt, gid);
   }
 
   return (free);
@@ -593,7 +593,7 @@ void nfc_ncif_proc_credits(uint8_t* p, __attribute__((unused)) uint16_t plen) {
           /* if this happens in activated state, it's very likely that our NFCC
            * has issues */
           /* However, credit may be returned after deactivation */
-          LOG(ERROR) << StringPrintf("num_buff:0x%x, init_credits:0x%x",
+          LOG(ERROR) << StringPrintf("num_buff:0x%02x, init_credits:0x%02x",
                                      p_cb->num_buff, p_cb->init_credits);
         }
         p_cb->num_buff = p_cb->init_credits;
@@ -713,7 +713,7 @@ Available after Technology Detection
   } else if (NCI_DISCOVERY_TYPE_POLL_KOVIO == p_param->mode) {
     p_param->param.pk.uid_len = len;
     if (p_param->param.pk.uid_len > NFC_KOVIO_MAX_LEN) {
-      LOG(ERROR) << StringPrintf("Kovio UID len:0x%x exceeds max(0x%x)",
+      LOG(ERROR) << StringPrintf("Kovio UID len:0x%02x exceeds max(0x%x)",
                                  p_param->param.pk.uid_len, NFC_KOVIO_MAX_LEN);
       p_param->param.pk.uid_len = NFC_KOVIO_MAX_LEN;
     }
@@ -1313,13 +1313,13 @@ void nfc_ncif_proc_reset_rsp(uint8_t* p, bool is_ntf) {
   uint8_t status = *p++;
   uint8_t wait_for_ntf = FALSE;
   if (is_ntf) {
-    LOG(ERROR) << StringPrintf("reset notification!!:0x%x ", status);
+    LOG(ERROR) << StringPrintf("reset notification!!:0x%02x ", status);
     /* clean up, if the state is OPEN
      * FW does not report reset ntf right now */
     if (status == NCI2_0_RESET_TRIGGER_TYPE_CORE_RESET_CMD_RECEIVED ||
         status == NCI2_0_RESET_TRIGGER_TYPE_POWERED_ON) {
       DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-          "CORE_RESET_NTF Received status nfc_state : 0x%x : 0x%x", status,
+          "CORE_RESET_NTF Received status nfc_state : 0x%02x : 0x%02x", status,
           nfc_cb.nfc_state);
       nfc_stop_timer(&nfc_cb.nci_wait_rsp_timer);
       p++;
@@ -1330,7 +1330,7 @@ void nfc_ncif_proc_reset_rsp(uint8_t* p, bool is_ntf) {
     } else {
       /* CORE_RESET_NTF received error case , trigger recovery*/
       DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-          "CORE_RESET_NTF Received status nfc_state : 0x%x : 0x%x", status,
+          "CORE_RESET_NTF Received status nfc_state : 0x%02x : 0x%02x", status,
           nfc_cb.nfc_state);
       nfc_ncif_cmd_timeout();
       status = NCI_STATUS_FAILED;

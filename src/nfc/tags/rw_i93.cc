@@ -1600,7 +1600,7 @@ void rw_i93_sm_detect_ndef(NFC_HDR* p_resp) {
   tNFC_STATUS status = NFC_STATUS_FAILED;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "sub_state:%s (0x%x)",
+      "sub_state:%s (0x%02x)",
       rw_i93_get_sub_state_name(p_i93->sub_state).c_str(), p_i93->sub_state);
 
   STREAM_TO_UINT8(flags, p);
@@ -1952,7 +1952,7 @@ void rw_i93_sm_detect_ndef(NFC_HDR* p_resp) {
       p_i93->sent_cmd = 0;
 
       DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-          "NDEF cur_size(%d),max_size (%d), flags (0x%x)",
+          "NDEF cur_size(%d),max_size (%d), flags (0x%02x)",
           rw_data.ndef.cur_size, rw_data.ndef.max_size, rw_data.ndef.flags);
 
       (*(rw_cb.p_cback))(RW_I93_NDEF_DETECT_EVT, &rw_data);
@@ -2076,7 +2076,7 @@ void rw_i93_sm_update_ndef(NFC_HDR* p_resp) {
   tRW_DATA rw_data;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "sub_state:%s (0x%x)",
+      "sub_state:%s (0x%02x)",
       rw_i93_get_sub_state_name(p_i93->sub_state).c_str(), p_i93->sub_state);
 
   STREAM_TO_UINT8(flags, p);
@@ -2326,7 +2326,7 @@ void rw_i93_sm_format(NFC_HDR* p_resp) {
   tNFC_STATUS status = NFC_STATUS_FAILED;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "sub_state:%s (0x%x)",
+      "sub_state:%s (0x%02x)",
       rw_i93_get_sub_state_name(p_i93->sub_state).c_str(), p_i93->sub_state);
 
   STREAM_TO_UINT8(flags, p);
@@ -2656,7 +2656,7 @@ void rw_i93_sm_set_read_only(NFC_HDR* p_resp) {
   tRW_DATA rw_data;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "sub_state:%s (0x%x)",
+      "sub_state:%s (0x%02x)",
       rw_i93_get_sub_state_name(p_i93->sub_state).c_str(), p_i93->sub_state);
 
   STREAM_TO_UINT8(flags, p);
@@ -2765,7 +2765,7 @@ void rw_i93_handle_error(tNFC_STATUS status) {
   tRW_EVENT event;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("status:0x%02X, state:0x%X", status, p_i93->state);
+      << StringPrintf("status:0x%02X, state:0x%02x", status, p_i93->state);
 
   nfc_stop_quick_timer(&p_i93->timer);
 
@@ -2898,7 +2898,7 @@ static void rw_i93_data_cback(__attribute__((unused)) uint8_t conn_id,
 
   uint8_t begin_state = p_i93->state;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event = 0x%X", event);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event = 0x%x", event);
 
   if ((event == NFC_DEACTIVATE_CEVT) || (event == NFC_ERROR_CEVT) ||
       ((event == NFC_DATA_CEVT) && (p_data->status != NFC_STATUS_OK))) {
@@ -3076,7 +3076,7 @@ tNFC_STATUS RW_I93Inventory(bool including_afi, uint8_t afi, uint8_t* p_uid) {
       << StringPrintf(", including_afi:%d, AFI:0x%02X", including_afi, afi);
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3110,7 +3110,7 @@ tNFC_STATUS RW_I93StayQuiet(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3144,7 +3144,7 @@ tNFC_STATUS RW_I93ReadSingleBlock(uint16_t block_number) {
       << StringPrintf("block_number:0x%02X", block_number);
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3179,7 +3179,7 @@ tNFC_STATUS RW_I93WriteSingleBlock(uint16_t block_number, uint8_t* p_data) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3217,7 +3217,7 @@ tNFC_STATUS RW_I93LockBlock(uint8_t block_number) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3251,7 +3251,7 @@ tNFC_STATUS RW_I93ReadMultipleBlocks(uint16_t first_block_number,
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3285,7 +3285,7 @@ tNFC_STATUS RW_I93WriteMultipleBlocks(uint16_t first_block_number,
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3329,7 +3329,7 @@ tNFC_STATUS RW_I93Select(uint8_t* p_uid) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3367,7 +3367,7 @@ tNFC_STATUS RW_I93ResetToReady(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3400,7 +3400,7 @@ tNFC_STATUS RW_I93WriteAFI(uint8_t afi) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3433,7 +3433,7 @@ tNFC_STATUS RW_I93LockAFI(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3466,7 +3466,7 @@ tNFC_STATUS RW_I93WriteDSFID(uint8_t dsfid) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3499,7 +3499,7 @@ tNFC_STATUS RW_I93LockDSFID(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3532,7 +3532,7 @@ tNFC_STATUS RW_I93GetSysInfo(uint8_t* p_uid) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3574,7 +3574,7 @@ tNFC_STATUS RW_I93GetMultiBlockSecurityStatus(uint16_t first_block_number,
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
     LOG(ERROR) << StringPrintf(
         "Unable to start command at state "
-        "(0x%X)",
+        "(0x%02x)",
         rw_cb.tcb.i93.state);
     return NFC_STATUS_BUSY;
   }
@@ -3607,7 +3607,7 @@ tNFC_STATUS RW_I93DetectNDef(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_FAILED;
   }
@@ -3661,7 +3661,7 @@ tNFC_STATUS RW_I93ReadNDef(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_FAILED;
   }
@@ -3707,7 +3707,7 @@ tNFC_STATUS RW_I93UpdateNDef(uint16_t length, uint8_t* p_data) {
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("length:%d", length);
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_FAILED;
   }
@@ -3768,7 +3768,7 @@ tNFC_STATUS RW_I93FormatNDef(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_FAILED;
   }
@@ -3815,7 +3815,7 @@ tNFC_STATUS RW_I93SetTagReadOnly(void) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
   if (rw_cb.tcb.i93.state != RW_I93_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%X)",
+    LOG(ERROR) << StringPrintf("Unable to start command at state (0x%02x)",
                                rw_cb.tcb.i93.state);
     return NFC_STATUS_FAILED;
   }

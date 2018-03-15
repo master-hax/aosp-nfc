@@ -395,7 +395,7 @@ void llcp_link_deactivate(uint8_t reason) {
   tLLCP_DLCB* p_dlcb;
   tLLCP_APP_CB* p_app_cb;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("reason = 0x%x", reason);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("reason = 0x%02x", reason);
 
   /* Release any held buffers in signaling PDU queue */
   while (llcp_cb.lcb.sig_xmit_q.p_first)
@@ -639,7 +639,7 @@ static void llcp_link_check_congestion(void) {
           p_app_cb->is_ui_tx_congested = true;
 
           LOG(WARNING) << StringPrintf(
-              "Logical link (SAP=0x%X) congestion start: count=%d", sap,
+              "Logical link (SAP=0x%02x) congestion start: count=%d", sap,
               p_app_cb->ui_xmit_q.count);
 
           data.congest.local_sap = sap;
@@ -658,7 +658,7 @@ static void llcp_link_check_congestion(void) {
         llcp_cb.dlcb[idx].is_tx_congested = true;
 
         LOG(WARNING) << StringPrintf(
-            "Data link (SSAP:DSAP=0x%X:0x%X) congestion start: count=%d",
+            "Data link (SSAP:DSAP=0x%02x:0x%02x) congestion start: count=%d",
             llcp_cb.dlcb[idx].local_sap, llcp_cb.dlcb[idx].remote_sap,
             llcp_cb.dlcb[idx].i_xmit_q.count);
 
@@ -730,7 +730,7 @@ static void llcp_link_check_uncongested(void) {
           p_app_cb->is_ui_tx_congested = false;
 
           DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-              "Logical link (SAP=0x%X) congestion end: count=%d", sap,
+              "Logical link (SAP=0x%02x) congestion end: count=%d", sap,
               p_app_cb->ui_xmit_q.count);
 
           data.congest.local_sap = sap;
@@ -776,7 +776,7 @@ static void llcp_link_check_uncongested(void) {
 
       if (llcp_cb.dlcb[idx].remote_busy == false) {
         DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-            "Data link (SSAP:DSAP=0x%X:0x%X) congestion end: count=%d",
+            "Data link (SSAP:DSAP=0x%02x:0x%02x) congestion end: count=%d",
             llcp_cb.dlcb[idx].local_sap, llcp_cb.dlcb[idx].remote_sap,
             llcp_cb.dlcb[idx].i_xmit_q.count);
 
@@ -979,7 +979,7 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
   if ((p_app_cb) && (p_app_cb->p_app_cback) &&
       (p_app_cb->link_type & LLCP_LINK_TYPE_LOGICAL_DATA_LINK)) {
     DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-        "Local SAP:0x%x, Remote SAP:0x%x", local_sap, remote_sap);
+        "Local SAP:0x%02x, Remote SAP:0x%02x", local_sap, remote_sap);
 
     /* if this is not from AGF PDU */
     if (p_msg) {
@@ -1055,7 +1055,7 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
 
     if (p_app_cb->ui_rx_q.count > llcp_cb.ll_rx_congest_start) {
       LOG(WARNING) << StringPrintf(
-          "SAP:0x%x, rx link is congested (%d), "
+          "SAP:0x%02x, rx link is congested (%d), "
           "discard oldest UI PDU",
           local_sap, p_app_cb->ui_rx_q.count);
 
@@ -1071,7 +1071,7 @@ static void llcp_link_proc_ui_pdu(uint8_t local_sap, uint8_t remote_sap,
       (*p_app_cb->p_app_cback)(&data);
     }
   } else {
-    LOG(ERROR) << StringPrintf("Unregistered SAP:0x%x", local_sap);
+    LOG(ERROR) << StringPrintf("Unregistered SAP:0x%02x", local_sap);
 
     if (p_msg) {
       GKI_freebuf(p_msg);
@@ -1146,7 +1146,7 @@ static void llcp_link_proc_agf_pdu(NFC_HDR* p_agf) {
     ssap = LLCP_GET_SSAP(pdu_hdr);
 
     DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-        "Rx DSAP:0x%x, PTYPE:%s (0x%x), SSAP:0x%x "
+        "Rx DSAP:0x%02x, PTYPE:%s (0x%02x), SSAP:0x%02x "
         "in AGF",
         dsap, llcp_pdu_type(ptype).c_str(), ptype, ssap);
 
@@ -1310,8 +1310,8 @@ static void llcp_link_proc_rx_data(NFC_HDR* p_msg) {
           frame_error = true;
         } else {
           DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-              "DSAP:0x%x, PTYPE:%s (0x%x), "
-              "SSAP:0x%x",
+              "DSAP:0x%02x, PTYPE:%s (0x%02x), "
+              "SSAP:0x%02x",
               dsap, llcp_pdu_type(ptype).c_str(), ptype, ssap);
 
           if (ptype == LLCP_PDU_SYMM_TYPE) {

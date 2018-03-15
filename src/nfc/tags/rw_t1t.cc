@@ -157,8 +157,8 @@ static void rw_t1t_data_cback(__attribute__((unused)) uint8_t conn_id,
   nfc_stop_quick_timer(&p_t1t->timer);
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("RW RECV [%s]:0x%x RSP", t1t_info_to_str(p_cmd_rsp_info),
-                      p_cmd_rsp_info->opcode);
+      << StringPrintf("RW RECV [%s]:0x%02x RSP",
+                      t1t_info_to_str(p_cmd_rsp_info), p_cmd_rsp_info->opcode);
 
   /* If we did not receive response to all retransmitted previous command,
    * dont expect that as response have come for the current command itself.
@@ -354,7 +354,7 @@ tNFC_STATUS rw_t1t_send_static_cmd(uint8_t opcode, uint8_t add, uint8_t dat) {
 #endif /* RW_STATS_INCLUDED */
 
       DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-          "RW SENT [%s]:0x%x CMD", t1t_info_to_str(p_cmd_rsp_info),
+          "RW SENT [%s]:0x%02x CMD", t1t_info_to_str(p_cmd_rsp_info),
           p_cmd_rsp_info->opcode);
       status = NFC_SendData(NFC_RF_CONN_ID, p_data);
       if (status == NFC_STATUS_OK) {
@@ -419,7 +419,7 @@ tNFC_STATUS rw_t1t_send_dyn_cmd(uint8_t opcode, uint8_t add, uint8_t* p_dat) {
 #endif /* RW_STATS_INCLUDED */
 
       DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-          "RW SENT [%s]:0x%x CMD", t1t_info_to_str(p_cmd_rsp_info),
+          "RW SENT [%s]:0x%02x CMD", t1t_info_to_str(p_cmd_rsp_info),
           p_cmd_rsp_info->opcode);
 
       status = NFC_SendData(NFC_RF_CONN_ID, p_data);
@@ -466,7 +466,7 @@ static tRW_EVENT rw_t1t_handle_rid_rsp(NFC_HDR* p_pkt) {
   STREAM_TO_ARRAY(p_t1t->hr, p_rid_rsp, T1T_HR_LEN);
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("hr0:0x%x, hr1:0x%x", p_t1t->hr[0], p_t1t->hr[1]);
+      << StringPrintf("hr0:0x%02x, hr1:0x%02x", p_t1t->hr[0], p_t1t->hr[1]);
   DLOG_IF(INFO, nfc_debug_enabled)
       << StringPrintf("UID0-3=%02x%02x%02x%02x", p_rid_rsp[0], p_rid_rsp[1],
                       p_rid_rsp[2], p_rid_rsp[3]);
