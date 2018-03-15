@@ -190,7 +190,7 @@ bool nfa_dm_is_protocol_supported(tNFC_PROTOCOL protocol, uint8_t sel_res) {
 *******************************************************************************/
 bool nfa_dm_is_active(void) {
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("flags:0x%x", nfa_dm_cb.flags);
+      << StringPrintf("flags:0x%02x", nfa_dm_cb.flags);
   if ((nfa_dm_cb.flags & NFA_DM_FLAGS_DM_IS_ACTIVE) &&
       ((nfa_dm_cb.flags &
         (NFA_DM_FLAGS_ENABLE_EVT_PEND | NFA_DM_FLAGS_NFCC_IS_RESTORING |

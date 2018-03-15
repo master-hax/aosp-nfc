@@ -57,7 +57,7 @@ void nfa_ce_handle_t3t_evt(tCE_EVENT event, tCE_DATA* p_ce_data) {
   tNFA_CONN_EVT_DATA conn_evt;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nfa_ce_handle_t3t_evt: event 0x%x", event);
+      << StringPrintf("nfa_ce_handle_t3t_evt: event 0x%02x", event);
 
   switch (event) {
     case CE_T3T_NDEF_UPDATE_START_EVT:
@@ -126,7 +126,7 @@ void nfa_ce_handle_t4t_evt(tCE_EVENT event, tCE_DATA* p_ce_data) {
   tNFA_CONN_EVT_DATA conn_evt;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nfa_ce_handle_t4t_evt: event 0x%x", event);
+      << StringPrintf("nfa_ce_handle_t4t_evt: event 0x%02x", event);
 
   /* AID for NDEF selected. we had notified the app of activation. */
   p_cb->idx_cur_active = NFA_CE_LISTEN_INFO_IDX_NDEF;
@@ -186,7 +186,7 @@ void nfa_ce_handle_t4t_aid_evt(tCE_EVENT event, tCE_DATA* p_ce_data) {
   tNFA_CONN_EVT_DATA conn_evt;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nfa_ce_handle_t4t_aid_evt: event 0x%x", event);
+      << StringPrintf("nfa_ce_handle_t4t_aid_evt: event 0x%02x", event);
 
   /* Get listen_info for this aid callback */
   for (listen_info_idx = 0; listen_info_idx < NFA_CE_LISTEN_INFO_IDX_INVALID;
@@ -261,7 +261,7 @@ void nfa_ce_discovery_cback(tNFA_DM_RF_DISC_EVT event, tNFC_DISCOVER* p_data) {
   switch (event) {
     case NFA_DM_RF_DISC_START_EVT:
       DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-          "nfa_ce_handle_disc_start (status=0x%x)", p_data->start);
+          "nfa_ce_handle_disc_start (status=0x%02x)", p_data->start);
       break;
 
     case NFA_DM_RF_DISC_ACTIVATED_EVT:
@@ -1204,7 +1204,7 @@ bool nfa_ce_api_reg_listen(tNFA_CE_MSG* p_ce_msg) {
         (p_cb->listen_info[i].flags & NFA_CE_LISTEN_INFO_IN_USE) &&
         (p_cb->listen_info[i].flags & NFA_CE_LISTEN_INFO_UICC) &&
         (p_cb->listen_info[i].ee_handle == p_ce_msg->reg_listen.ee_handle)) {
-      LOG(ERROR) << StringPrintf("UICC (0x%x) listening already specified",
+      LOG(ERROR) << StringPrintf("UICC (0x%02x) listening already specified",
                                  p_ce_msg->reg_listen.ee_handle);
       conn_evt.status = NFA_STATUS_FAILED;
       nfa_dm_conn_cback_event_notify(NFA_CE_UICC_LISTEN_CONFIGURED_EVT,

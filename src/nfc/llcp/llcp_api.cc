@@ -367,7 +367,7 @@ uint8_t LLCP_RegisterServer(uint8_t reg_sap, uint8_t link_type,
   };
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "SAP:0x%x, link_type:0x%x, ServiceName:<%s>", reg_sap, link_type,
+      "SAP:0x%02x, link_type:0x%02x, ServiceName:<%s>", reg_sap, link_type,
       ((p_service_name.empty()) ? "" : p_service_name.c_str()));
 
   if (!p_app_cback) {
@@ -375,7 +375,8 @@ uint8_t LLCP_RegisterServer(uint8_t reg_sap, uint8_t link_type,
     return LLCP_INVALID_SAP;
   } else if (((link_type & LLCP_LINK_TYPE_LOGICAL_DATA_LINK) == 0x00) &&
              ((link_type & LLCP_LINK_TYPE_DATA_LINK_CONNECTION) == 0x00)) {
-    LOG(ERROR) << StringPrintf("link type (0x%x) must be specified", link_type);
+    LOG(ERROR) << StringPrintf("link type (0x%02x) must be specified",
+                               link_type);
     return LLCP_INVALID_SAP;
   }
 
@@ -394,31 +395,31 @@ uint8_t LLCP_RegisterServer(uint8_t reg_sap, uint8_t link_type,
       return LLCP_INVALID_SAP;
     }
   } else if (reg_sap == LLCP_SAP_LM) {
-    LOG(ERROR) << StringPrintf("SAP (0x%x) is for link manager", reg_sap);
+    LOG(ERROR) << StringPrintf("SAP (0x%02x) is for link manager", reg_sap);
     return LLCP_INVALID_SAP;
   } else if (reg_sap <= LLCP_UPPER_BOUND_WK_SAP) {
     if (reg_sap >= LLCP_MAX_WKS) {
-      LOG(ERROR) << StringPrintf("out of resource for SAP (0x%x)", reg_sap);
+      LOG(ERROR) << StringPrintf("out of resource for SAP (0x%02x)", reg_sap);
       return LLCP_INVALID_SAP;
     } else if (llcp_cb.wks_cb[reg_sap].p_app_cback) {
-      LOG(ERROR) << StringPrintf("SAP (0x%x) is already registered", reg_sap);
+      LOG(ERROR) << StringPrintf("SAP (0x%02x) is already registered", reg_sap);
       return LLCP_INVALID_SAP;
     } else {
       p_app_cb = &llcp_cb.wks_cb[reg_sap];
     }
   } else if (reg_sap <= LLCP_UPPER_BOUND_SDP_SAP) {
     if (reg_sap - LLCP_LOWER_BOUND_SDP_SAP >= LLCP_MAX_SERVER) {
-      LOG(ERROR) << StringPrintf("out of resource for SAP (0x%x)", reg_sap);
+      LOG(ERROR) << StringPrintf("out of resource for SAP (0x%02x)", reg_sap);
       return LLCP_INVALID_SAP;
     } else if (llcp_cb.server_cb[reg_sap - LLCP_LOWER_BOUND_SDP_SAP]
                    .p_app_cback) {
-      LOG(ERROR) << StringPrintf("SAP (0x%x) is already registered", reg_sap);
+      LOG(ERROR) << StringPrintf("SAP (0x%02x) is already registered", reg_sap);
       return LLCP_INVALID_SAP;
     } else {
       p_app_cb = &llcp_cb.server_cb[reg_sap - LLCP_LOWER_BOUND_SDP_SAP];
     }
   } else if (reg_sap >= LLCP_LOWER_BOUND_LOCAL_SAP) {
-    LOG(ERROR) << StringPrintf("SAP (0x%x) must be less than 0x%x", reg_sap,
+    LOG(ERROR) << StringPrintf("SAP (0x%02x) must be less than 0x%02x", reg_sap,
                                LLCP_LOWER_BOUND_LOCAL_SAP);
     return LLCP_INVALID_SAP;
   }
@@ -480,14 +481,15 @@ uint8_t LLCP_RegisterClient(uint8_t link_type, tLLCP_APP_CBACK* p_app_cback) {
   tLLCP_APP_CB* p_app_cb;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("link_type = 0x%x", link_type);
+      << StringPrintf("link_type = 0x%02x", link_type);
 
   if (!p_app_cback) {
     LOG(ERROR) << StringPrintf("Callback must be provided");
     return LLCP_INVALID_SAP;
   } else if (((link_type & LLCP_LINK_TYPE_LOGICAL_DATA_LINK) == 0x00) &&
              ((link_type & LLCP_LINK_TYPE_DATA_LINK_CONNECTION) == 0x00)) {
-    LOG(ERROR) << StringPrintf("link type (0x%x) must be specified", link_type);
+    LOG(ERROR) << StringPrintf("link type (0x%02x) must be specified",
+                               link_type);
     return LLCP_INVALID_SAP;
   }
 
@@ -535,12 +537,12 @@ tLLCP_STATUS LLCP_Deregister(uint8_t local_sap) {
   uint8_t idx;
   tLLCP_APP_CB* p_app_cb;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("SAP:0x%x", local_sap);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("SAP:0x%02x", local_sap);
 
   p_app_cb = llcp_util_get_app_cb(local_sap);
 
   if ((!p_app_cb) || (p_app_cb->p_app_cback == NULL)) {
-    LOG(ERROR) << StringPrintf("SAP (0x%x) is not registered", local_sap);
+    LOG(ERROR) << StringPrintf("SAP (0x%02x) is not registered", local_sap);
     return LLCP_STATUS_FAIL;
   }
 
@@ -598,7 +600,7 @@ bool LLCP_IsLogicalLinkCongested(uint8_t local_sap, uint8_t num_pending_ui_pdu,
   tLLCP_APP_CB* p_app_cb;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "Local SAP:0x%x, pending = (%d, %d, %d)", local_sap, num_pending_ui_pdu,
+      "Local SAP:0x%02x, pending = (%d, %d, %d)", local_sap, num_pending_ui_pdu,
       total_pending_ui_pdu, total_pending_i_pdu);
 
   p_app_cb = llcp_util_get_app_cb(local_sap);
@@ -640,14 +642,14 @@ tLLCP_STATUS LLCP_SendUI(uint8_t ssap, uint8_t dsap, NFC_HDR* p_buf) {
   tLLCP_APP_CB* p_app_cb;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("SSAP=0x%x, DSAP=0x%x", ssap, dsap);
+      << StringPrintf("SSAP=0x%02x, DSAP=0x%02x", ssap, dsap);
 
   p_app_cb = llcp_util_get_app_cb(ssap);
 
   if ((p_app_cb == NULL) || (p_app_cb->p_app_cback == NULL)) {
-    LOG(ERROR) << StringPrintf("SSAP (0x%x) is not registered", ssap);
+    LOG(ERROR) << StringPrintf("SSAP (0x%02x) is not registered", ssap);
   } else if ((p_app_cb->link_type & LLCP_LINK_TYPE_LOGICAL_DATA_LINK) == 0) {
-    LOG(ERROR) << StringPrintf("Logical link on SSAP (0x%x) is not enabled",
+    LOG(ERROR) << StringPrintf("Logical link on SSAP (0x%02x) is not enabled",
                                ssap);
   } else if (llcp_cb.lcb.link_state != LLCP_LINK_STATE_ACTIVATED) {
     LOG(ERROR) << StringPrintf("LLCP link is not activated");
@@ -699,7 +701,8 @@ bool LLCP_ReadLogicalLinkData(uint8_t local_sap, uint32_t max_data_len,
   uint8_t* p_ui_pdu;
   uint16_t pdu_hdr, ui_pdu_length;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("Local SAP:0x%x", local_sap);
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("Local SAP:0x%02x", local_sap);
 
   *p_data_len = 0;
 
@@ -762,7 +765,7 @@ bool LLCP_ReadLogicalLinkData(uint8_t local_sap, uint32_t max_data_len,
       return false;
     }
   } else {
-    LOG(ERROR) << StringPrintf("Unregistered SAP:0x%x", local_sap);
+    LOG(ERROR) << StringPrintf("Unregistered SAP:0x%02x", local_sap);
 
     return false;
   }
@@ -785,7 +788,8 @@ uint32_t LLCP_FlushLogicalLinkRxData(uint8_t local_sap) {
   uint8_t* p_ui_pdu;
   uint16_t ui_pdu_length;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("Local SAP:0x%x", local_sap);
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("Local SAP:0x%02x", local_sap);
 
   p_app_cb = llcp_util_get_app_cb(local_sap);
 
@@ -818,7 +822,7 @@ uint32_t LLCP_FlushLogicalLinkRxData(uint8_t local_sap) {
     /* number of received UI PDU is decreased so check rx congestion status */
     llcp_util_check_rx_congested_status();
   } else {
-    LOG(ERROR) << StringPrintf("Unregistered SAP:0x%x", local_sap);
+    LOG(ERROR) << StringPrintf("Unregistered SAP:0x%02x", local_sap);
   }
 
   return (flushed_length);
@@ -844,7 +848,7 @@ tLLCP_STATUS LLCP_ConnectReq(uint8_t reg_sap, uint8_t dsap,
   tLLCP_CONNECTION_PARAMS params;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("reg_sap=0x%x, DSAP=0x%x", reg_sap, dsap);
+      << StringPrintf("reg_sap=0x%02x, DSAP=0x%02x", reg_sap, dsap);
 
   if ((llcp_cb.lcb.peer_opt != LLCP_LSC_UNKNOWN) &&
       ((llcp_cb.lcb.peer_opt & LLCP_LSC_2) == 0)) {
@@ -863,12 +867,12 @@ tLLCP_STATUS LLCP_ConnectReq(uint8_t reg_sap, uint8_t dsap,
 
   /* if application is registered */
   if ((p_app_cb == NULL) || (p_app_cb->p_app_cback == NULL)) {
-    LOG(ERROR) << StringPrintf("SSAP (0x%x) is not registered", reg_sap);
+    LOG(ERROR) << StringPrintf("SSAP (0x%02x) is not registered", reg_sap);
     return LLCP_STATUS_FAIL;
   }
 
   if (dsap == LLCP_SAP_LM) {
-    LOG(ERROR) << StringPrintf("DSAP (0x%x) must not be link manager SAP",
+    LOG(ERROR) << StringPrintf("DSAP (0x%02x) must not be link manager SAP",
                                dsap);
     return LLCP_STATUS_FAIL;
   }
@@ -936,7 +940,7 @@ tLLCP_STATUS LLCP_ConnectCfm(uint8_t local_sap, uint8_t remote_sap,
   tLLCP_CONNECTION_PARAMS params;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "Local SAP:0x%x, Remote SAP:0x%x)", local_sap, remote_sap);
+      "Local SAP:0x%02x, Remote SAP:0x%02x)", local_sap, remote_sap);
 
   if (!p_params) {
     params.miu = LLCP_DEFAULT_MIU;
@@ -986,8 +990,8 @@ tLLCP_STATUS LLCP_ConnectReject(uint8_t local_sap, uint8_t remote_sap,
   tLLCP_DLCB* p_dlcb;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("Local SAP:0x%x, Remote SAP:0x%x, reason:0x%x", local_sap,
-                      remote_sap, reason);
+      << StringPrintf("Local SAP:0x%02x, Remote SAP:0x%02x, reason:0x%02x",
+                      local_sap, remote_sap, reason);
 
   p_dlcb = llcp_dlc_find_dlcb_by_sap(local_sap, remote_sap);
 
@@ -1020,7 +1024,7 @@ bool LLCP_IsDataLinkCongested(uint8_t local_sap, uint8_t remote_sap,
   tLLCP_DLCB* p_dlcb;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "Local SAP:0x%x, Remote SAP:0x%x, pending = "
+      "Local SAP:0x%02x, Remote SAP:0x%02x, pending = "
       "(%d, %d, %d)",
       local_sap, remote_sap, num_pending_i_pdu, total_pending_ui_pdu,
       total_pending_i_pdu);
@@ -1060,8 +1064,8 @@ tLLCP_STATUS LLCP_SendData(uint8_t local_sap, uint8_t remote_sap,
   tLLCP_STATUS status = LLCP_STATUS_FAIL;
   tLLCP_DLCB* p_dlcb;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("Local SAP:0x%x, Remote SAP:0x%x", local_sap, remote_sap);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      "Local SAP:0x%02x, Remote SAP:0x%02x", local_sap, remote_sap);
 
   p_dlcb = llcp_dlc_find_dlcb_by_sap(local_sap, remote_sap);
 
@@ -1113,8 +1117,8 @@ bool LLCP_ReadDataLinkData(uint8_t local_sap, uint8_t remote_sap,
   uint8_t* p_i_pdu;
   uint16_t i_pdu_length;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("Local SAP:0x%x, Remote SAP:0x%x", local_sap, remote_sap);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      "Local SAP:0x%02x, Remote SAP:0x%02x", local_sap, remote_sap);
 
   p_dlcb = llcp_dlc_find_dlcb_by_sap(local_sap, remote_sap);
 
@@ -1204,8 +1208,8 @@ uint32_t LLCP_FlushDataLinkRxData(uint8_t local_sap, uint8_t remote_sap) {
   uint8_t* p_i_pdu;
   uint16_t i_pdu_length;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("Local SAP:0x%x, Remote SAP:0x%x", local_sap, remote_sap);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      "Local SAP:0x%02x, Remote SAP:0x%02x", local_sap, remote_sap);
 
   p_dlcb = llcp_dlc_find_dlcb_by_sap(local_sap, remote_sap);
 
@@ -1267,8 +1271,8 @@ tLLCP_STATUS LLCP_DisconnectReq(uint8_t local_sap, uint8_t remote_sap,
   tLLCP_DLCB* p_dlcb;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("Local SAP:0x%x, Remote SAP:0x%x, flush=%d", local_sap,
-                      remote_sap, flush);
+      << StringPrintf("Local SAP:0x%02x, Remote SAP:0x%02x, flush=%d",
+                      local_sap, remote_sap, flush);
 
   p_dlcb = llcp_dlc_find_dlcb_by_sap(local_sap, remote_sap);
 
@@ -1299,8 +1303,8 @@ tLLCP_STATUS LLCP_SetTxCompleteNtf(uint8_t local_sap, uint8_t remote_sap) {
   tLLCP_STATUS status;
   tLLCP_DLCB* p_dlcb;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("Local SAP:0x%x, Remote SAP:0x%x", local_sap, remote_sap);
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      "Local SAP:0x%02x, Remote SAP:0x%02x", local_sap, remote_sap);
 
   p_dlcb = llcp_dlc_find_dlcb_by_sap(local_sap, remote_sap);
 
@@ -1332,7 +1336,7 @@ tLLCP_STATUS LLCP_SetLocalBusyStatus(uint8_t local_sap, uint8_t remote_sap,
   tLLCP_DLCB* p_dlcb;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("Local SAP:0x%x, is_busy=%d", local_sap, is_busy);
+      << StringPrintf("Local SAP:0x%02x, is_busy=%d", local_sap, is_busy);
 
   p_dlcb = llcp_dlc_find_dlcb_by_sap(local_sap, remote_sap);
 

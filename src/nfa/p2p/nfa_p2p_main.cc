@@ -189,7 +189,7 @@ static void nfa_p2p_update_active_listen(void) {
   NFC_HDR* p_msg;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("listen_tech_mask_to_restore:0x%x",
+      << StringPrintf("listen_tech_mask_to_restore:0x%02x",
                       nfa_p2p_cb.listen_tech_mask_to_restore);
 
   /* if active listen mode was removed temporarily */
@@ -282,7 +282,7 @@ void nfa_p2p_llcp_link_cback(uint8_t event, uint8_t reason) {
   tNFA_LLCP_DEACTIVATED llcp_deactivated;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("event:0x%x, reason:0x%x", event, reason);
+      << StringPrintf("event:0x%02x, reason:0x%02x", event, reason);
 
   if (event == LLCP_LINK_ACTIVATION_COMPLETE_EVT) {
     LLCP_GetLinkMIU(&nfa_p2p_cb.local_link_miu, &nfa_p2p_cb.remote_link_miu);
@@ -693,7 +693,7 @@ void nfa_p2p_disable_listening(tNFA_SYS_ID sys_id, bool update_wks) {
 *******************************************************************************/
 void nfa_p2p_update_listen_tech(tNFA_TECHNOLOGY_MASK tech_mask) {
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("tech_mask = 0x%x", tech_mask);
+      << StringPrintf("tech_mask = 0x%02x", tech_mask);
 
   if (nfa_p2p_cb.listen_tech_mask_to_restore) {
     nfa_p2p_cb.listen_tech_mask_to_restore = 0;

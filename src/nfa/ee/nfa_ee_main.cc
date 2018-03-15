@@ -52,30 +52,32 @@ static const tNFA_SYS_REG nfa_ee_sys_reg = {nfa_ee_sys_enable, nfa_ee_evt_hdlr,
 
 const tNFA_EE_SM_ACT nfa_ee_actions[] = {
     /* NFA-EE action function/ internal events */
-    nfa_ee_api_discover,      /* NFA_EE_API_DISCOVER_EVT      */
-    nfa_ee_api_register,      /* NFA_EE_API_REGISTER_EVT      */
-    nfa_ee_api_deregister,    /* NFA_EE_API_DEREGISTER_EVT    */
-    nfa_ee_api_mode_set,      /* NFA_EE_API_MODE_SET_EVT      */
-    nfa_ee_api_set_tech_cfg,  /* NFA_EE_API_SET_TECH_CFG_EVT  */
-    nfa_ee_api_set_proto_cfg, /* NFA_EE_API_SET_PROTO_CFG_EVT */
-    nfa_ee_api_add_aid,       /* NFA_EE_API_ADD_AID_EVT       */
-    nfa_ee_api_remove_aid,    /* NFA_EE_API_REMOVE_AID_EVT    */
-    nfa_ee_api_lmrt_size,     /* NFA_EE_API_LMRT_SIZE_EVT     */
-    nfa_ee_api_update_now,    /* NFA_EE_API_UPDATE_NOW_EVT    */
-    nfa_ee_api_connect,       /* NFA_EE_API_CONNECT_EVT       */
-    nfa_ee_api_send_data,     /* NFA_EE_API_SEND_DATA_EVT     */
-    nfa_ee_api_disconnect,    /* NFA_EE_API_DISCONNECT_EVT    */
-    nfa_ee_nci_disc_rsp,      /* NFA_EE_NCI_DISC_RSP_EVT      */
-    nfa_ee_nci_disc_ntf,      /* NFA_EE_NCI_DISC_NTF_EVT      */
-    nfa_ee_nci_mode_set_rsp,  /* NFA_EE_NCI_MODE_SET_RSP_EVT  */
-    nfa_ee_nci_conn,          /* NFA_EE_NCI_CONN_EVT          */
-    nfa_ee_nci_conn,          /* NFA_EE_NCI_DATA_EVT          */
-    nfa_ee_nci_action_ntf,    /* NFA_EE_NCI_ACTION_NTF_EVT    */
-    nfa_ee_nci_disc_req_ntf,  /* NFA_EE_NCI_DISC_REQ_NTF_EVT  */
-    nfa_ee_nci_wait_rsp,      /* NFA_EE_NCI_WAIT_RSP_EVT      */
-    nfa_ee_rout_timeout,      /* NFA_EE_ROUT_TIMEOUT_EVT      */
-    nfa_ee_discv_timeout,     /* NFA_EE_DISCV_TIMEOUT_EVT     */
-    nfa_ee_lmrt_to_nfcc       /* NFA_EE_CFG_TO_NFCC_EVT       */
+    nfa_ee_api_discover,        /* NFA_EE_API_DISCOVER_EVT      */
+    nfa_ee_api_register,        /* NFA_EE_API_REGISTER_EVT      */
+    nfa_ee_api_deregister,      /* NFA_EE_API_DEREGISTER_EVT    */
+    nfa_ee_api_mode_set,        /* NFA_EE_API_MODE_SET_EVT      */
+    nfa_ee_api_set_tech_cfg,    /* NFA_EE_API_SET_TECH_CFG_EVT  */
+    nfa_ee_api_set_proto_cfg,   /* NFA_EE_API_SET_PROTO_CFG_EVT */
+    nfa_ee_api_add_aid,         /* NFA_EE_API_ADD_AID_EVT       */
+    nfa_ee_api_remove_aid,      /* NFA_EE_API_REMOVE_AID_EVT    */
+    nfa_ee_api_add_sys_code,    /* NFA_EE_API_ADD_SYSCODE_EVT   */
+    nfa_ee_api_remove_sys_code, /* NFA_EE_API_REMOVE_SYSCODE_EVT*/
+    nfa_ee_api_lmrt_size,       /* NFA_EE_API_LMRT_SIZE_EVT     */
+    nfa_ee_api_update_now,      /* NFA_EE_API_UPDATE_NOW_EVT    */
+    nfa_ee_api_connect,         /* NFA_EE_API_CONNECT_EVT       */
+    nfa_ee_api_send_data,       /* NFA_EE_API_SEND_DATA_EVT     */
+    nfa_ee_api_disconnect,      /* NFA_EE_API_DISCONNECT_EVT    */
+    nfa_ee_nci_disc_rsp,        /* NFA_EE_NCI_DISC_RSP_EVT      */
+    nfa_ee_nci_disc_ntf,        /* NFA_EE_NCI_DISC_NTF_EVT      */
+    nfa_ee_nci_mode_set_rsp,    /* NFA_EE_NCI_MODE_SET_RSP_EVT  */
+    nfa_ee_nci_conn,            /* NFA_EE_NCI_CONN_EVT          */
+    nfa_ee_nci_conn,            /* NFA_EE_NCI_DATA_EVT          */
+    nfa_ee_nci_action_ntf,      /* NFA_EE_NCI_ACTION_NTF_EVT    */
+    nfa_ee_nci_disc_req_ntf,    /* NFA_EE_NCI_DISC_REQ_NTF_EVT  */
+    nfa_ee_nci_wait_rsp,        /* NFA_EE_NCI_WAIT_RSP_EVT      */
+    nfa_ee_rout_timeout,        /* NFA_EE_ROUT_TIMEOUT_EVT      */
+    nfa_ee_discv_timeout,       /* NFA_EE_DISCV_TIMEOUT_EVT     */
+    nfa_ee_lmrt_to_nfcc         /* NFA_EE_CFG_TO_NFCC_EVT       */
 };
 
 /*******************************************************************************
@@ -125,8 +127,9 @@ void nfa_ee_sys_enable(void) {
     unsigned retlen = NfcConfig::getUnsigned(NAME_NFA_AID_BLOCK_ROUTE);
     if ((retlen == 0x01) && (NFC_GetNCIVersion() == NCI_VERSION_2_0)) {
       nfa_ee_cb.route_block_control = NCI_ROUTE_QUAL_BLOCK_ROUTE;
-      DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-          "nfa_ee_cb.route_block_control=0x%x", nfa_ee_cb.route_block_control);
+      DLOG_IF(INFO, nfc_debug_enabled)
+          << StringPrintf("nfa_ee_cb.route_block_control=0x%02x",
+                          nfa_ee_cb.route_block_control);
     }
   }
 
@@ -157,8 +160,8 @@ void nfa_ee_restore_one_ecb(tNFA_EE_ECB* p_cb) {
   tNFA_EE_NCI_MODE_SET ee_msg;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "nfcee_id:0x%x, ecb_flags:0x%x ee_status:0x%x "
-      "ee_old_status: 0x%x",
+      "nfcee_id:0x%02x, ecb_flags:0x%02x ee_status:0x%02x "
+      "ee_old_status: 0x%02x",
       p_cb->nfcee_id, p_cb->ecb_flags, p_cb->ee_status, p_cb->ee_old_status);
   if ((p_cb->nfcee_id != NFA_EE_INVALID) &&
       (p_cb->ee_status & NFA_EE_STATUS_RESTORING) == 0 &&
@@ -348,7 +351,7 @@ void nfa_ee_proc_evt(tNFC_RESPONSE_EVT event, void* p_data) {
   }
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "nfa_ee_proc_evt: event=0x%02x int_event:0x%x", event, int_event);
+      "nfa_ee_proc_evt: event=0x%x int_event:0x%x", event, int_event);
   if (int_event) {
     cbk.hdr.event = int_event;
     cbk.p_data = p_data;
@@ -571,6 +574,10 @@ static std::string nfa_ee_sm_evt_2_str(uint16_t event) {
       return "API_ADD_AID";
     case NFA_EE_API_REMOVE_AID_EVT:
       return "API_REMOVE_AID";
+    case NFA_EE_API_ADD_SYSCODE_EVT:
+      return "NFA_EE_API_ADD_SYSCODE_EVT";
+    case NFA_EE_API_REMOVE_SYSCODE_EVT:
+      return "NFA_EE_API_REMOVE_SYSCODE_EVT";
     case NFA_EE_API_LMRT_SIZE_EVT:
       return "API_LMRT_SIZE";
     case NFA_EE_API_UPDATE_NOW_EVT:

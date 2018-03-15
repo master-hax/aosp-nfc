@@ -1445,7 +1445,7 @@ void rw_t3t_act_handle_raw_senddata_rsp(tRW_T3T_CB* p_cb,
   NFC_HDR* p_pkt = p_data->p_data;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("RW T3T Raw Frame: Len [0x%X] Status [%s]", p_pkt->len,
+      << StringPrintf("RW T3T Raw Frame: Len [0x%x] Status [%s]", p_pkt->len,
                       NFC_GetStatusName(p_data->status).c_str());
 
   /* Copy incoming data into buffer */
@@ -2455,7 +2455,7 @@ tNFC_STATUS RW_T3tDetectNDef(void) {
 
   /* Check if we are in valid state to handle this API */
   if (p_cb->rw_state != RW_T3T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%x)",
+    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%02x)",
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   }
@@ -2508,7 +2508,7 @@ tNFC_STATUS RW_T3tCheckNDef(void) {
 
   /* Check if we are in valid state to handle this API */
   if (p_cb->rw_state != RW_T3T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%x)",
+    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%02x)",
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   } else if (p_cb->ndef_attrib.status !=
@@ -2564,7 +2564,7 @@ tNFC_STATUS RW_T3tUpdateNDef(uint32_t len, uint8_t* p_data) {
 
   /* Check if we are in valid state to handle this API */
   if (p_cb->rw_state != RW_T3T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%x)",
+    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%02x)",
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   } else if (p_cb->ndef_attrib.status !=
@@ -2624,7 +2624,7 @@ tNFC_STATUS RW_T3tCheck(uint8_t num_blocks, tT3T_BLOCK_DESC* t3t_blocks) {
 
   /* Check if we are in valid state to handle this API */
   if (p_cb->rw_state != RW_T3T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%x)",
+    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%02x)",
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   }
@@ -2665,7 +2665,7 @@ tNFC_STATUS RW_T3tUpdate(uint8_t num_blocks, tT3T_BLOCK_DESC* t3t_blocks,
 
   /* Check if we are in valid state to handle this API */
   if (p_cb->rw_state != RW_T3T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%x)",
+    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%02x)",
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   }
@@ -2763,7 +2763,7 @@ tNFC_STATUS RW_T3tPoll(uint16_t system_code, tT3T_POLL_RC rc, uint8_t tsn) {
 
   /* Check if we are in valid state to handle this API */
   if (p_cb->rw_state != RW_T3T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%x)",
+    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%02x)",
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   }
@@ -2808,7 +2808,7 @@ tNFC_STATUS RW_T3tSendRawFrame(uint16_t len, uint8_t* p_data) {
 
   /* Check if we are in valid state to handle this API */
   if (p_cb->rw_state != RW_T3T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%x)",
+    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%02x)",
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   }
@@ -2844,7 +2844,7 @@ tNFC_STATUS RW_T3tGetSystemCodes(void) {
 
   /* Check if we are in valid state to handle this API */
   if (p_cb->rw_state != RW_T3T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%x)",
+    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%02x)",
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   } else {
@@ -2889,7 +2889,7 @@ tNFC_STATUS RW_T3tFormatNDef(void) {
 
   /* Check if we are in valid state to handle this API */
   if (p_cb->rw_state != RW_T3T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%x)",
+    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%02x)",
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   } else {
@@ -2936,7 +2936,7 @@ tNFC_STATUS RW_T3tSetReadOnly(bool b_hard_lock) {
 
   /* Check if we are in valid state to handle this API */
   if (p_cb->rw_state != RW_T3T_STATE_IDLE) {
-    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%x)",
+    LOG(ERROR) << StringPrintf("Error: invalid state to handle API (0x%02x)",
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   }

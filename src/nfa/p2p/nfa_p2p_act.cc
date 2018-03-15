@@ -287,7 +287,7 @@ void nfa_p2p_proc_llcp_connect_ind(tLLCP_SAP_CBACK_DATA* p_data) {
   uint8_t xx;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("server_sap:0x%x", p_data->connect_ind.server_sap);
+      << StringPrintf("server_sap:0x%02x", p_data->connect_ind.server_sap);
 
   server_sap = p_data->connect_ind.server_sap;
   local_sap = p_data->connect_ind.local_sap;
@@ -490,11 +490,11 @@ void nfa_p2p_proc_llcp_congestion(tLLCP_SAP_CBACK_DATA* p_data) {
 
   if (p_data->congest.is_congested) {
     DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("START SAP=(0x%x,0x%x)", local_sap, remote_sap);
+        << StringPrintf("START SAP=(0x%02x,0x%02x)", local_sap, remote_sap);
 
   } else {
     DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("END SAP=(0x%x,0x%x)", local_sap, remote_sap);
+        << StringPrintf("END SAP=(0x%02x,0x%02x)", local_sap, remote_sap);
   }
 
   if (nfa_p2p_cb.sap_cb[local_sap].p_cback) {
