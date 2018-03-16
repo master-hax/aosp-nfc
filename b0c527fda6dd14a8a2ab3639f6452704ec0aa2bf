@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fee28e53_dbd40f6c",
+        "filename": "src/include/nci_defs.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-16T20:53:12Z",
+      "side": 1,
+      "message": "space?",
+      "range": {
+        "startLine": 390,
+        "startChar": 55,
+        "endLine": 390,
+        "endChar": 58
+      },
+      "revId": "b0c527fda6dd14a8a2ab3639f6452704ec0aa2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e996e13_b7858d6a",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-16T20:53:12Z",
+      "side": 1,
+      "message": "if (nfa_ee_cb.ee_cfged \u0026 mask) \u003d\u003d 0 || p_ecb-\u003esys_code_cfg_entries \u003d\u003d null)",
+      "range": {
+        "startLine": 624,
+        "startChar": 4,
+        "endLine": 624,
+        "endChar": 41
+      },
+      "revId": "b0c527fda6dd14a8a2ab3639f6452704ec0aa2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271a81da_db3c2fd0",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-16T20:53:12Z",
+      "side": 1,
+      "message": "else not needed?",
+      "range": {
+        "startLine": 626,
+        "startChar": 3,
+        "endLine": 626,
+        "endChar": 10
+      },
+      "revId": "b0c527fda6dd14a8a2ab3639f6452704ec0aa2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62b91c4_d47cd68d",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-16T20:53:12Z",
+      "side": 1,
+      "message": "return p_ret?",
+      "range": {
+        "startLine": 641,
+        "startChar": 10,
+        "endLine": 642,
+        "endChar": 16
+      },
+      "revId": "b0c527fda6dd14a8a2ab3639f6452704ec0aa2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba9e61b_a098930e",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-16T20:53:12Z",
+      "side": 1,
+      "message": "Adds System Code routing configuration from user.",
+      "range": {
+        "startLine": 1092,
+        "startChar": 22,
+        "endLine": 1093,
+        "endChar": 45
+      },
+      "revId": "b0c527fda6dd14a8a2ab3639f6452704ec0aa2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f681f7_6fc7852f",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-16T20:53:12Z",
+      "side": 1,
+      "message": "These changes should be part of a separate patch.",
+      "range": {
+        "startLine": 864,
+        "startChar": 63,
+        "endLine": 864,
+        "endChar": 68
+      },
+      "revId": "b0c527fda6dd14a8a2ab3639f6452704ec0aa2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
