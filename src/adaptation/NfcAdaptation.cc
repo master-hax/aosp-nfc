@@ -176,6 +176,12 @@ NfcAdaptation& NfcAdaptation::GetInstance() {
 
 void NfcAdaptation::GetVendorConfigs(
     std::map<std::string, ConfigValue>& configMap) {
+  if (!mHal_1_1) {
+    mHal = mHal_1_1 = INfcV1_1::tryGetService();
+    LOG(INFO) << StringPrintf("%s: INfc::getService() returned %p (%s)",
+                              __func__, mHal.get(),
+                              (mHal->isRemote() ? "remote" : "local"));
+  }
   if (mHal_1_1) {
     mHal_1_1->getConfig([&configMap](NfcVendorConfig config) {
       std::vector<uint8_t> nfaPropCfg = {
@@ -189,6 +195,24 @@ void NfcAdaptation::GetVendorConfigs(
           config.nfaProprietaryCfg.discoveryPollBPrime,
           config.nfaProprietaryCfg.discoveryListenBPrime};
       configMap.emplace(NAME_NFA_PROPRIETARY_CFG, ConfigValue(nfaPropCfg));
+      if (nfaPropCfg.size() > 0)
+        nfa_proprietary_cfg.pro_protocol_18092_active = nfaPropCfg[0];
+      if (nfaPropCfg.size() > 1)
+        nfa_proprietary_cfg.pro_protocol_b_prime = nfaPropCfg[1];
+      if (nfaPropCfg.size() > 2)
+        nfa_proprietary_cfg.pro_protocol_dual = nfaPropCfg[2];
+      if (nfaPropCfg.size() > 3)
+        nfa_proprietary_cfg.pro_protocol_15693 = nfaPropCfg[3];
+      if (nfaPropCfg.size() > 4)
+        nfa_proprietary_cfg.pro_protocol_kovio = nfaPropCfg[4];
+      if (nfaPropCfg.size() > 5)
+        nfa_proprietary_cfg.pro_protocol_mfc = nfaPropCfg[5];
+      if (nfaPropCfg.size() > 6)
+        nfa_proprietary_cfg.pro_discovery_kovio_poll = nfaPropCfg[6];
+      if (nfaPropCfg.size() > 7)
+        nfa_proprietary_cfg.pro_discovery_b_prime_poll = nfaPropCfg[7];
+      if (nfaPropCfg.size() > 8)
+        nfa_proprietary_cfg.pro_discovery_b_prime_listen = nfaPropCfg[8];
       configMap.emplace(NAME_NFA_POLL_BAIL_OUT_MODE,
                         ConfigValue(config.nfaPollBailOutMode ? 1 : 0));
       configMap.emplace(NAME_DEFAULT_OFFHOST_ROUTE,
@@ -213,6 +237,9 @@ void NfcAdaptation::GetVendorConfigs(
                           ConfigValue((uint32_t)config.presenceCheckAlgorithm));
       }
     });
+  } else {
+    LOG(ERROR) << StringPrintf(
+        "NfcAdaptation::GetVendorConfigs Failed. mHal_1_1 not initialized");
   }
 }
 /*******************************************************************************
@@ -264,28 +291,6 @@ void NfcAdaptation::Initialize() {
     DLOG_IF(INFO, nfc_debug_enabled)
         << StringPrintf("%s: Overriding NFA_POLL_BAIL_OUT_MODE to use %d", func,
                         nfa_poll_bail_out_mode);
-  }
-
-  if (NfcConfig::hasKey(NAME_NFA_PROPRIETARY_CFG)) {
-    std::vector<uint8_t> p_config =
-        NfcConfig::getBytes(NAME_NFA_PROPRIETARY_CFG);
-    if (p_config.size() > 0)
-      nfa_proprietary_cfg.pro_protocol_18092_active = p_config[0];
-    if (p_config.size() > 1)
-      nfa_proprietary_cfg.pro_protocol_b_prime = p_config[1];
-    if (p_config.size() > 2)
-      nfa_proprietary_cfg.pro_protocol_dual = p_config[2];
-    if (p_config.size() > 3)
-      nfa_proprietary_cfg.pro_protocol_15693 = p_config[3];
-    if (p_config.size() > 4)
-      nfa_proprietary_cfg.pro_protocol_kovio = p_config[4];
-    if (p_config.size() > 5) nfa_proprietary_cfg.pro_protocol_mfc = p_config[5];
-    if (p_config.size() > 6)
-      nfa_proprietary_cfg.pro_discovery_kovio_poll = p_config[6];
-    if (p_config.size() > 7)
-      nfa_proprietary_cfg.pro_discovery_b_prime_poll = p_config[7];
-    if (p_config.size() > 8)
-      nfa_proprietary_cfg.pro_discovery_b_prime_listen = p_config[8];
   }
 
   // Configure whitelist of HCI host ID's
@@ -456,10 +461,14 @@ void NfcAdaptation::InitializeHalDeviceContext() {
   mHalEntryFuncs.control_granted = HalControlGranted;
   mHalEntryFuncs.power_cycle = HalPowerCycle;
   mHalEntryFuncs.get_max_ee = HalGetMaxNfcee;
-  LOG(INFO) << StringPrintf("%s: INfc::getService()", func);
-  mHal = mHal_1_1 = INfcV1_1::getService();
+  LOG(INFO) << StringPrintf("%s: INfcV1_1::trygetService()", func);
   if (mHal_1_1 == nullptr) {
-    mHal = INfc::getService();
+    mHal = mHal_1_1 = INfcV1_1::tryGetService();
+  }
+  if (mHal_1_1 == nullptr) {
+    LOG(INFO) << StringPrintf(
+        "%s: INfcV1_1 Service Not Available. Try get INfc Service", func);
+    mHal = INfc::tryGetService();
   }
   LOG_FATAL_IF(mHal == nullptr, "Failed to retrieve the NFC HAL!");
   LOG(INFO) << StringPrintf("%s: INfc::getService() returned %p (%s)", func,
