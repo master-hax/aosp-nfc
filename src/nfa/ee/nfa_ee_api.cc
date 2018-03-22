@@ -357,7 +357,6 @@ tNFA_STATUS NFA_EeSetDefaultProtoRouting(
   tNFA_EE_ECB* p_cb;
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      ""
       "handle:<0x%x>protocol_mask:<0x%x>/<0x%x>/<0x%x>",
       ee_handle, protocols_switch_on, protocols_switch_off,
       protocols_battery_off);
@@ -490,6 +489,100 @@ tNFA_STATUS NFA_EeRemoveAidRouting(uint8_t aid_len, uint8_t* p_aid) {
     }
   }
 
+  return status;
+}
+
+/*******************************************************************************
+**
+** Function         NFA_EeAddSystemCodeRouting
+**
+** Description      This function is called to add an system code entry in the
+**                  listen mode routing table in NFCC. The status of this
+**                  operation is reported as the NFA_EE_ADD_SYSCODE_EVT.
+**
+** Note:            If RF discovery is started,
+**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
+**                  happen before calling this function
+**
+** Note:            NFA_EeUpdateNow() should be called after last NFA-EE
+**                  function to change the listen mode routing is called.
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**                  NFA_STATUS_INVALID_PARAM If bad parameter
+**
+*******************************************************************************/
+tNFA_STATUS NFA_EeAddSystemCodeRouting(uint8_t* p_systemcode,
+                                       tNFA_HANDLE ee_handle,
+                                       tNFA_EE_PWR_STATE power_state) {
+  tNFA_STATUS status = NFA_STATUS_FAILED;
+  uint8_t nfcee_id = (uint8_t)(ee_handle & 0xFF);
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("NFA_EeAddSystemCodeRouting(): handle:<0x%x>", ee_handle);
+  tNFA_EE_ECB* p_cb = nfa_ee_find_ecb(nfcee_id);
+
+  if (p_cb == NULL || p_systemcode == NULL) {
+    LOG(ERROR) << StringPrintf("Bad ee_handle or System Code");
+    status = NFA_STATUS_INVALID_PARAM;
+  } else if (NFA_GetNCIVersion() != NCI_VERSION_2_0) {
+    LOG(ERROR) << StringPrintf("Invalid NCI Version");
+    status = NFA_STATUS_FAILED;
+  } else {
+    tNFA_EE_API_ADD_SYSCODE* p_msg =
+        (tNFA_EE_API_ADD_SYSCODE*)GKI_getbuf(sizeof(tNFA_EE_API_ADD_SYSCODE));
+    if (p_msg != NULL) {
+      p_msg->hdr.event = NFA_EE_API_ADD_SYSCODE_EVT;
+      p_msg->power_state = power_state;
+      p_msg->nfcee_id = nfcee_id;
+      p_msg->p_cb = p_cb;
+      memcpy(p_msg->p_syscode, p_systemcode, NFA_EE_SYSTEM_CODE_LEN);
+      nfa_sys_sendmsg(p_msg);
+      status = NFA_STATUS_OK;
+    }
+  }
+  return status;
+}
+
+/*******************************************************************************
+**
+** Function         NFA_EeRemoveSystemCodeRouting
+**
+** Description      This function is called to remove the given System Code
+**                  based entry from the listen mode routing table. The status
+**                  of this operation is reported as the
+**                  NFA_EE_REMOVE_SYSCODE_EVT.
+**
+** Note:            If RF discovery is started,
+**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
+**                  happen before calling this function
+**
+** Note:            NFA_EeUpdateNow() should be called after last NFA-EE
+**                  function to change the listen mode routing is called.
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**                  NFA_STATUS_INVALID_PARAM If bad parameter
+**
+*******************************************************************************/
+tNFA_STATUS NFA_EeRemoveSystemCodeRouting(uint8_t* p_systemcode) {
+  tNFA_STATUS status = NFA_STATUS_FAILED;
+
+  if (p_systemcode == NULL) {
+    LOG(ERROR) << "Bad ee_handle or System Code";
+    status = NFA_STATUS_INVALID_PARAM;
+  } else if (NFA_GetNCIVersion() != NCI_VERSION_2_0) {
+    LOG(ERROR) << "Invalid NCI Version";
+    status = NFA_STATUS_FAILED;
+  } else {
+    tNFA_EE_API_REMOVE_SYSCODE* p_msg = (tNFA_EE_API_REMOVE_SYSCODE*)GKI_getbuf(
+        sizeof(tNFA_EE_API_REMOVE_SYSCODE));
+    if (p_msg != NULL) {
+      p_msg->hdr.event = NFA_EE_API_REMOVE_SYSCODE_EVT;
+      memcpy(p_msg->p_syscode, p_systemcode, NFA_EE_SYSTEM_CODE_LEN);
+      nfa_sys_sendmsg(p_msg);
+      status = NFA_STATUS_OK;
+    }
+  }
   return status;
 }
 
