@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4db14023_94c462b9",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-27T00:01:08Z",
+      "side": 1,
+      "message": "Check if mHal_1_1 and mHal are both null, signifying HAL hasn\u0027t been initialized. And if that\u0027s the case then call getInstance()? Such that service is initialized?\n\nI would highly prefer once instance of service and it being called from a single place.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 3
+      },
+      "revId": "98d16fb762347eb4bd2380e82f7876dc9f0b5807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d845f12d_9c209f37",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-27T00:01:08Z",
+      "side": 1,
+      "message": "why should this be here?",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 73
+      },
+      "revId": "98d16fb762347eb4bd2380e82f7876dc9f0b5807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81af2c95_e7afd5dc",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-27T00:01:08Z",
+      "side": 1,
+      "message": "What if the underlying layer is NFC 1.0? This error wouldn\u0027t be accurate then.",
+      "range": {
+        "startLine": 240,
+        "startChar": 1,
+        "endLine": 242,
+        "endChar": 76
+      },
+      "revId": "98d16fb762347eb4bd2380e82f7876dc9f0b5807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
