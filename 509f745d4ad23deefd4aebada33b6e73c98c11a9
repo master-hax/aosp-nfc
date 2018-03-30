@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6745b9db_37ad6d19",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-30T01:43:21Z",
+      "side": 1,
+      "message": "These and others like this shouldn\u0027t be a part of this patch.",
+      "range": {
+        "startLine": 974,
+        "startChar": 47,
+        "endLine": 974,
+        "endChar": 52
+      },
+      "revId": "509f745d4ad23deefd4aebada33b6e73c98c11a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
