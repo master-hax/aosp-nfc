@@ -22,6 +22,30 @@
       "revId": "509f745d4ad23deefd4aebada33b6e73c98c11a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1088ac_c20b81c7",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-04-03T16:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6745b9db_37ad6d19",
+      "range": {
+        "startLine": 974,
+        "startChar": 47,
+        "endLine": 974,
+        "endChar": 52
+      },
+      "revId": "509f745d4ad23deefd4aebada33b6e73c98c11a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
