@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bd7d4b0_b714079a",
+        "filename": "src/nfa/include/nfa_ee_int.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-04-03T16:53:02Z",
+      "side": 1,
+      "message": "Where is this used? If not used anywhere, please remove.",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "e4b2c442a5dec0c0837d5e8405b651e2bb9ae478",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
