@@ -22,6 +22,30 @@
       "revId": "4d4d58eb4d5f9d1bc8412a9611d88c42e8ea5fb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297d0a82_8d9dfd99",
+        "filename": "src/nfc/include/nfc_int.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1206274
+      },
+      "writtenOn": "2018-04-10T18:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42ee0b55_0a62360a",
+      "range": {
+        "startLine": 217,
+        "startChar": 27,
+        "endLine": 217,
+        "endChar": 45
+      },
+      "revId": "4d4d58eb4d5f9d1bc8412a9611d88c42e8ea5fb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
