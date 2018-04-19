@@ -29,6 +29,7 @@
 #include "nfa_api.h"
 #include "nfa_dm_int.h"
 #include "nfa_ee_int.h"
+#include "nfa_hci_int.h"
 
 using android::base::StringPrintf;
 
@@ -1506,6 +1507,9 @@ void nfa_ee_report_disc_done(bool notify_enable_done) {
       NFA_EeGetInfo(&evt_data.ee_discover.num_ee, evt_data.ee_discover.ee_info);
       nfa_ee_report_event(p_cback, NFA_EE_DISCOVER_EVT, &evt_data);
     }
+    if ((nfa_hci_cb.hci_state == NFA_HCI_STATE_EE_RECOVERY) &&
+        nfa_ee_cb.p_enable_cback)
+      (*nfa_ee_cb.p_enable_cback)(NFA_EE_RECOVERY_REDISCOVERED);
   }
 }
 
@@ -1808,6 +1812,29 @@ void nfa_ee_nci_disc_ntf(tNFA_EE_MSG* p_data) {
       nfa_sys_stop_timer(&nfa_ee_cb.discv_timer);
       p_data->hdr.event = NFA_EE_DISCV_TIMEOUT_EVT;
       nfa_ee_evt_hdlr(&p_data->hdr);
+    }
+  }
+}
+
+/*******************************************************************************
+**
+** Function         nfa_ee_nci_nfcee_status_ntf
+**
+** Description      Process the callback for NFCEE status notification
+**
+** Returns          void
+**
+*******************************************************************************/
+void nfa_ee_nci_nfcee_status_ntf(tNFA_EE_MSG* p_data) {
+  if (p_data != NULL) {
+    tNFC_NFCEE_STATUS_REVT* p_ee_data = p_data->nfcee_status_ntf.p_data;
+    if ((NFA_GetNCIVersion() == NCI_VERSION_2_0) &&
+        (p_ee_data->status == NFC_NFCEE_STATUS_UNRECOVERABLE_ERROR)) {
+      tNFA_EE_ECB* p_cb = nfa_ee_find_ecb(p_ee_data->nfcee_id);
+      if (p_cb && nfa_ee_cb.p_enable_cback) {
+        (*nfa_ee_cb.p_enable_cback)(NFA_EE_RECOVERY_INIT);
+        NFC_NfceeDiscover(true);
+      }
     }
   }
 }
