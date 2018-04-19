@@ -266,7 +266,6 @@
 #define NCI_RF_PARAM_ID_B_DATA_EX_PARAM \
   0x03 /* B Data Exchange config param  \
           */
-
 #define NCI_NFCEE_INTERFACE_APDU 0x00
 #define NCI_NFCEE_INTERFACE_HCI_ACCESS 0x01
 #define NCI_NFCEE_INTERFACE_T3T 0x02
@@ -275,6 +274,7 @@
 /****************************************************
  * NCI NFCEE INterface specific status Codes
  ****************************************************/
+#define NCI_NFCEE_STS_UNRECOVERABLE_ERROR 0x00
 #define NCI_NFCEE_STS_INTF_ACTIVATION_FAILED 0xC0
 #define NCI_NFCEE_STS_TRANSMISSION_ERROR 0xC1
 #define NCI_NFCEE_STS_PROTOCOL_ERROR 0xC2
