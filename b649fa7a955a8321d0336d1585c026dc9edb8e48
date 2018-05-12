@@ -1,0 +1,10 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Ruchi Kandoi <kandoiruchi@google.com>
+Code-Review+2: Ruchi Kandoi <kandoiruchi@google.com>
+Autosubmit+1: Ruchi Kandoi <kandoiruchi@google.com>
+Presubmit-Ready+1: Ruchi Kandoi <kandoiruchi@google.com>
+Submitted-by: Ruchi Kandoi <kandoiruchi@google.com>
+Submitted-at: Sat, 12 May 2018 00:12:39 +0000
+Reviewed-on: https://android-review.googlesource.com/683658
+Project: platform/system/nfc
+Branch: refs/heads/master
