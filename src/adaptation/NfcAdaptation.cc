@@ -16,20 +16,19 @@
  *
  ******************************************************************************/
 #include <android-base/stringprintf.h>
-#include <android/hardware/nfc/1.0/INfc.h>
+#include <android/hardware/nfc/1.1/INfc.h>
 #include <base/command_line.h>
 #include <base/logging.h>
 #include <cutils/properties.h>
 #include <hwbinder/ProcessState.h>
 
 #include "NfcAdaptation.h"
-
 #include "android_logmsg.h"
 #include "debug_nfcsnoop.h"
 #include "nfa_api.h"
+#include "nfa_rw_api.h"
 #include "nfc_config.h"
 #include "nfc_int.h"
-#include "nfca_version.h"
 
 using android::OK;
 using android::sp;
@@ -40,7 +39,10 @@ using android::hardware::ProcessState;
 using android::hardware::Return;
 using android::hardware::Void;
 using android::hardware::nfc::V1_0::INfc;
-using android::hardware::nfc::V1_0::INfcClientCallback;
+using android::hardware::nfc::V1_1::PresenceCheckAlgorithm;
+using INfcV1_1 = android::hardware::nfc::V1_1::INfc;
+using NfcVendorConfig = android::hardware::nfc::V1_1::NfcConfig;
+using android::hardware::nfc::V1_1::INfcClientCallback;
 using android::hardware::hidl_vec;
 
 extern bool nfc_debug_enabled;
@@ -56,6 +58,7 @@ tHAL_NFC_DATA_CBACK* NfcAdaptation::mHalDataCallback = NULL;
 ThreadCondVar NfcAdaptation::mHalOpenCompletedEvent;
 ThreadCondVar NfcAdaptation::mHalCloseCompletedEvent;
 sp<INfc> NfcAdaptation::mHal;
+sp<INfcV1_1> NfcAdaptation::mHal_1_1;
 INfcClientCallback* NfcAdaptation::mCallback;
 
 bool nfc_debug_enabled = false;
@@ -68,9 +71,6 @@ extern tNFA_HCI_CFG nfa_hci_cfg;
 extern uint8_t nfa_ee_max_ee_cfg;
 extern bool nfa_poll_bail_out_mode;
 
-extern const uint8_t nfca_version_string[];
-extern const uint8_t nfa_version_string[];
-
 // Whitelist for hosts allowed to create a pipe
 // See ADM_CREATE_PIPE command in the ETSI test specification
 // ETSI TS 102 622, section 6.1.3.1
@@ -82,12 +82,12 @@ void initializeGlobalDebugEnabledFlag() {
       (NfcConfig::getUnsigned(NAME_NFC_DEBUG_ENABLED, 0) != 0) ? true : false;
 
   char valueStr[PROPERTY_VALUE_MAX] = {0};
-  int len = property_get("nfc.app_log_level", valueStr, "");
+  int len = property_get("nfc.debug_enabled", valueStr, "");
   if (len > 0) {
     // let Android property override .conf variable
-    unsigned trace_level = 0;
-    sscanf(valueStr, "%u", &trace_level);
-    nfc_debug_enabled = (trace_level == 0) ? false : true;
+    unsigned debug_enabled = 0;
+    sscanf(valueStr, "%u", &debug_enabled);
+    nfc_debug_enabled = (debug_enabled == 0) ? false : true;
   }
 
   DLOG_IF(INFO, nfc_debug_enabled)
@@ -103,6 +103,12 @@ class NfcClientCallback : public INfcClientCallback {
     mDataCallback = dataCallback;
   };
   virtual ~NfcClientCallback() = default;
+  Return<void> sendEvent_1_1(
+      ::android::hardware::nfc::V1_1::NfcEvent event,
+      ::android::hardware::nfc::V1_0::NfcStatus event_status) override {
+    mEventCallback((uint8_t)event, (tHAL_NFC_STATUS)event_status);
+    return Void();
+  };
   Return<void> sendEvent(
       ::android::hardware::nfc::V1_0::NfcEvent event,
       ::android::hardware::nfc::V1_0::NfcStatus event_status) override {
@@ -157,10 +163,61 @@ NfcAdaptation::~NfcAdaptation() { mpInstance = NULL; }
 NfcAdaptation& NfcAdaptation::GetInstance() {
   AutoThreadMutex a(sLock);
 
-  if (!mpInstance) mpInstance = new NfcAdaptation;
+  if (!mpInstance) {
+    mpInstance = new NfcAdaptation;
+    mpInstance->InitializeHalDeviceContext();
+  }
   return *mpInstance;
 }
 
+void NfcAdaptation::GetVendorConfigs(
+    std::map<std::string, ConfigValue>& configMap) {
+  if (mHal_1_1) {
+    mHal_1_1->getConfig([&configMap](NfcVendorConfig config) {
+      std::vector<uint8_t> nfaPropCfg = {
+          config.nfaProprietaryCfg.protocol18092Active,
+          config.nfaProprietaryCfg.protocolBPrime,
+          config.nfaProprietaryCfg.protocolDual,
+          config.nfaProprietaryCfg.protocol15693,
+          config.nfaProprietaryCfg.protocolKovio,
+          config.nfaProprietaryCfg.protocolMifare,
+          config.nfaProprietaryCfg.discoveryPollKovio,
+          config.nfaProprietaryCfg.discoveryPollBPrime,
+          config.nfaProprietaryCfg.discoveryListenBPrime};
+      configMap.emplace(NAME_NFA_PROPRIETARY_CFG, ConfigValue(nfaPropCfg));
+      configMap.emplace(NAME_NFA_POLL_BAIL_OUT_MODE,
+                        ConfigValue(config.nfaPollBailOutMode ? 1 : 0));
+      configMap.emplace(NAME_DEFAULT_OFFHOST_ROUTE,
+                        ConfigValue(config.defaultOffHostRoute));
+      configMap.emplace(NAME_DEFAULT_ROUTE, ConfigValue(config.defaultRoute));
+      configMap.emplace(NAME_DEFAULT_NFCF_ROUTE,
+                        ConfigValue(config.defaultOffHostRouteFelica));
+      configMap.emplace(NAME_DEFAULT_SYS_CODE_ROUTE,
+                        ConfigValue(config.defaultSystemCodeRoute));
+      configMap.emplace(NAME_DEFAULT_SYS_CODE_PWR_STATE,
+                        ConfigValue(config.defaultSystemCodePowerState));
+      configMap.emplace(NAME_OFF_HOST_SIM_PIPE_ID,
+                        ConfigValue(config.offHostSIMPipeId));
+      configMap.emplace(NAME_OFF_HOST_ESE_PIPE_ID,
+                        ConfigValue(config.offHostESEPipeId));
+      configMap.emplace(NAME_ISO_DEP_MAX_TRANSCEIVE,
+                        ConfigValue(config.maxIsoDepTransceiveLength));
+      if (config.hostWhitelist.size() != 0) {
+        configMap.emplace(NAME_DEVICE_HOST_WHITE_LIST,
+                          ConfigValue(config.hostWhitelist));
+      }
+      /* For Backwards compatibility */
+      if (config.presenceCheckAlgorithm ==
+          PresenceCheckAlgorithm::ISO_DEP_NAK) {
+        configMap.emplace(NAME_PRESENCE_CHECK_ALGORITHM,
+                          ConfigValue((uint32_t)NFA_RW_PRES_CHK_ISO_DEP_NAK));
+      } else {
+        configMap.emplace(NAME_PRESENCE_CHECK_ALGORITHM,
+                          ConfigValue((uint32_t)config.presenceCheckAlgorithm));
+      }
+    });
+  }
+}
 /*******************************************************************************
 **
 ** Function:    NfcAdaptation::Initialize()
@@ -180,8 +237,6 @@ void NfcAdaptation::Initialize() {
   logging::SetLogItems(false, false, false, false);
 
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: enter", func);
-  LOG(INFO) << StringPrintf("%s: ver=%s nfa=%s", func, nfca_version_string,
-                            nfa_version_string);
 
   nfc_storage_path = NfcConfig::getString(NAME_NFA_STORAGE, "/data/nfc");
 
@@ -264,9 +319,6 @@ void NfcAdaptation::Initialize() {
     mCondVar.wait();
   }
 
-  mHalCallback = NULL;
-  memset(&mHalEntryFuncs, 0, sizeof(mHalEntryFuncs));
-  InitializeHalDeviceContext();
   debug_nfcsnoop_init();
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: exit", func);
 }
@@ -289,11 +341,20 @@ void NfcAdaptation::Finalize() {
 
   NfcConfig::clear();
 
-  mCallback = NULL;
-  memset(&mHalEntryFuncs, 0, sizeof(mHalEntryFuncs));
-
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: exit", func);
   delete this;
+}
+
+void NfcAdaptation::FactoryReset() {
+  if (mHal_1_1 != nullptr) {
+    mHal_1_1->factoryReset();
+  }
+}
+
+void NfcAdaptation::DeviceShutdown() {
+  if (mHal_1_1 != nullptr) {
+    mHal_1_1->closeForPowerOffCase();
+  }
 }
 
 /*******************************************************************************
@@ -385,7 +446,6 @@ tHAL_NFC_ENTRY* NfcAdaptation::GetHalEntryFuncs() { return &mHalEntryFuncs; }
 *******************************************************************************/
 void NfcAdaptation::InitializeHalDeviceContext() {
   const char* func = "NfcAdaptation::InitializeHalDeviceContext";
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: enter", func);
 
   mHalEntryFuncs.initialize = HalInitialize;
   mHalEntryFuncs.terminate = HalTerminate;
@@ -398,12 +458,14 @@ void NfcAdaptation::InitializeHalDeviceContext() {
   mHalEntryFuncs.power_cycle = HalPowerCycle;
   mHalEntryFuncs.get_max_ee = HalGetMaxNfcee;
   LOG(INFO) << StringPrintf("%s: INfc::getService()", func);
-  mHal = INfc::getService();
+  mHal = mHal_1_1 = INfcV1_1::getService();
+  if (mHal_1_1 == nullptr) {
+    mHal = INfc::getService();
+  }
   LOG_FATAL_IF(mHal == nullptr, "Failed to retrieve the NFC HAL!");
   LOG(INFO) << StringPrintf("%s: INfc::getService() returned %p (%s)", func,
                             mHal.get(),
                             (mHal->isRemote() ? "remote" : "local"));
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: exit", func);
 }
 
 /*******************************************************************************
@@ -450,7 +512,11 @@ void NfcAdaptation::HalOpen(tHAL_NFC_CBACK* p_hal_cback,
   const char* func = "NfcAdaptation::HalOpen";
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s", func);
   mCallback = new NfcClientCallback(p_hal_cback, p_data_cback);
-  mHal->open(mCallback);
+  if (mHal_1_1 != nullptr) {
+    mHal_1_1->open_1_1(mCallback);
+  } else {
+    mHal->open(mCallback);
+  }
 }
 
 /*******************************************************************************
