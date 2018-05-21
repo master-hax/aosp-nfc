@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 #include "nfc_config.h"
+#include "NfcAdaptation.h"
 
 #include <android-base/file.h>
 #include <android-base/logging.h>
@@ -28,7 +29,8 @@ using namespace ::android::base;
 namespace {
 
 std::string findConfigPath() {
-  const vector<string> search_path = {"/odm/etc/", "/vendor/etc/", "/etc/"};
+  const vector<string> search_path = {"/odm/etc/", "/vendor/etc/",
+                                      "/product/etc/", "/etc/"};
   const string file_name = "libnfc-nci.conf";
 
   for (string path : search_path) {
@@ -42,14 +44,26 @@ std::string findConfigPath() {
 
 }  // namespace
 
-NfcConfig::NfcConfig() {
+void NfcConfig::loadConfig() {
   string config_path = findConfigPath();
   CHECK(config_path != "");
   config_.parseFromFile(config_path);
+  /* Read vendor specific configs */
+  NfcAdaptation& theInstance = NfcAdaptation::GetInstance();
+  std::map<std::string, ConfigValue> configMap;
+  theInstance.GetVendorConfigs(configMap);
+  for (auto config : configMap) {
+    config_.addConfig(config.first, config.second);
+  }
 }
+
+NfcConfig::NfcConfig() { loadConfig(); }
 
 NfcConfig& NfcConfig::getInstance() {
   static NfcConfig theInstance;
+  if (theInstance.config_.isEmpty()) {
+    theInstance.loadConfig();
+  }
   return theInstance;
 }
 
