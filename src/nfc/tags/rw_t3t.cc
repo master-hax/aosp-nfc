@@ -55,6 +55,7 @@ extern bool nfc_debug_enabled;
  * length) */
 #define RW_T3T_SENSF_RES_RD_OFFSET 17
 #define RW_T3T_SENSF_RES_RD_LEN 2 /* Size of RD in SENSF_RES   */
+#define RW_T3T_SENSF_RES_NFCID2_OFFSET 1 /* Offset of NFCID2 in SENSF_RES */
 
 /* Timeout definitions for commands */
 #define RW_T3T_POLL_CMD_TIMEOUT_TICKS \
@@ -1666,6 +1667,8 @@ static void rw_t3t_handle_ndef_detect_poll_rsp(tRW_T3T_CB* p_cb,
   /* Validate response for NDEF poll */
   if ((nci_status == NCI_STATUS_OK) && (num_responses > 0)) {
     /* Tag responded for NDEF poll */
+    memcpy(p_cb->peer_nfcid2, p_sensf_res_buf + RW_T3T_SENSF_RES_NFCID2_OFFSET,
+           NCI_NFCID2_LEN);
 
     /* Read NDEF attribute block */
     p_cmd_buf = rw_t3t_get_cmd_buf();
