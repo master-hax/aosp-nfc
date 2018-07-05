@@ -24,7 +24,7 @@
 #include "nfa_api.h"
 
 /* the SetConfig for CE T3T/T4T */
-const uint8_t nfa_dm_ce_cfg[] = {
+uint8_t nfa_dm_ce_cfg[] = {
     13,                  /* total length */
     NFC_PMID_LF_T3T_PMM, /* Type-3 tag default PMM */
     NCI_PARAM_LEN_LF_T3T_PMM,
