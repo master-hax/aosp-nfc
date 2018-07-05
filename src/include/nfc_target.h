@@ -300,6 +300,11 @@
 #define CE_T4T_ISO_DEP_FWI 7
 #endif
 
+/* CE Type 4 Tag, NCI2.0 LI_A_RATS_TB1 */
+#ifndef CE_T4T_ISO_DEP_TB1
+#define CE_T4T_ISO_DEP_TB1 0x71
+#endif
+
 /* RW Type 4 Tag timeout for each API call, in ms */
 #ifndef RW_T4T_TOUT_RESP
 #define RW_T4T_TOUT_RESP 1000
