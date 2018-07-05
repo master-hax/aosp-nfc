@@ -184,6 +184,9 @@ static void nfa_dm_set_init_nci_params(void) {
 
   /* Set CE default configuration */
   if (p_nfa_dm_ce_cfg[0]) {
+    if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
+      p_nfa_dm_ce_cfg[13] = CE_T4T_ISO_DEP_TB1;
+    }
     nfa_dm_check_set_config(p_nfa_dm_ce_cfg[0], &p_nfa_dm_ce_cfg[1], false);
   }
 
