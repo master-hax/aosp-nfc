@@ -33,7 +33,6 @@
 #include "nfa_hci_defs.h"
 #include "nfa_hci_int.h"
 #include "nfa_nv_co.h"
-#include "trace_api.h"
 
 using android::base::StringPrintf;
 
@@ -160,14 +159,21 @@ void nfa_hci_ee_info_cback(tNFA_EE_DISC_STS status) {
         }
       }
       break;
+    case NFA_EE_RECOVERY_REDISCOVERED:
     case NFA_EE_MODE_SET_COMPLETE:
       /*received mode set Ntf */
       if ((nfa_hci_cb.hci_state == NFA_HCI_STATE_WAIT_NETWK_ENABLE) ||
-          (nfa_hci_cb.hci_state == NFA_HCI_STATE_RESTORE_NETWK_ENABLE)) {
+          (nfa_hci_cb.hci_state == NFA_HCI_STATE_RESTORE_NETWK_ENABLE) ||
+          (nfa_hci_cb.hci_state == NFA_HCI_STATE_EE_RECOVERY)) {
         /* Discovery operation is complete, retrieve discovery result */
         NFA_EeGetInfo(&nfa_hci_cb.num_nfcee, nfa_hci_cb.ee_info);
         nfa_hci_enable_one_nfcee();
       }
+      break;
+    case NFA_EE_RECOVERY_INIT:
+      /*NFCEE recovery in progress*/
+      nfa_ee_cb.isDiscoveryStopped = nfa_dm_act_stop_rf_discovery(NULL);
+      nfa_hci_cb.hci_state = NFA_HCI_STATE_EE_RECOVERY;
       break;
   }
 }
@@ -550,7 +556,16 @@ void nfa_hci_enable_one_nfcee(void) {
   }
 
   if (xx == nfa_hci_cb.num_nfcee) {
-    nfa_hciu_send_get_param_cmd(NFA_HCI_ADMIN_PIPE, NFA_HCI_HOST_LIST_INDEX);
+    if ((nfa_hci_cb.hci_state == NFA_HCI_STATE_WAIT_NETWK_ENABLE) ||
+        (nfa_hci_cb.hci_state == NFA_HCI_STATE_RESTORE_NETWK_ENABLE)) {
+      nfa_hciu_send_get_param_cmd(NFA_HCI_ADMIN_PIPE, NFA_HCI_HOST_LIST_INDEX);
+    } else if (nfa_hci_cb.hci_state == NFA_HCI_STATE_EE_RECOVERY) {
+      nfa_hci_cb.hci_state = NFA_HCI_STATE_IDLE;
+      if (nfa_ee_cb.isDiscoveryStopped == true) {
+        nfa_dm_act_start_rf_discovery(NULL);
+        nfa_ee_cb.isDiscoveryStopped = false;
+      }
+    }
   }
 }
 
@@ -657,8 +672,8 @@ static void nfa_hci_sys_disable(void) {
       if (NFC_GetNCIVersion() == NCI_VERSION_1_0) {
         nfa_hciu_send_to_all_apps(NFA_HCI_EXIT_EVT, &evt_data);
         NFC_ConnClose(nfa_hci_cb.conn_id);
+        return;
       }
-      return;
     }
     nfa_hci_cb.conn_id = 0;
   }
@@ -725,8 +740,6 @@ static void nfa_hci_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 
   p = (uint8_t*)(p_pkt + 1) + p_pkt->offset;
   pkt_len = p_pkt->len;
-
-  DispHcp(p, pkt_len, true);
 
   chaining_bit = ((*p) >> 0x07) & 0x01;
   pipe = (*p++) & 0x7F;
