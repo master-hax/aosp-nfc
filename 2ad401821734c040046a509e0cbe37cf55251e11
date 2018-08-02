@@ -22,6 +22,30 @@
       "revId": "2ad401821734c040046a509e0cbe37cf55251e11",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a182c824_c8909210",
+        "filename": "src/nfa/hci/nfa_hci_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-08-02T23:14:00Z",
+      "side": 1,
+      "message": "I changed that in gerrit in patch 2 and then it got back to the local version from my repository.",
+      "parentUuid": "80236cc5_fe4de039",
+      "range": {
+        "startLine": 261,
+        "startChar": 10,
+        "endLine": 261,
+        "endChar": 17
+      },
+      "revId": "2ad401821734c040046a509e0cbe37cf55251e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
