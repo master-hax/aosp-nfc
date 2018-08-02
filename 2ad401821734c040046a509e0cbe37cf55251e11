@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80236cc5_fe4de039",
+        "filename": "src/nfa/hci/nfa_hci_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2018-08-02T23:03:15Z",
+      "side": 1,
+      "message": "`gate_id` isn\u0027t valid in this case?",
+      "range": {
+        "startLine": 261,
+        "startChar": 10,
+        "endLine": 261,
+        "endChar": 17
+      },
+      "revId": "2ad401821734c040046a509e0cbe37cf55251e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
