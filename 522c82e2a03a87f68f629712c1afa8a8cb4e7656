@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ebe42d9_68e89904",
+        "filename": "src/gki/ulinux/gki_ulinux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-10-08T18:30:05Z",
+      "side": 0,
+      "message": "Please remove this variable from the header file as well?",
+      "range": {
+        "startLine": 382,
+        "startChar": 14,
+        "endLine": 382,
+        "endChar": 36
+      },
+      "revId": "522c82e2a03a87f68f629712c1afa8a8cb4e7656",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
