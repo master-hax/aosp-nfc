@@ -140,6 +140,11 @@ void debug_nfcsnoop_dump(int fd) {
     return;
   }
 
+  if (buffer == NULL) {
+    dprintf(fd, "%s Nfcsnoop is not ready\n", __func__);
+    return;
+  }
+
   // Prepend preamble
 
   nfcsnooz_preamble_t preamble;
