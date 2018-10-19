@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb9b7772_f432c9e9",
+        "filename": "src/nfc/tags/rw_t3t.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-10-19T21:36:58Z",
+      "side": 1,
+      "message": "system/nfc/src/nfc/tags/rw_t3t.cc:1669:31: error: use of undeclared identifier \u0027p_sensf_res_buf\u0027",
+      "range": {
+        "startLine": 1669,
+        "startChar": 4,
+        "endLine": 1670,
+        "endChar": 27
+      },
+      "revId": "98f28a8ca7726bcb3da48d6cf6585124eb316dde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
