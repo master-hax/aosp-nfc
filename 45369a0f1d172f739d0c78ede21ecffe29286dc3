@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aec2758_33cdd38b",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-10-29T22:45:17Z",
+      "side": 0,
+      "message": "Default offhost route should be kept to allow the fallback to either eSE or UICC in case offhost is not mentioned in meta data (provided by App).",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "45369a0f1d172f739d0c78ede21ecffe29286dc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
