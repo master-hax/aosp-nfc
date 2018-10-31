@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8653bed6_390817f5",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-10-31T21:40:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e94df9e6_0c82a67f",
+      "range": {
+        "startLine": 44,
+        "startChar": 46,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "8f2b99a208c506c9df917dc7a283ec4ff1875ef6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14275ad1_d4527854",
         "filename": "src/include/nfc_config.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8f2b99a208c506c9df917dc7a283ec4ff1875ef6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81e2882_aa57b709",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-10-31T21:40:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "14275ad1_d4527854",
+      "range": {
+        "startLine": 45,
+        "startChar": 47,
+        "endLine": 45,
+        "endChar": 50
+      },
+      "revId": "8f2b99a208c506c9df917dc7a283ec4ff1875ef6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
