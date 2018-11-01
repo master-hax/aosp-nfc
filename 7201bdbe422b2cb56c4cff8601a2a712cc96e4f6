@@ -22,6 +22,30 @@
       "revId": "7201bdbe422b2cb56c4cff8601a2a712cc96e4f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56748aa7_00d2784e",
+        "filename": "src/nfa/ee/nfa_ee_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2018-11-01T10:16:56Z",
+      "side": 1,
+      "message": "Thanks, the checking should be aligned with NFA_EeAddAidRouting.",
+      "parentUuid": "c37d8835_9bdc4047",
+      "range": {
+        "startLine": 495,
+        "startChar": 0,
+        "endLine": 496,
+        "endChar": 78
+      },
+      "revId": "7201bdbe422b2cb56c4cff8601a2a712cc96e4f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
