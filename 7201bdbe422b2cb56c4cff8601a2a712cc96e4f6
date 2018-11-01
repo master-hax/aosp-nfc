@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c37d8835_9bdc4047",
+        "filename": "src/nfa/ee/nfa_ee_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1150263
+      },
+      "writtenOn": "2018-11-01T07:42:43Z",
+      "side": 1,
+      "message": "It looks that if NCI_VER_2 and aid_len is larger than MAX_AID_LEN, then it will be STATUS_OK. is it OK?",
+      "range": {
+        "startLine": 495,
+        "startChar": 0,
+        "endLine": 496,
+        "endChar": 78
+      },
+      "revId": "7201bdbe422b2cb56c4cff8601a2a712cc96e4f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
