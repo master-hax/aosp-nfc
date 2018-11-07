@@ -313,8 +313,12 @@ static tNFA_STATUS nfa_dm_set_rf_listen_mode_config(
   ** If the ATQA values are 0x0000, then the FW will use 0x0400
   ** which works for ISODEP, T2T and NFCDEP.
   */
-  if (nfa_dm_cb.disc_cb.listen_RT[NFA_DM_DISC_LRT_NFC_A] ==
-      NFA_DM_DISC_HOST_ID_DH) {
+  /* If we are in mode NFCC allowed to manage RF config,
+   * DH will only add in polling loop listen modes for HCE
+   * In this case, we must program LA_SEL_INFO for DH techs only  */
+  if ((nfa_dm_cb.disc_cb.listen_RT[NFA_DM_DISC_LRT_NFC_A] ==
+       NFA_DM_DISC_HOST_ID_DH) ||
+      (nfa_dm_cb.nfcc_config_control == 0x01)) {
     UINT8_TO_STREAM(p, NFC_PMID_LA_BIT_FRAME_SDD);
     UINT8_TO_STREAM(p, NCI_PARAM_LEN_LA_BIT_FRAME_SDD);
     UINT8_TO_STREAM(p, 0x04);
@@ -339,8 +343,9 @@ static tNFA_STATUS nfa_dm_set_rf_listen_mode_config(
   }
 
   /* for Listen B */
-  if (nfa_dm_cb.disc_cb.listen_RT[NFA_DM_DISC_LRT_NFC_B] ==
-      NFA_DM_DISC_HOST_ID_DH) {
+  if ((nfa_dm_cb.disc_cb.listen_RT[NFA_DM_DISC_LRT_NFC_B] ==
+       NFA_DM_DISC_HOST_ID_DH) ||
+      (nfa_dm_cb.nfcc_config_control == 0x01)) {
     UINT8_TO_STREAM(p, NFC_PMID_LB_SENSB_INFO);
     UINT8_TO_STREAM(p, NCI_PARAM_LEN_LB_SENSB_INFO);
     if (tech_proto_mask & NFA_DM_DISC_MASK_LB_ISO_DEP) {

@@ -548,6 +548,7 @@ typedef struct {
   uint8_t pending_power_state; /* pending screen state change received in
                                   LISTEN_ACTIVE state which needs to be applied
                                   after current transaction is completed*/
+  uint8_t nfcc_config_control; /* value of NFCC_CONFIG_CONTROL parameter */
 } tNFA_DM_CB;
 
 /* Internal function prototypes */

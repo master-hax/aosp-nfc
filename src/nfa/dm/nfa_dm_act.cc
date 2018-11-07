@@ -563,6 +563,14 @@ bool nfa_dm_set_config(tNFA_DM_MSG* p_data) {
   if (status != NFC_STATUS_OK) {
     dm_cback_data.set_config.status = NFA_STATUS_INVALID_PARAM;
     (*nfa_dm_cb.p_dm_cback)(NFA_DM_SET_CONFIG_EVT, &dm_cback_data);
+  } else {
+    // Record whether or not we're in NFCC_CONFIG_CONTROL mode "NFCC allowed"
+    if (p_data->setconfig.param_id == NCI_PARAM_ID_NFCC_CONFIG_CONTROL) {
+      nfa_dm_cb.nfcc_config_control = p_data->setconfig.p_data[0];
+      DLOG_IF(INFO, nfc_debug_enabled)
+          << StringPrintf("%s, NFCC_CONFIG_CONTROL: 0x%02X", __func__,
+                          nfa_dm_cb.nfcc_config_control);
+    }
   }
 
   return true;
