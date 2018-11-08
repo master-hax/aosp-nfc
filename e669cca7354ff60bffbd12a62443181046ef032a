@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54d6682d_3de6c329",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2018-11-08T13:45:16Z",
+      "side": 1,
+      "message": "Definition for UICC and ESE route names have been inverted",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 50
+      },
+      "revId": "e669cca7354ff60bffbd12a62443181046ef032a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
