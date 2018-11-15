@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f446e49_4a645800",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-11-15T17:29:10Z",
+      "side": 1,
+      "message": "If this is coming from the libnfc-nci then it needs to be in the previous list.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 54
+      },
+      "revId": "fe9a809991dbaaa4a58274a9299b55ce31c3aecc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
