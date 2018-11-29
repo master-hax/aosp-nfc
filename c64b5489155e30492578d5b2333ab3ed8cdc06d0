@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8c28b07_f54e6287",
+        "filename": "src/nfa/include/nfa_ee_int.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-11-29T02:07:49Z",
+      "side": 1,
+      "message": "Routing table space should NOT be reserved for protocol T1T/T2T/NDEF \n\nNFC Forum does not define Card Emulation for T1T and T2T.\nProtocol NDEF mentioned in the NCI spec was introduced for reader mode and not for card mode (routing table)\nRef: NCI 2.0 Sec 8.5\n\nThe NDEF RF Interface is not applicable to the Listen side. The following RF Protocols can be mapped to the NDEF RF Interface in Poll Mode:\n PROTOCOL_NDEF.",
+      "range": {
+        "startLine": 109,
+        "startChar": 3,
+        "endLine": 109,
+        "endChar": 61
+      },
+      "revId": "c64b5489155e30492578d5b2333ab3ed8cdc06d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
