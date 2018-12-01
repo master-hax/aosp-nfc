@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5029b3f_575bd549",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-12-01T00:56:25Z",
+      "side": 1,
+      "message": "IMHO, This patch is not required and NFCC_CONFIG_CONTROL shall be set to 0x01 always and should not be a configurable option.\n\nPlease see the following case: \nNFCC_CONFIG_CONTROL\u003d0x00 \u0026 TECH_A route !\u003d DH.\n\nHere, since DH is suppose to manage the RF configurations and NFCC will not consider RF params from UICC/eSE, this would impact the Card Emulation behavior for eSE/UICC. Also today, no known spec defines that how should DH manage the RF param.\n\nTherefore NFCC_CONFIG_CONTROL shall be set to 0x01 and there is no standard behavior definition present for NFCC_CONFIG_CONTROL\u003d0x00.\n\n\nRef: NCI 2.0, Sec 7.1: \"If Bit 0 of NFCC_CONFIG_CONTROL is equal to 0b, the NFCC SHALL NOT change any of the RF configuration parameters after they are set by the DH.\"",
+      "range": {
+        "startLine": 331,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 3
+      },
+      "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
