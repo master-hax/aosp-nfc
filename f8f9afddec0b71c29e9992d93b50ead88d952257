@@ -22,6 +22,30 @@
       "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba562379_468525c1",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2018-12-03T08:54:17Z",
+      "side": 1,
+      "message": "For now, the aosp does not handle the NFCC_CONFIG_CONTROL and the default value following NCI is 0x0. Therefore, if TECH_ROUTE !\u003dDH (regardless of the NFCC_CONFIG_CONTROL), it will go in the \u0027else\u0027 bracket and the LA_SEL_INFO will be set to 0 i.e no ISO-DEP nor NFC_DEP supported by the device in listen mode.\nHence the commit to allow to handle the NFCC_CONTROL_CONFIG (see nfcc_control_config topic).",
+      "parentUuid": "e5029b3f_575bd549",
+      "range": {
+        "startLine": 331,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 3
+      },
+      "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
