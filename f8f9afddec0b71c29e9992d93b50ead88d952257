@@ -46,6 +46,30 @@
       "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2333a76_207dbd6b",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2018-12-03T21:01:31Z",
+      "side": 1,
+      "message": "\"For now, the aosp does not handle the NFCC_CONFIG_CONTROL and the default value following NCI is 0x0.\"\nAgree, therefore suggestion is that AOSP shall configure the NFCC_CONFIG-CONTROL\u003d0x01 by default \n during NFC init and no option is needed in config file.",
+      "parentUuid": "ba562379_468525c1",
+      "range": {
+        "startLine": 331,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 3
+      },
+      "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
