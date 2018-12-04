@@ -70,6 +70,30 @@
       "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b0ebed_3bc6aff7",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2018-12-04T08:39:33Z",
+      "side": 1,
+      "message": "I agree that one solution is to put NFCC_CONFIG-CONTROL\u003d0x01 by default in the NFC init. If everyone agrees, it can be set as default without any option in config file. \n\nHowever,if NFCC_CONFIG-CONTROL is set by default at 0x01, a patch is still needed here to remove the else bracket. The DH will always have to fill the RF parameters for itself (LA_SEL_INFO, LA_BIT_FRAME_SDD and LA_PLATFORM_CONFIG)",
+      "parentUuid": "d2333a76_207dbd6b",
+      "range": {
+        "startLine": 331,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 3
+      },
+      "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
