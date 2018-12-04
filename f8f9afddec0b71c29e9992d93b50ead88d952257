@@ -94,6 +94,30 @@
       "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7333d678_17b95996",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-12-04T17:26:53Z",
+      "side": 1,
+      "message": "Agreed on keeping the NFCC_CONFIG-CONTROL set a 0x01 as default.",
+      "parentUuid": "45b0ebed_3bc6aff7",
+      "range": {
+        "startLine": 331,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 3
+      },
+      "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
