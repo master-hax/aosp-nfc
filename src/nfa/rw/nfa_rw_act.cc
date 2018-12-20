@@ -52,6 +52,7 @@ static void nfa_rw_presence_check(tNFA_RW_MSG* p_data);
 static void nfa_rw_handle_t2t_evt(tRW_EVENT event, tRW_DATA* p_rw_data);
 static bool nfa_rw_detect_ndef(void);
 static void nfa_rw_cback(tRW_EVENT event, tRW_DATA* p_rw_data);
+static void nfa_rw_handle_mfc_evt(tRW_EVENT event, tRW_DATA* p_rw_data);
 
 /*******************************************************************************
 **
@@ -1386,6 +1387,82 @@ static void nfa_rw_handle_i93_evt(tRW_EVENT event, tRW_DATA* p_rw_data) {
 
 /*******************************************************************************
 **
+** Function         nfa_rw_handle_mfc_evt
+**
+** Description      Handler for Mifare Classic tag reader/writer events
+**
+** Returns          Nothing
+**
+*******************************************************************************/
+static void nfa_rw_handle_mfc_evt(tRW_EVENT event, tRW_DATA* p_rw_data) {
+  tNFA_CONN_EVT_DATA conn_evt_data;
+
+  conn_evt_data.status = p_rw_data->status;
+   DLOG_IF(INFO, nfc_debug_enabled)
+          << StringPrintf("nfa_rw_handle_mfc_evt() event = 0x%X", event);
+
+  if (p_rw_data->status == NFC_STATUS_REJECTED) {
+    /* Received NACK. Let DM wakeup the tag first (by putting tag to sleep and
+     * then waking it up) */
+    if ((p_rw_data->status = nfa_dm_disc_sleep_wakeup()) == NFC_STATUS_OK) {
+      nfa_rw_cb.halt_event = event;
+      memcpy(&nfa_rw_cb.rw_data, p_rw_data, sizeof(tRW_DATA));
+      return;
+    }
+  }
+
+  switch (event) {
+    case RW_MFC_NDEF_READ_CPLT_EVT: /* Read completed          */
+      nfa_rw_send_data_to_upper(p_rw_data);
+      /* Command complete - perform cleanup, notify the app */
+      nfa_rw_command_complete();
+      nfa_dm_act_conn_cback_notify(NFA_READ_CPLT_EVT, &conn_evt_data);
+      break;
+
+    case RW_MFC_NDEF_DETECT_EVT: /* NDEF detection complete */
+
+      nfa_rw_handle_ndef_detect(p_rw_data);
+      break;
+
+    case RW_MFC_NDEF_READ_EVT: /* NDEF read completed     */
+
+      if (p_rw_data->status == NFC_STATUS_OK) {
+        /* Process the ndef record */
+        nfa_dm_ndef_handle_message(NFA_STATUS_OK, nfa_rw_cb.p_ndef_buf,
+                                   nfa_rw_cb.ndef_cur_size);
+      } else {
+        /* Notify app of failure */
+        if (nfa_rw_cb.cur_op == NFA_RW_OP_READ_NDEF) {
+          /* If current operation is READ_NDEF, then notify ndef handlers of
+           * failure */
+          nfa_dm_ndef_handle_message(NFA_STATUS_FAILED, NULL, 0);
+        }
+      }
+
+      /* Notify app of read status */
+      conn_evt_data.status = p_rw_data->status;
+      nfa_dm_act_conn_cback_notify(NFA_READ_CPLT_EVT, &conn_evt_data);
+      /* Free ndef buffer */
+      nfa_rw_free_ndef_rx_buf();
+
+      /* Command complete - perform cleanup */
+      nfa_rw_command_complete();
+      break;
+
+    case RW_MFC_RAW_FRAME_EVT: /* Raw Frame data event         */
+      nfa_rw_send_data_to_upper(p_rw_data);
+
+      if (p_rw_data->status != NFC_STATUS_CONTINUE) {
+        /* Command complete - perform cleanup */
+        nfa_rw_command_complete();
+        nfa_rw_cb.cur_op = NFA_RW_OP_MAX;
+      }
+      break;
+  }
+}
+
+/*******************************************************************************
+**
 ** Function         nfa_rw_cback
 **
 ** Description      Callback for reader/writer event notification
@@ -1413,6 +1490,9 @@ static void nfa_rw_cback(tRW_EVENT event, tRW_DATA* p_rw_data) {
   } else if (event < RW_I93_MAX_EVT) {
     /* Handle ISO 15693 tag events */
     nfa_rw_handle_i93_evt(event, p_rw_data);
+  } else if (event < RW_MFC_MAX_EVT) {
+    /* Handle Mifare Classic tag events */
+    nfa_rw_handle_mfc_evt(event, p_rw_data);
   } else {
     LOG(ERROR) << StringPrintf("nfa_rw_cback: unhandled event=0x%02x", event);
   }
@@ -1448,6 +1528,8 @@ static tNFC_STATUS nfa_rw_start_ndef_detection(void) {
   } else if (NFC_PROTOCOL_T5T == protocol) {
     /* ISO 15693 */
     status = RW_I93DetectNDef();
+  } else if (NFC_PROTOCOL_MIFARE == protocol) {
+    status = RW_MfcDetectNDef();
   }
 
   return (status);
@@ -1518,6 +1600,10 @@ static tNFC_STATUS nfa_rw_start_ndef_read(void) {
   } else if (NFC_PROTOCOL_T5T == protocol) {
     /* ISO 15693 */
     status = RW_I93ReadNDef();
+  } else if (NFC_PROTOCOL_MIFARE == protocol) /* Mifare Classic*/
+  {
+    status =
+        RW_MfcReadNDef(nfa_rw_cb.p_ndef_buf, (uint16_t)nfa_rw_cb.ndef_cur_size);
   }
 
   return (status);

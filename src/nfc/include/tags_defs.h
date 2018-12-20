@@ -448,6 +448,15 @@ typedef uint8_t tT3T_POLL_RC;
 
 /*
 **
+**  Mifare Classic Tag Definitions
+**
+*/
+
+#define MFC_UID_LEN \
+  4
+
+/*
+**
 **  ISO 15693 Tag Definitions
 **
 */
