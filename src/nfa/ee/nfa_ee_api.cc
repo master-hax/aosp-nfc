@@ -336,6 +336,73 @@ tNFA_STATUS NFA_EeSetDefaultTechRouting(
 
 /*******************************************************************************
 **
+** Function         NFA_EeClearDefaultTechRouting
+**
+** Description      This function is called to remove the default routing based
+**                  on RF technology in the listen mode routing table for the
+**                  given ee_handle. The status of this operation is reported
+**                  as the NFA_EE_CLEAR_TECH_CFG_EVT.
+**
+** Note:            If RF discovery is started,
+**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
+**                  happen before calling this function
+**
+** Note:            NFA_EeUpdateNow() should be called after last NFA-EE
+**                  function to change the listen mode routing is called.
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**                  NFA_STATUS_INVALID_PARAM If bad parameter
+**
+*******************************************************************************/
+tNFA_STATUS NFA_EeClearDefaultTechRouting(
+    tNFA_HANDLE ee_handle, tNFA_TECHNOLOGY_MASK technologies_switch_on,
+    tNFA_TECHNOLOGY_MASK technologies_switch_off,
+    tNFA_TECHNOLOGY_MASK technologies_battery_off,
+    tNFA_TECHNOLOGY_MASK technologies_screen_lock,
+    tNFA_TECHNOLOGY_MASK technologies_screen_off,
+    tNFA_TECHNOLOGY_MASK technologies_screen_off_lock) {
+  tNFA_EE_API_SET_TECH_CFG* p_msg;
+  tNFA_STATUS status = NFA_STATUS_FAILED;
+  uint8_t nfcee_id = (uint8_t)(ee_handle & 0xFF);
+  tNFA_EE_ECB* p_cb;
+
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      ""
+      "handle:<0x%x>clear technology_mask:<0x%x>/<0x%x>/<0x%x><0x%x><0x%x><0x%x>",
+      ee_handle, technologies_switch_on, technologies_switch_off,
+      technologies_battery_off, technologies_screen_lock,
+      technologies_screen_off, technologies_screen_off_lock);
+  p_cb = nfa_ee_find_ecb(nfcee_id);
+
+  if (p_cb == nullptr) {
+    LOG(ERROR) << StringPrintf("Bad ee_handle");
+    status = NFA_STATUS_INVALID_PARAM;
+  } else {
+    p_msg =
+        (tNFA_EE_API_CLEAR_TECH_CFG*)GKI_getbuf(sizeof(tNFA_EE_API_CLEAR_TECH_CFG));
+    if (p_msg != nullptr) {
+      p_msg->hdr.event = NFA_EE_API_CLEAR_TECH_CFG_EVT;
+      p_msg->nfcee_id = nfcee_id;
+      p_msg->p_cb = p_cb;
+      p_msg->technologies_switch_on = technologies_switch_on;
+      p_msg->technologies_switch_off = technologies_switch_off;
+      p_msg->technologies_battery_off = technologies_battery_off;
+      p_msg->technologies_screen_lock = technologies_screen_lock;
+      p_msg->technologies_screen_off = technologies_screen_off;
+      p_msg->technologies_screen_off_lock = technologies_screen_off_lock;
+
+      nfa_sys_sendmsg(p_msg);
+
+      status = NFA_STATUS_OK;
+    }
+  }
+
+  return status;
+}
+
+/*******************************************************************************
+**
 ** Function         NFA_EeSetDefaultProtoRouting
 **
 ** Description      This function is called to add, change or remove the
