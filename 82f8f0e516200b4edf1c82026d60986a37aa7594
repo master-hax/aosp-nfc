@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f364b5b_f64122ea",
+        "filename": "src/nfa/dm/nfa_dm_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: Formatting",
+      "range": {
+        "startLine": 1493,
+        "startChar": 0,
+        "endLine": 1493,
+        "endChar": 6
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac4abad_75c56e2b",
+        "filename": "src/nfa/dm/nfa_dm_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: formatting",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 4
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f395e0_331d7f12",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "status \u003d nfa_dm_disc_sleep_wakeup();\nif (status \u003d\u003d NFC_STATUS_OK) {..}\n\nPlease avoid assigning values inside if condition.",
+      "range": {
+        "startLine": 1407,
+        "startChar": 8,
+        "endLine": 1407,
+        "endChar": 73
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce6fb12_9831f804",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "in case of error status what\u0027s the expected behavior?",
+      "range": {
+        "startLine": 1412,
+        "startChar": 1,
+        "endLine": 1412,
+        "endChar": 3
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7b33d2_21499677",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: This as well as other following comments.\nPlease place the comment on the previous line.\n\n/* ... */\ncase ...",
+      "range": {
+        "startLine": 1415,
+        "startChar": 36,
+        "endLine": 1415,
+        "endChar": 65
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24ae261_ea47900f",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: This as well as following cases, please remove the extra new line.",
+      "range": {
+        "startLine": 1422,
+        "startChar": 6,
+        "endLine": 1424,
+        "endChar": 8
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e34a78_43eeeaff",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "default case? In case of error event?",
+      "range": {
+        "startLine": 1461,
+        "startChar": 1,
+        "endLine": 1461,
+        "endChar": 3
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2cb25d_202d1ace",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: formatting\n\n/* .. */\nelse if () {",
+      "range": {
+        "startLine": 1603,
+        "startChar": 4,
+        "endLine": 1604,
+        "endChar": 3
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfba22f7_77e70753",
+        "filename": "src/nfc/include/rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: \n\nPlease remove extra spaces in the comment.",
+      "range": {
+        "startLine": 628,
+        "startChar": 17,
+        "endLine": 636,
+        "endChar": 66
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f266130_be55b98c",
+        "filename": "src/nfc/include/tags_defs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit:\n\nSingle line comment?\n\nAnd #define MFC_.. 4 in one line as well?",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 456,
+        "endChar": 3
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28cc38af_6e0e7507",
+        "filename": "src/nfc/tags/rw_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: comment on previous line.",
+      "range": {
+        "startLine": 260,
+        "startChar": 44,
+        "endLine": 260,
+        "endChar": 63
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196eb795_1dcc27eb",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: remove this.",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 11
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b5191e_432813c0",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: formatting",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6760baa5_d464b9de",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "remove if not needed.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c660b9b_a2d2b88c",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: Comments on previous line",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 49
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e7db3a_9d87642d",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: formatting",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 6
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d79975_de68c467",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "StringPrintf is not needed.\n\nLOG(ERROR) \u003c\u003c __func__\n\nPlease edit other usage as well in this patch.",
+      "range": {
+        "startLine": 107,
+        "startChar": 16,
+        "endLine": 107,
+        "endChar": 29
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e95411_3a02c553",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "nit: formatting",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 4
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e207cd_049e18a2",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T21:07:23Z",
+      "side": 1,
+      "message": "parenthesis is not needed.\nreturn NFC_STATUS_BUSY;\n\nPlease change similar usage at other places too.",
+      "range": {
+        "startLine": 338,
+        "startChar": 4,
+        "endLine": 338,
+        "endChar": 28
+      },
+      "revId": "82f8f0e516200b4edf1c82026d60986a37aa7594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
