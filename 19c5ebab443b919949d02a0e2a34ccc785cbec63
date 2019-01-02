@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb565aeb_39e86bcc",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-01-02T18:59:59Z",
+      "side": 1,
+      "message": "Please re-format:\n\nEither merge with previous comment or add a new line and \n/*\n * ...\n */",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 68
+      },
+      "revId": "19c5ebab443b919949d02a0e2a34ccc785cbec63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
