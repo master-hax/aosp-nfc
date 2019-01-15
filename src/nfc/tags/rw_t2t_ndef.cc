@@ -26,6 +26,7 @@
 
 #include <android-base/stringprintf.h>
 #include <base/logging.h>
+#include <log/log.h>
 
 #include "nfc_target.h"
 
@@ -615,6 +616,10 @@ static void rw_t2t_handle_tlv_detect_rsp(uint8_t* p_data) {
 
                 /* Extract lockbytes info addressed by this Lock TLV */
                 xx = 0;
+                if (count > RW_T2T_MAX_LOCK_BYTES) {
+                  count = RW_T2T_MAX_LOCK_BYTES;
+                  android_errorWriteLog(0x534e4554, "112161557");
+                }
                 while (xx < count) {
                   p_t2t->lockbyte[p_t2t->num_lockbytes].tlv_index =
                       p_t2t->num_lock_tlvs;
@@ -692,7 +697,7 @@ static void rw_t2t_handle_tlv_detect_rsp(uint8_t* p_data) {
   /* If not found and not failed, read next block and search tlv */
   if (!found && !failed) {
     if (p_t2t->work_offset >=
-        (p_t2t->tag_hdr[T2T_CC2_TMS_BYTE] * T2T_TMS_TAG_FACTOR)) {
+        (p_t2t->tag_hdr[T2T_CC2_TMS_BYTE] * T2T_TMS_TAG_FACTOR + T2T_FIRST_DATA_BLOCK * T2T_BLOCK_LEN)) {
       if (((tlvtype == TAG_LOCK_CTRL_TLV) && (p_t2t->num_lockbytes > 0)) ||
           ((tlvtype == TAG_MEM_CTRL_TLV) && (p_t2t->num_mem_tlvs > 0))) {
         found = true;
@@ -700,8 +705,7 @@ static void rw_t2t_handle_tlv_detect_rsp(uint8_t* p_data) {
         failed = true;
       }
     } else {
-      if (rw_t2t_read((uint16_t)((p_t2t->work_offset / T2T_BLOCK_LEN) +
-                                 T2T_FIRST_DATA_BLOCK)) != NFC_STATUS_OK)
+      if (rw_t2t_read((uint16_t)(p_t2t->work_offset / T2T_BLOCK_LEN) ) != NFC_STATUS_OK)
         failed = true;
     }
   }
