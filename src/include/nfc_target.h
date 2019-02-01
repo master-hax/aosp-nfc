@@ -653,6 +653,12 @@
     GKI_freebuf(p);                                                   \
   }
 
+#ifndef HAL_MIFARE_WRITE
+#define HAL_MIFARE_WRITE(p)                                                  \
+  {                                                                   \
+    nfc_cb.p_hal->mifare_write((p)->len, (uint8_t*)((p) + 1) + (p)->offset); \
+    GKI_freebuf(p);                                                   \
+  }
 #ifdef NFC_HAL_SHARED_GKI
 
 /* NFC HAL Included if NFC_NFCEE_INCLUDED */
@@ -669,6 +675,8 @@
 #endif /* NFC_NFCEE_INCLUDED == FALSE */
 
 #endif /* NFC_HAL_SHARED_GKI */
+
+#endif /* HAL_MIFARE_WRITE */
 
 #endif /* HAL_WRITE */
 

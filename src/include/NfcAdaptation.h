@@ -125,6 +125,7 @@ class NfcAdaptation {
   static void HalCoreInitialized(uint16_t data_len,
                                  uint8_t* p_core_init_rsp_params);
   static void HalWrite(uint16_t data_len, uint8_t* p_data);
+  static void HalMifareWrite(uint16_t data_len, uint8_t* p_data);
   static bool HalPrediscover();
   static void HalControlGranted();
   static void HalPowerCycle();

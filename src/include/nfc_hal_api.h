@@ -56,6 +56,7 @@ typedef struct {
   tHAL_API_CLOSE* close;
   tHAL_API_CORE_INITIALIZED* core_initialized;
   tHAL_API_WRITE* write;
+  tHAL_API_WRITE* mifare_write;
   tHAL_API_PREDISCOVER* prediscover;
   tHAL_API_CONTROL_GRANTED* control_granted;
   tHAL_API_POWER_CYCLE* power_cycle;

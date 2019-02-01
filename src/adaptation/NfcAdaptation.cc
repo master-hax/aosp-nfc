@@ -483,6 +483,7 @@ void NfcAdaptation::InitializeHalDeviceContext() {
   mHalEntryFuncs.close = HalClose;
   mHalEntryFuncs.core_initialized = HalCoreInitialized;
   mHalEntryFuncs.write = HalWrite;
+  mHalEntryFuncs.mifare_write = HalMifareWrite;
   mHalEntryFuncs.prediscover = HalPrediscover;
   mHalEntryFuncs.control_granted = HalControlGranted;
   mHalEntryFuncs.power_cycle = HalPowerCycle;
@@ -619,6 +620,26 @@ void NfcAdaptation::HalWrite(uint16_t data_len, uint8_t* p_data) {
   mHal->write(data);
 }
 
+/*******************************************************************************
+**
+** Function:    NfcAdaptation::HalMifareWrite
+**
+** Description: Write NCI message to the controller.
+**
+** Returns:     None.
+**
+*******************************************************************************/
+void NfcAdaptation::HalMifareWrite(uint16_t data_len, uint8_t* p_data) {
+  const char* func = "NfcAdaptation::HalMifareWrite";
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s", func);
+  ::android::hardware::nfc::V1_0::NfcData data;
+  data.setToExternal(p_data, data_len);
+  if (mHal_1_2 != nullptr) {
+    mHal_1_2->mifareWrite(data);
+  } else {
+    mHal->write(data);
+  }
+}
 /*******************************************************************************
 **
 ** Function:    NfcAdaptation::HalCoreInitialized
