@@ -142,6 +142,30 @@
       "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14ef662b_3478f45a",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2019-02-13T09:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6994c5a2_b010455d",
+      "range": {
+        "startLine": 331,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 3
+      },
+      "revId": "f8f9afddec0b71c29e9992d93b50ead88d952257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
