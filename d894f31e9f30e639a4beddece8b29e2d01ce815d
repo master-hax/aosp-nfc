@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc58ac5c_a0d7dc8a",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2019-02-13T06:14:13Z",
+      "side": 1,
+      "message": "Function description mismatch.",
+      "range": {
+        "startLine": 431,
+        "startChar": 0,
+        "endLine": 439,
+        "endChar": 81
+      },
+      "revId": "d894f31e9f30e639a4beddece8b29e2d01ce815d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
