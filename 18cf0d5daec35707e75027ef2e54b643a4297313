@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c2bbde5_022db70e",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2019-02-13T12:32:45Z",
+      "side": 1,
+      "message": "Can we also add a check for connection id to be sure that this raw packet is only for RF,\nas function nfc_ncif_send_data is common for sending HCI packets to EE ?\nif(p_cb-\u003eact_protocol \u003d\u003d NCI_PROTOCOL_MIFARE \u0026\u0026 p_cb-\u003eid \u003d\u003d NFC_RF_CONN_ID)",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 52
+      },
+      "revId": "18cf0d5daec35707e75027ef2e54b643a4297313",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
