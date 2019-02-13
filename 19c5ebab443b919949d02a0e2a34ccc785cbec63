@@ -22,6 +22,30 @@
       "revId": "19c5ebab443b919949d02a0e2a34ccc785cbec63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95292014_f3742858",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2019-02-13T09:41:18Z",
+      "side": 1,
+      "message": "Mark Resolved.",
+      "parentUuid": "bb565aeb_39e86bcc",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 68
+      },
+      "revId": "19c5ebab443b919949d02a0e2a34ccc785cbec63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
