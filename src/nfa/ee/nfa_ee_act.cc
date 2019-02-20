@@ -313,7 +313,7 @@ static void nfa_ee_add_tech_route_to_ecb(tNFA_EE_ECB* p_cb, uint8_t* pp,
 
   /* add the Technology based routing */
   for (int xx = 0; xx < NFA_EE_NUM_TECH; xx++) {
-    uint8_t power_cfg = 0;
+    uint8_t power_cfg = 0, tech_tag = 0;
     if (p_cb->tech_switch_on & nfa_ee_tech_mask_list[xx])
       power_cfg |= NCI_ROUTE_PWR_STATE_ON;
     if (p_cb->tech_switch_off & nfa_ee_tech_mask_list[xx])
@@ -330,8 +330,9 @@ static void nfa_ee_add_tech_route_to_ecb(tNFA_EE_ECB* p_cb, uint8_t* pp,
         power_cfg |= NCI_ROUTE_PWR_STATE_SCREEN_OFF_LOCK();
     }
     if (power_cfg) {
-      add_route_tech_proto_tlv(&pp, NFC_ROUTE_TAG_TECH, p_cb->nfcee_id,
-                               power_cfg, nfa_ee_tech_list[xx]);
+      tech_tag = NFC_ROUTE_TAG_TECH | nfa_ee_cb.route_block_control;
+      add_route_tech_proto_tlv(&pp, tech_tag, p_cb->nfcee_id, power_cfg,
+                               nfa_ee_tech_list[xx]);
       num_tlv++;
       if (power_cfg != NCI_ROUTE_PWR_STATE_ON)
         nfa_ee_cb.ee_cfged |= NFA_EE_CFGED_OFF_ROUTING;
