@@ -22,6 +22,52 @@
       "revId": "d894f31e9f30e639a4beddece8b29e2d01ce815d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb47212b_7be0bc41",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2019-02-22T10:56:58Z",
+      "side": 1,
+      "message": "Please correct the format.",
+      "range": {
+        "startLine": 642,
+        "startChar": 1,
+        "endLine": 646,
+        "endChar": 68
+      },
+      "revId": "d894f31e9f30e639a4beddece8b29e2d01ce815d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3446cf5b_9d1f5b02",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2019-02-22T10:56:58Z",
+      "side": 1,
+      "message": "Please correct the format.",
+      "range": {
+        "startLine": 745,
+        "startChar": 1,
+        "endLine": 749,
+        "endChar": 25
+      },
+      "revId": "d894f31e9f30e639a4beddece8b29e2d01ce815d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
