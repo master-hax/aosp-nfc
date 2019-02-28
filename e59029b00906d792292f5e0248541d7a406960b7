@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0ae3fb9_93d399e7",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2019-02-28T08:09:56Z",
+      "side": 1,
+      "message": "nit:RW_MFC_STATE_IDLE",
+      "range": {
+        "startLine": 759,
+        "startChar": 22,
+        "endLine": 759,
+        "endChar": 39
+      },
+      "revId": "e59029b00906d792292f5e0248541d7a406960b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
