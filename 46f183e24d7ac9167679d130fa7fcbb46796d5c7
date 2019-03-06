@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f527bf7_dbec936b",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-03-06T16:53:56Z",
+      "side": 1,
+      "message": "nit: naming:\nNAME_LEGACY_MIFARE_READER?",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "46f183e24d7ac9167679d130fa7fcbb46796d5c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
