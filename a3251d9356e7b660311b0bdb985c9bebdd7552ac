@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "585ac02a_ecbb052b",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-03-07T00:08:29Z",
+      "side": 1,
+      "message": "nit: new line",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 1
+      },
+      "revId": "a3251d9356e7b660311b0bdb985c9bebdd7552ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb61c893_b6ff9f71",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-03-07T00:08:29Z",
+      "side": 1,
+      "message": "nit:\nLOG(ERROR) \u003c\u003c __func__ \u003c\u003c \"unable to allocate buffer for \"\n          \"retransmission\"",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 28
+      },
+      "revId": "a3251d9356e7b660311b0bdb985c9bebdd7552ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8173b31e_cfc1f7e4",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-03-07T00:08:29Z",
+      "side": 1,
+      "message": "nit: new line",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 1
+      },
+      "revId": "a3251d9356e7b660311b0bdb985c9bebdd7552ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e699b9d1_7f9439b6",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-03-07T00:08:29Z",
+      "side": 1,
+      "message": "LOG(ERROR) \u003c\u003c __func__ \u003c\u003c \"NFC_SendData () failed\";",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 170,
+        "endChar": 59
+      },
+      "revId": "a3251d9356e7b660311b0bdb985c9bebdd7552ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b633fb93_476d6a2a",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-03-07T00:08:29Z",
+      "side": 1,
+      "message": "DLOG_IF(INFO, nfc_debug_enabled) \u003c\u003c __func__ \u003c\u003c \"event \u003d\" \u003c\u003c p_tle-\u003eevent;\n\nand similar changes in the file.",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 74
+      },
+      "revId": "a3251d9356e7b660311b0bdb985c9bebdd7552ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

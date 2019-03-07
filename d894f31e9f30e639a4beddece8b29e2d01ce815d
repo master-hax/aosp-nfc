@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9648c877_40cbcfb1",
+        "filename": "src/include/nfc_target.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-03-07T00:08:29Z",
+      "side": 1,
+      "message": "nit: new line",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 337,
+        "endChar": 1
+      },
+      "revId": "d894f31e9f30e639a4beddece8b29e2d01ce815d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc58ac5c_a0d7dc8a",
         "filename": "src/nfc/tags/rw_mfc.cc",
         "patchSetId": 2
@@ -140,6 +163,29 @@
       "revId": "d894f31e9f30e639a4beddece8b29e2d01ce815d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27b0c918_738f4238",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2019-03-07T00:08:29Z",
+      "side": 1,
+      "message": "nit: space",
+      "range": {
+        "startLine": 932,
+        "startChar": 16,
+        "endLine": 932,
+        "endChar": 18
+      },
+      "revId": "d894f31e9f30e639a4beddece8b29e2d01ce815d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
