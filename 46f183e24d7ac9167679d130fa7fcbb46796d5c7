@@ -22,6 +22,30 @@
       "revId": "46f183e24d7ac9167679d130fa7fcbb46796d5c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0b7852_3ff7e941",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2019-03-07T06:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f527bf7_dbec936b",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "46f183e24d7ac9167679d130fa7fcbb46796d5c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
