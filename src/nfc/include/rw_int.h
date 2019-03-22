@@ -608,7 +608,7 @@ typedef struct {
 /* Mifare Classic RW Control Block */
 
 typedef struct {
-  uint8_t block;
+  uint16_t block;
   bool auth;
 } tRW_MFC_BLOCK;
 
