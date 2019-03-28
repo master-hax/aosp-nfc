@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d3f6eaa_959666fb",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2019-03-28T11:58:03Z",
+      "side": 1,
+      "message": "Call to nfa_rw_command_complete() is missing to clear the busy flag",
+      "revId": "72061c90cebcfebcb391ea8ff5bc2689f16781a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6b4d5c_a9694c01",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2019-03-28T11:58:03Z",
+      "side": 1,
+      "message": "Same. A call to nfa_rw_command_complete is needed.",
+      "revId": "72061c90cebcfebcb391ea8ff5bc2689f16781a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7addbae9_616fef34",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2019-03-28T11:58:03Z",
+      "side": 1,
+      "message": "I think that for MAD2 the block 64 should be filled with MAD_B1 and blocks 65 and 66 with MAD_B2",
+      "revId": "72061c90cebcfebcb391ea8ff5bc2689f16781a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7536d590_90d9b742",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2019-03-28T11:58:03Z",
+      "side": 1,
+      "message": "MAD2 is between block 64 and 67 included so the test should be  if (p_mfc-\u003ecurrent_block \u003e\u003d 63 \u0026\u0026 p_mfc-\u003ecurrent_block \u003c 67)",
+      "revId": "72061c90cebcfebcb391ea8ff5bc2689f16781a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de99ec9d_15ba16bc",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2019-03-28T11:58:03Z",
+      "side": 1,
+      "message": "if current_block \u003d127 (block 3 of sector 31) then next block should p_mfc-\u003enext_block.block \u003d p_mfc-\u003ecurrent_block + 16 (block 15 of sector 32)\nTherefore test should be if (p_mfc-\u003ecurrent_block \u003c 127)",
+      "revId": "72061c90cebcfebcb391ea8ff5bc2689f16781a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d23dbdc_89ff1dc7",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2019-03-28T11:58:03Z",
+      "side": 1,
+      "message": "For Mifare 4K, num_of_blocks \u003d 256 therefore p_mfc-\u003enext_block.block should be declared as a a uint16_t.",
+      "revId": "72061c90cebcfebcb391ea8ff5bc2689f16781a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
