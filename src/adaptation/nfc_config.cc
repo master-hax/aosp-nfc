@@ -22,19 +22,18 @@
 #include <android-base/strings.h>
 
 #include <config.h>
+#include <cutils/properties.h>
 
 using namespace ::std;
 using namespace ::android::base;
 
 namespace {
 
-std::string findConfigPath() {
+std::string findConfigPath(const string& configName) {
   const vector<string> search_path = {"/odm/etc/", "/vendor/etc/",
                                       "/product/etc/", "/etc/"};
-  const string file_name = "libnfc-nci.conf";
-
   for (string path : search_path) {
-    path.append(file_name);
+    path.append(configName);
     struct stat file_stat;
     if (stat(path.c_str(), &file_stat) != 0) continue;
     if (S_ISREG(file_stat.st_mode)) return path;
@@ -42,10 +41,33 @@ std::string findConfigPath() {
   return "";
 }
 
+std::string getConfigPath() {
+  char valueStr[PROPERTY_VALUE_MAX] = {0};
+  const string defaultConfigFileName = "libnfc-nci.conf";
+  string configFileName = "libnfc-nci";
+  /* update config file name based on system property */
+  int len = property_get("persist.nfc.config_file_name", valueStr, "");
+  if (len > 0) {
+    configFileName = configFileName + "_" + valueStr + ".conf";
+  } else {
+    configFileName = defaultConfigFileName;
+  }
+  LOG(INFO) << __func__ << " nci config file name = " << configFileName.c_str();
+
+  string filePath = findConfigPath(configFileName);
+  if (filePath.length() == 0) {
+    LOG(INFO) << __func__ << " Unable to find nci Config file."
+              << configFileName.c_str() << " Using Default Config file.";
+    filePath = findConfigPath(defaultConfigFileName);
+  }
+
+  return filePath;
+}
+
 }  // namespace
 
 void NfcConfig::loadConfig() {
-  string config_path = findConfigPath();
+  string config_path = getConfigPath();
   CHECK(config_path != "");
   config_.parseFromFile(config_path);
   /* Read vendor specific configs */
