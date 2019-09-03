@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2d5e1a8_582bc751",
+        "filename": "src/nfa/hci/nfa_hci_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1429,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2019-09-03T10:20:17Z",
+      "side": 1,
+      "message": "correct format\n\n        } else if",
+      "range": {
+        "startLine": 1427,
+        "startChar": 8,
+        "endLine": 1429,
+        "endChar": 15
+      },
+      "revId": "ea07c4692611a8902a4282ae1694697e146ac3a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
