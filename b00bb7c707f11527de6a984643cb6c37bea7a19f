@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Yifan Hong <elsk@google.com>
+Code-Review+1: George Chang <georgekgchang@google.com>
+Autosubmit+1: Steven Moreland <smoreland@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Sun, 08 Sep 2019 10:39:59 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/system/nfc/+/1115390
+Project: platform/system/nfc
+Branch: refs/heads/master
