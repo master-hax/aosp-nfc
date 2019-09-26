@@ -1322,15 +1322,27 @@ void rw_t3t_act_handle_ndef_detect_rsp(tRW_T3T_CB* p_cb, NFC_HDR* p_msg_rsp) {
             p_cb->ndef_attrib.nbr, p_cb->ndef_attrib.nbw,
             p_cb->ndef_attrib.nmaxb, p_cb->ndef_attrib.writef,
             p_cb->ndef_attrib.rwflag, p_cb->ndef_attrib.ln);
-
-        /* Set data for RW_T3T_NDEF_DETECT_EVT */
-        evt_data.status = p_cb->ndef_attrib.status;
-        evt_data.cur_size = p_cb->ndef_attrib.ln;
-        evt_data.max_size = (uint32_t)p_cb->ndef_attrib.nmaxb * 16;
-        evt_data.protocol = NFC_PROTOCOL_T3T;
-        evt_data.flags = (RW_NDEF_FL_SUPPORTED | RW_NDEF_FL_FORMATED);
-        if (p_cb->ndef_attrib.rwflag == T3T_MSG_NDEF_RWFLAG_RO)
-          evt_data.flags |= RW_NDEF_FL_READ_ONLY;
+        if (p_cb->ndef_attrib.nbr > T3T_MSG_NUM_BLOCKS_CHECK_MAX ||
+            p_cb->ndef_attrib.nbw > T3T_MSG_NUM_BLOCKS_UPDATE_MAX) {
+            /*Exceeding maximum length of an NFC-F Frame */
+            DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+            "Unsupported NDEF Attributes value: Nbr=%i, Nbw=%i, Nmaxb=%i,"
+            "WriteF=%i, RWFlag=%i, Ln=%i",
+            p_cb->ndef_attrib.nbr, p_cb->ndef_attrib.nbw,
+            p_cb->ndef_attrib.nmaxb, p_cb->ndef_attrib.writef,
+            p_cb->ndef_attrib.rwflag, p_cb->ndef_attrib.ln);
+            p_cb->ndef_attrib.status = NFC_STATUS_FAILED;
+            evt_data.status = NFC_STATUS_BAD_RESP;
+        } else {
+          /* Set data for RW_T3T_NDEF_DETECT_EVT */
+          evt_data.status = p_cb->ndef_attrib.status;
+          evt_data.cur_size = p_cb->ndef_attrib.ln;
+          evt_data.max_size = (uint32_t)p_cb->ndef_attrib.nmaxb * 16;
+          evt_data.protocol = NFC_PROTOCOL_T3T;
+          evt_data.flags = (RW_NDEF_FL_SUPPORTED | RW_NDEF_FL_FORMATED);
+          if (p_cb->ndef_attrib.rwflag == T3T_MSG_NDEF_RWFLAG_RO)
+            evt_data.flags |= RW_NDEF_FL_READ_ONLY;
+        }
       }
     }
   }
