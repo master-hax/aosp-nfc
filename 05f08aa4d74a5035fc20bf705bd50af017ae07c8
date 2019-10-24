@@ -1,0 +1,7 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Alisher Alikhodjaev <alisher@google.com>
+Submitted-by: Mitch Phillips <mitchp@google.com>
+Submitted-at: Thu, 24 Oct 2019 23:43:09 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/system/nfc/+/1147940
+Project: platform/system/nfc
+Branch: refs/heads/master
