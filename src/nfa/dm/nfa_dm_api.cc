@@ -34,6 +34,7 @@
 using android::base::StringPrintf;
 
 extern bool nfc_debug_enabled;
+tHAL_NFC_ENTRY* p_hal_tbl = nullptr;
 
 /*****************************************************************************
 **  Constants
@@ -58,6 +59,7 @@ extern bool nfc_debug_enabled;
 *******************************************************************************/
 void NFA_Init(tHAL_NFC_ENTRY* p_hal_entry_tbl) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  p_hal_tbl = p_hal_entry_tbl;
   nfa_sys_init();
   nfa_dm_init();
   nfa_p2p_init();

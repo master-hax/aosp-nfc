@@ -38,6 +38,9 @@ struct INfcClientCallback;
 namespace V1_2 {
 struct INfc;
 }
+namespace V1_3 {
+struct INfc;
+}
 }
 }
 }
@@ -88,6 +91,7 @@ class NfcAdaptation {
   void Finalize();
   void FactoryReset();
   void DeviceShutdown();
+  void SetVendorConfigName(std::string filename);
   static NfcAdaptation& GetInstance();
   tHAL_NFC_ENTRY* GetHalEntryFuncs();
   bool DownloadFirmware();
@@ -104,6 +108,7 @@ class NfcAdaptation {
   static android::sp<android::hardware::nfc::V1_0::INfc> mHal;
   static android::sp<android::hardware::nfc::V1_1::INfc> mHal_1_1;
   static android::sp<android::hardware::nfc::V1_2::INfc> mHal_1_2;
+  static android::sp<android::hardware::nfc::V1_3::INfc> mHal_1_3;
   static android::hardware::nfc::V1_1::INfcClientCallback* mCallback;
   static tHAL_NFC_CBACK* mHalCallback;
   static tHAL_NFC_DATA_CBACK* mHalDataCallback;
