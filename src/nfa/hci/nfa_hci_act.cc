@@ -1413,7 +1413,11 @@ void nfa_hci_handle_admin_gate_rsp(uint8_t* p_data, uint8_t data_len) {
             /* Something wrong, NVRAM data could be corrupt or first start with
              * default session id */
             nfa_hciu_send_clear_all_pipe_cmd();
+<<<<<<< HEAD   (0f02a6 Merge cherrypicks of [9427496, 9427497, 9427498, 9427499, 94)
             nfa_hci_cb.b_hci_netwk_reset = true;
+=======
+            nfa_hci_cb.b_hci_new_sessionId = true;
+>>>>>>> BRANCH (a58106 Snap for 5892339 from 49bcb48088577b443cb9a8a02c7294f87ef23a)
             if (data_len < NFA_HCI_SESSION_ID_LEN) {
               android_errorWriteLog(0x534e4554, "124524315");
             }
@@ -1423,9 +1427,15 @@ void nfa_hci_handle_admin_gate_rsp(uint8_t* p_data, uint8_t data_len) {
 
       case NFA_HCI_ANY_OPEN_PIPE:
         nfa_hci_cb.cfg.admin_gate.pipe01_state = NFA_HCI_PIPE_OPENED;
-
         if (nfa_hci_cb.b_hci_netwk_reset) {
+          /* Something wrong, NVRAM data could be corrupt or first start with
+           * default session id */
+          nfa_hciu_send_clear_all_pipe_cmd();
           nfa_hci_cb.b_hci_netwk_reset = false;
+          nfa_hci_cb.b_hci_new_sessionId = true;
+        } else if (nfa_hci_cb.b_hci_new_sessionId) {
+          nfa_hci_cb.b_hci_new_sessionId = false;
+
           /* Session ID is reset, Set New session id */
           memcpy(
               &nfa_hci_cb.cfg.admin_gate.session_id[NFA_HCI_SESSION_ID_LEN / 2],
