@@ -48,6 +48,7 @@ typedef bool(tHAL_API_PREDISCOVER)(void);
 typedef void(tHAL_API_CONTROL_GRANTED)(void);
 typedef void(tHAL_API_POWER_CYCLE)(void);
 typedef uint8_t(tHAL_API_GET_MAX_NFCEE)(void);
+typedef void(tHAL_API_SET_VENDOR_CONFIG_FILENAME)(std::string);
 
 typedef struct {
   tHAL_API_INITIALIZE* initialize;
@@ -60,6 +61,7 @@ typedef struct {
   tHAL_API_CONTROL_GRANTED* control_granted;
   tHAL_API_POWER_CYCLE* power_cycle;
   tHAL_API_GET_MAX_NFCEE* get_max_ee;
+  tHAL_API_SET_VENDOR_CONFIG_FILENAME* set_vendor_cfg_name;
 
 } tHAL_NFC_ENTRY;
 

@@ -811,6 +811,8 @@ extern tNFA_STATUS NFA_Disable(bool graceful);
 extern tNFA_STATUS NFA_SetConfig(tNFA_PMID param_id, uint8_t length,
                                  uint8_t* p_data);
 
+extern tNFA_STATUS NFA_SetConfigFileName(std::string FileName);
+extern tNFA_STATUS NFA_SetVendorConfigFileName(std::string FileName);
 /*******************************************************************************
 **
 ** Function         NFA_GetConfig
