@@ -18,6 +18,7 @@
 #include <android-base/stringprintf.h>
 #include <android/hardware/nfc/1.1/INfc.h>
 #include <android/hardware/nfc/1.2/INfc.h>
+#include <android/hardware/nfc/1.3/INfc.h>
 #include <base/command_line.h>
 #include <base/logging.h>
 #include <cutils/properties.h>
@@ -42,6 +43,7 @@ using android::hardware::nfc::V1_0::INfc;
 using android::hardware::nfc::V1_1::PresenceCheckAlgorithm;
 using INfcV1_1 = android::hardware::nfc::V1_1::INfc;
 using INfcV1_2 = android::hardware::nfc::V1_2::INfc;
+using INfcV1_3 = android::hardware::nfc::V1_3::INfc;
 using NfcVendorConfigV1_1 = android::hardware::nfc::V1_1::NfcConfig;
 using NfcVendorConfigV1_2 = android::hardware::nfc::V1_2::NfcConfig;
 using android::hardware::nfc::V1_1::INfcClientCallback;
@@ -62,6 +64,7 @@ ThreadCondVar NfcAdaptation::mHalCloseCompletedEvent;
 sp<INfc> NfcAdaptation::mHal;
 sp<INfcV1_1> NfcAdaptation::mHal_1_1;
 sp<INfcV1_2> NfcAdaptation::mHal_1_2;
+sp<INfcV1_3> NfcAdaptation::mHal_1_3;
 INfcClientCallback* NfcAdaptation::mCallback;
 
 bool nfc_debug_enabled = false;
@@ -177,7 +180,11 @@ NfcAdaptation& NfcAdaptation::GetInstance() {
 void NfcAdaptation::GetVendorConfigs(
     std::map<std::string, ConfigValue>& configMap) {
   NfcVendorConfigV1_2 configValue;
-  if (mHal_1_2) {
+
+  configMap.emplace(NAME_DYNAMIC_CONFIG_SUPPORT, 0x00);
+  if (mHal_1_3) {
+    configMap.emplace(NAME_DYNAMIC_CONFIG_SUPPORT, 0x01);
+  } else  if (mHal_1_2) {
     mHal_1_2->getConfig_1_2(
         [&configValue](NfcVendorConfigV1_2 config) { configValue = config; });
   } else if (mHal_1_1) {
@@ -187,7 +194,7 @@ void NfcAdaptation::GetVendorConfigs(
     });
   }
 
-  if (mHal_1_1 || mHal_1_2) {
+  if (mHal_1_1 || mHal_1_2 || mHal_1_3) {
     std::vector<uint8_t> nfaPropCfg = {
         configValue.v1_1.nfaProprietaryCfg.protocol18092Active,
         configValue.v1_1.nfaProprietaryCfg.protocolBPrime,
@@ -244,6 +251,13 @@ void NfcAdaptation::GetVendorConfigs(
     }
   }
 }
+
+void NfcAdaptation::HalSetVendorConfigName(std::string filename) {
+  if (mHal_1_3) {
+    mHal_1_3->setVendorConfigFileName(filename);
+  }
+}
+
 /*******************************************************************************
 **
 ** Function:    NfcAdaptation::Initialize()
@@ -487,12 +501,20 @@ void NfcAdaptation::InitializeHalDeviceContext() {
   mHalEntryFuncs.control_granted = HalControlGranted;
   mHalEntryFuncs.power_cycle = HalPowerCycle;
   mHalEntryFuncs.get_max_ee = HalGetMaxNfcee;
-  LOG(INFO) << StringPrintf("%s: INfc::getService()", func);
-  mHal = mHal_1_1 = mHal_1_2 = INfcV1_2::getService();
-  if (mHal_1_2 == nullptr) {
-    mHal = mHal_1_1 = INfcV1_1::getService();
-    if (mHal_1_1 == nullptr) {
-      mHal = INfc::getService();
+  mHalEntryFuncs.set_vendor_cfg_name = HalSetVendorConfigName;
+
+  LOG(INFO) << StringPrintf("%s: INfc::getService() 1_3", func);
+  mHal = mHal_1_1 = mHal_1_2 = mHal_1_3 = INfcV1_3::getService();
+  if (mHal_1_3 == nullptr) {
+    LOG(INFO) << StringPrintf("%s: INfc::getService() 1_2", func);
+    mHal = mHal_1_1 = mHal_1_2 = INfcV1_2::getService();
+    if (mHal_1_2 == nullptr) {
+      LOG(INFO) << StringPrintf("%s: INfc::getService() 1_1", func);
+      mHal = mHal_1_1 = INfcV1_1::getService();
+      if (mHal_1_1 == nullptr) {
+        LOG(INFO) << StringPrintf("%s: INfc::getService() 1_0", func);
+        mHal = INfc::getService();
+      }
     }
   }
   LOG_FATAL_IF(mHal == nullptr, "Failed to retrieve the NFC HAL!");

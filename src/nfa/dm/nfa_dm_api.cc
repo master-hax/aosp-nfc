@@ -34,6 +34,7 @@
 using android::base::StringPrintf;
 
 extern bool nfc_debug_enabled;
+tHAL_NFC_ENTRY* p_hal_tbl = nullptr;
 
 /*****************************************************************************
 **  Constants
@@ -58,6 +59,7 @@ extern bool nfc_debug_enabled;
 *******************************************************************************/
 void NFA_Init(tHAL_NFC_ENTRY* p_hal_entry_tbl) {
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  p_hal_tbl = p_hal_entry_tbl;
   nfa_sys_init();
   nfa_dm_init();
   nfa_p2p_init();
@@ -262,6 +264,24 @@ tNFA_STATUS NFA_SetConfig(tNFA_PMID param_id, uint8_t length, uint8_t* p_data) {
   }
 
   return (NFA_STATUS_FAILED);
+}
+
+tNFA_STATUS NFA_SetConfigFileName(std::string filename) {
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("NFA_SetConfigFileName %s", filename.c_str());
+  // TODO: update parameters
+  return (NFA_STATUS_OK);
+}
+
+tNFA_STATUS NFA_SetVendorConfigFileName(std::string filename) {
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("NFA_SetVendorConfigFileName %s", filename.c_str());
+  // TODO: update parameters
+  if (p_hal_tbl) {
+    p_hal_tbl->set_vendor_cfg_name(filename);
+    return NFA_STATUS_OK;
+  }
+  return NFA_STATUS_FAILED;
 }
 
 /*******************************************************************************
