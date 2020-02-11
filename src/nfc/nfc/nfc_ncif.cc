@@ -26,7 +26,6 @@
 #include <android-base/stringprintf.h>
 #include <base/logging.h>
 #include <log/log.h>
-#include <metricslogger/metrics_logger.h>
 
 #include "nfc_target.h"
 
@@ -539,7 +538,6 @@ void nfc_ncif_set_config_status(uint8_t* p, uint8_t len) {
 void nfc_ncif_event_status(tNFC_RESPONSE_EVT event, uint8_t status) {
   tNFC_RESPONSE evt_data;
   if (event == NFC_NFCC_TIMEOUT_REVT && status == NFC_STATUS_HW_TIMEOUT) {
-    android::metricslogger::LogCounter("nfc_hw_timeout_error", 1);
     uint32_t cmd_hdr = (nfc_cb.last_hdr[0] << 8) | nfc_cb.last_hdr[1];
     android::util::stats_write(android::util::NFC_ERROR_OCCURRED,
                                (int32_t)NCI_TIMEOUT, (int32_t)cmd_hdr,
@@ -570,23 +568,6 @@ void nfc_ncif_error_status(uint8_t conn_id, uint8_t status) {
   }
   android::util::stats_write(android::util::NFC_ERROR_OCCURRED,
                              (int32_t)ERROR_NTF, (int32_t)0, (int32_t)status);
-
-  if (status == NFC_STATUS_TIMEOUT)
-    android::metricslogger::LogCounter("nfc_rf_timeout_error", 1);
-  else if (status == NFC_STATUS_EE_TIMEOUT)
-    android::metricslogger::LogCounter("nfc_ee_timeout_error", 1);
-  else if (status == NFC_STATUS_ACTIVATION_FAILED)
-    android::metricslogger::LogCounter("nfc_rf_activation_failed", 1);
-  else if (status == NFC_STATUS_EE_INTF_ACTIVE_FAIL)
-    android::metricslogger::LogCounter("nfc_ee_activation_failed", 1);
-  else if (status == NFC_STATUS_RF_TRANSMISSION_ERR)
-    android::metricslogger::LogCounter("nfc_rf_transmission_error", 1);
-  else if (status == NFC_STATUS_EE_TRANSMISSION_ERR)
-    android::metricslogger::LogCounter("nfc_ee_transmission_error", 1);
-  else if (status == NFC_STATUS_RF_PROTOCOL_ERR)
-    android::metricslogger::LogCounter("nfc_rf_protocol_error", 1);
-  else if (status == NFC_STATUS_EE_PROTOCOL_ERR)
-    android::metricslogger::LogCounter("nfc_ee_protocol_error", 1);
 }
 
 /*******************************************************************************
@@ -1237,6 +1218,13 @@ void nfc_ncif_proc_ee_discover_req(uint8_t* p, uint16_t plen) {
 
   DLOG_IF(INFO, nfc_debug_enabled)
       << StringPrintf("nfc_ncif_proc_ee_discover_req %d len:%d", *p, plen);
+
+  if (*p > NFC_MAX_EE_DISC_ENTRIES) {
+    android_errorWriteLog(0x534e4554, "122361874");
+    LOG(ERROR) << __func__ << "Exceed NFC_MAX_EE_DISC_ENTRIES";
+    return;
+  }
+
   if (p_cback) {
     u8 = *p;
     ee_disc_req.status = NFC_STATUS_OK;
