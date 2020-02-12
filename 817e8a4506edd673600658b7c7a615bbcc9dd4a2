@@ -22,6 +22,30 @@
       "revId": "817e8a4506edd673600658b7c7a615bbcc9dd4a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5609cd3_2d2a5e57",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1633436
+      },
+      "writtenOn": "2020-02-12T18:49:14Z",
+      "side": 1,
+      "message": "switch (p_i93-\u003eproduct_version){\n          case RW_I93_ONS_N36RW02:\n               p_i93-\u003enum_block \u003d 0x40;\n               break; \n          case RW_I93_ONS_N24RF04:\n          case RW_I93_ONS_N24RF04E:\n               p_i93-\u003enum_block \u003d 0x80;\n               break; \n          case RW_I93_ONS_N24RF16:\n          case RW_I93_ONS_N24RF16E:\n               p_i93-\u003enum_block \u003d 0x200;\n               break; \n          case RW_I93_ONS_N24RF64:\n          case RW_I93_ONS_N24RF64E:\n               p_i93-\u003enum_block \u003d 0x800;\n               break; \n          default:\n               return false;\n        }",
+      "parentUuid": "3c4c0f98_0d12b923",
+      "range": {
+        "startLine": 451,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 28
+      },
+      "revId": "817e8a4506edd673600658b7c7a615bbcc9dd4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
