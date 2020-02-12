@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c4c0f98_0d12b923",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2020-02-12T18:21:30Z",
+      "side": 1,
+      "message": "confusing formatting of the code",
+      "range": {
+        "startLine": 451,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 28
+      },
+      "revId": "817e8a4506edd673600658b7c7a615bbcc9dd4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
