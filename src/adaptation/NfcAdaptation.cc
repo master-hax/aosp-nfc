@@ -30,6 +30,10 @@
 #include "nfc_config.h"
 #include "nfc_int.h"
 
+using ::android::wp;
+using ::android::hardware::hidl_death_recipient;
+using ::android::hidl::base::V1_0::IBase;
+
 using android::OK;
 using android::sp;
 using android::status_t;
@@ -131,6 +135,25 @@ class NfcClientCallback : public INfcClientCallback {
   tHAL_NFC_DATA_CBACK* mDataCallback;
 };
 
+class NfcDeathRecipient : public hidl_death_recipient {
+ public:
+  android::sp<android::hardware::nfc::V1_0::INfc> mNfcDeathHal;
+  NfcDeathRecipient(android::sp<android::hardware::nfc::V1_0::INfc>& mHal) {
+    mNfcDeathHal = mHal;
+  }
+
+  virtual void serviceDied(
+      uint64_t /* cookie */,
+      const wp<::android::hidl::base::V1_0::IBase>& /* who */) {
+    ALOGE(
+        "NfcDeathRecipient::serviceDied - Nfc-Hal service died. Killing "
+        "NfcServie");
+    mNfcDeathHal->unlinkToDeath(this);
+    mNfcDeathHal = NULL;
+    abort();
+  }
+};
+
 /*******************************************************************************
 **
 ** Function:    NfcAdaptation::NfcAdaptation()
@@ -141,6 +164,7 @@ class NfcClientCallback : public INfcClientCallback {
 **
 *******************************************************************************/
 NfcAdaptation::NfcAdaptation() {
+  mNfcHalDeathRecipient = new NfcDeathRecipient(mHal);
   memset(&mHalEntryFuncs, 0, sizeof(mHalEntryFuncs));
 }
 
@@ -499,6 +523,7 @@ void NfcAdaptation::InitializeHalDeviceContext() {
   LOG(INFO) << StringPrintf("%s: INfc::getService() returned %p (%s)", func,
                             mHal.get(),
                             (mHal->isRemote() ? "remote" : "local"));
+  mHal->linkToDeath(mNfcHalDeathRecipient, 0);
 }
 
 /*******************************************************************************
