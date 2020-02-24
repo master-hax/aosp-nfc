@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: George Chang <georgekgchang@google.com>
+Code-Review+2: George Chang <georgekgchang@google.com>
+Autosubmit+1: George Chang <georgekgchang@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 24 Feb 2020 09:34:56 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/system/nfc/+/959713
+Project: platform/system/nfc
+Branch: refs/heads/master
