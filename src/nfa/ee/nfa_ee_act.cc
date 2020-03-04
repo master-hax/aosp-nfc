@@ -1487,7 +1487,11 @@ void nfa_ee_api_remove_sys_code(tNFA_EE_MSG* p_data) {
     evt_data.status = NFA_STATUS_INVALID_PARAM;
   }
   /* report the status of this operation */
-  nfa_ee_report_event(p_cb->p_ee_cback, NFA_EE_REMOVE_SYSCODE_EVT, &evt_data);
+  if (p_cb) {
+    nfa_ee_report_event(p_cb->p_ee_cback, NFA_EE_REMOVE_SYSCODE_EVT, &evt_data);
+  } else {
+    nfa_ee_report_event(NULL, NFA_EE_REMOVE_SYSCODE_EVT, &evt_data);
+  }
 }
 
 /*******************************************************************************
@@ -2072,8 +2076,7 @@ static void nfa_ee_build_discover_req_evt(tNFA_EE_DISCOVER_REQ* p_evt_data) {
 
   for (xx = 0; xx < nfa_ee_cb.cur_ee; xx++, p_cb++) {
     if ((p_cb->ee_status & NFA_EE_STATUS_INT_MASK) ||
-        (p_cb->ee_status != NFA_EE_STATUS_ACTIVE) ||
-        ((p_cb->ecb_flags & NFA_EE_ECB_FLAGS_DISC_REQ) == 0)) {
+        (p_cb->ee_status != NFA_EE_STATUS_ACTIVE) ) {
       continue;
     }
     p_info->ee_handle = (tNFA_HANDLE)p_cb->nfcee_id | NFA_HANDLE_GROUP_EE;
