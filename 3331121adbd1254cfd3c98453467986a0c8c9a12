@@ -22,6 +22,30 @@
       "revId": "3331121adbd1254cfd3c98453467986a0c8c9a12",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0773a6f2_ac092510",
+        "filename": "src/nfc/llcp/llcp_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-03-11T09:34:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fce5329_61640e66",
+      "range": {
+        "startLine": 441,
+        "startChar": 4,
+        "endLine": 441,
+        "endChar": 11
+      },
+      "revId": "3331121adbd1254cfd3c98453467986a0c8c9a12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
