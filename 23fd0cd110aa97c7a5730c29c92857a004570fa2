@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1694615a_52ac8c24",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-03-19T13:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4495d69b_6a1cf231",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 151,
+        "endChar": 16
+      },
+      "revId": "23fd0cd110aa97c7a5730c29c92857a004570fa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9951a4a3_adada787",
         "filename": "src/adaptation/NfcAdaptation.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "36b46974_0613fff1",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-03-19T13:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9951a4a3_adada787",
+      "range": {
+        "startLine": 526,
+        "startChar": 2,
+        "endLine": 526,
+        "endChar": 46
+      },
+      "revId": "23fd0cd110aa97c7a5730c29c92857a004570fa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa07c917_47b5e10f",
         "filename": "src/include/NfcAdaptation.h",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "23fd0cd110aa97c7a5730c29c92857a004570fa2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e04871_4a593987",
+        "filename": "src/include/NfcAdaptation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-03-19T13:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa07c917_47b5e10f",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "23fd0cd110aa97c7a5730c29c92857a004570fa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
