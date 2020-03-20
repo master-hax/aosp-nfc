@@ -122,7 +122,8 @@ static void nfa_ee_trace_aid(std::string p_str, uint8_t id, uint8_t aid_len,
                              uint8_t* p) {
   int len = aid_len;
   int xx, yy = 0;
-  char buff[100];
+  const uint8_t MAX_BUFF_SIZE = 100;
+  char buff[MAX_BUFF_SIZE];
 
   buff[0] = 0;
   if (aid_len > NFA_MAX_AID_LEN) {
@@ -131,7 +132,7 @@ static void nfa_ee_trace_aid(std::string p_str, uint8_t id, uint8_t aid_len,
     len = NFA_MAX_AID_LEN;
   }
   for (xx = 0; xx < len; xx++) {
-    yy += sprintf(&buff[yy], "%02x ", *p);
+    yy += snprintf(&buff[yy], MAX_BUFF_SIZE - yy, "%02x ", *p);
     p++;
   }
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
@@ -1487,7 +1488,11 @@ void nfa_ee_api_remove_sys_code(tNFA_EE_MSG* p_data) {
     evt_data.status = NFA_STATUS_INVALID_PARAM;
   }
   /* report the status of this operation */
-  nfa_ee_report_event(p_cb->p_ee_cback, NFA_EE_REMOVE_SYSCODE_EVT, &evt_data);
+  if (p_cb) {
+    nfa_ee_report_event(p_cb->p_ee_cback, NFA_EE_REMOVE_SYSCODE_EVT, &evt_data);
+  } else {
+    nfa_ee_report_event(NULL, NFA_EE_REMOVE_SYSCODE_EVT, &evt_data);
+  }
 }
 
 /*******************************************************************************
@@ -2072,8 +2077,7 @@ static void nfa_ee_build_discover_req_evt(tNFA_EE_DISCOVER_REQ* p_evt_data) {
 
   for (xx = 0; xx < nfa_ee_cb.cur_ee; xx++, p_cb++) {
     if ((p_cb->ee_status & NFA_EE_STATUS_INT_MASK) ||
-        (p_cb->ee_status != NFA_EE_STATUS_ACTIVE) ||
-        ((p_cb->ecb_flags & NFA_EE_ECB_FLAGS_DISC_REQ) == 0)) {
+        (p_cb->ee_status != NFA_EE_STATUS_ACTIVE) ) {
       continue;
     }
     p_info->ee_handle = (tNFA_HANDLE)p_cb->nfcee_id | NFA_HANDLE_GROUP_EE;
