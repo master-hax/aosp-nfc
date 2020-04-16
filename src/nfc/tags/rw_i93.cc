@@ -190,16 +190,16 @@ void rw_i93_get_product_version(uint8_t* p_uid) {
         case I93_IC_REF_ONS_N24RF04E:
           p_i93->product_version = RW_I93_ONS_N24RF04E;
           break;
-        case RW_I93_ONS_N24RF16:
+        case I93_IC_REF_ONS_N24RF16:
           p_i93->product_version = RW_I93_ONS_N24RF16;
           break;
-        case RW_I93_ONS_N24RF16E:
+        case I93_IC_REF_ONS_N24RF16E:
           p_i93->product_version = RW_I93_ONS_N24RF16E;
           break;
-        case RW_I93_ONS_N24RF64:
+        case I93_IC_REF_ONS_N24RF64:
           p_i93->product_version = RW_I93_ONS_N24RF64;
           break;
-        case RW_I93_ONS_N24RF64E:
+        case I93_IC_REF_ONS_N24RF64E:
           p_i93->product_version = RW_I93_ONS_N24RF64E;
           break;
         default:
@@ -4271,4 +4271,4 @@ static std::string rw_i93_get_tag_name(uint8_t product_version) {
     default:
       return "UNKNOWN";
   }
-} 
+}
