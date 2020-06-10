@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000003353611",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1325672?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "9b9dbb7f_67322927",
+          "description": "Change to \"conf/libnfc-nci.conf\"",
+          "replacements": [
+            {
+              "path": "conf/libnfc-nci.conf",
+              "range": {
+                "startLine": 19,
+                "startChar": 7,
+                "endLine": 19,
+                "endChar": 14
+              },
+              "replacement": "default"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "8c9fdd27_6d879518",
+        "filename": "conf/libnfc-nci.conf",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-06-10T09:56:17Z",
+      "side": 1,
+      "message": "Common typo found: \"defualt\" -- should it be \"default\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 14
+      },
+      "revId": "d9f9a16997ca9bda5c6590e24556816b7c8747b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
