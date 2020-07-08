@@ -62,11 +62,12 @@ extern std::string nfc_storage_path;
 static struct timeval timer_start;
 static struct timeval timer_end;
 
+#define DEFAULT_NFCSNOOP_PATH "/data/misc/nfc/logs"
 static const off_t NATIVE_CRASH_FILE_SIZE = (1024 * 1024);
 
 void storeNativeCrashLogs(void) {
   std::string filename = "/native_crash_logs";
-  std::string filepath = nfc_storage_path + filename;
+  std::string filepath = DEFAULT_NFCSNOOP_PATH + filename;
   int fileStream;
   off_t fileSize;
   DLOG_IF(INFO, nfc_debug_enabled)
@@ -79,13 +80,15 @@ void storeNativeCrashLogs(void) {
     fileSize = 0;
   }
 
+  mode_t prevmask = umask(0);
   if (fileSize >= NATIVE_CRASH_FILE_SIZE) {
-    fileStream =
-        open(filepath.c_str(), O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+    fileStream = open(filepath.c_str(), O_RDWR | O_CREAT | O_TRUNC,
+                      S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
   } else {
-    fileStream =
-        open(filepath.c_str(), O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+    fileStream = open(filepath.c_str(), O_RDWR | O_CREAT | O_APPEND,
+                      S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
   }
+  umask(prevmask);
 
   if (fileStream >= 0) {
     debug_nfcsnoop_dump(fileStream);
