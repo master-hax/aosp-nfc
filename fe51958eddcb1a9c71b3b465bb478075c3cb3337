@@ -22,6 +22,30 @@
       "revId": "fe51958eddcb1a9c71b3b465bb478075c3cb3337",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf934ae6_3c989a79",
+        "filename": "src/adaptation/debug_nfcsnoop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-08-21T09:38:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e8bb9d1_7caabedd",
+      "range": {
+        "startLine": 210,
+        "startChar": 5,
+        "endLine": 210,
+        "endChar": 22
+      },
+      "revId": "fe51958eddcb1a9c71b3b465bb478075c3cb3337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
