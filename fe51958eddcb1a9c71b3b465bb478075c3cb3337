@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e8bb9d1_7caabedd",
+        "filename": "src/adaptation/debug_nfcsnoop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2020-08-21T03:08:22Z",
+      "side": 1,
+      "message": "Can we somehow combine it with storeNfcCrashLogs? It is just too much common code. What do you think?",
+      "range": {
+        "startLine": 210,
+        "startChar": 5,
+        "endLine": 210,
+        "endChar": 22
+      },
+      "revId": "fe51958eddcb1a9c71b3b465bb478075c3cb3337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
