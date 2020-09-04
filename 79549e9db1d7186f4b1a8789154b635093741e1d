@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeb45e2a_1f666a9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2020-09-04T23:10:52Z",
+      "side": 1,
+      "message": "The change looks good, but it breaks fuzzers. It cannot be merged like this.",
+      "revId": "79549e9db1d7186f4b1a8789154b635093741e1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
