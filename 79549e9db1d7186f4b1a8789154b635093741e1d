@@ -16,6 +16,24 @@
       "revId": "79549e9db1d7186f4b1a8789154b635093741e1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05ca8ba6_f02f7f65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-09-10T09:13:34Z",
+      "side": 1,
+      "message": "Need to merge ag/12106030 first.",
+      "parentUuid": "aeb45e2a_1f666a9a",
+      "revId": "79549e9db1d7186f4b1a8789154b635093741e1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
