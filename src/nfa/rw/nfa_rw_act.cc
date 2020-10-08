@@ -1696,8 +1696,9 @@ static tNFC_STATUS nfa_rw_start_ndef_write(void) {
       status = RW_T3tUpdateNDef(nfa_rw_cb.ndef_wr_len, nfa_rw_cb.p_ndef_wr_buf);
     } else if (NFC_PROTOCOL_ISO_DEP == protocol) {
       /* ISODEP/4A,4B- NFC-A or NFC-B */
-      status = RW_T4tUpdateNDef((uint16_t)nfa_rw_cb.ndef_wr_len,
+      status = RW_T4tUpdateNDef(nfa_rw_cb.ndef_wr_len,
                                 nfa_rw_cb.p_ndef_wr_buf);
+
     } else if (NFC_PROTOCOL_T5T == protocol) {
       /* ISO 15693 */
       status = RW_I93UpdateNDef((uint16_t)nfa_rw_cb.ndef_wr_len,
