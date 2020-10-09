@@ -1764,9 +1764,12 @@ static bool nfa_rw_write_ndef(tNFA_RW_MSG* p_data) {
   tNFA_CONN_EVT_DATA conn_evt_data;
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
 
-  /* Validate NDEF message */
-  ndef_status = NDEF_MsgValidate(p_data->op_req.params.write_ndef.p_data,
-                                 p_data->op_req.params.write_ndef.len, false);
+  if (appl_dta_mode_flag) {
+    ndef_status = NDEF_OK;
+  } else
+    /* Validate NDEF message */
+    ndef_status = NDEF_MsgValidate(p_data->op_req.params.write_ndef.p_data,
+                                   p_data->op_req.params.write_ndef.len, false);
   if (ndef_status != NDEF_OK) {
     LOG(ERROR) << StringPrintf(
         "Invalid NDEF message. NDEF_MsgValidate returned %i", ndef_status);
