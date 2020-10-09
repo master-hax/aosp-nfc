@@ -677,7 +677,8 @@ static void rw_t2t_handle_tlv_detect_rsp(uint8_t* p_data) {
                   p_t2t->mem_tlv[p_t2t->num_mem_tlvs].offset =
                       (p_t2t->tlv_value[0] >> 4) & 0x0F;
                   p_t2t->mem_tlv[p_t2t->num_mem_tlvs].offset *=
-                      (uint8_t)tags_pow(2, p_t2t->tlv_value[2] & 0x0F);
+                      (uint16_t)tags_pow(2, p_t2t->tlv_value[2] & 0x0F);
+
                   p_t2t->mem_tlv[p_t2t->num_mem_tlvs].offset +=
                       p_t2t->tlv_value[0] & 0x0F;
                   count = p_t2t->tlv_value[1];
