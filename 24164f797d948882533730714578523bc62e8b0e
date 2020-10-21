@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd723828_b873c841",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:16:10Z",
+      "side": 1,
+      "message": "clang-format\n -    memcpy(p_t2t-\u003eterminator_tlv_block, p_t2t-\u003endef_last_block,\n -           T2T_BLOCK_LEN);\n +    memcpy(p_t2t-\u003eterminator_tlv_block, p_t2t-\u003endef_last_block, T2T_BLOCK_LEN);",
+      "range": {
+        "startLine": 1453,
+        "startChar": 0,
+        "endLine": 1455,
+        "endChar": 26
+      },
+      "revId": "24164f797d948882533730714578523bc62e8b0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef649461_a4ce07ba",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1581,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:16:10Z",
+      "side": 1,
+      "message": "Remove this line",
+      "revId": "24164f797d948882533730714578523bc62e8b0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
