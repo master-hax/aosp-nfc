@@ -1,0 +1,160 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac1afd42_54220e58",
+        "filename": "src/nfc/include/rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:47:50Z",
+      "side": 1,
+      "message": "#define RW_T5T_CC_READ_MEM_INFO 0",
+      "range": {
+        "startLine": 699,
+        "startChar": 0,
+        "endLine": 699,
+        "endChar": 34
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79e9ad1d_99b2496c",
+        "filename": "src/nfc/include/rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:47:50Z",
+      "side": 1,
+      "message": "clang_format\n -  RW_I93_SUBSTATE_WRITE_CC_NDEF_TLV, /* write CC and empty NDEF/Terminator TLV */\n +  RW_I93_SUBSTATE_WRITE_CC_NDEF_TLV, /* write CC and empty NDEF/Terminator TLV\n +                                      */",
+      "range": {
+        "startLine": 734,
+        "startChar": 0,
+        "endLine": 734,
+        "endChar": 81
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f2507ea_558f81e0",
+        "filename": "src/nfc/include/rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:47:50Z",
+      "side": 1,
+      "message": "clang_format\n\n  uint8_t addr_mode;\n  uint8_t i93_t5t_mode;\n  uint8_t t5t_area_start_block;  /* offset of first block of T5T_Area  */\n  uint16_t t5t_area_last_offset; /* offset of last byte of T5T_Area  */\n\n  /* Greedy collection with NDEF Detection data */\n  uint8_t gre_validity;\n  uint8_t gre_cc_content[8];\n  uint16_t gre_ndef_tlv_pos;\n  uint16_t gre_ndef_tlv_length;",
+      "range": {
+        "startLine": 791,
+        "startChar": 0,
+        "endLine": 800,
+        "endChar": 31
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b055d4fb_65060ffa",
+        "filename": "src/nfc/include/tags_defs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:47:50Z",
+      "side": 1,
+      "message": "/* Block lengths */\n#define I93_BLEN_4BYTES 0x04\n#define I93_BLEN_8BYTES 0x08\n#define I93_BLEN_16BYTES 0x10\n#define I93_BLEN_32BYTES 0x20",
+      "range": {
+        "startLine": 590,
+        "startChar": 0,
+        "endLine": 593,
+        "endChar": 30
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "932085ac_933564fc",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:47:50Z",
+      "side": 1,
+      "message": "\u003e Please remove the trailing whitespace.\n\nPlease fix.",
+      "parentUuid": "6a1da75d_a81346ef",
+      "range": {
+        "startLine": 596,
+        "startChar": 0,
+        "endLine": 596,
+        "endChar": 2
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35b80ad7_a8a9e2ea",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:47:50Z",
+      "side": 1,
+      "message": "Remove new line",
+      "range": {
+        "startLine": 619,
+        "startChar": 0,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79eb82f7_3513006d",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4147,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:47:50Z",
+      "side": 1,
+      "message": "remove this line",
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
