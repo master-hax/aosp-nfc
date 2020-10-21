@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bde61a8_ecae7872",
+        "filename": "src/nfc/include/tags_defs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:31:28Z",
+      "side": 1,
+      "message": "/* Request is addressed with SMS (Select Mode Selector). UID field is included\n * or not. It shall be executed by the unique VICC to be in SELECTED state */",
+      "range": {
+        "startLine": 499,
+        "startChar": 0,
+        "endLine": 500,
+        "endChar": 69
+      },
+      "revId": "fff6d5c767129e273433df8064310eea7271c288",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
