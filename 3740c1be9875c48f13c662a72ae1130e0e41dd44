@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d77155f1_872b55ae",
+        "filename": "src/nfa/include/nfa_rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:18:47Z",
+      "side": 1,
+      "message": "clang_format\n -typedef struct { bool read_dyn_locks; } tNFA_RW_OP_PARAMS_T2T_READ_DYN_LOCKS;\n +typedef struct {\n +  bool read_dyn_locks;\n +} tNFA_RW_OP_PARAMS_T2T_READ_DYN_LOCKS;",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 77
+      },
+      "revId": "3740c1be9875c48f13c662a72ae1130e0e41dd44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
