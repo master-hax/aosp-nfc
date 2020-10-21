@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eba39903_2e5f9626",
+        "filename": "src/nfa/include/nfa_rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:28:14Z",
+      "side": 1,
+      "message": "clang_format\n -  uint8_t  i93_addr_mode;\n +  uint8_t i93_addr_mode;",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 25
+      },
+      "revId": "e2a529ef3f075250b4aed41cfbd820cfc47167db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dad8c09a_7aec290a",
+        "filename": "src/nfc/include/rw_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:28:14Z",
+      "side": 1,
+      "message": "clang_format\n-#define RW_I93_MODE_ADDRESSED          0\n-#define RW_I93_MODE_NON_ADDRESSED      1\n+#define RW_I93_MODE_ADDRESSED 0\n+#define RW_I93_MODE_NON_ADDRESSED 1",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 35
+      },
+      "revId": "e2a529ef3f075250b4aed41cfbd820cfc47167db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05883e72_6dad2b83",
+        "filename": "src/nfc/include/rw_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:28:14Z",
+      "side": 1,
+      "message": "**                  The addressing mode (addressed or non-addressed) must be\n**                  done at the module initialization prior to the Tag\n**                  activation.",
+      "range": {
+        "startLine": 1338,
+        "startChar": 0,
+        "endLine": 1339,
+        "endChar": 77
+      },
+      "revId": "e2a529ef3f075250b4aed41cfbd820cfc47167db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "201be1bc_931eefba",
+        "filename": "src/nfc/include/rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:28:14Z",
+      "side": 1,
+      "message": "clang_format\n -  uint8_t  addr_mode;\n +  uint8_t addr_mode;",
+      "range": {
+        "startLine": 744,
+        "startChar": 0,
+        "endLine": 744,
+        "endChar": 21
+      },
+      "revId": "e2a529ef3f075250b4aed41cfbd820cfc47167db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f00fff9f_f2228fc4",
+        "filename": "src/nfc/include/tags_defs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:28:14Z",
+      "side": 1,
+      "message": "clang_format\n -#define I93_CMD_SET_ADDR_MODE 0x3D      /* Set address mode            */\n +#define I93_CMD_SET_ADDR_MODE 0x3D /* Set address mode            */",
+      "range": {
+        "startLine": 555,
+        "startChar": 0,
+        "endLine": 555,
+        "endChar": 73
+      },
+      "revId": "e2a529ef3f075250b4aed41cfbd820cfc47167db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
