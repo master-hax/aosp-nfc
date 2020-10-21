@@ -72,6 +72,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "27ec1ef2_62b06696",
+        "filename": "src/nfc/include/rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T15:03:26Z",
+      "side": 1,
+      "message": "src/nfc/tags/rw_t5t.cc ?",
+      "range": {
+        "startLine": 891,
+        "startChar": 0,
+        "endLine": 893,
+        "endChar": 46
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b055d4fb_65060ffa",
         "filename": "src/nfc/include/tags_defs.h",
         "patchSetId": 1
