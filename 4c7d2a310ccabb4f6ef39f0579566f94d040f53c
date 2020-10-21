@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e154c0e_66df26eb",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1701,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:00:26Z",
+      "side": 1,
+      "message": "Correct clan_format\n-      status \u003d RW_T4tUpdateNDef(nfa_rw_cb.ndef_wr_len,\n-                                nfa_rw_cb.p_ndef_wr_buf);\n+      status \u003d RW_T4tUpdateNDef(nfa_rw_cb.ndef_wr_len, nfa_rw_cb.p_ndef_wr_buf);",
+      "range": {
+        "startLine": 1699,
+        "startChar": 6,
+        "endLine": 1701,
+        "endChar": 0
+      },
+      "revId": "4c7d2a310ccabb4f6ef39f0579566f94d040f53c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8c5fac0_0a1bf625",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1701,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-21T14:00:26Z",
+      "side": 1,
+      "message": "Remove this extra line",
+      "revId": "4c7d2a310ccabb4f6ef39f0579566f94d040f53c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
