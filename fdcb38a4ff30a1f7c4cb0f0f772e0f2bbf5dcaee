@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005752946",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1456263?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "cadf19a4_8b5280f1",
+          "description": "Change to \"src/nfc/tags/rw_t5t.cc\"",
+          "replacements": [
+            {
+              "path": "src/nfc/tags/rw_t5t.cc",
+              "range": {
+                "startLine": 411,
+                "startChar": 41,
+                "endLine": 411,
+                "endChar": 49
+              },
+              "replacement": "FORMATTED"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "22c1d320_160a65c3",
+        "filename": "src/nfc/tags/rw_t5t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-27T07:08:56Z",
+      "side": 1,
+      "message": "Common typo found: \"FORMATED\" -- should it be \"FORMATTED\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 411,
+        "startChar": 41,
+        "endLine": 411,
+        "endChar": 49
+      },
+      "revId": "fdcb38a4ff30a1f7c4cb0f0f772e0f2bbf5dcaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
