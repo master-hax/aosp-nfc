@@ -16,6 +16,24 @@
       "message": "remove this newline.",
       "revId": "83dbbdf71b802954c946209f1f595c999f73ec45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b198867_29ac7d40",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2014,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-10-27T07:16:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42a1b5f8_54a93529",
+      "revId": "83dbbdf71b802954c946209f1f595c999f73ec45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
