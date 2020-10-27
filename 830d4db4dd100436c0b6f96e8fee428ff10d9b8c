@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23eadfa9_3340eb4d",
+        "filename": "src/nfc/include/rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-10-27T07:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac1afd42_54220e58",
+      "range": {
+        "startLine": 699,
+        "startChar": 0,
+        "endLine": 699,
+        "endChar": 34
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79e9ad1d_99b2496c",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-21T14:47:50Z",
       "side": 1,
       "message": "clang_format\n -  RW_I93_SUBSTATE_WRITE_CC_NDEF_TLV, /* write CC and empty NDEF/Terminator TLV */\n +  RW_I93_SUBSTATE_WRITE_CC_NDEF_TLV, /* write CC and empty NDEF/Terminator TLV\n +                                      */",
+      "range": {
+        "startLine": 734,
+        "startChar": 0,
+        "endLine": 734,
+        "endChar": 81
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d6a0486_febd7760",
+        "filename": "src/nfc/include/rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-10-27T07:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79e9ad1d_99b2496c",
       "range": {
         "startLine": 734,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d2c7a07_248e2fb8",
+        "filename": "src/nfc/include/rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-10-27T07:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f2507ea_558f81e0",
+      "range": {
+        "startLine": 791,
+        "startChar": 0,
+        "endLine": 800,
+        "endChar": 31
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27ec1ef2_62b06696",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75a360dc_92854510",
+        "filename": "src/nfc/include/rw_int.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-10-27T07:26:19Z",
+      "side": 1,
+      "message": "rw_t5t.cc is added in patchset #2",
+      "parentUuid": "27ec1ef2_62b06696",
+      "range": {
+        "startLine": 891,
+        "startChar": 0,
+        "endLine": 893,
+        "endChar": 46
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b055d4fb_65060ffa",
@@ -106,6 +202,30 @@
       "writtenOn": "2020-10-21T14:47:50Z",
       "side": 1,
       "message": "/* Block lengths */\n#define I93_BLEN_4BYTES 0x04\n#define I93_BLEN_8BYTES 0x08\n#define I93_BLEN_16BYTES 0x10\n#define I93_BLEN_32BYTES 0x20",
+      "range": {
+        "startLine": 590,
+        "startChar": 0,
+        "endLine": 593,
+        "endChar": 30
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce267b34_dcb03adf",
+        "filename": "src/nfc/include/tags_defs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-10-27T07:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b055d4fb_65060ffa",
       "range": {
         "startLine": 590,
         "startChar": 0,
@@ -140,6 +260,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35ef9d83_31e80ec3",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-10-27T07:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "932085ac_933564fc",
+      "range": {
+        "startLine": 596,
+        "startChar": 0,
+        "endLine": 596,
+        "endChar": 2
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35b80ad7_a8a9e2ea",
@@ -163,6 +307,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad6106eb_89dda022",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-10-27T07:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35b80ad7_a8a9e2ea",
+      "range": {
+        "startLine": 619,
+        "startChar": 0,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79eb82f7_3513006d",
@@ -176,6 +344,24 @@
       "writtenOn": "2020-10-21T14:47:50Z",
       "side": 1,
       "message": "remove this line",
+      "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "badb8f14_70187d92",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4147,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-10-27T07:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79eb82f7_3513006d",
       "revId": "830d4db4dd100436c0b6f96e8fee428ff10d9b8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
