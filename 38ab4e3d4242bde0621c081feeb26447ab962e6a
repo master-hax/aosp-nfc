@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76da2b15_f61af6a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-10-30T12:04:52Z",
+      "side": 1,
+      "message": "We need to fix build target \"nfc_nci_fuzzer\"",
+      "revId": "38ab4e3d4242bde0621c081feeb26447ab962e6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
