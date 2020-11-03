@@ -121,7 +121,6 @@ void nfc_ncif_cmd_timeout(void) {
   // Do not abort if for fuzz testing -- this may have some undesired
   // effect but this is the best we can do.
 #else
-  abort();
 #endif
 }
 
