@@ -1364,4 +1364,26 @@ extern uint8_t NFA_GetNCIVersion();
 *******************************************************************************/
 extern tNFA_STATUS NFA_SetPowerSubStateForScreenState(uint8_t ScreenState);
 
+/*******************************************************************************
+**
+** Function         NFA_setFieldDetectMode
+**
+** Description      Updates field detect mode true/false
+**
+** Returns          none
+**
+*******************************************************************************/
+extern void NFA_SetFieldDetectMode(bool mode);
+
+/*******************************************************************************
+**
+** Function         NFA_IsFieldDetectEnabled
+**
+** Description      Returns current status of field detect mode
+**
+** Returns          true/false
+**
+*******************************************************************************/
+extern bool NFA_IsFieldDetectEnabled();
+
 #endif /* NFA_API_H */

@@ -36,7 +36,7 @@
 #include "nfa_ee_int.h"
 #endif
 #include "nfa_rw_int.h"
-
+#include "nfc_config.h"
 #include "nfc_int.h"
 
 using android::base::StringPrintf;
@@ -158,33 +158,46 @@ static uint8_t nfa_dm_get_rf_discover_config(
       if (num_params >= max_params) return num_params;
     }
   }
-  /* Check listening A */
-  if (dm_disc_mask &
-      (NFA_DM_DISC_MASK_LA_T1T | NFA_DM_DISC_MASK_LA_T2T |
-       NFA_DM_DISC_MASK_LA_ISO_DEP | NFA_DM_DISC_MASK_LA_NFC_DEP)) {
-    disc_params[num_params].type = NFC_DISCOVERY_TYPE_LISTEN_A;
+  if (nfa_dm_cb.isFieldDetectEnabled) {
+    uint16_t fieldDetectRfDiscTech = 0xFF;
+    if (NfcConfig::hasKey(NAME_RF_DISC_TECH_MODE_FIELD_DETECT)) {
+      fieldDetectRfDiscTech =
+          NfcConfig::getUnsigned(NAME_RF_DISC_TECH_MODE_FIELD_DETECT);
+    }
+    disc_params[num_params].type = fieldDetectRfDiscTech;
     disc_params[num_params].frequency = 1;
     num_params++;
-
     if (num_params >= max_params) return num_params;
-  }
+  } else {
+    /* Check listening A */
+    if (dm_disc_mask &
+        (NFA_DM_DISC_MASK_LA_T1T | NFA_DM_DISC_MASK_LA_T2T |
+         NFA_DM_DISC_MASK_LA_ISO_DEP | NFA_DM_DISC_MASK_LA_NFC_DEP)) {
+      disc_params[num_params].type = NFC_DISCOVERY_TYPE_LISTEN_A;
+      disc_params[num_params].frequency = 1;
+      num_params++;
 
-  /* Check listening B */
-  if (dm_disc_mask & NFA_DM_DISC_MASK_LB_ISO_DEP) {
-    disc_params[num_params].type = NFC_DISCOVERY_TYPE_LISTEN_B;
-    disc_params[num_params].frequency = 1;
-    num_params++;
+      if (num_params >= max_params) return num_params;
+    }
 
-    if (num_params >= max_params) return num_params;
-  }
+    /* Check listening B */
+    if (dm_disc_mask & NFA_DM_DISC_MASK_LB_ISO_DEP) {
+      disc_params[num_params].type = NFC_DISCOVERY_TYPE_LISTEN_B;
+      disc_params[num_params].frequency = 1;
+      num_params++;
 
-  /* Check listening F */
-  if (dm_disc_mask & (NFA_DM_DISC_MASK_LF_T3T | NFA_DM_DISC_MASK_LF_NFC_DEP)) {
-    disc_params[num_params].type = NFC_DISCOVERY_TYPE_LISTEN_F;
-    disc_params[num_params].frequency = 1;
-    num_params++;
+      if (num_params >= max_params) return num_params;
+    }
 
-    if (num_params >= max_params) return num_params;
+    /* Check listening F */
+    if (dm_disc_mask &
+        (NFA_DM_DISC_MASK_LF_T3T | NFA_DM_DISC_MASK_LF_NFC_DEP)) {
+      disc_params[num_params].type = NFC_DISCOVERY_TYPE_LISTEN_F;
+      disc_params[num_params].frequency = 1;
+      num_params++;
+
+      if (num_params >= max_params) return num_params;
+    }
   }
   if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
     /* Check polling Active mode  */

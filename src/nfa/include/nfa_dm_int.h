@@ -549,6 +549,7 @@ typedef struct {
   uint8_t pending_power_state; /* pending screen state change received in
                                   LISTEN_ACTIVE state which needs to be applied
                                   after current transaction is completed*/
+  bool isFieldDetectEnabled;   /*Field Detect Enable status*/
 } tNFA_DM_CB;
 
 /* Internal function prototypes */

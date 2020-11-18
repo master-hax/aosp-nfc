@@ -1305,3 +1305,27 @@ void NFA_EnableDtamode(tNFA_eDtaModes eDtaMode) {
   appl_dta_mode_flag = 0x01;
   nfa_dm_cb.eDtaMode = eDtaMode;
 }
+
+/*******************************************************************************
+**
+** Function         NFA_setFieldDetectMode
+**
+** Description      Updates field detect mode true/false
+**
+** Returns          none
+**
+*******************************************************************************/
+void NFA_SetFieldDetectMode(bool enable) {
+  nfa_dm_cb.isFieldDetectEnabled = enable;
+}
+
+/*******************************************************************************
+**
+** Function         NFA_IsFieldDetectEnabled
+**
+** Description      Returns current status of field detect mode
+**
+** Returns          true/false
+**
+*******************************************************************************/
+bool NFA_IsFieldDetectEnabled() { return nfa_dm_cb.isFieldDetectEnabled; }
