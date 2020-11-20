@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13273b18_3a913431",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-20T08:09:36Z",
+      "side": 1,
+      "message": "This change is NOT needed.\n\nFrom CR12 compliancy point of view, there are already approved CRs to change TC specification to validate Ndef Message for Tag OP \u0026 DP testcases.\n\nReference : NFC Forum CR# 656, 657",
+      "revId": "c62cf6c2ca38739f980db187e14643f701db828a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
