@@ -16,6 +16,24 @@
       "message": "This change is NOT needed.\n\nFrom CR12 compliancy point of view, there are already approved CRs to change TC specification to validate Ndef Message for Tag OP \u0026 DP testcases.\n\nReference : NFC Forum CR# 656, 657",
       "revId": "c62cf6c2ca38739f980db187e14643f701db828a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3f628ed_0ff32927",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1795865
+      },
+      "writtenOn": "2020-11-23T15:53:31Z",
+      "side": 1,
+      "message": "The patch will not be needed for NFC Forum certification from Test Release 12.1.\n\nHowever current version of CR12 (active TR12.0) implemented by the tools does not support CR656 \u0026 CR657.\nThe tester sends random data (to be sent back) that are invalidated by nfa_rw_write_ndef() and not propagated to the NFC lower layer if NDEF_MsgValidate() is called (returns not NDEF_OK).",
+      "parentUuid": "13273b18_3a913431",
+      "revId": "c62cf6c2ca38739f980db187e14643f701db828a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
