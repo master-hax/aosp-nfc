@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "359a666d_b7b51c66",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:16:13Z",
+      "side": 1,
+      "message": "typecasting can be removed as max_read_size is already uint16_t",
+      "range": {
+        "startLine": 690,
+        "startChar": 4,
+        "endLine": 690,
+        "endChar": 46
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ae79e80_02d7fd3a",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:16:13Z",
+      "side": 1,
+      "message": "This else case is even for MV3.0 when data is \u003c 32K.\nPlease remove/update the comment.",
+      "range": {
+        "startLine": 756,
+        "startChar": 4,
+        "endLine": 756,
+        "endChar": 20
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "221a2fc0_bfd48daa",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:16:13Z",
+      "side": 1,
+      "message": "typecasting can be removed as max_read_size is already uint16_t",
+      "range": {
+        "startLine": 874,
+        "startChar": 4,
+        "endLine": 874,
+        "endChar": 48
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83cbd440_af12eac2",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:16:13Z",
+      "side": 1,
+      "message": "Too long \"if\" condition.\nInstead, a new function can be added for BER-TLV parsing \u0026 this  fun can be called wherever needed.",
+      "range": {
+        "startLine": 880,
+        "startChar": 0,
+        "endLine": 880,
+        "endChar": 55
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b88ddfaf_e2157091",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:16:13Z",
+      "side": 1,
+      "message": "not clear why +8 here?\nCan this be # defined ? also please add comment.",
+      "range": {
+        "startLine": 898,
+        "startChar": 7,
+        "endLine": 898,
+        "endChar": 38
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca6b1040_cffbd921",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:16:13Z",
+      "side": 1,
+      "message": "This condition shall be checked for both MV 2.0 \u0026 MV 3.0\nFor MV 2.0, max_le \u003c 0x000F \u003d\u003e invalid\nFor MV 3.0, max_le \u003c 0x0011 \u003d\u003e invalid",
+      "range": {
+        "startLine": 1207,
+        "startChar": 0,
+        "endLine": 1211,
+        "endChar": 3
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a64df9be_1c810c2f",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:16:13Z",
+      "side": 1,
+      "message": "This condition check not needed.\nFor write_access check read_access shall not be checked.\nread_access is already checked at line#1245",
+      "range": {
+        "startLine": 1254,
+        "startChar": 6,
+        "endLine": 1254,
+        "endChar": 68
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7455988d_9bfd572f",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:16:13Z",
+      "side": 1,
+      "message": "Instead of default reading for MV2.0 complete CC ( 15bytes), we can 1st read only 1st 2 bytes of CC ( which is CC length). \u003d\u003d\u003e For this new substate say RW_T4T_SUBSTATE_WAIT_CC_LEN\n\nnew substate say RW_T4T_SUBSTATE_WAIT_CC_LEN handling : Based on CC length, we can read full CC file ( either 15 bytes or 17 bytes)",
+      "range": {
+        "startLine": 1578,
+        "startChar": 5,
+        "endLine": 1579,
+        "endChar": 70
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e698878_599c6617",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:16:13Z",
+      "side": 1,
+      "message": "RW_T4T_SUBSTATE_WAIT_ENDEF_FILE_CTRL_TLV \u0026 RW_T4T_SUBSTATE_WAIT_CC_FILE has duplicate code.\n\nThis can be optimized If we accept previous comment.\nAlso,RW_T4T_SUBSTATE_WAIT_ENDEF_FILE_CTRL_TLV sub-state can be removed.",
+      "range": {
+        "startLine": 1641,
+        "startChar": 0,
+        "endLine": 1709,
+        "endChar": 9
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
