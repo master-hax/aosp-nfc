@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2987ff8_bd78c285",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-11-24T12:02:24Z",
+      "side": 1,
+      "message": "How about this one?",
+      "range": {
+        "startLine": 618,
+        "startChar": 20,
+        "endLine": 618,
+        "endChar": 69
+      },
+      "revId": "9d52767ed69e409bb42f64218643bedfbff9b43a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
