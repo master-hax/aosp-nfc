@@ -34,6 +34,24 @@
       "parentUuid": "13273b18_3a913431",
       "revId": "c62cf6c2ca38739f980db187e14643f701db828a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aab9091c_91126905",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T15:15:05Z",
+      "side": 1,
+      "message": "If we merge this commit now, again on TR 12.1 release, we shall revert this change.\nIf we don\u0027t merge this change, for current version of CR12 (active TR12.0) related TC (TC_DP21_POL_NFCV_T5T_BV_2_x ..) failure will be waived off as there is already approved CR for this failure.",
+      "parentUuid": "b3f628ed_0ff32927",
+      "revId": "c62cf6c2ca38739f980db187e14643f701db828a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
