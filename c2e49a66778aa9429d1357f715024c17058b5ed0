@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63ffd9d1_f094826a",
+        "filename": "src/nfc/tags/rw_t3t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2985,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:25:37Z",
+      "side": 1,
+      "message": "Please update API description.",
+      "range": {
+        "startLine": 2985,
+        "startChar": 26,
+        "endLine": 2985,
+        "endChar": 73
+      },
+      "revId": "c2e49a66778aa9429d1357f715024c17058b5ed0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f386996_8b710f08",
+        "filename": "src/nfc/tags/rw_t3t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2994,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-24T12:25:37Z",
+      "side": 1,
+      "message": "Can we remove Felica-lite System Code dependencies from this function and make it generic which can be used for any Felica Tag?",
+      "range": {
+        "startLine": 2994,
+        "startChar": 12,
+        "endLine": 2994,
+        "endChar": 29
+      },
+      "revId": "c2e49a66778aa9429d1357f715024c17058b5ed0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
