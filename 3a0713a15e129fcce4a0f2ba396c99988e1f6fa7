@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbfb478e_a89c4fe9",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-11-25T12:15:40Z",
+      "side": 1,
+      "message": "By backward compatibility you meant with CR11, right ?\nIf so, do we really need to support CR11 backward compatibility ?\n\nIf we need to support , for CR11 backward compatibility,\nDynamic lock area is not blocks aligned case can come for \ncase 1 . 1st block of Dynamic lock area \ncase 2 . last block of Dynamic lock area.\n\ncould you please clarify how case 2 is handled here ?",
+      "range": {
+        "startLine": 1786,
+        "startChar": 0,
+        "endLine": 1800,
+        "endChar": 11
+      },
+      "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
