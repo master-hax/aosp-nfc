@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61e73b34_e09cccc4",
+        "filename": "src/nfc/nfc/nfc_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-11-26T11:36:43Z",
+      "side": 1,
+      "message": "2 spaces",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 6
+      },
+      "revId": "dfdb2c6fdacf1879536508fd2196b4ac3212a944",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3527a249_8b509348",
+        "filename": "src/nfc/nfc/nfc_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-11-26T11:36:43Z",
+      "side": 1,
+      "message": "2 spaces",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 6
+      },
+      "revId": "dfdb2c6fdacf1879536508fd2196b4ac3212a944",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
