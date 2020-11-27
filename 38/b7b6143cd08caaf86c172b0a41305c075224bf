@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Verified+1: Jack Yu <jackcwyu@google.com>
+Autosubmit+1: Jack Yu <jackcwyu@google.com>
+Code-Review+2: George Chang <georgekgchang@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 27 Nov 2020 07:58:20 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/system/nfc/+/1506814
+Project: platform/system/nfc
+Branch: refs/heads/master
