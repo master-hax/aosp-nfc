@@ -52,6 +52,24 @@
       "parentUuid": "b3f628ed_0ff32927",
       "revId": "c62cf6c2ca38739f980db187e14643f701db828a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48a54398_2c662023",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1795865
+      },
+      "writtenOn": "2020-11-27T18:03:42Z",
+      "side": 1,
+      "message": "Yes we will have to revert the change for TR12.1.\nThe list of waived off Tag Op tests is limited to few DP T5T and T4T tests. It does not cover all tag tests. And the problem temporarily solved by this patch occurs for all tags tests.\n\nI think we should even complete the patch by preventing from calling NDEF_MsgValidate() in nfa_dm_ndef_handle_message() during the NDEF Read procedure to be safer. During the validation of NFC Forum testers, the random content of tools passed this check but we cannot guarantee it will always pass for all generated pseudo NDEF contents.",
+      "parentUuid": "aab9091c_91126905",
+      "revId": "c62cf6c2ca38739f980db187e14643f701db828a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
