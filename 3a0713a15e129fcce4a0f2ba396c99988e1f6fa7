@@ -22,6 +22,30 @@
       },
       "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e234420d_b1ffc8cf",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1231179
+      },
+      "writtenOn": "2020-12-01T16:03:27Z",
+      "side": 1,
+      "message": "Yes, by backward compatibility, I meant CR11.\n\nCase 1: 1st block read in case of DynLock_Area start not block aligned allows not to break legacy.\nCase 2: Adding zero padding in the last block in case of DynLock_Area end not block aligned as requested by CR12 for sure breaks legacy. No need to read the last block.\n\nNevertheless I imagine case 1 is still possible with or without having case 2. So I recommend that we keep reading the first block containing dynamic lock bytes if not aligned to a block boundary to only overwrite lock bytes.",
+      "parentUuid": "fbfb478e_a89c4fe9",
+      "range": {
+        "startLine": 1786,
+        "startChar": 0,
+        "endLine": 1800,
+        "endChar": 11
+      },
+      "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
