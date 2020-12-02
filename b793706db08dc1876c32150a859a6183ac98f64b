@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58acf1cc_f143a840",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-12-02T13:21:06Z",
+      "side": 1,
+      "message": "Can we follow below sequence ?\n\nInstead of using appl_dta_mode_flag to skip GetSystemInfo cmd, default skip systemInfo cmd on T5T protocol activation.\nwe can directly send activation NTF ( NFA_RW_FL_ACTIVATION_NTF_PENDING set to false)\nAnd skip reading AFI, skip current harcoded values of defining block size, etc.. such code can be moved to below case 2.\n\nDuring Ndef detection , start with Case 1)\nCase 1) NFC forum T5T tag : 1st we assume tag is T5T NFC Forum complaint , start Ndef detection accordingly\nCase 2) Legacy 15693 : If 1) ndef detection fails , we assuming tag is legacy I93 \u0026 send SystemInfo cmd followed by legacy Ndef detection.",
+      "revId": "b793706db08dc1876c32150a859a6183ac98f64b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
