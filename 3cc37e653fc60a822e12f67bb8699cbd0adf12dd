@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43d4f2a8_3f394867",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1231179
+      },
+      "writtenOn": "2020-12-03T17:25:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "359a666d_b7b51c66",
+      "range": {
+        "startLine": 690,
+        "startChar": 4,
+        "endLine": 690,
+        "endChar": 46
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ae79e80_02d7fd3a",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a5d704ce_ca741582",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1231179
+      },
+      "writtenOn": "2020-12-03T17:25:10Z",
+      "side": 1,
+      "message": "Comment will be updated.",
+      "parentUuid": "6ae79e80_02d7fd3a",
+      "range": {
+        "startLine": 756,
+        "startChar": 4,
+        "endLine": 756,
+        "endChar": 20
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "221a2fc0_bfd48daa",
         "filename": "src/nfc/tags/rw_t4t.cc",
         "patchSetId": 2
@@ -60,6 +108,30 @@
       "writtenOn": "2020-11-24T12:16:13Z",
       "side": 1,
       "message": "typecasting can be removed as max_read_size is already uint16_t",
+      "range": {
+        "startLine": 874,
+        "startChar": 4,
+        "endLine": 874,
+        "endChar": 48
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd7cf861_b0780498",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1231179
+      },
+      "writtenOn": "2020-12-03T17:25:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "221a2fc0_bfd48daa",
       "range": {
         "startLine": 874,
         "startChar": 4,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0d4dc2f6_42d55591",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1231179
+      },
+      "writtenOn": "2020-12-03T17:25:10Z",
+      "side": 1,
+      "message": "New parsing function will be created.",
+      "parentUuid": "83cbd440_af12eac2",
+      "range": {
+        "startLine": 880,
+        "startChar": 0,
+        "endLine": 880,
+        "endChar": 55
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b88ddfaf_e2157091",
         "filename": "src/nfc/tags/rw_t4t.cc",
         "patchSetId": 2
@@ -106,6 +202,30 @@
       "writtenOn": "2020-11-24T12:16:13Z",
       "side": 1,
       "message": "not clear why +8 here?\nCan this be # defined ? also please add comment.",
+      "range": {
+        "startLine": 898,
+        "startChar": 7,
+        "endLine": 898,
+        "endChar": 38
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "172b5e4d_038048c3",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1231179
+      },
+      "writtenOn": "2020-12-03T17:25:10Z",
+      "side": 1,
+      "message": "Code tries to define if the data to be written in the NDEF File fits within the C-APDU data field using short field coding (Lc max 0xFF) and if we use BER-TLV length field encoded on two bytes as defined in ISO-7816 table E.2 (coding on one byte first checked with \u003c\u003d 0x7F).\n\nThe length to write must take into account the overhead/header of the ODO and DDO encoding as defined in table 41 of [T4T-TS]. It is then: 5B (for 54 03 xxyyzz) + 3B (for 53’ tag + Ld on two bytes for  81’+N) i.e. min of 8B.\n\nA #defined can be added for clarity.",
+      "parentUuid": "b88ddfaf_e2157091",
       "range": {
         "startLine": 898,
         "startChar": 7,
@@ -141,6 +261,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8f4fbd8_391c2b5b",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1231179
+      },
+      "writtenOn": "2020-12-03T17:25:10Z",
+      "side": 1,
+      "message": "I don\u0027t see in [T4T-TS] where it is mandated to make the distinction between MV 2.0 and MV 3.0 for MLe. Please provide the reference.\n\n0x000F is the maximum size you can read during the first READ BINARY that corresponds to the CC reading of an MV2.0. By default we must assume we have an MV2.0 tag in front of the reader. Only after the first read we can deduce from the CCLEN and/or T4T_VNo that we could have an MV3.0 tag. So I don\u0027t see why we should restrict MLe to min 0x0011 bytes for MV3.0.",
+      "parentUuid": "ca6b1040_cffbd921",
+      "range": {
+        "startLine": 1207,
+        "startChar": 0,
+        "endLine": 1211,
+        "endChar": 3
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a64df9be_1c810c2f",
         "filename": "src/nfc/tags/rw_t4t.cc",
         "patchSetId": 2
@@ -164,6 +308,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "24ad842e_a64f0ce8",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1231179
+      },
+      "writtenOn": "2020-12-03T17:25:10Z",
+      "side": 1,
+      "message": "0xFF is \u0027No write access granted at all\u0027. We must keep it but using the correct variable:\n(p_t4t-\u003ecc_file.ndef_fc.write_access \u003d\u003d T4T_FC_NO_WRITE_ACCESS)\n\nTo be corrected",
+      "parentUuid": "a64df9be_1c810c2f",
+      "range": {
+        "startLine": 1254,
+        "startChar": 6,
+        "endLine": 1254,
+        "endChar": 68
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7455988d_9bfd572f",
         "filename": "src/nfc/tags/rw_t4t.cc",
         "patchSetId": 2
@@ -175,6 +343,30 @@
       "writtenOn": "2020-11-24T12:16:13Z",
       "side": 1,
       "message": "Instead of default reading for MV2.0 complete CC ( 15bytes), we can 1st read only 1st 2 bytes of CC ( which is CC length). \u003d\u003d\u003e For this new substate say RW_T4T_SUBSTATE_WAIT_CC_LEN\n\nnew substate say RW_T4T_SUBSTATE_WAIT_CC_LEN handling : Based on CC length, we can read full CC file ( either 15 bytes or 17 bytes)",
+      "range": {
+        "startLine": 1578,
+        "startChar": 5,
+        "endLine": 1579,
+        "endChar": 70
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f41b755e_f4833d07",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1231179
+      },
+      "writtenOn": "2020-12-03T17:25:10Z",
+      "side": 1,
+      "message": "I agree we could optimize some code. However this change does not optimize the exchanges with the tags.\n\nIt breaks the legacy sequence by adding systematically two READ BINARY commands to read MV2.0 tags CC that up to now were read with only one READ BINARY of 15 bytes.\nWith the first 15 bytes read, we also ensure we avoid troubles in front of MV2.0 tags already read in the field that would not be fully compliant (first read 2 bytes and then the rest of the CC).",
+      "parentUuid": "7455988d_9bfd572f",
       "range": {
         "startLine": 1578,
         "startChar": 5,
