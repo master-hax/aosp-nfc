@@ -16,6 +16,24 @@
       "message": "Can we follow below sequence ?\n\nInstead of using appl_dta_mode_flag to skip GetSystemInfo cmd, default skip systemInfo cmd on T5T protocol activation.\nwe can directly send activation NTF ( NFA_RW_FL_ACTIVATION_NTF_PENDING set to false)\nAnd skip reading AFI, skip current harcoded values of defining block size, etc.. such code can be moved to below case 2.\n\nDuring Ndef detection , start with Case 1)\nCase 1) NFC forum T5T tag : 1st we assume tag is T5T NFC Forum complaint , start Ndef detection accordingly\nCase 2) Legacy 15693 : If 1) ndef detection fails , we assuming tag is legacy I93 \u0026 send SystemInfo cmd followed by legacy Ndef detection.",
       "revId": "b793706db08dc1876c32150a859a6183ac98f64b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ca1fb70_58c802d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1231179
+      },
+      "writtenOn": "2020-12-04T10:54:48Z",
+      "side": 1,
+      "message": "1) We cannot start with the NFC Forum NDEF detection first as there are a lot of tags in the field that for historical reasons (ISO or NFC Forum standards not defined) did not implement properly or not at all the T5T CC format. Some implement the format but encode the MLEN as for ISO15693 i,e, configuring MLEN with the physical memory size and not the T5T_Area size. Some manufacturers defined proprietary solutions…\n\nThere is a lot of legacy we cannot get rid off. We must continue with ISO first.\n\n2) NFC Forum T5T does not define the (Extended) Get System Info commands but it should be either added in Technical Spec or at least tolerated in testing sequences (up to the testers not to answer and to ignore the commands). Due to CR12 timing deadline, it was not proposed for TR12.0. We can remove appl_dta_mode_flag use in TR12.1 once we solve this point.\n\nThe problem is that today we cannot really make the distinction after the activation between a T5T tag or an ISO15693 tag. It is not really meaningful.\n\nIn a next version of Android, we can implement a correlation between Get System Info and CC MLEN outputs to adjust the allowed memory size for tags supporting both ISO and NFC Forum Read commands. We can propose a convergence keeping legacy but all manufacturers involved in this legacy must participate to ensure we do not break it.",
+      "parentUuid": "58acf1cc_f143a840",
+      "revId": "b793706db08dc1876c32150a859a6183ac98f64b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
