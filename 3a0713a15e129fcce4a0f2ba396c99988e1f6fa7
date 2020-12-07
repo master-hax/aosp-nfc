@@ -46,6 +46,30 @@
       },
       "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b21c527b_2a90fa45",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-12-07T13:25:29Z",
+      "side": 1,
+      "message": "We see a new T2T API NFA_RwT2tReadDynLockBytes(bool read_dyn_locks) added within \"NFC_Forum_CR12\" topic.\nIn order to maintain full CR11 backward compatibility, this new API can be used to decide DynLock_Area to be read or not.\n\nPlease let us know your views.",
+      "parentUuid": "e234420d_b1ffc8cf",
+      "range": {
+        "startLine": 1786,
+        "startChar": 0,
+        "endLine": 1800,
+        "endChar": 11
+      },
+      "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
