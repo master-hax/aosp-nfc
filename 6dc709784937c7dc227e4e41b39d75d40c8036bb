@@ -22,6 +22,30 @@
       },
       "revId": "6dc709784937c7dc227e4e41b39d75d40c8036bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c62c4e9e_c3c34f66",
+        "filename": "src/nfa/include/nfa_rw_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1795865
+      },
+      "writtenOn": "2020-12-09T14:04:39Z",
+      "side": 1,
+      "message": "NFA_RwI93SetAddressingMode was introduced for TR12.0 to pass certifications. Most of tests assume the IUT is in non-addressed mode whereas the android stack is historically configured to use the addressed mode by default. We believe it should be removed in TR12.1 if we modify the NFC Forum Test Spec. The tools should adapt to the reader addressing mode. It does not make sense for a final product to implement two different addressing modes.\n\nExpose the complete REQ_FLAG with the API would request to handle also SMS and OPTION_FLAG information:\n\n1) SMS can only be set when the tag is in SELECTED state i.e. after it has received a SELECT_REQ. For that purpose, SMS is only registered in the rw_cb.tcb.i93.intl_flags upon RW_I93Select call. It is then used by rw_i93_send_cmd_read_single_block, rw_i93_send_cmd_lock_blockrw_i93_send_cmd_write_single_block functions. Then we are not sure it can be managed as a general setting like for the addressing mode. It depends on time on the tag state unknown to the generic functions that handle the different commands.\nThe tag specific selection must be done by the JNI.\n\n2) OF setting is derived from the Special_Frame flag within the CC. It is not known or of interest to handle this from the NFA API.\nIt is also forced in rw_i93_send_cmd_read_single_block for some dedicated NXP and TI legacy read procedures we did not want to impact.\n\nWe therefore recommend to revert the API once the NFC Forum test procedure is modified.",
+      "parentUuid": "903de665_4754d13f",
+      "range": {
+        "startLine": 769,
+        "startChar": 0,
+        "endLine": 770,
+        "endChar": 31
+      },
+      "revId": "6dc709784937c7dc227e4e41b39d75d40c8036bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
