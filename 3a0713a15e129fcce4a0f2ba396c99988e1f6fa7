@@ -70,6 +70,30 @@
       },
       "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c3507cd_e939693b",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1795865
+      },
+      "writtenOn": "2020-12-09T10:13:50Z",
+      "side": 1,
+      "message": "Yes NFA_RwT2tReadDynLockBytes was defined to keep CR11 backward compatibility.\n\nAfter analysis of the AOSP T2T procedures, it appeared that the DynLock_Area content was read at the end of the NDEF detection to store the lock attribute internal table. This procedure is not compliant with NFC Forum technical specifications (NFC Forum does not define how to handle bytes protected by the DynLock_Area). Setting skip_dyn_lock with the new API before the activation allows not to read or read the area.\n\nCurrent NFC Forum test specifications acceptance criteria do not allow the read even if the tools accept it.\n\nSeems the lock attribute value is only used during the computation of the max NDEF length (only the area between the NDEF TLV T field and the first lock byte is considered as available for TLVs_Area in case the DynLock_Area is already defined) and NOT during the NDEF write procedure.\nWe assumed this allows to detect a problem of size to write at NFA level (in JNI) and not later during the execution of the write procedure (write rejected by the tag for protected blocks?). This also implies the area after the DynLock_Area is not available for NDEF data.\n\nThe code to read the DynLock_Area content and the skip_dyn_lock flag could be removed for TR12.1. It would not block the write procedure as the tag would remain in initialized state in case we attempt to write in a forbidden block (procedure would stop, up to applications to restart the procedure). A new write with the appropriate number of data to copy would still be possible.\n\nDo you share our understanding?",
+      "parentUuid": "b21c527b_2a90fa45",
+      "range": {
+        "startLine": 1786,
+        "startChar": 0,
+        "endLine": 1800,
+        "endChar": 11
+      },
+      "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
