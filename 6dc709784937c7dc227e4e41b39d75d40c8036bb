@@ -46,6 +46,30 @@
       },
       "revId": "6dc709784937c7dc227e4e41b39d75d40c8036bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edd9d729_6d66fc6b",
+        "filename": "src/nfa/include/nfa_rw_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-12-10T13:49:15Z",
+      "side": 1,
+      "message": "If API purpose is only to  \"Set addressing mode\" then do you agree with below comment ?\n-- If only 0/1 input needed, we can use input param as bool instead of uint_8.\n\n\n\u003e\u003e We believe it should be removed in TR12.1 if we modify the NFC Forum Test Spec. \n\nHave you guys filed any CR on NFC forum CR12 for this topic? Could you please provide CR reference.",
+      "parentUuid": "c62c4e9e_c3c34f66",
+      "range": {
+        "startLine": 769,
+        "startChar": 0,
+        "endLine": 770,
+        "endChar": 31
+      },
+      "revId": "6dc709784937c7dc227e4e41b39d75d40c8036bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
