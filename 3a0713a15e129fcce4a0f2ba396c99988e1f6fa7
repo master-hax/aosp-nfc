@@ -94,6 +94,30 @@
       },
       "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "865307b0_a754cd50",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-12-10T13:15:53Z",
+      "side": 1,
+      "message": "\u003e\u003e Current NFC Forum test specifications acceptance criteria do not allow the read even if the tools accept it.\n\n\u003e\u003e Setting skip_dyn_lock with the new API before the activation allows not to read or read the area.\n\n\u003d\u003d\u003d\u003e We have different view on above points.\n\nIUT \u0026 LT tool implementation shall be aligned with CR12 test \u0026 technical spec, not by tool implementation.\nCR12 says, DynLock_Area read not allowed, if tool allowing it, it is wrong tool implementation \u0026 which shall be corrected by tool side.\n\n\nLet\u0027s relook at CR11 \u0026 CR12 T2T technical \u0026 test spec.\n\n- CR11 Technical spec doesn\u0027t explicitly mention DynLock_Area shall be block aligned or not ? However, CR11 Test Spec doesn\u0027t have any test scenario where T2T memory layout has DynLock_Area NOT block aligned. \n\n- CR12 anyways explicitly mentions DynLock_Area shall be block aligned.\n\n- Also, in my understanding, there are no Tag in the field which have a  DynLock_Area which is not block aligned. \n\nSo, for both CR11 \u0026 CR12 as well as field tag, if we can implement assuming DynLock_Area is block aligned, we shall not have any compatibility issue.\n\nDo you agree with above conclusion ? \nCan we avoid this change of \"reading the first block of the DynLock_Area\" ?",
+      "parentUuid": "1c3507cd_e939693b",
+      "range": {
+        "startLine": 1786,
+        "startChar": 0,
+        "endLine": 1800,
+        "endChar": 11
+      },
+      "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
