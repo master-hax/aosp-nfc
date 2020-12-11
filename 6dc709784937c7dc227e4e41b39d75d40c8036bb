@@ -70,6 +70,30 @@
       },
       "revId": "6dc709784937c7dc227e4e41b39d75d40c8036bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3599caa4_0022f786",
+        "filename": "src/nfa/include/nfa_rw_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1795865
+      },
+      "writtenOn": "2020-12-11T17:00:52Z",
+      "side": 1,
+      "message": "As the mode will be addressed or non addressed only, we can define it as a boolean if you prefer.\n\nRegarding NFC Forum, the change requests and specs were supposed to be finalized some months ago when we discovered the issue for the AOSP. Therefore we will address it for the next release.",
+      "parentUuid": "edd9d729_6d66fc6b",
+      "range": {
+        "startLine": 769,
+        "startChar": 0,
+        "endLine": 770,
+        "endChar": 31
+      },
+      "revId": "6dc709784937c7dc227e4e41b39d75d40c8036bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
