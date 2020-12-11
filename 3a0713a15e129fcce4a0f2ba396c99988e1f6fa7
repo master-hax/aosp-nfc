@@ -118,6 +118,30 @@
       },
       "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "646f6d79_f17a8482",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1795865
+      },
+      "writtenOn": "2020-12-11T17:02:05Z",
+      "side": 1,
+      "message": "I cannot conclude on your statement that excludes we have no tags in the field with unaligned DynLock_Area areas.\n\nWe are mixing several topics whether the DynLock_Area:\n1)\tCould be read at the end of the NDEF Detection.\nThis is controlled by the skip_dyn_lock flag that can be changed with the NFA_RwT2tReadDynLockBytes prior to any activation.\nDo you have an idea why this was done historically? See analysis in previous comment.\n\n2)\tCould be read at any time.\nNo requirement forbids it. If any, please give me the reference in the Tech Spec.\n\n3)\tShould be assumed block aligned for legacy CR11 tags.\nAs you said, in CR11 nothing was specified for the area alignment. \n\nNow CR12 defines in 4.7 of [T2T 1.1] of 2020-06-12 : “The first byte of the DynLock_Area is required to be the first byte of a Block. When the last byte of the DynLock_Area is not the last byte of a Block, the bytes of this Block that are not part of DynLock_Area are Internal Bytes.”\n\nREQ 4.4.1.5 also says: “The Reader/Writer SHALL set any of the Internal Bytes of a Block that partially belong to the DynLock_Area to 00h or SHALL write the existing values. “\nREQ 4.9.5.5 says: “The Reader/Writer SHALL accept a Lock Control TLV encoding a DynLock_Area that starts at ByteNo 0 of a Block and MAY accept a start different to ByteNo 0 of a Block.“\n\nOur proposal in the code compliant with CR12 is:\n- For the first block including dynamic lock bits: \nIf DynLock_Area block aligned, not read is done.\nIf unaligned, read done prior to the write to avoid overwriting existing values.\n- For blocks only containing dynamic lock bits, no read done.\n- For the last block, if Internal bytes exist, they are written with zeros to comply with CR12. In android-R, these bytes were considered as TLVs_Area bytes. This was corrected.\n\nTherefore if the DynLock_Area is already block aligned as requested by CR12 no read will be done on the overall area + Internal bytes if any.\nIf the area start is unaligned, it could happen with the legacy tags, there will be a read for the first block.\n\nWe believe it is a good compromise.",
+      "parentUuid": "865307b0_a754cd50",
+      "range": {
+        "startLine": 1786,
+        "startChar": 0,
+        "endLine": 1800,
+        "endChar": 11
+      },
+      "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
