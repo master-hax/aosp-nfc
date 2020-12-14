@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48a35838_7593980f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2020-12-14T13:34:23Z",
+      "side": 1,
+      "message": "Why shall we maintain \"Internal bytes\", managing DynLock_Area bytes aren\u0027t good enough?\n- During read/write we can skip complete block when DynLock_Area detected.\n\nPlease clarify.",
+      "revId": "a31734529e64dc1ad76585d82494ba8291707b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
