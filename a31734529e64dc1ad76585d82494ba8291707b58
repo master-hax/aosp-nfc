@@ -16,6 +16,24 @@
       "message": "Why shall we maintain \"Internal bytes\", managing DynLock_Area bytes aren\u0027t good enough?\n- During read/write we can skip complete block when DynLock_Area detected.\n\nPlease clarify.",
       "revId": "a31734529e64dc1ad76585d82494ba8291707b58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78c71a2c_16ed41c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1795865
+      },
+      "writtenOn": "2020-12-18T18:22:49Z",
+      "side": 1,
+      "message": "“Internal bytes” reference is just maintained in the rw_t2t_update_attributes function to pad the attribute table in case the end of the DynLock_Area (or Rsvd_Area) is not block aligned.\nThis corrects the original code that was treating what we consider now as internal bytes in DynLock_Area like TLVs_Area bytes. The attribute table (attr) is checked before each write to avoid overwriting the lock (or reserved) bytes.",
+      "parentUuid": "48a35838_7593980f",
+      "revId": "a31734529e64dc1ad76585d82494ba8291707b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
