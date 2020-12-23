@@ -358,6 +358,10 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
 #endif
 
     case NFC_SET_POWER_SUB_STATE_REVT:
+      if (NFA_STATUS_SEMANTIC_ERROR == p_data->status &&
+          SCREEN_STATE_INVALID == nfa_dm_cb.pending_power_state) {
+        nfa_dm_cb.pending_power_state = nfa_dm_cb.power_state;
+      }
       dm_cback_data.power_sub_state.status = p_data->status;
       dm_cback_data.power_sub_state.power_state = nfa_dm_cb.power_state;
       (*nfa_dm_cb.p_dm_cback)(NFA_DM_SET_POWER_SUB_STATE_EVT, &dm_cback_data);
