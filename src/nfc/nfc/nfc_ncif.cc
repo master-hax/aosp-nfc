@@ -410,6 +410,19 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
 
   NCI_MSG_PRS_HDR0(p, mt, pbf, gid);
   oid = ((*p) & NCI_OID_MASK);
+  if ((NCI_MT_RSP == mt &&
+       NCI_STATUS_SEMANTIC_ERROR == p[NCI_MSG_STATUS_BYTE]) &&
+      !(NCI_GID_CORE == gid &&
+        NCI_MSG_CORE_SET_POWER_SUB_STATE ==
+            oid)) { /*if we have received NCI_STATUS_SEMANTIC_ERROR, abort the
+                     * process.... EXCEPTION: If the state is
+                     * NFA_DM_RFST_LISTEN_ACTIVE and last sent command is
+                     * CORE_SET_POWER_SUB_STATE_CMD, proceed and save state as
+                     * the pending screen state */
+    LOG(ERROR) << StringPrintf(
+        "Received NCI_STATUS_SEMANTIC_ERROR\nAborting...");
+    abort();
+  }
   if (nfc_cb.rawVsCbflag == true &&
       nfc_ncif_proc_proprietary_rsp(mt, gid, oid) == true) {
     nci_proc_prop_raw_vs_rsp(p_msg);
