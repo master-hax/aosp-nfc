@@ -70,6 +70,24 @@
       "parentUuid": "aab9091c_91126905",
       "revId": "c62cf6c2ca38739f980db187e14643f701db828a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d462a05_5311a23d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-06T06:03:20Z",
+      "side": 1,
+      "message": "If we need to revert the change for the latest TR.\nI think we don\u0027t need this patch for AOSP.",
+      "parentUuid": "48a54398_2c662023",
+      "revId": "c62cf6c2ca38739f980db187e14643f701db828a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
