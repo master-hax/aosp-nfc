@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97085cca_b7846762",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-01-11T15:28:14Z",
+      "side": 1,
+      "message": "uint32_t typecasting done in patchset 3",
+      "parentUuid": "43d4f2a8_3f394867",
+      "range": {
+        "startLine": 690,
+        "startChar": 4,
+        "endLine": 690,
+        "endChar": 46
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ae79e80_02d7fd3a",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Comment will be updated.",
       "parentUuid": "6ae79e80_02d7fd3a",
+      "range": {
+        "startLine": 756,
+        "startChar": 4,
+        "endLine": 756,
+        "endChar": 20
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d1d9d5d_165a7fb1",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-01-11T15:28:14Z",
+      "side": 1,
+      "message": "comment added in patchset 3",
+      "parentUuid": "a5d704ce_ca741582",
       "range": {
         "startLine": 756,
         "startChar": 4,
@@ -142,6 +190,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "495330d4_4161ca47",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-01-11T15:28:14Z",
+      "side": 1,
+      "message": "uint32_t typecasting done in patchset 3",
+      "parentUuid": "cd7cf861_b0780498",
+      "range": {
+        "startLine": 874,
+        "startChar": 4,
+        "endLine": 874,
+        "endChar": 48
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "83cbd440_af12eac2",
@@ -189,6 +261,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9809fbe_25a48540",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-01-11T15:28:14Z",
+      "side": 1,
+      "message": "New rw_t4t_set_ber_tlv() function added in patchset 3",
+      "parentUuid": "0d4dc2f6_42d55591",
+      "range": {
+        "startLine": 880,
+        "startChar": 0,
+        "endLine": 880,
+        "endChar": 55
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b88ddfaf_e2157091",
@@ -226,6 +322,30 @@
       "side": 1,
       "message": "Code tries to define if the data to be written in the NDEF File fits within the C-APDU data field using short field coding (Lc max 0xFF) and if we use BER-TLV length field encoded on two bytes as defined in ISO-7816 table E.2 (coding on one byte first checked with \u003c\u003d 0x7F).\n\nThe length to write must take into account the overhead/header of the ODO and DDO encoding as defined in table 41 of [T4T-TS]. It is then: 5B (for 54 03 xxyyzz) + 3B (for 53’ tag + Ld on two bytes for  81’+N) i.e. min of 8B.\n\nA #defined can be added for clarity.",
       "parentUuid": "b88ddfaf_e2157091",
+      "range": {
+        "startLine": 898,
+        "startChar": 7,
+        "endLine": 898,
+        "endChar": 38
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0c9ef78_4a82450a",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-01-11T15:28:14Z",
+      "side": 1,
+      "message": "Done in patchset 3",
+      "parentUuid": "172b5e4d_038048c3",
       "range": {
         "startLine": 898,
         "startChar": 7,
@@ -320,6 +440,30 @@
       "side": 1,
       "message": "0xFF is \u0027No write access granted at all\u0027. We must keep it but using the correct variable:\n(p_t4t-\u003ecc_file.ndef_fc.write_access \u003d\u003d T4T_FC_NO_WRITE_ACCESS)\n\nTo be corrected",
       "parentUuid": "a64df9be_1c810c2f",
+      "range": {
+        "startLine": 1254,
+        "startChar": 6,
+        "endLine": 1254,
+        "endChar": 68
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f307906_25ca0d19",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-01-11T15:28:14Z",
+      "side": 1,
+      "message": "Done in patchset 3",
+      "parentUuid": "24ad842e_a64f0ce8",
       "range": {
         "startLine": 1254,
         "startChar": 6,
