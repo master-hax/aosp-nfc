@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "915c86be_1512f026",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1770,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-12T07:48:54Z",
+      "side": 1,
+      "message": "Could you update comment since FALLTHROUGH_INTENDED removed?",
+      "range": {
+        "startLine": 1769,
+        "startChar": 4,
+        "endLine": 1770,
+        "endChar": 67
+      },
+      "revId": "9ba5d3bab0e995b56ee6da0012965dc6b7246bbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
