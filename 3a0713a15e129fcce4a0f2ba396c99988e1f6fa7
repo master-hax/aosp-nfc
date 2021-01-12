@@ -166,6 +166,30 @@
       },
       "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da1d1fdc_17d3f454",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-12T07:44:36Z",
+      "side": 1,
+      "message": "Mark as resolved base on above comment",
+      "parentUuid": "08bfe286_9d330658",
+      "range": {
+        "startLine": 1786,
+        "startChar": 0,
+        "endLine": 1800,
+        "endChar": 11
+      },
+      "revId": "3a0713a15e129fcce4a0f2ba396c99988e1f6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
