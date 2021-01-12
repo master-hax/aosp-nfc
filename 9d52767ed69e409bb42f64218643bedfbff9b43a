@@ -22,6 +22,30 @@
       },
       "revId": "9d52767ed69e409bb42f64218643bedfbff9b43a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "386f7b93_6875a209",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-01-12T17:45:55Z",
+      "side": 1,
+      "message": "Yes this one must be typecasted to uint16_t. I will update the code and the patch title as both MajorOffset_Size_DLA and MajorOffset_Size_RA are impacted.\n\nI now have doubts on bytes_locked_per_bit. Should also be redefined to uint16_t.\nBytesLockedPerLockBit may consequently be badly handled in rw_t2t_get_lock_bits_for_segment() and rw_t2t_update_lock_attributes() unless we assume cards don\u0027t have BLPLB_Index exceeding 0x8. The Technical Specifications define up to 0xA.",
+      "parentUuid": "a2987ff8_bd78c285",
+      "range": {
+        "startLine": 618,
+        "startChar": 20,
+        "endLine": 618,
+        "endChar": 69
+      },
+      "revId": "9d52767ed69e409bb42f64218643bedfbff9b43a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
