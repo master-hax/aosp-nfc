@@ -417,6 +417,26 @@ void nfa_dm_ndef_handle_message(tNFA_STATUS status, uint8_t* p_msg_buf,
     return;
   }
 
+  if (appl_dta_mode_flag) {
+    p_handler = p_cb->p_ndef_handler[NFA_NDEF_DEFAULT_HANDLER_IDX];
+    if (p_handler != nullptr) {
+      DLOG_IF(INFO, nfc_debug_enabled)
+          << StringPrintf("Using default handler...");
+
+      ndef_data.ndef_type_handle = p_handler->ndef_type_handle;
+      ndef_data.p_data = p_msg_buf;
+      ndef_data.len = len;
+      tNFA_NDEF_EVT_DATA nfa_ndef_evt_data;
+      nfa_ndef_evt_data.ndef_data = ndef_data;
+      (*p_handler->p_ndef_cback)(NFA_NDEF_DATA_EVT, &nfa_ndef_evt_data);
+      /* Notify NDEF type handler */
+      ndef_data.ndef_type_handle = p_handler->ndef_type_handle;
+      ndef_data.p_data = p_msg_buf; /* Start of NDEF message */
+      ndef_data.len = len;
+    }
+    return;
+  }
+
   /* Validate the NDEF message */
   ndef_status = NDEF_MsgValidate(p_msg_buf, len, true);
   if (ndef_status != NDEF_OK) {
