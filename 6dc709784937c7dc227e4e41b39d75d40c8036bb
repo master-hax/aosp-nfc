@@ -94,6 +94,30 @@
       },
       "revId": "6dc709784937c7dc227e4e41b39d75d40c8036bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2fc186d_58a56e22",
+        "filename": "src/nfa/include/nfa_rw_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-01-15T09:05:15Z",
+      "side": 1,
+      "message": "API updated in patch set 4",
+      "parentUuid": "3599caa4_0022f786",
+      "range": {
+        "startLine": 769,
+        "startChar": 0,
+        "endLine": 770,
+        "endChar": 31
+      },
+      "revId": "6dc709784937c7dc227e4e41b39d75d40c8036bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
