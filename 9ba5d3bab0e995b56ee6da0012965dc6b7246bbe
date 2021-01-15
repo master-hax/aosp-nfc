@@ -22,6 +22,30 @@
       },
       "revId": "9ba5d3bab0e995b56ee6da0012965dc6b7246bbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd435dfa_cb87d9b3",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1770,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-01-15T09:05:01Z",
+      "side": 1,
+      "message": "Comment removed in patch set ready to be uploaded\n\nDone in patch set 6",
+      "parentUuid": "915c86be_1512f026",
+      "range": {
+        "startLine": 1769,
+        "startChar": 4,
+        "endLine": 1770,
+        "endChar": 67
+      },
+      "revId": "9ba5d3bab0e995b56ee6da0012965dc6b7246bbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
