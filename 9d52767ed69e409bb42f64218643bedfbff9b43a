@@ -46,6 +46,30 @@
       },
       "revId": "9d52767ed69e409bb42f64218643bedfbff9b43a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e6a37e1_e53c8062",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-01-15T09:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "386f7b93_6875a209",
+      "range": {
+        "startLine": 618,
+        "startChar": 20,
+        "endLine": 618,
+        "endChar": 69
+      },
+      "revId": "9d52767ed69e409bb42f64218643bedfbff9b43a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
