@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "978dd164_af959756",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2428,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-19T09:51:37Z",
+      "side": 1,
+      "message": "I know the NFCC SHALL accept this command in any state except RFST_LISTEN_ACTIVE, but is there any chance we don\u0027t need to set power sub state every time after deactivate to discovery?\nIt looks redundant for normal cases.",
+      "range": {
+        "startLine": 2428,
+        "startChar": 10,
+        "endLine": 2428,
+        "endChar": 62
+      },
+      "revId": "24a6fed3bf14be63a7e480e670e1edb5374d59ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
