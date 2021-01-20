@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88d8a22f_370fe211",
+        "filename": "src/gki/common/gki_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-01-20T05:32:20Z",
+      "side": 1,
+      "message": "Is there any reason that we need to maintain the max buffer count if we only assign the current count when it\u0027s larger?",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 302,
+        "endChar": 57
+      },
+      "revId": "4c9daddc28f507045884475cd51bc5a239e0d21e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f5bd6b4_40135dd2",
+        "filename": "src/gki/common/gki_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-01-20T05:32:20Z",
+      "side": 1,
+      "message": "Is this function still in use so we need to add log message here?",
+      "range": {
+        "startLine": 1216,
+        "startChar": 2,
+        "endLine": 1217,
+        "endChar": 73
+      },
+      "revId": "4c9daddc28f507045884475cd51bc5a239e0d21e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3620a834_3dcbcd48",
+        "filename": "src/gki/common/gki_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-01-20T05:32:20Z",
+      "side": 1,
+      "message": "Is this function still in use so we need to add log message here?",
+      "range": {
+        "startLine": 1266,
+        "startChar": 2,
+        "endLine": 1266,
+        "endChar": 79
+      },
+      "revId": "4c9daddc28f507045884475cd51bc5a239e0d21e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
