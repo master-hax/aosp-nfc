@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bf695e5_160c3458",
+        "filename": "src/gki/common/gki_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-01-21T02:14:43Z",
+      "side": 1,
+      "message": "Yes, that was the idea, but I feel I need more statistics, 2Mb does not really sounds like a reasonable amount of memory, but this is how much the stack was configured to use before this patch.",
+      "parentUuid": "16257fbc_f4b71acc",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 302,
+        "endChar": 57
+      },
+      "revId": "4c9daddc28f507045884475cd51bc5a239e0d21e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f5bd6b4_40135dd2",
