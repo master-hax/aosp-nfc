@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+package {
+    default_applicable_licenses: ["system_nfc_license"],
+}
+
 prebuilt_etc {
     name: "libnfc-nci.conf-default",
     src: "libnfc-nci.conf",
