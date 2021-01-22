@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "899785a7_de19545d",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-22T01:35:24Z",
+      "side": 1,
+      "message": "remove the whole part?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 6
+      },
+      "revId": "87f865f17b986b5aad2c523087ea17c42ef5f66f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
