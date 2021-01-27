@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2234b367_6ed36bcf",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-27T01:48:57Z",
+      "side": 1,
+      "message": "Suggest to remove \"NFC\" since it\u0027s already nfc stack.\nNAME_RECOVERY_OPTION  or  NAME_HW_RECOVERY_OPTION",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "c2401b18949954008ef8ed1e310354ec799f725c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
