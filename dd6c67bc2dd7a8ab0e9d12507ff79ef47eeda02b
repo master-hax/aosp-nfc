@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3a171ba_eedf7602",
+        "filename": "src/nfc/tags/rw_t3t.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3042,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-27T07:12:55Z",
+      "side": 1,
+      "message": "Could you fix the inedent?\nDon\u0027t use tabs.",
+      "range": {
+        "startLine": 3041,
+        "startChar": 0,
+        "endLine": 3042,
+        "endChar": 2
+      },
+      "revId": "dd6c67bc2dd7a8ab0e9d12507ff79ef47eeda02b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
