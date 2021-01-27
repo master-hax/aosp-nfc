@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c30cdb1_050c07d4",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-27T07:16:16Z",
+      "side": 1,
+      "message": "remove tab",
+      "revId": "5ce99d0fb018d62b97a00c5d8b572de6d8fd5528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
