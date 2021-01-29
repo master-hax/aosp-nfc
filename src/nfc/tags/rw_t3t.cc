@@ -1199,6 +1199,12 @@ tNFC_STATUS rw_t3t_send_raw_frame(tRW_T3T_CB* p_cb, uint16_t len,
   uint8_t* p;
   tNFC_STATUS retval = NFC_STATUS_OK;
 
+  /* GKI_BUF2 is used for NFC_RW_POOL */
+  if (len > GKI_BUF2_SIZE - NCI_MSG_OFFSET_SIZE - NCI_DATA_HDR_SIZE - 2) {
+    android_errorWriteLog(0x534e4554, "157649467");
+    return NFC_STATUS_NO_BUFFERS;
+  }
+
   p_cmd_buf = rw_t3t_get_cmd_buf();
   if (p_cmd_buf != nullptr) {
     /* Construct T3T message */
@@ -2574,6 +2580,14 @@ tNFC_STATUS RW_T3tCheckNDef(void) {
   } else if (p_cb->ndef_attrib.ln == 0) {
     LOG(ERROR) << StringPrintf("Type 3 tag contains empty NDEF message");
     return (NFC_STATUS_FAILED);
+  } else if (p_cb->ndef_attrib.writef ==
+             T3T_MSG_NDEF_WRITEF_ON) /* Tag's NDEF memory write in progress? */
+  {
+    LOG(ERROR) << StringPrintf(
+        "%s - WriteFlag ON: NDEF data may be inconsistent, "
+        "conclude NDEF Read procedure",
+        __func__);
+    return (NFC_STATUS_FAILED);
   }
 
   /* Check number of blocks needed for this update */
@@ -2778,7 +2792,7 @@ tNFC_STATUS RW_T3tPresenceCheck(void) {
     }
   } else {
     /* IDLE state: send POLL command */
-    retval = (tNFC_STATUS)nci_snd_t3t_polling(0xFFFF, T3T_POLL_RC_SC, 0);
+    retval = (tNFC_STATUS)nci_snd_t3t_polling(0xFFFF, T3T_POLL_RC_SC, 0x03);
     if (retval == NCI_STATUS_OK) {
       p_rw_cb->tcb.t3t.flags |= RW_T3T_FL_W4_PRESENCE_CHECK_POLL_RSP;
       p_rw_cb->tcb.t3t.rw_state = RW_T3T_STATE_COMMAND_PENDING;
@@ -2903,7 +2917,7 @@ tNFC_STATUS RW_T3tGetSystemCodes(void) {
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   } else {
-    retval = (tNFC_STATUS)nci_snd_t3t_polling(0xFFFF, T3T_POLL_RC_SC, 0);
+    retval = (tNFC_STATUS)nci_snd_t3t_polling(0xFFFF, T3T_POLL_RC_SC, 0x0F);
     if (retval == NCI_STATUS_OK) {
       p_cb->cur_cmd = RW_T3T_CMD_GET_SYSTEM_CODES;
       p_cb->cur_tout = RW_T3T_DEFAULT_CMD_TIMEOUT_TICKS;

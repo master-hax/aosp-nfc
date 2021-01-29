@@ -254,7 +254,7 @@ typedef struct {
 /* Maximum supported Lock control TLVS in the tag           */
 #define RW_T2T_MAX_LOCK_TLVS 0x05
 /* Maximum supported dynamic lock bytes                     */
-#define RW_T2T_MAX_LOCK_BYTES 0x1E
+#define RW_T2T_MAX_LOCK_BYTES 0x20
 #define RW_T2T_SEGMENT_BYTES 128
 #define RW_T2T_SEGMENT_SIZE 16
 
@@ -361,19 +361,17 @@ typedef uint8_t tRW_T2T_LOCK_STATUS;
 #define RW_T2T_SUBSTATE_WAIT_READ_DYN_LOCK_BYTE_BLOCK 0x1A
 /* waiting for response to set dynamic lock bits            */
 #define RW_T2T_SUBSTATE_WAIT_SET_DYN_LOCK_BITS 0x1B
-/* waiting for response to set static lock bits             */
-#define RW_T2T_SUBSTATE_WAIT_SET_ST_LOCK_BITS 0x1C
 
 typedef struct {
   uint16_t offset;              /* Offset of the lock byte in the Tag */
-  uint8_t num_bits;             /* Number of lock bits in the lock byte */
+  uint16_t num_bits;            /* Number of lock bits in the lock byte */
   uint8_t bytes_locked_per_bit; /* No. of tag bytes gets locked by a bit in this
                                    byte       */
 } tRW_T2T_LOCK_INFO;
 
 typedef struct {
   uint16_t offset;   /* Reserved bytes offset taken from Memory control TLV */
-  uint8_t num_bytes; /* Number of reserved bytes as per the TLV */
+  uint16_t num_bytes; /* Number of reserved bytes as per the TLV */
 } tRW_T2T_RES_INFO;
 
 typedef struct {

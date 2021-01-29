@@ -259,6 +259,7 @@ typedef enum {
   NFA_DTA_LLCP_MODE = 0x00000002,
   NFA_DTA_HCEF_MODE = 0x00000004,
   NFA_DTA_CR8 = 0x00000080,
+  NFA_DTA_CR12 = 0x00000040,
 } tNFA_eDtaModes;
 
 /* NFA Connection Callback Events */
@@ -331,6 +332,8 @@ typedef enum {
 #define NFA_P2P_PAUSED_EVT 38
 /* P2P services resumed event */
 #define NFA_P2P_RESUMED_EVT 39
+/* T2T command completed */
+#define NFA_T2T_CMD_CPLT_EVT 40
 
 /* NFC deactivation type */
 #define NFA_DEACTIVATE_TYPE_IDLE NFC_DEACTIVATE_TYPE_IDLE

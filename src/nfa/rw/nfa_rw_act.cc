@@ -966,6 +966,9 @@ static void nfa_rw_handle_t3t_evt(tRW_EVENT event, tRW_DATA* p_rw_data) {
       break;
 
     case RW_T3T_INTF_ERROR_EVT:
+      DLOG_IF(INFO, nfc_debug_enabled)
+          << StringPrintf("%s; send deactivate", __func__);
+      nfa_dm_rf_deactivate(NFA_DEACTIVATE_TYPE_DISCOVERY);
       conn_evt_data.status = p_rw_data->status;
       nfa_dm_act_conn_cback_notify(NFA_RW_INTF_ERROR_EVT, &conn_evt_data);
       break;
@@ -2634,7 +2637,7 @@ bool nfa_rw_activate_ntf(tNFA_RW_MSG* p_data) {
     memcpy(tag_params.t2t.uid, p_activate_params->rf_tech_param.param.pa.nfcid1,
            p_activate_params->rf_tech_param.param.pa.nfcid1_len);
   } else if (NFC_PROTOCOL_T3T == nfa_rw_cb.protocol) {
-    if (appl_dta_mode_flag) {
+    if ((appl_dta_mode_flag) && ((nfa_dm_cb.eDtaMode & 0xF0) != NFA_DTA_CR12)) {
       /* Incase of DTA mode Dont send commands to get system code. Just notify
        * activation */
       activate_notify = true;
@@ -2779,6 +2782,7 @@ bool nfa_rw_deactivate_ntf(__attribute__((unused)) tNFA_RW_MSG* p_data) {
 **
 *******************************************************************************/
 bool nfa_rw_handle_op_req(tNFA_RW_MSG* p_data) {
+  tNFA_CONN_EVT_DATA conn_evt_data;
   bool freebuf = true;
   uint16_t presence_check_start_delay = 0;
 
@@ -2817,7 +2821,6 @@ bool nfa_rw_handle_op_req(tNFA_RW_MSG* p_data) {
   /* Call appropriate handler for requested operation */
   switch (p_data->op_req.op) {
     case NFA_RW_OP_DETECT_NDEF:
-      nfa_rw_cb.skip_dyn_locks = false;
       nfa_rw_detect_ndef();
       break;
 
@@ -2902,6 +2905,22 @@ bool nfa_rw_handle_op_req(tNFA_RW_MSG* p_data) {
 
     case NFA_RW_OP_T2T_SECTOR_SELECT:
       nfa_rw_t2t_sector_select(p_data);
+      break;
+
+    case NFA_RW_OP_T2T_READ_DYN_LOCKS:
+      if (p_data->op_req.params.t2t_read_dyn_locks.read_dyn_locks == true) {
+        nfa_rw_cb.skip_dyn_locks = false;
+      } else {
+        nfa_rw_cb.skip_dyn_locks = true;
+      }
+      DLOG_IF(INFO, nfc_debug_enabled)
+          << StringPrintf("%s - Skip reading of dynamic lock bytes: %d",
+                          __func__, nfa_rw_cb.skip_dyn_locks);
+
+      /* Command complete - perform cleanup, notify app */
+      nfa_rw_command_complete();
+      conn_evt_data.status = NFA_STATUS_OK;
+      nfa_dm_act_conn_cback_notify(NFA_T2T_CMD_CPLT_EVT, &conn_evt_data);
       break;
 
     /* Type-3 tag commands */
