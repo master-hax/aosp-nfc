@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b53a601_96af7da3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-02-01T13:31:53Z",
+      "side": 1,
+      "message": "Hi Arach,\nWhat\u0027s the purpose of this one?\nIs it part of CR12 patch?\n",
+      "revId": "0d91078c6b384f52b0ce91b0241746a9baf5a898",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
