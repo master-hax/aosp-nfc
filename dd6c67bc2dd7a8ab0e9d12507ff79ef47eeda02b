@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa7c04cb_200bd04d",
+        "filename": "src/nfc/tags/rw_t3t.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2922,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-02-01T13:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daf16676_d74995e4",
+      "range": {
+        "startLine": 2922,
+        "startChar": 0,
+        "endLine": 2922,
+        "endChar": 69
+      },
+      "revId": "dd6c67bc2dd7a8ab0e9d12507ff79ef47eeda02b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3a171ba_eedf7602",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-27T07:12:55Z",
       "side": 1,
       "message": "Could you fix the inedent?\nDon\u0027t use tabs.",
+      "range": {
+        "startLine": 3041,
+        "startChar": 0,
+        "endLine": 3042,
+        "endChar": 2
+      },
+      "revId": "dd6c67bc2dd7a8ab0e9d12507ff79ef47eeda02b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "797278ae_32fdeed3",
+        "filename": "src/nfc/tags/rw_t3t.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3042,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-02-01T13:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3a171ba_eedf7602",
       "range": {
         "startLine": 3041,
         "startChar": 0,
