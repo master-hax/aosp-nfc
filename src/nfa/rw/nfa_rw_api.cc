@@ -25,6 +25,7 @@
 
 #include <android-base/stringprintf.h>
 #include <base/logging.h>
+#include <log/log.h>
 
 #include "nfa_api.h"
 #include "nfa_rw_int.h"
@@ -698,6 +699,48 @@ tNFA_STATUS NFA_RwT2tSectorSelect(uint8_t sector_number) {
 
 /*******************************************************************************
 **
+** Function         NFA_RwT2tReadDynLockBytes
+**
+** Description:
+**      Configure NFA skip_dyn_locks flag.
+**
+**      This API must be called after activation but before NFA_RwDetectNDef()
+**      or NFA_RwReadNDef() and NFA_RwWriteNDef() in case NDEF Detection is
+**      triggered internally. It overwrites skip_dyn_locks default setting
+**      set to false at activation. If not called, at the end of the NDEF
+**      Detection, the DynLock_Area will be read and its content used to define
+**      max_ndef_msg_len.
+**
+**      When the operation has completed (or if an error occurs), the app will
+**      be notified with NFA_T2T_CMD_CPLT_EVT.
+**
+** Returns:
+**      NFA_STATUS_OK if successfully initiated
+**      NFA_STATUS_FAILED otherwise
+**
+*******************************************************************************/
+tNFA_STATUS NFA_RwT2tReadDynLockBytes(bool read_dyn_locks) {
+  tNFA_RW_OPERATION* p_msg;
+
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      "%s - read DynLock_Area bytes: %d", __func__, read_dyn_locks);
+
+  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  if (p_msg != nullptr) {
+    /* Fill in tNFA_RW_OPERATION struct */
+    p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
+    p_msg->op = NFA_RW_OP_T2T_READ_DYN_LOCKS;
+
+    p_msg->params.t2t_read_dyn_locks.read_dyn_locks = read_dyn_locks;
+
+    nfa_sys_sendmsg(p_msg);
+    return (NFA_STATUS_OK);
+  }
+  return (NFA_STATUS_FAILED);
+}
+
+/*******************************************************************************
+**
 ** Function         NFA_RwT3tRead
 **
 ** Description:
@@ -1097,7 +1140,7 @@ tNFA_STATUS NFA_RwI93WriteMultipleBlocks(uint8_t first_block_number,
                                          uint16_t number_blocks,
                                          uint8_t* p_data) {
   tNFA_RW_OPERATION* p_msg;
-  uint16_t data_length;
+  uint32_t data_length;
 
   DLOG_IF(INFO, nfc_debug_enabled)
       << StringPrintf("%d, %d", first_block_number, number_blocks);
@@ -1112,6 +1155,11 @@ tNFA_STATUS NFA_RwI93WriteMultipleBlocks(uint8_t first_block_number,
   }
 
   data_length = nfa_rw_cb.i93_block_size * number_blocks;
+
+  if (data_length + sizeof(tNFA_RW_OPERATION) > UINT16_MAX) {
+    android_errorWriteLog(0x534e4554, "157650338");
+    return (NFA_STATUS_FAILED);
+  }
 
   p_msg = (tNFA_RW_OPERATION*)GKI_getbuf(
       (uint16_t)(sizeof(tNFA_RW_OPERATION) + data_length));

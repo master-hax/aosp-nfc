@@ -1199,6 +1199,12 @@ tNFC_STATUS rw_t3t_send_raw_frame(tRW_T3T_CB* p_cb, uint16_t len,
   uint8_t* p;
   tNFC_STATUS retval = NFC_STATUS_OK;
 
+  /* GKI_BUF2 is used for NFC_RW_POOL */
+  if (len > GKI_BUF2_SIZE - NCI_MSG_OFFSET_SIZE - NCI_DATA_HDR_SIZE - 2) {
+    android_errorWriteLog(0x534e4554, "157649467");
+    return NFC_STATUS_NO_BUFFERS;
+  }
+
   p_cmd_buf = rw_t3t_get_cmd_buf();
   if (p_cmd_buf != nullptr) {
     /* Construct T3T message */
@@ -2911,7 +2917,7 @@ tNFC_STATUS RW_T3tGetSystemCodes(void) {
                                p_cb->rw_state);
     return (NFC_STATUS_FAILED);
   } else {
-    retval = (tNFC_STATUS)nci_snd_t3t_polling(0xFFFF, T3T_POLL_RC_SC, 0);
+    retval = (tNFC_STATUS)nci_snd_t3t_polling(0xFFFF, T3T_POLL_RC_SC, 0x0F);
     if (retval == NCI_STATUS_OK) {
       p_cb->cur_cmd = RW_T3T_CMD_GET_SYSTEM_CODES;
       p_cb->cur_tout = RW_T3T_DEFAULT_CMD_TIMEOUT_TICKS;
