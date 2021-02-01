@@ -16,6 +16,24 @@
       "message": "remove tab",
       "revId": "5ce99d0fb018d62b97a00c5d8b572de6d8fd5528",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4e559aa_5386933b",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-02-01T13:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c30cdb1_050c07d4",
+      "revId": "5ce99d0fb018d62b97a00c5d8b572de6d8fd5528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
