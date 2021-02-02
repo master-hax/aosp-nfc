@@ -34,6 +34,24 @@
       "parentUuid": "58acf1cc_f143a840",
       "revId": "b793706db08dc1876c32150a859a6183ac98f64b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddd2ba30_29e74ff5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2021-02-02T04:08:50Z",
+      "side": 1,
+      "message": "General Remark: A Tag will send responses based on the requests received. An T5T is a ISO15693 Tag with a defined content and content structure in its memory. It is recommended to only read data which are meaningful for an application. A  Transport, Identification or IATA application on the Tag is meaningless to android, since the specific application who can deal and interpret the data correctly is missing. An NDEF message is natively supported and can be generically used.\n\nComment on point 1 above: \n   -If a CC is not contained properly on a Tag it is no CC. This has nothing to \n    do with ISO nor with NFC Forum.  \n   -MLEN vs physical memory size. A T5T may or may not use the entire physical \n    memory size to store NDEF. The point is unclear and not understood. A phone \n    shall only read the NDEF message and not stupidly the entire memory. The \n    content within the T5T_Area but after the NDEF message must be regarded is \n    random and data format after the T5T_Area is unknown. \n   \nComment on point 2 above:\n    -Get_SYSTEM_INFORMATION and EXTENDED_Get_SYSTEM_INFORMATION are not defined \n     by NFC Forum and are optional commands in ISO. A Tag may support one of \n     these CMDs or may not support them. Besides these CMDs do not at all help to \n     distinguish a ISO15693 TAG from an NFC Forum T5T. Any intelligence to do so \n     will break interoperability since a T5T is just a specific memory \n     configuration of an ISO15693 Tag. This memory configuration is flexible and \n     therefore no intelligence will help to distinguish.\n\n     -Therefore NXP recommends to always start with the NDEF detection because \n      NDEF is the application supported natively by android. If this is not \n      successful a trial and error approach could be used to read not well \n      formatted tag as described in point one of Celine. Using GET_SYSTEM will \n      never help to resolve a conflict. A dedicated application (for an \n      application like Transport, ID,…) could then proceed using RF IF cmds to \n      execute a dedicated application.",
+      "parentUuid": "9ca1fb70_58c802d1",
+      "revId": "b793706db08dc1876c32150a859a6183ac98f64b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
