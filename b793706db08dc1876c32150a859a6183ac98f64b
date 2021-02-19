@@ -52,6 +52,24 @@
       "parentUuid": "9ca1fb70_58c802d1",
       "revId": "b793706db08dc1876c32150a859a6183ac98f64b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5c91481_fb89401e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-02-19T16:01:40Z",
+      "side": 1,
+      "message": "We agree that if a tag does not contain in the CC valid NFC Forum Magic Number, Version number, Access Rights, it is not an NFC Forum tag and will be managed by a dedicated application. \n\nAs T5T has only been defined in 2015, and earlier ISO15693 tags were already in the market, and still are, an ISO15693 tag with NDEF content may look like a fully compliant NFC Forum tag, but in fact there are subtle differences present in the current AOSP code. This determination can only be done with the GetSystemInfo/ExtendedGetSystemInfo commands, which indicate the IC Manufacturing code, and other key information necessary for reading properly the NDEF content and there is code for that in AOSP from multiple tag manufacturers. \nThis specific handling cannot be avoided for maintaining operation with tags that are present in the field. This is independent of starting with the NDEF detection then doing IC Manufacturer specific handling or doing GetSystemInfo and ExtendedGetSystemInfo first. \nThe specific behaviors do not always trigger errors and cannot be systematically used to handle those specific tags. Reading block 0 and getting an MLEN does not also always guarantee we can trust the MLEN.\n\nST’s position is to first find a way to certify AOSP with CR12 while guaranteeing proper operation with all tags in the field (dta flag), then in a second step tackle the bigger problem of how to start with pure NDEF management taking into account tag IC’s manufacturers legacy. \nThis will require involvement of all manufacturers (NXP, ST, TI, On Semiconductors… if we refer to the AOSP code) as ST cannot validate other than its legacy and standard NFC Forum compliant tags.\n\n\nRegarding MLEN vs physical memory size:\nThe problem is that earlier versions than android 9 check whether MLEN and the physical memory length are consistent. If not, the native android read aborts. With android 9 onwards, this check is no longer performed and only the physical memory length is used (not MLEN). \n\nIf tags are programmed, fulfilling NFC Forum T5T rules, with MLEN different from the physical memory size, phones with android 8 and lower will reject these tags and not read the NDEF natively. We see this as an issue till android 8 phones are in the market.",
+      "parentUuid": "ddd2ba30_29e74ff5",
+      "revId": "b793706db08dc1876c32150a859a6183ac98f64b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
