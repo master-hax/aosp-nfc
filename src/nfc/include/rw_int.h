@@ -365,8 +365,8 @@ typedef uint8_t tRW_T2T_LOCK_STATUS;
 typedef struct {
   uint16_t offset;              /* Offset of the lock byte in the Tag */
   uint16_t num_bits;            /* Number of lock bits in the lock byte */
-  uint8_t bytes_locked_per_bit; /* No. of tag bytes gets locked by a bit in this
-                                   byte       */
+  uint16_t bytes_locked_per_bit; /* No. of tag bytes gets locked by a bit
+                                    in this byte */
 } tRW_T2T_LOCK_INFO;
 
 typedef struct {
@@ -523,6 +523,8 @@ typedef struct {
   uint8_t cur_poll_rc; /* RC used in current POLL command */
 
   uint8_t flags; /* Flags see RW_T3T_FL_* */
+  /* Recall System Code used in last T3T polling command */
+  int32_t cur_active_sc;
 } tRW_T3T_CB;
 
 /*
@@ -722,6 +724,7 @@ typedef struct {
 
   uint8_t tlv_detect_state; /* TLV detecting state              */
   uint8_t tlv_type;         /* currently detected type          */
+  uint8_t addr_mode;
   uint16_t tlv_length;      /* currently detected length        */
 
   uint16_t ndef_tlv_start_offset; /* offset of first byte of NDEF TLV */
@@ -744,8 +747,18 @@ typedef union {
   tRW_MFC_CB mfc;
 } tRW_TCB;
 
+/* RW callback type */
+#define RW_CB_TYPE_UNKNOWN 0
+#define RW_CB_TYPE_T1T 1
+#define RW_CB_TYPE_T2T 2
+#define RW_CB_TYPE_T3T 3
+#define RW_CB_TYPE_T4T 4
+#define RW_CB_TYPE_T5T 5
+typedef uint8_t tRW_CB_TYPE;
+
 /* RW control blocks */
 typedef struct {
+  tRW_CB_TYPE tcb_type;
   tRW_TCB tcb;
   tRW_CBACK* p_cback;
   uint32_t cur_retry; /* Retry count for the current operation */
