@@ -59,9 +59,14 @@
 #define NFA_STATUS_INVALID_PARAM NCI_STATUS_INVALID_PARAM
 /* Already started      */
 #define NFA_STATUS_ALREADY_STARTED NCI_STATUS_ALREADY_STARTED
+/* RF frame error       */
+#define NFA_STATUS_RF_FRAME_CORRUPTED NCI_STATUS_RF_FRAME_CORRUPTED
+/* RF protocol error    */
+#define NFA_STATUS_RF_PROTOCOL_ERR NCI_STATUS_RF_PROTOCOL_ERR
 /* RF Timeout           */
 #define NFA_STATUS_TIMEOUT NCI_STATUS_TIMEOUT
 
+#define NFA_STATUS_CONTINUE NFC_STATUS_CONTINUE
 /* Out of GKI buffers */
 #define NFA_STATUS_NO_BUFFERS NFC_STATUS_NO_BUFFERS
 /* Protocol mismatch between API and activated one */
@@ -259,7 +264,6 @@ typedef enum {
   NFA_DTA_LLCP_MODE = 0x00000002,
   NFA_DTA_HCEF_MODE = 0x00000004,
   NFA_DTA_CR8 = 0x00000080,
-  NFA_DTA_CR12 = 0x00000040,
 } tNFA_eDtaModes;
 
 /* NFA Connection Callback Events */
