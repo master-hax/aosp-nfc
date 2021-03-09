@@ -950,6 +950,14 @@ tNFA_STATUS nfa_dm_start_polling(void) {
       poll_disc_mask |= NFA_DM_DISC_MASK_P_KOVIO;
     }
 
+    if (!(nfc_cb.nci_interfaces & (1 << NCI_INTERFACE_NFC_DEP))) {
+      /* Remove NFC-DEP related Discovery mask, if NFC_DEP interface is not
+       * supported */
+      poll_disc_mask &=
+          ~(NFA_DM_DISC_MASK_PACM_NFC_DEP | NFA_DM_DISC_MASK_PAA_NFC_DEP |
+            NFA_DM_DISC_MASK_PFA_NFC_DEP | NFA_DM_DISC_MASK_PF_NFC_DEP);
+    }
+
     nfa_dm_cb.poll_disc_handle = nfa_dm_add_rf_discover(
         poll_disc_mask, NFA_DM_DISC_HOST_ID_DH, nfa_dm_poll_disc_cback);
 
