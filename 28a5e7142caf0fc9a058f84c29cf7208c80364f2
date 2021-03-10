@@ -16,6 +16,23 @@
       "message": "Good catch! I agree with your assessment.",
       "revId": "28a5e7142caf0fc9a058f84c29cf7208c80364f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79e5c197_b4a77e95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2021-03-10T13:45:14Z",
+      "side": 1,
+      "message": "Agree with the change done.",
+      "revId": "28a5e7142caf0fc9a058f84c29cf7208c80364f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
