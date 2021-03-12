@@ -916,7 +916,7 @@ tNFA_STATUS NFA_RwI93Inventory(bool afi_present, uint8_t afi, uint8_t* p_uid) {
 **      NFA_STATUS_FAILED otherwise
 **
 *******************************************************************************/
-tNFA_STATUS NFA_RwI93StayQuiet(void) {
+tNFA_STATUS NFA_RwI93StayQuiet(uint8_t* p_uid) {
   tNFA_RW_OPERATION* p_msg;
 
   DLOG_IF(INFO, nfc_debug_enabled) << __func__;
@@ -930,6 +930,8 @@ tNFA_STATUS NFA_RwI93StayQuiet(void) {
     /* Fill in tNFA_RW_OPERATION struct */
     p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
     p_msg->op = NFA_RW_OP_I93_STAY_QUIET;
+    p_msg->params.i93_cmd.p_data = (uint8_t*)(p_msg + 1);
+    memcpy(p_msg->params.i93_cmd.p_data, p_uid, I93_UID_BYTE_LEN);
 
     nfa_sys_sendmsg(p_msg);
 
@@ -1514,6 +1516,46 @@ tNFA_STATUS NFA_RwI93GetMultiBlockSecurityStatus(uint8_t first_block_number,
 
     p_msg->params.i93_cmd.first_block_number = first_block_number;
     p_msg->params.i93_cmd.number_blocks = number_blocks;
+
+    nfa_sys_sendmsg(p_msg);
+
+    return (NFA_STATUS_OK);
+  }
+
+  return (NFA_STATUS_FAILED);
+}
+
+/*******************************************************************************
+**
+** Function         NFA_RwI93SetAddressingMode
+**
+** Description:
+**      Set addressing mode to use to communicate with T5T tag.
+**      mode = true: addressed (default if API not called)
+**      mode = false: non-addressed
+**
+** Returns:
+**      NFA_STATUS_OK if successfully initiated
+**      NFA_STATUS_WRONG_PROTOCOL: T5T tag not activated
+**      NFA_STATUS_FAILED otherwise
+**
+*******************************************************************************/
+tNFA_STATUS NFA_RwI93SetAddressingMode(bool mode) {
+  tNFA_RW_OPERATION* p_msg;
+
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s - %d", __func__, mode);
+
+  if (nfa_rw_cb.protocol != NFC_PROTOCOL_T5T) {
+    return (NFA_STATUS_WRONG_PROTOCOL);
+  }
+
+  p_msg = (tNFA_RW_OPERATION*)GKI_getbuf((uint16_t)(sizeof(tNFA_RW_OPERATION)));
+  if (p_msg != nullptr) {
+    /* Fill in tNFA_RW_OPERATION struct */
+    p_msg->hdr.event = NFA_RW_OP_REQUEST_EVT;
+    p_msg->op = NFA_RW_OP_I93_SET_ADDR_MODE;
+
+    p_msg->params.i93_cmd.addr_mode = mode;
 
     nfa_sys_sendmsg(p_msg);
 
