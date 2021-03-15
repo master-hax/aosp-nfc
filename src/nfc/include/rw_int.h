@@ -663,6 +663,10 @@ typedef uint8_t tRW_I93_RW_SUBSTATE;
 #define RW_I93_FLAG_16BIT_NUM_BLOCK 0x10
 /* use extended commands */
 #define RW_I93_FLAG_EXT_COMMANDS 0x20
+/* use Special Frame in Write-Alike commands */
+#define RW_I93_FLAG_SPECIAL_FRAME 0x40
+/* use SMS bit in Selected state           */
+#define RW_I93_FLAG_SELECTED_STATE 0x80
 
 /* searching for type                      */
 #define RW_I93_TLV_DETECT_STATE_TYPE 0x01
@@ -724,6 +728,7 @@ typedef struct {
 
   uint8_t tlv_detect_state; /* TLV detecting state              */
   uint8_t tlv_type;         /* currently detected type          */
+  uint8_t addr_mode;
   uint16_t tlv_length;      /* currently detected length        */
 
   uint16_t ndef_tlv_start_offset; /* offset of first byte of NDEF TLV */
@@ -753,6 +758,7 @@ typedef union {
 #define RW_CB_TYPE_T3T 3
 #define RW_CB_TYPE_T4T 4
 #define RW_CB_TYPE_T5T 5
+#define RW_CB_TYPE_MIFARE 6
 typedef uint8_t tRW_CB_TYPE;
 
 /* RW control blocks */
