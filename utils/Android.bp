@@ -42,6 +42,7 @@ cc_test {
     defaults: ["nfc_utils_defaults"],
     test_suites: ["device-tests"],
     host_supported: true,
+    require_root: true,
     srcs: [
         "test/config_test.cc",
         "test/ringbuffer_test.cc",
