@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b173ccc_3cc60a85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-03-18T00:29:01Z",
+      "side": 1,
+      "message": "LGTM, but I don\u0027t have +2 permission.",
+      "revId": "6960b401115b1076cce320d89d50cfdc17d4106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
