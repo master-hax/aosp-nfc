@@ -405,6 +405,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e0a54602_b6d20b44",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-03-19T06:37:09Z",
+      "side": 1,
+      "message": "MV2.0 \u003d\u003e CCLEN (15 bytes) 0x000F\nMV3.0 \u003d\u003e CCLEN (17 bytes) 0x0011\nWhy don\u0027t you check both for MV3.0 and 2.0 case since we already knows the MV version (p_t4t-\u003ecc_file.version) here?",
+      "parentUuid": "e8f4fbd8_391c2b5b",
+      "range": {
+        "startLine": 1207,
+        "startChar": 0,
+        "endLine": 1211,
+        "endChar": 3
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a64df9be_1c810c2f",
         "filename": "src/nfc/tags/rw_t4t.cc",
         "patchSetId": 2
