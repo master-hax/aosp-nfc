@@ -364,7 +364,7 @@ uint32_t nfc_task(__attribute__((unused)) uint32_t arg) {
 
       /* Reset the NFC controller. */
       nfc_set_state(NFC_STATE_CORE_INIT);
-      nci_snd_core_reset(NCI_RESET_TYPE_RESET_CFG);
+      nci_snd_core_reset(NCI_RESET_TYPE_KEEP_CFG);
     }
 
     if (event & NFC_MBOX_EVT_MASK) {
