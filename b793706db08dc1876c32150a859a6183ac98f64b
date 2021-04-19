@@ -70,6 +70,24 @@
       "parentUuid": "ddd2ba30_29e74ff5",
       "revId": "b793706db08dc1876c32150a859a6183ac98f64b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a29c13e_cd30ea11",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-04-19T09:50:07Z",
+      "side": 1,
+      "message": "Merge this version first.",
+      "parentUuid": "a5c91481_fb89401e",
+      "revId": "b793706db08dc1876c32150a859a6183ac98f64b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
