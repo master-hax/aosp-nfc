@@ -427,6 +427,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fffd0a98_c2672ff7",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-04-20T10:14:38Z",
+      "side": 1,
+      "message": "Merge this version first.",
+      "parentUuid": "e0a54602_b6d20b44",
+      "range": {
+        "startLine": 1207,
+        "startChar": 0,
+        "endLine": 1211,
+        "endChar": 3
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a64df9be_1c810c2f",
@@ -545,6 +569,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd9adcee_1bcacc5e",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-04-20T10:14:38Z",
+      "side": 1,
+      "message": "Merge this version first.",
+      "parentUuid": "f41b755e_f4833d07",
+      "range": {
+        "startLine": 1578,
+        "startChar": 5,
+        "endLine": 1579,
+        "endChar": 70
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e698878_599c6617",
@@ -558,6 +606,30 @@
       "writtenOn": "2020-11-24T12:16:13Z",
       "side": 1,
       "message": "RW_T4T_SUBSTATE_WAIT_ENDEF_FILE_CTRL_TLV \u0026 RW_T4T_SUBSTATE_WAIT_CC_FILE has duplicate code.\n\nThis can be optimized If we accept previous comment.\nAlso,RW_T4T_SUBSTATE_WAIT_ENDEF_FILE_CTRL_TLV sub-state can be removed.",
+      "range": {
+        "startLine": 1641,
+        "startChar": 0,
+        "endLine": 1709,
+        "endChar": 9
+      },
+      "revId": "3cc37e653fc60a822e12f67bb8699cbd0adf12dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29791e27_658f86d6",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-04-20T10:14:38Z",
+      "side": 1,
+      "message": "Merge this version first.",
+      "parentUuid": "9e698878_599c6617",
       "range": {
         "startLine": 1641,
         "startChar": 0,
