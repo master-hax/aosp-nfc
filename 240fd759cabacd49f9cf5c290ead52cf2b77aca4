@@ -16,6 +16,23 @@
       "message": "Please review the file and if you do not have any comments,\nplease submit it, since I most likely do not have permissions to submit to refs/meta/config\n\nThanks!",
       "revId": "240fd759cabacd49f9cf5c290ead52cf2b77aca4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fc67ac5_405203a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1099348
+      },
+      "writtenOn": "2021-04-20T17:31:45Z",
+      "side": 1,
+      "message": "If you need default project level owners across all branches this is not correct \nYou will rather need to follow this example change listed here: go/android-codereviews#file-location following the listed example.\n\nAdding a OWNERS file on refs/meta/config will only add OWNERS support to the refs/meta/config branch, not across all of the project.",
+      "revId": "240fd759cabacd49f9cf5c290ead52cf2b77aca4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
