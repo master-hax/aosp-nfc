@@ -33,6 +33,24 @@
       "message": "If you need default project level owners across all branches this is not correct \nYou will rather need to follow this example change listed here: go/android-codereviews#file-location following the listed example.\n\nAdding a OWNERS file on refs/meta/config will only add OWNERS support to the refs/meta/config branch, not across all of the project.",
       "revId": "240fd759cabacd49f9cf5c290ead52cf2b77aca4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1748a2e0_baed30fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115908
+      },
+      "writtenOn": "2021-04-21T06:34:43Z",
+      "side": 1,
+      "message": "\u003e Adding a OWNERS file on refs/meta/config will only add OWNERS support to\n\u003e the refs/meta/config branch, not across all of the project.\n\nThis is not correct. The OWNERS file in refs/meta/config will also be considered as the parent OWNERS file of the root OWNERS file in all branches of the repository. Thus it allows to define default code owners for all branches. Also see https://screenshot.googleplex.com/6RtGGcp2Ecf49Wj",
+      "parentUuid": "4fc67ac5_405203a0",
+      "revId": "240fd759cabacd49f9cf5c290ead52cf2b77aca4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
