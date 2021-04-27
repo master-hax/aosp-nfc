@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c772909_91f93219",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-04-27T13:50:52Z",
+      "side": 1,
+      "message": "Please keep 80 characters limit.",
+      "range": {
+        "startLine": 968,
+        "startChar": 78,
+        "endLine": 968,
+        "endChar": 90
+      },
+      "revId": "11381fe978e06a2440d94e5b06a7363850df4497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "250bd6e4_5b6b6bd7",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-04-27T13:50:52Z",
+      "side": 1,
+      "message": "Please keep 80 characters limit.",
+      "range": {
+        "startLine": 1686,
+        "startChar": 0,
+        "endLine": 1686,
+        "endChar": 84
+      },
+      "revId": "11381fe978e06a2440d94e5b06a7363850df4497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
