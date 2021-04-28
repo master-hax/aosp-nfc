@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a36ba3e3_2d68eda3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1876690
+      },
+      "writtenOn": "2021-04-28T05:47:37Z",
+      "side": 1,
+      "message": "Thanks. In which Android release will this patch be present?",
+      "revId": "487e6d12384a1c942b46a8be691ac6efc19ae6aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
