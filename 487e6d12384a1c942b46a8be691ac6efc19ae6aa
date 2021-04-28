@@ -16,6 +16,24 @@
       "message": "Thanks. In which Android release will this patch be present?",
       "revId": "487e6d12384a1c942b46a8be691ac6efc19ae6aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "370ed4d3_af67c5ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-04-28T09:47:42Z",
+      "side": 1,
+      "message": "Android 12",
+      "parentUuid": "a36ba3e3_2d68eda3",
+      "revId": "487e6d12384a1c942b46a8be691ac6efc19ae6aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
