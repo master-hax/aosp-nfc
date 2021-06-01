@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "739996ec_40f54501",
+        "filename": "src/nfa/dm/nfa_dm_act.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-06-01T02:17:40Z",
+      "side": 1,
+      "message": "#include \"nfc_int.h\"",
+      "range": {
+        "startLine": 953,
+        "startChar": 10,
+        "endLine": 953,
+        "endChar": 16
+      },
+      "revId": "f23a3bc240891a2a87d9577e8ececfcde7497886",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c691632_7e467342",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-06-01T02:17:40Z",
+      "side": 1,
+      "message": "#include \"nfc_int.h\"",
+      "range": {
+        "startLine": 387,
+        "startChar": 12,
+        "endLine": 387,
+        "endChar": 18
+      },
+      "revId": "f23a3bc240891a2a87d9577e8ececfcde7497886",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
