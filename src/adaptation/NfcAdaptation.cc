@@ -154,6 +154,19 @@ class NfcHalDeathRecipient : public hidl_death_recipient {
     mNfcDeathHal = NULL;
     abort();
   }
+  void finalize() {
+    if (mNfcDeathHal) {
+      mNfcDeathHal->unlinkToDeath(this);
+    } else {
+      DLOG_IF(INFO, nfc_debug_enabled)
+          << StringPrintf("%s: mNfcDeathHal is not set", __func__);
+    }
+
+    ALOGE(
+        "NfcHalDeathRecipient::destructor - "
+        "NfcServie");
+    mNfcDeathHal = NULL;
+  }
 };
 
 /*******************************************************************************
@@ -166,7 +179,6 @@ class NfcHalDeathRecipient : public hidl_death_recipient {
 **
 *******************************************************************************/
 NfcAdaptation::NfcAdaptation() {
-  mNfcHalDeathRecipient = new NfcHalDeathRecipient(mHal);
   memset(&mHalEntryFuncs, 0, sizeof(mHalEntryFuncs));
 }
 
@@ -393,6 +405,7 @@ void NfcAdaptation::Finalize() {
 
   NfcConfig::clear();
 
+  mNfcHalDeathRecipient->finalize();
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: exit", func);
   delete this;
 }
@@ -529,6 +542,7 @@ void NfcAdaptation::InitializeHalDeviceContext() {
                             mHal.get(),
                             (mHal->isRemote() ? "remote" : "local"));
   if (mHal) {
+    mNfcHalDeathRecipient = new NfcHalDeathRecipient(mHal);
     mHal->linkToDeath(mNfcHalDeathRecipient, 0);
   }
 }
