@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4e431b1_9bb8cfe1",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-06-11T02:18:39Z",
+      "side": 1,
+      "message": "Is it supposed to be ||?",
+      "range": {
+        "startLine": 94,
+        "startChar": 41,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "0eb6447aa05968348878b1fb49bb7c5862f5cd9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
