@@ -46,6 +46,30 @@
       },
       "revId": "0eb6447aa05968348878b1fb49bb7c5862f5cd9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ab2137d_feab59a0",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-06-11T08:34:05Z",
+      "side": 1,
+      "message": "By the way, I change the logic here.\nThe log can be enabled by both config file or property now. \nThe property does not overwrite the config setting.\nPlease let me know if there is concern to this part.",
+      "parentUuid": "ca7c50bc_a50dbf30",
+      "range": {
+        "startLine": 94,
+        "startChar": 41,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "0eb6447aa05968348878b1fb49bb7c5862f5cd9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
