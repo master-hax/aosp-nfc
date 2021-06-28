@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "953318b5_90296fa0",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2021-06-28T14:03:29Z",
+      "side": 1,
+      "message": "Instead of above changes, Can you please check if we can remove this line to retain this as singleton and resolve the leak?",
+      "range": {
+        "startLine": 410,
+        "startChar": 1,
+        "endLine": 410,
+        "endChar": 14
+      },
+      "revId": "e3b7f4601f3f8759803f8c92ff2b677ba04920b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
