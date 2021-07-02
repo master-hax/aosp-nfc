@@ -22,6 +22,30 @@
       },
       "revId": "e3b7f4601f3f8759803f8c92ff2b677ba04920b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "916919b5_34b649c5",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-07-02T17:49:08Z",
+      "side": 1,
+      "message": "The external references held in the NfcAdaptation object, might get invalidated after the service shutdown.",
+      "parentUuid": "953318b5_90296fa0",
+      "range": {
+        "startLine": 410,
+        "startChar": 1,
+        "endLine": 410,
+        "endChar": 14
+      },
+      "revId": "e3b7f4601f3f8759803f8c92ff2b677ba04920b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
