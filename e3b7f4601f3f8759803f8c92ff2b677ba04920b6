@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce2201a1_d2a2faff",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-07-13T19:05:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc0c2405_bef159a4",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 45
+      },
+      "revId": "e3b7f4601f3f8759803f8c92ff2b677ba04920b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "953318b5_90296fa0",
