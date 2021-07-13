@@ -46,6 +46,30 @@
       },
       "revId": "e3b7f4601f3f8759803f8c92ff2b677ba04920b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2896213a_36370f59",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2021-07-13T04:39:11Z",
+      "side": 1,
+      "message": "As discussed, current changes are already well tested. Please proceed to push the changes. Improvement proposal to keep NfcAdaptation as singleton can be taken later after testing all use cases with the change.",
+      "parentUuid": "916919b5_34b649c5",
+      "range": {
+        "startLine": 410,
+        "startChar": 1,
+        "endLine": 410,
+        "endChar": 14
+      },
+      "revId": "e3b7f4601f3f8759803f8c92ff2b677ba04920b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
