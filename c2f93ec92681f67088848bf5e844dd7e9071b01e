@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04c1d01e_43f2d83b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1076194
+      },
+      "writtenOn": "2021-07-14T15:36:35Z",
+      "side": 1,
+      "message": "The P0 bug attached to this CL is causing a large number of CLs to be rejected in presubmit. Please prioritize review \u0026 landing of it.",
+      "revId": "c2f93ec92681f67088848bf5e844dd7e9071b01e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
