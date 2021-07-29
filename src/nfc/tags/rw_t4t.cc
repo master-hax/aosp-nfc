@@ -1269,11 +1269,14 @@ static bool rw_t4t_validate_cc_file(void) {
 
   if (((p_t4t->cc_file.ndef_fc.write_access > T4T_FC_WRITE_ACCESS) &&
        (p_t4t->cc_file.ndef_fc.write_access <
-        T4T_FC_WRITE_ACCESS_PROP_START)) ||
-      (p_t4t->cc_file.ndef_fc.write_access == T4T_FC_NO_WRITE_ACCESS)) {
+        T4T_FC_WRITE_ACCESS_PROP_START))) {
     LOG(ERROR) << StringPrintf("%s - Write Access (0x%02X) is invalid",
                                __func__, p_t4t->cc_file.ndef_fc.write_access);
     return false;
+  }
+
+  if (p_t4t->cc_file.ndef_fc.write_access == T4T_FC_NO_WRITE_ACCESS) {
+    p_t4t->ndef_status |= RW_T4T_NDEF_STATUS_NDEF_READ_ONLY;
   }
 
   return true;
