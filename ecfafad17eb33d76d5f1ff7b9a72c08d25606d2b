@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b22790c_4daea2fd",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2021-07-30T14:17:28Z",
+      "side": 1,
+      "message": "Not sure setting the RO flag here is needed as the function returns true and the NDEF detection continues. \n\nRW_T4T_NDEF_STATUS_NDEF_READ_ONLY flag is already set in rw_t4t_sm_detect_ndef() case RW_T4T_SUBSTATE_WAIT_READ_NLEN with:\n\n   if (p_t4t-\u003ecc_file.ndef_fc.write_access !\u003d T4T_FC_WRITE_ACCESS) {\n            p_t4t-\u003endef_status |\u003d RW_T4T_NDEF_STATUS_NDEF_READ_ONLY;\n   }\nI would propose to replace above with your test of T4T_FC_NO_WRITE_ACCESS to avoid having \u0027Limit write access\u0027 being considered as READ-ONLY?",
+      "revId": "ecfafad17eb33d76d5f1ff7b9a72c08d25606d2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
