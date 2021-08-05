@@ -1229,7 +1229,7 @@ static bool rw_t4t_validate_cc_file(void) {
     return false;
   }
 
-  if (p_t4t->cc_file.max_lc < 0x000D) {
+  if (p_t4t->cc_file.max_lc < 0x0001) {
     LOG(ERROR) << StringPrintf("%s - MaxLc (%d) is too small", __func__,
                                p_t4t->cc_file.max_lc);
     return false;
