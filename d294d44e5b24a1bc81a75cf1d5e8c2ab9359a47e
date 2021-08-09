@@ -16,6 +16,23 @@
       "message": "Hi,\n\nI am submitting changes on behalf of Silicon Craft Technology PLC. We are releasing a new NFC type 5 tag called SIC81T1. Our tag has memory larger than 0x100 blocks so we need to modify the codes to support it just like ST Micro and ON Semi have done.\n\nYou can also reach me via thanapol@sic.co.th.\n\nThank you,\nThanapol",
       "revId": "d294d44e5b24a1bc81a75cf1d5e8c2ab9359a47e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ff30a53_73ec4436",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884627
+      },
+      "writtenOn": "2021-08-09T04:09:59Z",
+      "side": 1,
+      "message": "Hi,\n\nI am submitting this change on behalf of Silicon Craft Technology PLC. We are releasing a new NFC type5 tag called SIC81T1. The tag has more than 0x100 memory blocks so we need to modify the codes just like ST Micro and ON Semi have done.\n\nYou can also reach me via thanapol@sic.co.th.\n\nThank you,\nThanapol\n",
+      "revId": "d294d44e5b24a1bc81a75cf1d5e8c2ab9359a47e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
