@@ -290,8 +290,6 @@ void GKI_shutdown(void) {
    * GKI_exception problem due to btu->hci sleep request events  */
   for (task_id = GKI_MAX_TASKS; task_id > 0; task_id--) {
     if (gki_cb.com.OSRdyTbl[task_id - 1] != TASK_DEAD) {
-      gki_cb.com.OSRdyTbl[task_id - 1] = TASK_DEAD;
-
       /* paranoi settings, make sure that we do not execute any mailbox events
        */
       gki_cb.com.OSWaitEvt[task_id - 1] &=
@@ -1073,6 +1071,11 @@ void GKI_exit_task(uint8_t task_id) {
     return;
   }
   GKI_disable();
+  if (gki_cb.com.OSRdyTbl[task_id] == TASK_DEAD) {
+      GKI_enable();
+      LOG(WARNING) << StringPrintf("%s: task_id %d was already stopped.", __func__, task_id);
+      return;
+  }
   gki_cb.com.OSRdyTbl[task_id] = TASK_DEAD;
 
   /* Destroy mutex and condition variable objects */
