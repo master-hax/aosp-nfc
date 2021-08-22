@@ -168,6 +168,16 @@ void rw_i93_get_product_version(uint8_t* p_uid) {
           p_i93->product_version = RW_I93_UNKNOWN_PRODUCT;
         break;
       }
+  } else if ((p_uid[1] == I93_UID_IC_MFG_CODE_SIC) &&
+             (p_i93->info_flags & I93_INFO_FLAG_IC_REF)) {
+    switch (p_i93->ic_reference) {
+      case I93_IC_REF_SIC_81T1:
+        p_i93->product_version = RW_I93_SIC_81T1;
+        break;
+      default:
+        p_i93->product_version = RW_I93_UNKNOWN_PRODUCT;
+        break;
+    }
   } else {
     p_i93->product_version = RW_I93_UNKNOWN_PRODUCT;
   }
@@ -433,6 +443,22 @@ bool rw_i93_process_sys_info(uint8_t* p_data, uint16_t length) {
             default:
                  return false;
           }
+      } else if (p_i93->uid[1] == I93_UID_IC_MFG_CODE_SIC) {
+        /*
+         ** 81T1:      00000001(b), blockSize: 4, numberBlocks: 0x800
+         */
+        if (p_i93->product_version == RW_I93_SIC_81T1) {
+          p_i93->intl_flags |= RW_I93_FLAG_EXT_COMMANDS;
+          return false;
+        } else if (!(p_i93->info_flags & I93_INFO_FLAG_MEM_SIZE)) {
+          if (!(p_i93->intl_flags & RW_I93_FLAG_EXT_COMMANDS)) {
+            if (rw_i93_send_cmd_get_ext_sys_info(nullptr) == NFC_STATUS_OK) {
+              /* SIC supports extended command */
+              p_i93->intl_flags |= RW_I93_FLAG_EXT_COMMANDS;
+              return false;
+            }
+          }
+        }
       }
     }
   }
@@ -657,11 +683,17 @@ bool rw_i93_send_to_lower(NFC_HDR* p_msg) {
     rw_cb.tcb.i93.p_retry_cmd = nullptr;
   }
 
+  uint16_t msg_size = sizeof(NFC_HDR) + p_msg->offset + p_msg->len;
+
   rw_cb.tcb.i93.p_retry_cmd = (NFC_HDR*)GKI_getpoolbuf(NFC_RW_POOL_ID);
 
-  if (rw_cb.tcb.i93.p_retry_cmd) {
-    memcpy(rw_cb.tcb.i93.p_retry_cmd, p_msg,
-           sizeof(NFC_HDR) + p_msg->offset + p_msg->len);
+  if (rw_cb.tcb.i93.p_retry_cmd &&
+      GKI_get_pool_bufsize(NFC_RW_POOL_ID) >= msg_size) {
+    memcpy(rw_cb.tcb.i93.p_retry_cmd, p_msg, msg_size);
+  } else {
+    LOG(ERROR) << StringPrintf("Memory allocation error");
+    android_errorWriteLog(0x534e4554, "157650357");
+    return false;
   }
 
   if (NFC_SendData(NFC_RF_CONN_ID, p_msg) != NFC_STATUS_OK) {

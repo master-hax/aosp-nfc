@@ -89,14 +89,9 @@ void initializeGlobalDebugEnabledFlag() {
   nfc_debug_enabled =
       (NfcConfig::getUnsigned(NAME_NFC_DEBUG_ENABLED, 0) != 0) ? true : false;
 
-  char valueStr[PROPERTY_VALUE_MAX] = {0};
-  int len = property_get("nfc.debug_enabled", valueStr, "");
-  if (len > 0) {
-    // let Android property override .conf variable
-    unsigned debug_enabled = 0;
-    sscanf(valueStr, "%u", &debug_enabled);
-    nfc_debug_enabled = (debug_enabled == 0) ? false : true;
-  }
+  bool debug_enabled = property_get_bool("persist.nfc.debug_enabled", false);
+
+  nfc_debug_enabled = (nfc_debug_enabled || debug_enabled);
 
   DLOG_IF(INFO, nfc_debug_enabled)
       << StringPrintf("%s: level=%u", __func__, nfc_debug_enabled);
@@ -147,12 +142,23 @@ class NfcHalDeathRecipient : public hidl_death_recipient {
       const wp<::android::hidl::base::V1_0::IBase>& /* who */) {
     ALOGE(
         "NfcHalDeathRecipient::serviceDied - Nfc-Hal service died. Killing "
-        "NfcServie");
+        "NfcService");
     if (mNfcDeathHal) {
       mNfcDeathHal->unlinkToDeath(this);
     }
     mNfcDeathHal = NULL;
     abort();
+  }
+  void finalize() {
+    if (mNfcDeathHal) {
+      mNfcDeathHal->unlinkToDeath(this);
+    } else {
+      DLOG_IF(INFO, nfc_debug_enabled)
+          << StringPrintf("%s: mNfcDeathHal is not set", __func__);
+    }
+
+    ALOGI("NfcHalDeathRecipient::destructor - NfcService");
+    mNfcDeathHal = NULL;
   }
 };
 
@@ -166,7 +172,6 @@ class NfcHalDeathRecipient : public hidl_death_recipient {
 **
 *******************************************************************************/
 NfcAdaptation::NfcAdaptation() {
-  mNfcHalDeathRecipient = new NfcHalDeathRecipient(mHal);
   memset(&mHalEntryFuncs, 0, sizeof(mHalEntryFuncs));
 }
 
@@ -393,6 +398,7 @@ void NfcAdaptation::Finalize() {
 
   NfcConfig::clear();
 
+  mNfcHalDeathRecipient->finalize();
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: exit", func);
   delete this;
 }
@@ -529,6 +535,7 @@ void NfcAdaptation::InitializeHalDeviceContext() {
                             mHal.get(),
                             (mHal->isRemote() ? "remote" : "local"));
   if (mHal) {
+    mNfcHalDeathRecipient = new NfcHalDeathRecipient(mHal);
     mHal->linkToDeath(mNfcHalDeathRecipient, 0);
   }
 }
