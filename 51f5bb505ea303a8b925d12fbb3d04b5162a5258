@@ -16,6 +16,24 @@
       "message": "Isn\u0027t thread_evt_mutex already destroyed in GKI_exit_task()?",
       "revId": "51f5bb505ea303a8b925d12fbb3d04b5162a5258",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65e455f0_2974d526",
+        "filename": "src/gki/ulinux/gki_ulinux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-08-25T14:52:11Z",
+      "side": 1,
+      "message": "In current flow, this part runs before GKI_exit_task().\nChange the checking condition here, so gki_wait can be released earlier by line#298 nad line#303.",
+      "parentUuid": "d2af784e_841b7916",
+      "revId": "51f5bb505ea303a8b925d12fbb3d04b5162a5258",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
