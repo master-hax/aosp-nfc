@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4a92ef4_a072d3a9",
+        "filename": "src/nfc/tags/rw_t3t.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-09-15T17:57:33Z",
+      "side": 1,
+      "message": "Since the compiler is run with -Werror,-Wcomment flags the irregularity on line 340 breaks the build, could you please add */ to the end of the line?",
+      "range": {
+        "startLine": 340,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 46
+      },
+      "revId": "cd6099b2a6f09d9e3b90faa0158105739189390a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
