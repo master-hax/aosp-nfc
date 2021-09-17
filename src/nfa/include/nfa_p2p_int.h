@@ -24,7 +24,6 @@
 #ifndef NFA_P2P_INT_H
 #define NFA_P2P_INT_H
 
-#if (NFA_P2P_INCLUDED == TRUE)
 #include "nfa_dm_int.h"
 #include "nfa_p2p_api.h"
 
@@ -304,12 +303,4 @@ bool nfa_p2p_get_remote_sap(tNFA_P2P_MSG* p_msg);
 bool nfa_p2p_set_llcp_cfg(tNFA_P2P_MSG* p_msg);
 bool nfa_p2p_restart_rf_discovery(tNFA_P2P_MSG* p_msg);
 
-#else
-
-#define nfa_p2p_init ()
-#define nfa_p2p_activate_llcp (a){};
-#define nfa_p2p_deactivate_llcp ()
-#define nfa_p2p_set_config ()
-
-#endif /* (NFA_P2P_INCLUDED == TRUE) */
 #endif /* NFA_P2P_INT_H */
