@@ -305,11 +305,6 @@
 #define RW_MFC_TOUT_RESP 300
 #endif
 
-/* TRUE, to include Card Emulation related test commands */
-#ifndef CE_TEST_INCLUDED
-#define CE_TEST_INCLUDED FALSE
-#endif
-
 /* Quick Timer */
 #ifndef QUICK_TIMER_TICKS_PER_SEC
 #define QUICK_TIMER_TICKS_PER_SEC 100 /* 10ms timer */

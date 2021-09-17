@@ -40,12 +40,6 @@ using android::base::StringPrintf;
 
 extern bool nfc_debug_enabled;
 
-#if (CE_TEST_INCLUDED == TRUE) /* test only */
-bool mapping_aid_test_enabled = false;
-uint8_t ce_test_tag_app_id[T4T_V20_NDEF_TAG_AID_LEN] = {0xD2, 0x76, 0x00, 0x00,
-                                                        0x85, 0x01, 0x01};
-#endif
-
 /*******************************************************************************
 **
 ** Function         ce_t4t_send_to_lower
@@ -398,17 +392,6 @@ static void ce_t4t_process_select_app_cmd(uint8_t* p_cmd, NFC_HDR* p_c_apdu) {
     GKI_freebuf(p_c_apdu);
     return;
   }
-#if (CE_TEST_INCLUDED == TRUE)
-  if (mapping_aid_test_enabled) {
-    if ((data_len == T4T_V20_NDEF_TAG_AID_LEN) &&
-        (!memcmp(p_cmd, ce_test_tag_app_id, data_len)) &&
-        (ce_cb.mem.t4t.p_ndef_msg)) {
-      GKI_freebuf(p_c_apdu);
-      ce_t4t_send_status((uint16_t)T4T_RSP_CMD_CMPLTED);
-      return;
-    }
-  }
-#endif
 
   /*
   ** Compare AIDs registered by applications
@@ -838,10 +821,6 @@ tNFC_STATUS CE_T4tSetLocalNDEFMsg(bool read_only, uint16_t ndef_msg_max,
         "read-only");
     return NFC_STATUS_FAILED;
   }
-
-#if (CE_TEST_INCLUDED == TRUE)
-  mapping_aid_test_enabled = false;
-#endif
 
   /* Initialise CC file */
   p = p_t4t->cc_file;

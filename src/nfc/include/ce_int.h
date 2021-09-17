@@ -28,13 +28,8 @@
 
 #include "ce_api.h"
 
-#if (CE_TEST_INCLUDED == FALSE)
 #define CE_MIN_SUP_PROTO NCI_PROTOCOL_FELICA
 #define CE_MAX_SUP_PROTO NCI_PROTOCOL_ISO4
-#else
-#define CE_MIN_SUP_PROTO NCI_PROTOCOL_TYPE1
-#define CE_MAX_SUP_PROTO NCI_PROTOCOL_MIFARE
-#endif
 
 /* CE Type 3 Tag structures */
 
