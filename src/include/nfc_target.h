@@ -30,10 +30,6 @@
 
 #include "bt_types.h" /* This must be defined AFTER buildcfg.h */
 
-#ifndef USERIAL_DEBUG
-#define USERIAL_DEBUG FALSE
-#endif
-
 /******************************************************************************
 **
 ** GKI Mail Box and Timer
