@@ -151,11 +151,6 @@
 #endif
 #define NCI_CORE_RESET_RSP_LEN(X) (((X) == NCI_VERSION_2_0) ? (0x01) : (0x03))
 
-/* TRUE I2C patch is needed */
-#ifndef NFC_I2C_PATCH_INCLUDED
-#define NFC_I2C_PATCH_INCLUDED TRUE /* NFC-Android uses this!!! */
-#endif
-
 /******************************************************************************
 **
 ** NFC
