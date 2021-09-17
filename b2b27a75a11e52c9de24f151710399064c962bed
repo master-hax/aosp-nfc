@@ -141,6 +141,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16865438_52e6efc0",
+        "filename": "src/rust/rootcanal/main.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-09-17T22:26:39Z",
+      "side": 1,
+      "message": "or if you don\u0027t want to panic directly, use thiserror to simplify\n\nuse thiserror::Error;\n\ntype Result\u003cT\u003e \u003d std::result::Result\u003cT, Error\u003e;\n\n#[derive(Debug, Error)]\npub enum Error {\n  #[error(\"Invalid command packet\")]\n  InvalidPacketError,\n  ...\n}",
+      "parentUuid": "7451a35a_ab7d39db",
+      "range": {
+        "startLine": 102,
+        "startChar": 16,
+        "endLine": 102,
+        "endChar": 89
+      },
+      "revId": "b2b27a75a11e52c9de24f151710399064c962bed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "76783edd_6455bba4",
         "filename": "src/rust/rootcanal/main.rs",
         "patchSetId": 1
