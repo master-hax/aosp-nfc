@@ -22,13 +22,25 @@
  *  commands (for DH).
  *
  ******************************************************************************/
+#include "nci_hmsgs.h"
+
 #include <string.h>
-#include "nfc_target.h"
+
+#include <algorithm>
+#include <vector>
 
 #include "nci_defs.h"
-#include "nci_hmsgs.h"
+#include "nci_packets.h"
 #include "nfc_api.h"
 #include "nfc_int.h"
+#include "nfc_target.h"
+#include "os/log.h"
+#include "packet/packet_builder.h"
+
+using bluetooth::BitInserter;
+using bluetooth::PacketBoundaryFlag;
+using bluetooth::ResetCommandBuilder;
+using bluetooth::ResetType;
 
 /*******************************************************************************
 **
@@ -41,21 +53,22 @@
 *******************************************************************************/
 uint8_t nci_snd_core_reset(uint8_t reset_type) {
   NFC_HDR* p;
-  uint8_t* pp;
+
+  auto packet = ResetCommandBuilder::Create(
+      PacketBoundaryFlag::COMPLETE_OR_FINAL, (ResetType)reset_type);
+
+  std::vector<uint8_t> bytes;
+  BitInserter bi(bytes);
+  packet->Serialize(bi);
 
   p = NCI_GET_CMD_BUF(NCI_CORE_PARAM_SIZE_RESET);
   if (p == nullptr) return (NCI_STATUS_FAILED);
 
   p->event = BT_EVT_TO_NFC_NCI;
-  p->len = NCI_MSG_HDR_SIZE + NCI_CORE_PARAM_SIZE_RESET;
+  p->len = bytes.size();
   p->offset = NCI_MSG_OFFSET_SIZE;
   p->layer_specific = 0;
-  pp = (uint8_t*)(p + 1) + p->offset;
-
-  NCI_MSG_BLD_HDR0(pp, NCI_MT_CMD, NCI_GID_CORE);
-  NCI_MSG_BLD_HDR1(pp, NCI_MSG_CORE_RESET);
-  UINT8_TO_STREAM(pp, NCI_CORE_PARAM_SIZE_RESET);
-  UINT8_TO_STREAM(pp, reset_type);
+  std::copy(bytes.begin(), bytes.end(), (uint8_t*)(p + 1) + p->offset);
 
   nfc_ncif_send_cmd(p);
   return (NCI_STATUS_OK);

@@ -41,6 +41,9 @@ cc_library_shared {
         "-Werror",
         "-Wimplicit-fallthrough",
     ],
+    include_dirs: [
+        "system/bt/gd",
+    ],
     local_include_dirs: [
         "include",
         "gki/ulinux",
@@ -64,6 +67,10 @@ cc_library_shared {
         "adaptation/*.cc",
         "gki/common/*.cc",
         "gki/ulinux/*.cc",
+        ":BluetoothPacketSources",
+    ],
+    generated_headers: [
+      "NfcGeneratedPackets_h",
     ],
     required: [
         // Provide a default libnfc-nci.conf in /system/etc for devices that
