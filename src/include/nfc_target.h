@@ -157,11 +157,6 @@
 **
 ******************************************************************************/
 
-/* Define to TRUE to include Broadcom Vendor Specific implementation */
-#ifndef NFC_BRCM_VS_INCLUDED
-#define NFC_BRCM_VS_INCLUDED TRUE
-#endif
-
 /* Timeout for receiving response to NCI command */
 #ifndef NFC_CMD_CMPL_TIMEOUT
 #define NFC_CMD_CMPL_TIMEOUT 2
