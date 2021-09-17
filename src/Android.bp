@@ -185,3 +185,17 @@ cc_fuzz {
         "fuzzers/llcp/*.cc",
     ],
 }
+
+genrule {
+    name: "NfcGeneratedPackets_h",
+    tools: [
+        "bluetooth_packetgen",
+    ],
+    cmd: "$(location bluetooth_packetgen) --include=system/nfc/src --out=$(genDir) $(in)",
+    srcs: [
+        "nci_packets.pdl",
+    ],
+    out: [
+        "nci_packets.h",
+    ],
+}
