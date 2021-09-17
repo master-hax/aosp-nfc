@@ -138,12 +138,6 @@
 #define NCI_MSG_OFFSET_SIZE 1
 #endif
 
-/* Restore NFCC baud rate to default on shutdown if NFC_UpdateBaudRate was
- * called */
-#ifndef NFC_RESTORE_BAUD_ON_SHUTDOWN
-#define NFC_RESTORE_BAUD_ON_SHUTDOWN TRUE
-#endif
-
 /******************************************************************************
 **
 ** NCI
