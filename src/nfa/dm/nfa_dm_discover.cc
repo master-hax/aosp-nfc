@@ -31,10 +31,8 @@
 #include "nfa_dm_int.h"
 #include "nfa_p2p_int.h"
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
 #include "nfa_ee_api.h"
 #include "nfa_ee_int.h"
-#endif
 #include "nfa_rw_int.h"
 
 #include "nfc_int.h"

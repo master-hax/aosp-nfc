@@ -438,11 +438,9 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
         case NCI_GID_RF_MANAGE: /* 0001b NCI Discovery group */
           nci_proc_rf_management_rsp(p_msg);
           break;
-#if (NFC_NFCEE_INCLUDED == TRUE)
         case NCI_GID_EE_MANAGE: /* 0x02 0010b NFCEE Discovery group */
           nci_proc_ee_management_rsp(p_msg);
           break;
-#endif
         case NCI_GID_PROP: /* 1111b Proprietary */
           nci_proc_prop_rsp(p_msg);
           break;
@@ -464,11 +462,9 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
         case NCI_GID_RF_MANAGE: /* 0001b NCI Discovery group */
           nci_proc_rf_management_ntf(p_msg);
           break;
-#if (NFC_NFCEE_INCLUDED == TRUE)
         case NCI_GID_EE_MANAGE: /* 0x02 0010b NFCEE Discovery group */
           nci_proc_ee_management_ntf(p_msg);
           break;
-#endif
         case NCI_GID_PROP: /* 1111b Proprietary */
           nci_proc_prop_ntf(p_msg);
           break;
@@ -1371,7 +1367,6 @@ void nfc_ncif_proc_deactivate(uint8_t status, uint8_t deact_type, bool is_ntf) {
 ** Returns          void
 **
 *******************************************************************************/
-#if (NFC_NFCEE_INCLUDED == TRUE)
 void nfc_ncif_proc_ee_action(uint8_t* p, uint16_t plen) {
   tNFC_EE_ACTION_REVT evt_data;
   tNFC_RESPONSE_CBACK* p_cback = nfc_cb.p_resp_cback;
@@ -1546,7 +1541,6 @@ void nfc_ncif_proc_get_routing(uint8_t* p, uint8_t len) {
     }
   }
 }
-#endif
 
 /*******************************************************************************
 **

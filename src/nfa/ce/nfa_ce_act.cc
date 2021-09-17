@@ -32,9 +32,7 @@
 #include "nfa_ce_int.h"
 #include "nfa_mem_co.h"
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
 #include "nfa_ee_int.h"
-#endif
 
 using android::base::StringPrintf;
 
@@ -494,7 +492,6 @@ tNFA_STATUS nfa_ce_start_listening(void) {
         else
           p_cb->listen_info[listen_info_idx].rf_disc_handle = disc_handle;
       }
-#if (NFC_NFCEE_INCLUDED == TRUE)
       else if (p_cb->listen_info[listen_info_idx].flags &
                NFA_CE_LISTEN_INFO_UICC) {
         listen_mask = 0;
@@ -538,7 +535,6 @@ tNFA_STATUS nfa_ce_start_listening(void) {
               p_cb->listen_info[listen_info_idx].ee_handle);
         }
       }
-#endif
     }
   }
 
@@ -606,14 +602,12 @@ void nfa_ce_remove_listen_info_entry(uint8_t listen_info_idx, bool notify_app) {
       (*p_cb->listen_info[listen_info_idx].p_conn_cback)(
           NFA_CE_LOCAL_TAG_CONFIGURED_EVT, &conn_evt);
     }
-#if (NFC_NFCEE_INCLUDED == TRUE)
     else if (p_cb->listen_info[listen_info_idx].flags &
              NFA_CE_LISTEN_INFO_UICC) {
       conn_evt.status = NFA_STATUS_OK;
       (*p_cb->listen_info[listen_info_idx].p_conn_cback)(
           NFA_CE_UICC_LISTEN_CONFIGURED_EVT, &conn_evt);
     }
-#endif
     else {
       conn_evt.ce_deregistered.handle = NFA_HANDLE_GROUP_CE | listen_info_idx;
       (*p_cb->listen_info[listen_info_idx].p_conn_cback)(
@@ -899,7 +893,6 @@ bool nfa_ce_activate_ntf(tNFA_CE_MSG* p_ce_msg) {
           t4t_activate_pending = true;
         }
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
         /* Check if entry is for ISO_DEP UICC */
         if (p_cb->listen_info[i].flags & NFA_CE_LISTEN_INFO_UICC) {
           if (((p_cb->activation_params.rf_tech_param.mode ==
@@ -913,7 +906,6 @@ bool nfa_ce_activate_ntf(tNFA_CE_MSG* p_ce_msg) {
             listen_info_idx = i;
           }
         }
-#endif
       }
     }
 
@@ -1360,7 +1352,6 @@ bool nfa_ce_api_reg_listen(tNFA_CE_MSG* p_ce_msg) {
                p_ce_msg->reg_listen.t3tPmm, NCI_T3T_PMM_LEN);
         break;
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
       case NFA_CE_REG_TYPE_UICC:
         p_cb->listen_info[listen_info_idx].flags |= NFA_CE_LISTEN_INFO_UICC;
         p_cb->listen_info[listen_info_idx].p_conn_cback =
@@ -1372,7 +1363,6 @@ bool nfa_ce_api_reg_listen(tNFA_CE_MSG* p_ce_msg) {
         p_cb->listen_info[listen_info_idx].tech_mask =
             p_ce_msg->reg_listen.tech_mask;
         break;
-#endif
     }
   }
 
@@ -1414,7 +1404,6 @@ bool nfa_ce_api_dereg_listen(tNFA_CE_MSG* p_ce_msg) {
   uint8_t listen_info_idx;
   tNFA_CONN_EVT_DATA conn_evt;
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
   /* Check if deregistering UICC , or virtual secure element listen */
   if (p_ce_msg->dereg_listen.listen_info == NFA_CE_LISTEN_INFO_UICC) {
     /* Deregistering UICC listen. Look for listen_info for this UICC ee handle
@@ -1457,7 +1446,6 @@ bool nfa_ce_api_dereg_listen(tNFA_CE_MSG* p_ce_msg) {
                                      &conn_evt);
     }
   } else
-#endif
   {
     /* Deregistering virtual secure element listen */
     listen_info_idx = p_ce_msg->dereg_listen.handle & NFA_HANDLE_MASK;

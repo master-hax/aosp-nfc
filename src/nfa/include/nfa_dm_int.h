@@ -598,13 +598,8 @@ void nfa_snep_init(bool is_dta_mode);
 #define nfa_snep_init(is_dta_mode)
 #endif
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
 void nfa_ee_init(void);
 void nfa_hci_init(void);
-#else
-#define nfa_ee_init()
-#define nfa_hci_init()
-#endif
 
 /* Action function prototypes */
 bool nfa_dm_enable(tNFA_DM_MSG* p_data);
@@ -673,11 +668,6 @@ tNFC_STATUS nfa_dm_disc_sleep_wakeup(void);
 tNFC_STATUS nfa_dm_disc_start_kovio_presence_check(void);
 bool nfa_dm_is_raw_frame_session(void);
 bool nfa_dm_is_p2p_paused(void);
-
-#if (NFC_NFCEE_INCLUDED == FALSE)
-#define nfa_ee_get_tech_route(ps, ha) \
-  memset(ha, NFC_DH_ID, NFA_DM_MAX_TECH_ROUTE);
-#endif
 
 std::string nfa_dm_nfc_revt_2_str(tNFC_RESPONSE_EVT event);
 

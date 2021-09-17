@@ -201,8 +201,6 @@ void nci_proc_rf_management_rsp(NFC_HDR* p_msg) {
       nfc_ncif_proc_deactivate(*pp, *p_old, false);
       break;
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
-
     case NCI_MSG_RF_SET_ROUTING:
       nfc_ncif_event_status(NFC_SET_ROUTING_REVT, *pp);
       break;
@@ -211,7 +209,6 @@ void nci_proc_rf_management_rsp(NFC_HDR* p_msg) {
       if (*pp != NFC_STATUS_OK)
         nfc_ncif_event_status(NFC_GET_ROUTING_REVT, *pp);
       break;
-#endif
 
     case NCI_MSG_RF_PARAMETER_UPDATE:
       nfc_ncif_event_status(NFC_RF_COMM_PARAMS_UPDATE_REVT, *pp);
@@ -280,8 +277,6 @@ void nci_proc_rf_management_ntf(NFC_HDR* p_msg) {
       nfc_ncif_proc_t3t_polling_ntf(pp, len);
       break;
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
-
     case NCI_MSG_RF_GET_ROUTING:
       nfc_ncif_proc_get_routing(pp, len);
       break;
@@ -293,7 +288,7 @@ void nci_proc_rf_management_ntf(NFC_HDR* p_msg) {
     case NCI_MSG_RF_EE_DISCOVERY_REQ:
       nfc_ncif_proc_ee_discover_req(pp, len);
       break;
-#endif
+
     case NCI_MSG_RF_ISO_DEP_NAK_PRESENCE:
       nfc_ncif_proc_isodep_nak_presence_check_status(*pp, true);
       break;
@@ -302,8 +297,6 @@ void nci_proc_rf_management_ntf(NFC_HDR* p_msg) {
       break;
   }
 }
-
-#if (NFC_NFCEE_INCLUDED == TRUE)
 
 /*******************************************************************************
 **
@@ -498,8 +491,6 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
 
   if (p_cback) (*p_cback)(event, &nfc_response);
 }
-
-#endif
 
 /*******************************************************************************
 **

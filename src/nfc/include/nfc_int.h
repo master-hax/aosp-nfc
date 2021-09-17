@@ -266,11 +266,9 @@ extern void nfc_ncif_proc_credits(uint8_t* p, uint16_t plen);
 extern void nfc_ncif_proc_activate(uint8_t* p, uint8_t len);
 extern void nfc_ncif_proc_deactivate(uint8_t status, uint8_t deact_type,
                                      bool is_ntf);
-#if (NFC_NFCEE_INCLUDED == TRUE)
 extern void nfc_ncif_proc_ee_action(uint8_t* p, uint16_t plen);
 extern void nfc_ncif_proc_ee_discover_req(uint8_t* p, uint16_t plen);
 extern void nfc_ncif_proc_get_routing(uint8_t* p, uint8_t len);
-#endif
 extern void nfc_ncif_proc_conn_create_rsp(uint8_t* p, uint16_t plen,
                                           uint8_t dest_type);
 extern void nfc_ncif_report_conn_close_evt(uint8_t conn_id, tNFC_STATUS status);

@@ -59,13 +59,11 @@ uint8_t nci_snd_parameter_update_cmd(uint8_t* p_param_tlvs, uint8_t tlv_size);
 uint8_t nci_snd_iso_dep_nak_presence_check_cmd();
 uint8_t nci_snd_core_set_power_sub_state(uint8_t screen_state);
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
 uint8_t nci_snd_nfcee_discover(uint8_t discover_action);
 uint8_t nci_snd_nfcee_mode_set(uint8_t nfcee_id, uint8_t nfcee_mode);
 uint8_t nci_snd_set_routing_cmd(bool more, uint8_t num_tlv, uint8_t tlv_size,
                                 uint8_t* p_param_tlvs);
 uint8_t nci_snd_get_routing_cmd(void);
 uint8_t nci_snd_nfcee_power_link_control(uint8_t nfcee_id, uint8_t pl_config);
-#endif
 
 #endif /* NFC_NCI_MSGS_H */

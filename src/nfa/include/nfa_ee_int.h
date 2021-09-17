@@ -534,9 +534,7 @@ void nfa_ee_sys_disable(void);
 /* event handler function type */
 bool nfa_ee_evt_hdlr(NFC_HDR* p_msg);
 void nfa_ee_proc_nfcc_power_mode(uint8_t nfcc_power_mode);
-#if (NFC_NFCEE_INCLUDED == TRUE)
 void nfa_ee_get_tech_route(uint8_t power_state, uint8_t* p_handles);
-#endif
 void nfa_ee_proc_evt(tNFC_RESPONSE_EVT event, void* p_data);
 tNFA_EE_ECB* nfa_ee_find_ecb(uint8_t nfcee_id);
 tNFA_EE_ECB* nfa_ee_find_ecb_by_conn_id(uint8_t conn_id);

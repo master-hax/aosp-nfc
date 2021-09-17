@@ -34,9 +34,7 @@
 #include "nfa_rw_api.h"
 #include "nfa_rw_int.h"
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
 #include "nfa_ee_int.h"
-#endif
 
 #include "nfc_int.h"
 
@@ -336,7 +334,6 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
       (*nfa_dm_cb.p_dm_cback)(NFA_DM_GET_CONFIG_EVT, &dm_cback_data);
       break;
 
-#if (NFC_NFCEE_INCLUDED == TRUE)
     case NFC_NFCEE_DISCOVER_REVT:   /* NFCEE Discover response */
     case NFC_NFCEE_INFO_REVT:       /* NFCEE Discover Notification */
     case NFC_EE_ACTION_REVT:        /* EE Action notification */
@@ -357,7 +354,6 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
 
     case NFC_GET_ROUTING_REVT: /* Retrieve Routing response */
       break;
-#endif
 
     case NFC_SET_POWER_SUB_STATE_REVT:
       dm_cback_data.power_sub_state.status = p_data->status;

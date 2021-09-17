@@ -199,7 +199,6 @@ tNFA_STATUS NFA_CeConfigureLocalTag(tNFA_PROTOCOL_MASK protocol_mask,
 *******************************************************************************/
 tNFA_STATUS NFA_CeConfigureUiccListenTech(tNFA_HANDLE ee_handle,
                                           tNFA_TECHNOLOGY_MASK tech_mask) {
-#if (NFC_NFCEE_INCLUDED == TRUE)
   tNFA_CE_MSG* p_msg;
 
   DLOG_IF(INFO, nfc_debug_enabled)
@@ -224,11 +223,6 @@ tNFA_STATUS NFA_CeConfigureUiccListenTech(tNFA_HANDLE ee_handle,
 
     return (NFA_STATUS_OK);
   }
-#else
-  LOG(ERROR) << StringPrintf(
-      "NFCEE related functions are not "
-      "enabled!");
-#endif
   return (NFA_STATUS_FAILED);
 }
 

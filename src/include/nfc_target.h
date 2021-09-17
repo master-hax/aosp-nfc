@@ -184,11 +184,6 @@
 #define NCI_MAX_CMD_WINDOW 1
 #endif
 
-/* Define to TRUE to include the NFCEE related functionalities */
-#ifndef NFC_NFCEE_INCLUDED
-#define NFC_NFCEE_INCLUDED TRUE
-#endif
-
 /* the maximum number of NFCEE interface supported */
 #ifndef NFC_MAX_EE_INTERFACE
 #define NFC_MAX_EE_INTERFACE 3
@@ -635,18 +630,12 @@
 
 #ifdef NFC_HAL_SHARED_GKI
 
-/* NFC HAL Included if NFC_NFCEE_INCLUDED */
-#if (NFC_NFCEE_INCLUDED == TRUE)
-
 #ifndef NFC_HAL_HCI_INCLUDED
 #define NFC_HAL_HCI_INCLUDED TRUE
 #endif
-#else /* NFC_NFCEE_INCLUDED == TRUE */
 #ifndef NFC_HAL_HCI_INCLUDED
 #define NFC_HAL_HCI_INCLUDED FALSE
 #endif
-
-#endif /* NFC_NFCEE_INCLUDED == FALSE */
 
 #endif /* NFC_HAL_SHARED_GKI */
 
