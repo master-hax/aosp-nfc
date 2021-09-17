@@ -34,11 +34,7 @@
 #include "nci_hmsgs.h"
 #include "nfc_int.h"
 #include "rw_int.h"
-#if (NFC_RW_ONLY == FALSE)
 #include "llcp_int.h"
-#else
-#define llcp_cleanup()
-#endif
 
 #include "nfa_dm_int.h"
 
@@ -241,14 +237,12 @@ void nfc_process_quick_timer_evt(void) {
     GKI_remove_from_timer_list(&nfc_cb.quick_timer_queue, p_tle);
 
     switch (p_tle->event) {
-#if (NFC_RW_ONLY == FALSE)
       case NFC_TTYPE_LLCP_LINK_MANAGER:
       case NFC_TTYPE_LLCP_LINK_INACT:
       case NFC_TTYPE_LLCP_DATA_LINK:
       case NFC_TTYPE_LLCP_DELAY_FIRST_PDU:
         llcp_process_timeout(p_tle);
         break;
-#endif
       case NFC_TTYPE_RW_T1T_RESPONSE:
         rw_t1t_process_timeout(p_tle);
         break;
@@ -274,11 +268,9 @@ void nfc_process_quick_timer_evt(void) {
         rw_mfc_process_timeout(p_tle);
         break;
 
-#if (NFC_RW_ONLY == FALSE)
       case NFC_TTYPE_CE_T4T_UPDATE:
         ce_t4t_process_timeout(p_tle);
         break;
-#endif
       default:
         DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
             "nfc_process_quick_timer_evt: unhandled timer event (0x%04x)",

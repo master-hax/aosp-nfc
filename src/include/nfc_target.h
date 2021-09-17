@@ -162,11 +162,6 @@
 #define NFC_BRCM_VS_INCLUDED TRUE
 #endif
 
-/* Define to TRUE if compling for NFC Reader/Writer Only mode */
-#ifndef NFC_RW_ONLY
-#define NFC_RW_ONLY FALSE
-#endif
-
 /* Timeout for receiving response to NCI command */
 #ifndef NFC_CMD_CMPL_TIMEOUT
 #define NFC_CMD_CMPL_TIMEOUT 2

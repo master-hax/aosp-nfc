@@ -44,10 +44,8 @@
 
 using android::base::StringPrintf;
 
-#if (NFC_RW_ONLY == FALSE)
 static const uint8_t nfc_mpl_code_to_size[] = {64, 128, 192, 254};
 
-#endif /* NFC_RW_ONLY */
 #if (APPL_DTA_MODE == TRUE)
 // Global Structure varibale for FW Version
 static tNFC_FW_VERSION nfc_fw_version;
@@ -441,11 +439,9 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
           nci_proc_rf_management_rsp(p_msg);
           break;
 #if (NFC_NFCEE_INCLUDED == TRUE)
-#if (NFC_RW_ONLY == FALSE)
         case NCI_GID_EE_MANAGE: /* 0x02 0010b NFCEE Discovery group */
           nci_proc_ee_management_rsp(p_msg);
           break;
-#endif
 #endif
         case NCI_GID_PROP: /* 1111b Proprietary */
           nci_proc_prop_rsp(p_msg);
@@ -469,11 +465,9 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
           nci_proc_rf_management_ntf(p_msg);
           break;
 #if (NFC_NFCEE_INCLUDED == TRUE)
-#if (NFC_RW_ONLY == FALSE)
         case NCI_GID_EE_MANAGE: /* 0x02 0010b NFCEE Discovery group */
           nci_proc_ee_management_ntf(p_msg);
           break;
-#endif
 #endif
         case NCI_GID_PROP: /* 1111b Proprietary */
           nci_proc_prop_ntf(p_msg);
@@ -602,7 +596,6 @@ void nfc_ncif_error_status(uint8_t conn_id, uint8_t status) {
 ** Returns          void
 **
 *******************************************************************************/
-#if (NFC_RW_ONLY == FALSE)
 void nfc_ncif_proc_rf_field_ntf(uint8_t rf_status) {
   tNFC_RESPONSE evt_data;
   if (nfc_cb.p_resp_cback) {
@@ -611,7 +604,6 @@ void nfc_ncif_proc_rf_field_ntf(uint8_t rf_status) {
     (*nfc_cb.p_resp_cback)(NFC_RF_FIELD_REVT, &evt_data);
   }
 }
-#endif
 
 /*******************************************************************************
 **
@@ -979,11 +971,9 @@ void nfc_ncif_proc_activate(uint8_t* p, uint8_t len) {
   tNFC_INTF_PA_ISO_DEP* p_pa_iso;
   tNFC_INTF_LB_ISO_DEP* p_lb_iso;
   tNFC_INTF_PB_ISO_DEP* p_pb_iso;
-#if (NFC_RW_ONLY == FALSE)
   tNFC_INTF_PA_NFC_DEP* p_pa_nfc;
   int mpl_idx = 0;
   uint8_t gb_idx = 0, mpl;
-#endif
   uint8_t t0;
   tNCI_DISCOVERY_TYPE mode;
   tNFC_CONN_CB* p_cb = &nfc_cb.conn_cb[NFC_RF_CONN_ID];
@@ -1208,7 +1198,6 @@ void nfc_ncif_proc_activate(uint8_t* p, uint8_t len) {
     }
 
   }
-#if (NFC_RW_ONLY == FALSE)
   else if (evt_data.activate.intf_param.type == NCI_INTERFACE_NFC_DEP) {
     /* Make max payload of NCI aligned to max payload of NFC-DEP for better
      * performance */
@@ -1299,7 +1288,6 @@ void nfc_ncif_proc_activate(uint8_t* p, uint8_t len) {
       }
     }
   }
-#endif
   else if ((evt_data.activate.intf_param.type == NCI_INTERFACE_FRAME) &&
            (evt_data.activate.protocol == NCI_PROTOCOL_T1T)) {
     p_pa = &evt_data.activate.rf_tech_param.param.pa;
@@ -1383,7 +1371,7 @@ void nfc_ncif_proc_deactivate(uint8_t status, uint8_t deact_type, bool is_ntf) {
 ** Returns          void
 **
 *******************************************************************************/
-#if (NFC_NFCEE_INCLUDED == TRUE && NFC_RW_ONLY == FALSE)
+#if (NFC_NFCEE_INCLUDED == TRUE)
 void nfc_ncif_proc_ee_action(uint8_t* p, uint16_t plen) {
   tNFC_EE_ACTION_REVT evt_data;
   tNFC_RESPONSE_CBACK* p_cback = nfc_cb.p_resp_cback;

@@ -38,22 +38,12 @@
 #include "nfc_int.h"
 #include "rw_int.h"
 
-#if (NFC_RW_ONLY == FALSE)
-
 #include "llcp_int.h"
 
 /* NFC mandates support for at least one logical connection;
  * Update max_conn to the NFCC capability on InitRsp */
 #define NFC_SET_MAX_CONN_DEFAULT() \
   { nfc_cb.max_conn = 1; }
-
-#else /* NFC_RW_ONLY */
-#define ce_init()
-#define llcp_init()
-
-#define NFC_SET_MAX_CONN_DEFAULT()
-
-#endif /* NFC_RW_ONLY */
 
 using android::base::StringPrintf;
 using android::hardware::nfc::V1_1::NfcEvent;
@@ -66,24 +56,16 @@ extern void delete_stack_non_volatile_store(bool forceDelete);
 ****************************************************************************/
 tNFC_CB nfc_cb;
 
-#if (NFC_RW_ONLY == FALSE)
 #define NFC_NUM_INTERFACE_MAP 2
-#else
-#define NFC_NUM_INTERFACE_MAP 1
-#endif
 
 static const tNCI_DISCOVER_MAPS nfc_interface_mapping[NFC_NUM_INTERFACE_MAP] = {
     /* Protocols that use Frame Interface do not need to be included in the
        interface mapping */
     {NCI_PROTOCOL_ISO_DEP, NCI_INTERFACE_MODE_POLL_N_LISTEN,
-     NCI_INTERFACE_ISO_DEP}
-#if (NFC_RW_ONLY == FALSE)
-    ,
+     NCI_INTERFACE_ISO_DEP},
     /* this can not be set here due to 2079xB0 NFCC issues */
     {NCI_PROTOCOL_NFC_DEP, NCI_INTERFACE_MODE_POLL_N_LISTEN,
-     NCI_INTERFACE_NFC_DEP}
-#endif
-};
+     NCI_INTERFACE_NFC_DEP}};
 
 /*******************************************************************************
 **
@@ -243,11 +225,9 @@ void nfc_enabled(tNFC_STATUS nfc_status, NFC_HDR* p_init_rsp_msg) {
     /* four bytes below are consumed in the top expression */
     evt_data.enable.max_conn = *p++;
     STREAM_TO_UINT16(evt_data.enable.max_ce_table, p);
-#if (NFC_RW_ONLY == FALSE)
     nfc_cb.max_ce_table = evt_data.enable.max_ce_table;
     nfc_cb.nci_features = evt_data.enable.nci_features;
     nfc_cb.max_conn = evt_data.enable.max_conn;
-#endif
     nfc_cb.nci_ctrl_size = *p++; /* Max Control Packet Payload Length */
     p_cb->init_credits = p_cb->num_buff = 0;
     nfc_set_conn_id(p_cb, NFC_RF_CONN_ID);
@@ -276,11 +256,9 @@ void nfc_enabled(tNFC_STATUS nfc_status, NFC_HDR* p_init_rsp_msg) {
       }
       STREAM_TO_UINT16(evt_data.enable.max_nfc_v_size, p);
       STREAM_TO_UINT8(num_interfaces, p);
-#if (NFC_RW_ONLY == FALSE)
       nfc_cb.hci_packet_size = evt_data.enable.hci_packet_size;
       nfc_cb.hci_conn_credits = evt_data.enable.hci_conn_credits;
       nfc_cb.nci_max_v_size = evt_data.enable.max_nfc_v_size;
-#endif
       evt_data.enable.nci_interfaces = 0;
 
       for (xx = 0; xx < num_interfaces; xx++) {
@@ -803,9 +781,7 @@ void NFC_Init(tHAL_NFC_ENTRY* p_hal_entry_tbl) {
 *******************************************************************************/
 uint16_t NFC_GetLmrtSize(void) {
   uint16_t size = 0;
-#if (NFC_RW_ONLY == FALSE)
   size = nfc_cb.max_ce_table;
-#endif
   return size;
 }
 

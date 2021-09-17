@@ -111,15 +111,11 @@ enum {
 /* set num_buff to this for no flow control */
 #define NFC_CONN_NO_FC 0xFF
 
-#if (NFC_RW_ONLY == FALSE)
 /* only allow the entries that the NFCC can support */
 #define NFC_CHECK_MAX_CONN()                          \
   {                                                   \
     if (max > nfc_cb.max_conn) max = nfc_cb.max_conn; \
   }
-#else
-#define NFC_CHECK_MAX_CONN()
-#endif
 
 typedef struct {
   tNFC_CONN_CBACK* p_cback; /* the callback function to receive the data */
@@ -170,12 +166,10 @@ typedef struct {
   tNFC_VS_CBACK*
       p_vs_cb[NFC_NUM_VS_CBACKS]; /* Register for vendor specific events  */
 
-#if (NFC_RW_ONLY == FALSE)
   /* NFCC information at init rsp */
   uint32_t nci_features; /* the NCI features supported by NFCC */
   uint16_t max_ce_table; /* the max routing table size       */
   uint8_t max_conn;      /* the num of connections supported by NFCC */
-#endif
   uint8_t nci_ctrl_size; /* Max Control Packet Payload Size */
 
   const tNCI_DISCOVER_MAPS*
@@ -272,7 +266,7 @@ extern void nfc_ncif_proc_credits(uint8_t* p, uint16_t plen);
 extern void nfc_ncif_proc_activate(uint8_t* p, uint8_t len);
 extern void nfc_ncif_proc_deactivate(uint8_t status, uint8_t deact_type,
                                      bool is_ntf);
-#if (NFC_NFCEE_INCLUDED == TRUE && NFC_RW_ONLY == FALSE)
+#if (NFC_NFCEE_INCLUDED == TRUE)
 extern void nfc_ncif_proc_ee_action(uint8_t* p, uint16_t plen);
 extern void nfc_ncif_proc_ee_discover_req(uint8_t* p, uint16_t plen);
 extern void nfc_ncif_proc_get_routing(uint8_t* p, uint8_t len);
@@ -292,11 +286,7 @@ extern void nfa_dm_p2p_prio_logic_cleanup();
 extern void nfc_ncif_proc_isodep_nak_presence_check_status(uint8_t status,
                                                            bool is_ntf);
 extern void nfc_ncif_update_window(void);
-#if (NFC_RW_ONLY == FALSE)
 extern void nfc_ncif_proc_rf_field_ntf(uint8_t rf_status);
-#else
-#define nfc_ncif_proc_rf_field_ntf(rf_status)
-#endif
 
 /* From nfc_task.c */
 extern uint32_t nfc_task(uint32_t);
