@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bba1ecb4_022ba4aa",
+        "filename": "src/rust/rootcanal/main.rs",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-09-21T22:26:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dc95f5a3_cb3040e1",
+      "range": {
+        "startLine": 27,
+        "startChar": 25,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "a02f5bb84d74a7f4563ae4d747ba595b5e64db81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36fe3f84_cbdbfd95",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-09-21T22:03:49Z",
       "side": 1,
       "message": "nit: add vertical space after",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 1
+      },
+      "revId": "a02f5bb84d74a7f4563ae4d747ba595b5e64db81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8da0ed01_f054d06d",
+        "filename": "src/rust/rootcanal/main.rs",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-09-21T22:26:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "36fe3f84_cbdbfd95",
       "range": {
         "startLine": 159,
         "startChar": 0,
