@@ -22,6 +22,30 @@
       },
       "revId": "ac5fec088cc2a19508adbc55fba7858588bbc405",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e038c359_6b09d4cc",
+        "filename": "src/rust/test/main.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-09-23T16:08:40Z",
+      "side": 1,
+      "message": "Right, it is send_reset now, send_x and dispatch need to be combined.\nI\u0027ll change the name in the next commit.",
+      "parentUuid": "950df273_d41fb3ce",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 108,
+        "endChar": 21
+      },
+      "revId": "ac5fec088cc2a19508adbc55fba7858588bbc405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
