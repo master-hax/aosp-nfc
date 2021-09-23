@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "950df273_d41fb3ce",
+        "filename": "src/rust/test/main.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-09-23T02:23:37Z",
+      "side": 1,
+      "message": "nit: send_reset?",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 108,
+        "endChar": 21
+      },
+      "revId": "ac5fec088cc2a19508adbc55fba7858588bbc405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
