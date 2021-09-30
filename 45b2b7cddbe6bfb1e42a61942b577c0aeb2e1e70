@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2669ac7f_36c06bd2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-09-30T18:31:35Z",
+      "side": 1,
+      "message": "The code does not compile is the NFC_NFCEE_INCLUDED constant is set to FALSE",
+      "revId": "45b2b7cddbe6bfb1e42a61942b577c0aeb2e1e70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
