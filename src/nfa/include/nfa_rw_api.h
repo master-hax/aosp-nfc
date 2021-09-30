@@ -777,4 +777,6 @@ extern tNFA_STATUS NFA_RwI93GetMultiBlockSecurityStatus(
 *******************************************************************************/
 extern tNFA_STATUS NFA_RwI93SetAddressingMode(bool mode);
 
+extern void NFA_SetReconnectState(bool flag);
+
 #endif /* NFA_RW_API_H */

@@ -76,6 +76,7 @@ typedef struct nfa_dm_p2p_prio_logic {
 
 static nfa_dm_p2p_prio_logic_t p2p_prio_logic_data;
 
+static bool reconnect_in_progress;
 
 /*******************************************************************************
 **
@@ -2885,6 +2886,11 @@ bool nfa_dm_p2p_prio_logic(uint8_t event, uint8_t* p, uint8_t event_type) {
         "returning from nfa_dm_p2p_prio_logic  Disable p2p_prio_logic");
     return true;
   }
+  if (true == reconnect_in_progress) {
+    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+        "returning from nfa_dm_p2p_prio_logic  reconnect_in_progress");
+    return true;
+  }
   if (appl_dta_mode_flag == 0x01) {
     /*Disable the P2P Prio Logic when DTA is running*/
     return TRUE;
@@ -3060,3 +3066,8 @@ void nfa_dm_p2p_prio_logic_cleanup() {
   memset(&p2p_prio_logic_data, 0x00, sizeof(nfa_dm_p2p_prio_logic_t));
 }
 
+void NFA_SetReconnectState(bool flag) {
+  reconnect_in_progress = flag;
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("NFA_SetReconnectState = 0x%x", reconnect_in_progress);
+}
