@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d8047a4_34ef7b89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-09-30T18:09:38Z",
+      "side": 1,
+      "message": "The libnfc-nci cannot be compiled if the NFC_RW_ONLY is set to TRUE",
+      "revId": "943ebf9dad701b0543318e6230066cf5a70aba6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
