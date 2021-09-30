@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "772f0ac9_a092af68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-09-30T18:14:44Z",
+      "side": 1,
+      "message": "The libnfc-nci cannot be compiled if the NFA_P2P_INCLUDED constant is set to FALSE",
+      "revId": "1b328645e11799559e8dd91d61db806eea69685a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
