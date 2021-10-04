@@ -164,6 +164,8 @@ typedef uint8_t tNFA_PROTOCOL_MASK;
 #define NFA_DM_NFCC_TRANSPORT_ERR_EVT 7
 /* Result of NFA_SetPowerSubStateForScreenState */
 #define NFA_DM_SET_POWER_SUB_STATE_EVT 11
+/* Result of NFA_SetDtaPatternNo          */
+#define NFA_DM_SET_DTA_PATTERN_EVT 12
 /* T1T HR length            */
 #define NFA_T1T_HR_LEN T1T_HR_LEN
 /* Max UID length of T1/T2  */
@@ -653,6 +655,10 @@ typedef tNFC_RF_COMM_PARAMS tNFA_RF_COMM_PARAMS;
 #define NFA_INTERFACE_NFC_DEP NFC_INTERFACE_NFC_DEP
 #define NFA_INTERFACE_MIFARE NFC_INTERFACE_MIFARE
 typedef tNFC_INTF_TYPE tNFA_INTF_TYPE;
+
+/* NFA DM Set DTA Pattern No Callback */
+typedef void(tNFA_DM_SET_DTA_PATTERN_CBACK)(uint8_t event,
+                                            tNFA_DM_CBACK_DATA* p_data);
 
 /*******************************************************************************
 ** NDEF Definitions
@@ -1371,4 +1377,22 @@ extern uint8_t NFA_GetNCIVersion();
 *******************************************************************************/
 extern tNFA_STATUS NFA_SetPowerSubStateForScreenState(uint8_t ScreenState);
 
+/*******************************************************************************
+**
+** Function:        NFA_SetDtaPatternNo
+**
+** Description      Set DTA Pattern based configuration parameters to NFCC. The
+**                  result is reported with an NFA_DM_SET_DTA_PATTERN_EVT in the
+**                  tNFA_DM_CBACK callback.
+**
+** Note:            If RF discovery is started,
+**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
+**                  happen before calling this function. Most Configuration
+**                  parameters are related to RF discovery.
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**
+*******************************************************************************/
+extern tNFA_STATUS NFA_SetDtaPatternNo(uint32_t dtaPattern);
 #endif /* NFA_API_H */

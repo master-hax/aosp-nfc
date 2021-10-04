@@ -22,10 +22,11 @@
  *  machine.
  *
  ******************************************************************************/
-#include <string.h>
-
 #include <android-base/stringprintf.h>
 #include <base/logging.h>
+#include <string.h>
+
+#include <unordered_set>
 
 #include "nci_hmsgs.h"
 #include "nfa_api.h"
@@ -61,6 +62,11 @@ static void nfa_dm_excl_disc_cback(tNFA_DM_RF_DISC_EVT event,
                                    tNFC_DISCOVER* p_data);
 static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
                                    tNFC_DISCOVER* p_data);
+static void nfa_dm_set_dta_pattern_cback(uint8_t event,
+                                         tNFA_DM_CBACK_DATA* p_data);
+static void nfa_dm_set_dta_pattern(int32_t pattern);
+static bool nfa_dm_validate_dta_pattern_num(int32_t pattern);
+static bool nfa_dm_validate_dta_pattern_config_update(int32_t pattern);
 
 /*******************************************************************************
 **
@@ -319,21 +325,31 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
         LOG(ERROR) << StringPrintf(
             "NFA received unexpected NFC_SET_CONFIG_REVT");
       }
+      if (nfa_dm_cb.flags & NFA_DM_FLAGS_SET_DTA_PATTERN_EVT) {
+        dm_cback_data.set_config.status = p_data->set_config.status;
+        DLOG_IF(INFO, nfc_debug_enabled)
+            << StringPrintf("DTA Pattern Config set complete");
+        (*nfa_dm_cb.p_dm_set_pattern_cback)(NFA_DM_SET_DTA_PATTERN_EVT,
+                                            &dm_cback_data);
+      }
       break;
 
     case NFC_GET_CONFIG_REVT: /* 3  Get Config Response */
+      dm_cback_data.get_config.status = NFA_STATUS_FAILED;
       if (p_data->get_config.status == NFC_STATUS_OK) {
         tNFA_GET_CONFIG* p_nfa_get_confg = &dm_cback_data.get_config;
         p_nfa_get_confg->status = NFA_STATUS_OK;
         p_nfa_get_confg->tlv_size = p_data->get_config.tlv_size;
         p_nfa_get_confg->param_tlvs = p_data->get_config.p_param_tlvs;
-        (*nfa_dm_cb.p_dm_cback)(NFA_DM_GET_CONFIG_EVT, &dm_cback_data);
-        return;
       }
 
-      /* Return result of getconfig to the app */
-      dm_cback_data.get_config.status = NFA_STATUS_FAILED;
-      (*nfa_dm_cb.p_dm_cback)(NFA_DM_GET_CONFIG_EVT, &dm_cback_data);
+      if (nfa_dm_cb.flags & NFA_DM_FLAGS_SET_DTA_PATTERN_EVT) {
+        (*nfa_dm_cb.p_dm_set_pattern_cback)(NFA_DM_GET_CONFIG_EVT,
+                                            &dm_cback_data);
+      } else {
+        /* Return result of getconfig to the app */
+        (*nfa_dm_cb.p_dm_cback)(NFA_DM_GET_CONFIG_EVT, &dm_cback_data);
+      }
       break;
 
 #if (NFC_NFCEE_INCLUDED == TRUE)
@@ -1378,6 +1394,265 @@ bool nfa_dm_act_disable_timeout(__attribute__((unused)) tNFA_DM_MSG* p_data) {
 
 /*******************************************************************************
 **
+** Function         nfa_dm_config_dta_pattern
+**
+** Description      Process set dta pattern command
+**
+** Returns          TRUE (message buffer to be freed by caller)
+**
+*******************************************************************************/
+bool nfa_dm_config_dta_pattern(__attribute__((unused)) tNFA_DM_MSG* p_data) {
+  tNFA_STATUS status = NFA_STATUS_OK;
+  bool sendEvent = false;
+  if (nfa_dm_validate_dta_pattern_num(p_data->set_dta_pattern.pattern_no)) {
+    if (nfa_dm_validate_dta_pattern_config_update(
+            p_data->set_dta_pattern.pattern_no)) {
+      nfa_dm_cb.flags |= NFA_DM_FLAGS_SET_DTA_PATTERN_EVT;
+      nfa_dm_cb.p_dm_set_pattern_cback = nfa_dm_set_dta_pattern_cback;
+      nfa_dm_cb.dtaPattern = p_data->set_dta_pattern.pattern_no;
+      nfa_dm_act_stop_rf_discovery(nullptr);
+    } else {
+      /* No change in configuration parameter. So sending
+       * NFA_DM_SET_DTA_PATTERN_EVT event with status NFC_STATUS_OK */
+      sendEvent = true;
+    }
+  } else {
+    sendEvent = true;
+    status = NFA_STATUS_INVALID_PARAM;
+  }
+
+  if (sendEvent) {
+    tNFA_DM_CBACK_DATA dm_cback_data;
+    dm_cback_data.set_config.status = status;
+    (*nfa_dm_cb.p_dm_cback)(NFA_DM_SET_DTA_PATTERN_EVT, &dm_cback_data);
+  }
+
+  return true;
+}
+
+/*******************************************************************************
+**
+** Function         nfa_dm_set_dta_pattern
+**
+** Description      Update the mapped config parameter for the pattern.
+**
+** Returns          None
+**
+*******************************************************************************/
+static void nfa_dm_set_dta_pattern(int32_t pattern) {
+  uint8_t params[12], *p = NULL;
+  p = params;
+
+  UINT8_TO_STREAM(p, NFC_PMID_NFCC_CONFIG_CONTROL);
+  UINT8_TO_STREAM(p, 0x01);
+  UINT8_TO_STREAM(p, 0x00);
+
+  switch (pattern) {
+    case NFA_DM_DTA_PNRESET:
+      // Restore back to the original configuration state
+      memset(&(params), 0x00, sizeof(params));
+      p = params;
+      ARRAY_TO_STREAM(p, nfa_dm_cb.default_configs,
+                      sizeof(nfa_dm_cb.default_configs));
+      break;
+    case NFA_DM_DTA_PN0000:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_PACM_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x00);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN0001:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_PACM_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN0002:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_PACM_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x02);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN0003:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_PACM_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x00);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x00);
+      break;
+    case NFA_DM_DTA_PN0004:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_PACM_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x00);
+      break;
+    case NFA_DM_DTA_PN0005:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x02);
+
+      UINT8_TO_STREAM(p, NFC_PMID_PACM_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x00);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN0006:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x02);
+
+      UINT8_TO_STREAM(p, NFC_PMID_PACM_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x02);
+      break;
+    case NFA_DM_DTA_PN0007:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_PACM_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x00);
+      break;
+    case NFA_DM_DTA_PN0008:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x02);
+      break;
+    case NFA_DM_DTA_PN0009:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_PACM_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN000A:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x02);
+
+      UINT8_TO_STREAM(p, NFC_PMID_PACM_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN000B:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN1200:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN1201:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x02);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN1240:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN1241:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x02);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN1280:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    case NFA_DM_DTA_PN1281:
+      UINT8_TO_STREAM(p, NFC_PMID_PF_BIT_RATE);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x02);
+
+      UINT8_TO_STREAM(p, NFC_PMID_BITR_NFC_DEP);
+      UINT8_TO_STREAM(p, 0x01);
+      UINT8_TO_STREAM(p, 0x01);
+      break;
+    default:
+      p = NULL;
+      LOG(ERROR) << StringPrintf("Invalid DTA Pattern No.");
+      break;
+  }
+
+  if (NULL != p) {
+    tNFC_STATUS status =
+        nfa_dm_check_set_config((uint8_t)(p - params), params, false);
+    if (status != NFC_STATUS_OK) {
+      tNFA_DM_CBACK_DATA dm_cback_data;
+      dm_cback_data.set_config.status = status;
+      (*nfa_dm_cb.p_dm_set_pattern_cback)(NFA_DM_SET_DTA_PATTERN_EVT,
+                                          &dm_cback_data);
+    }
+  }
+}
+
+/*******************************************************************************
+**
 ** Function         nfa_dm_act_conn_cback_notify
 **
 ** Description      Notify app of reader/writer/ndef events
@@ -1885,4 +2160,147 @@ std::string nfa_dm_nfc_revt_2_str(tNFC_RESPONSE_EVT event) {
     default:
       return "unknown revt";
   }
+}
+
+/*******************************************************************************
+**
+** Function         nfa_dm_set_dta_pattern_cback
+**
+** Description      This callback handles NFA_SetDtaPatternNo responses.
+**
+** Note             If there are not mapped config for the pattern no then send
+**                  NFA_DM_SET_DTA_PATTERN_EVT event to service. Otherwise, stop
+**                  the discovery and after NFA_RF_DISCOVERY_STOPPED_EVT is
+**                  received update mapped config parameter. Once
+**                  NFA_DM_SET_DTA_PATTERN_EVT is received if discovery needs
+**                  to be started then nfa_dm_start_rf_discover will be called
+**                  from the callback. Once NFA_RF_DISCOVERY_STARTED_EVT is
+**                  received send NFA_RF_DISCOVERY_STARTED_EVT and
+**                  NFA_DM_SET_DTA_PATTERN_EVT events to service.
+**
+** Returns          void
+**
+*******************************************************************************/
+static void nfa_dm_set_dta_pattern_cback(uint8_t event,
+                                         tNFA_DM_CBACK_DATA* p_data) {
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("%s:event 0x%X", __func__, event);
+  tNFA_STATUS status = p_data->set_config.status;
+  bool sendEvent = false;
+  switch (event) {
+    case NFA_RF_DISCOVERY_STOPPED_EVT: {
+      if (status == NFA_STATUS_OK) {
+        if (!(nfa_dm_cb.flags & NFA_DM_FLAGS_DEFAULT_CONFIGS_AVAILABLE)) {
+          uint8_t params[4] = {NFC_PMID_NFCC_CONFIG_CONTROL,
+                               NFC_PMID_PF_BIT_RATE, NFC_PMID_PACM_BIT_RATE,
+                               NFC_PMID_BITR_NFC_DEP};
+          tNFC_STATUS stat = NFC_GetConfig(4, params);
+          if (stat != NFC_STATUS_OK) {
+            nfa_dm_cb.disc_cb.disc_flags |= NFA_DM_DISC_FLAGS_ENABLED;
+            nfa_dm_start_rf_discover();
+          }
+        } else {
+          nfa_dm_set_dta_pattern(nfa_dm_cb.dtaPattern);
+        }
+      } else {
+        sendEvent = true;
+      }
+    } break;
+    case NFA_DM_GET_CONFIG_EVT: {
+      status = p_data->get_config.status;
+      if (status == NFA_STATUS_OK) {
+        nfa_dm_cb.flags |= NFA_DM_FLAGS_DEFAULT_CONFIGS_AVAILABLE;
+        memset(&nfa_dm_cb.default_configs, 0,
+               sizeof(nfa_dm_cb.default_configs));
+        memcpy(&nfa_dm_cb.default_configs, p_data->get_config.param_tlvs + 1,
+               sizeof(nfa_dm_cb.default_configs));
+        nfa_dm_set_dta_pattern(nfa_dm_cb.dtaPattern);
+      } else {
+        nfa_dm_cb.disc_cb.disc_flags |= NFA_DM_DISC_FLAGS_ENABLED;
+        nfa_dm_start_rf_discover();
+      }
+    } break;
+    case NFA_DM_SET_DTA_PATTERN_EVT: {
+      if (status == NFA_STATUS_OK) {
+        if (nfa_dm_cb.dtaPattern == NFA_DM_DTA_PNRESET) {
+          nfa_dm_cb.flags &= ~NFA_DM_FLAGS_DEFAULT_CONFIGS_AVAILABLE;
+        }
+      }
+      nfa_dm_cb.disc_cb.disc_flags |= NFA_DM_DISC_FLAGS_ENABLED;
+      nfa_dm_start_rf_discover();
+    } break;
+    case NFA_RF_DISCOVERY_STARTED_EVT:
+      sendEvent = true;
+      break;
+    default:
+      DLOG_IF(INFO, nfc_debug_enabled)
+          << StringPrintf("%s:Unhandled event", __func__);
+  }
+
+  if (sendEvent) {
+    nfa_dm_cb.flags &= ~NFA_DM_FLAGS_SET_DTA_PATTERN_EVT;
+    tNFA_DM_CBACK_DATA dm_cback_data;
+    dm_cback_data.set_config.status = status;
+    (*nfa_dm_cb.p_dm_cback)(NFA_DM_SET_DTA_PATTERN_EVT, &dm_cback_data);
+    nfa_dm_cb.p_dm_set_pattern_cback = nullptr;
+    nfa_dm_cb.dtaPattern = NFA_DM_DTA_PNRESET;
+  }
+}
+
+/*******************************************************************************
+**
+** Function         nfa_dm_validate_dta_pattern_num
+**
+** Description      Validate the received DTA pattern from the pattern defined
+**                  in DTA Spec.
+**
+** Returns          TRUE if pattern no is valid.
+**
+*******************************************************************************/
+static bool nfa_dm_validate_dta_pattern_num(int32_t pattern) {
+  bool status = false;
+  std::unordered_set<int32_t> supportedDtaPatterns = {
+      NFA_DM_DTA_PNRESET, NFA_DM_DTA_PN0000, NFA_DM_DTA_PN0001,
+      NFA_DM_DTA_PN0011,  NFA_DM_DTA_PN0021, NFA_DM_DTA_PN0031,
+      NFA_DM_DTA_PN0002,  NFA_DM_DTA_PN0012, NFA_DM_DTA_PN0003,
+      NFA_DM_DTA_PN0004,  NFA_DM_DTA_PN0005, NFA_DM_DTA_PN0006,
+      NFA_DM_DTA_PN0007,  NFA_DM_DTA_PN0008, NFA_DM_DTA_PN0009,
+      NFA_DM_DTA_PN000A,  NFA_DM_DTA_PN000B, NFA_DM_DTA_PN1200,
+      NFA_DM_DTA_PN1201,  NFA_DM_DTA_PN1240, NFA_DM_DTA_PN1241,
+      NFA_DM_DTA_PN1280,  NFA_DM_DTA_PN1281};
+  std::unordered_set<int32_t>::iterator patItr =
+      supportedDtaPatterns.find(pattern);
+  if (patItr != supportedDtaPatterns.end()) {
+    status = true;
+  }
+
+  return status;
+}
+
+/*******************************************************************************
+**
+** Function         nfa_dm_validate_dta_pattern_config_update
+**
+** Description      Check whether received DTA pattern requires config
+**                  parameters update or not.
+**
+** Returns          TRUE if pattern requires update.
+**
+*******************************************************************************/
+static bool nfa_dm_validate_dta_pattern_config_update(int32_t pattern) {
+  if ((pattern == NFA_DM_DTA_PNRESET) &&
+      !(nfa_dm_cb.flags & NFA_DM_FLAGS_DEFAULT_CONFIGS_AVAILABLE)) {
+    return false;
+  }
+  bool status = true;
+  std::unordered_set<int32_t> noConfigUpdateDtaPatterns = {
+      NFA_DM_DTA_PN0011, NFA_DM_DTA_PN0021, NFA_DM_DTA_PN0031,
+      NFA_DM_DTA_PN0012};
+  std::unordered_set<int32_t>::iterator patItr =
+      noConfigUpdateDtaPatterns.find(pattern);
+  if (patItr != noConfigUpdateDtaPatterns.end()) {
+    status = false;
+  }
+
+  return status;
 }

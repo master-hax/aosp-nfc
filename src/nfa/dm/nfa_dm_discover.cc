@@ -750,6 +750,11 @@ static void nfa_dm_disc_notify_started(tNFA_STATUS status) {
                                      &evt_data);
     else
       nfa_dm_conn_cback_event_notify(NFA_RF_DISCOVERY_STARTED_EVT, &evt_data);
+  } else if (nfa_dm_cb.flags & NFA_DM_FLAGS_SET_DTA_PATTERN_EVT) {
+    tNFA_DM_CBACK_DATA dm_cback_data;
+    dm_cback_data.set_config.status = status;
+    (*nfa_dm_cb.p_dm_set_pattern_cback)(NFA_RF_DISCOVERY_STARTED_EVT,
+                                        &dm_cback_data);
   }
 }
 
@@ -1709,7 +1714,15 @@ void nfa_dm_disc_new_state(tNFA_DM_RF_DISC_STATE new_state) {
         nfa_dm_rel_excl_rf_control_and_notify();
       } else {
         evt_data.status = NFA_STATUS_OK;
-        nfa_dm_conn_cback_event_notify(NFA_RF_DISCOVERY_STOPPED_EVT, &evt_data);
+        if (nfa_dm_cb.flags & NFA_DM_FLAGS_SET_DTA_PATTERN_EVT) {
+          tNFA_DM_CBACK_DATA dm_cback_data;
+          dm_cback_data.set_config.status = NFA_STATUS_OK;
+          (*nfa_dm_cb.p_dm_set_pattern_cback)(NFA_RF_DISCOVERY_STOPPED_EVT,
+                                              &dm_cback_data);
+        } else {
+          nfa_dm_conn_cback_event_notify(NFA_RF_DISCOVERY_STOPPED_EVT,
+                                         &evt_data);
+        }
       }
     }
     if (nfa_dm_cb.disc_cb.disc_flags & NFA_DM_DISC_FLAGS_DISABLING) {

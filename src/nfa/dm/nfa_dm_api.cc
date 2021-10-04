@@ -1306,3 +1306,40 @@ void NFA_EnableDtamode(tNFA_eDtaModes eDtaMode) {
   appl_dta_mode_flag = 0x01;
   nfa_dm_cb.eDtaMode = eDtaMode;
 }
+
+/*******************************************************************************
+**
+** Function:        NFA_SetDtaPatternNo
+**
+** Description      Set DTA Pattern based configuration parameters to NFCC. The
+**                  result is reported with an NFA_DM_SET_DTA_PATTERN_EVT in the
+**                  tNFA_DM_CBACK callback.
+**
+** Note:            If RF discovery is started,
+**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
+**                  happen before calling this function. Most Configuration
+**                  parameters are related to RF discovery.
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**
+*******************************************************************************/
+tNFA_STATUS NFA_SetDtaPatternNo(uint32_t dtaPattern) {
+  tNFA_DM_API_SET_DTA_PATTERN* p_msg;
+
+  DLOG_IF(INFO, nfc_debug_enabled)
+      << StringPrintf("DTA Pattern No. 0x%X", dtaPattern);
+
+  p_msg = (tNFA_DM_API_SET_DTA_PATTERN*)GKI_getbuf(
+      sizeof(tNFA_DM_API_SET_DTA_PATTERN));
+  if (p_msg != nullptr) {
+    p_msg->hdr.event = NFA_DM_API_SET_DTA_PATTERN_EVT;
+    p_msg->pattern_no = dtaPattern;
+
+    nfa_sys_sendmsg(p_msg);
+
+    return NFA_STATUS_OK;
+  }
+
+  return NFA_STATUS_FAILED;
+}
