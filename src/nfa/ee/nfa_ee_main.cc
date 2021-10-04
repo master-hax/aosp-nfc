@@ -41,6 +41,12 @@ extern bool nfc_debug_enabled;
 /* system manager control block definition */
 tNFA_EE_CB nfa_ee_cb;
 
+/* last listen mode routing configuration command definition */
+std::vector<uint8_t> last_lmrt_cmd(0);
+
+/* committed listen mode routing configuration command definition */
+std::vector<uint8_t> committed_lmrt_cmd(0);
+
 /*****************************************************************************
 **  Constants
 *****************************************************************************/
