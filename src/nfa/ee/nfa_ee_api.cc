@@ -996,3 +996,178 @@ tNFA_STATUS NFA_EePowerAndLinkCtrl(tNFA_HANDLE ee_handle, uint8_t config) {
 
   return status;
 }
+
+/*******************************************************************************
+**
+** Function         NFA_GetRoutingTableSize
+**
+** Description      This function is used to calculate the size of each entry
+**
+**                  index | meanings
+**                  ------+---------------
+**                    0   | max_size
+**                    1   | total_proto
+**                    2   | total_tech
+**                    3   | total_aid
+**                    4   | total_sys_code
+**
+** Returns          void
+**
+*******************************************************************************/
+void NFA_GetRoutingTableSize(std::vector<int>& size) {
+  int xx = 0;
+  tNFA_EE_ECB* p_cb = &nfa_ee_cb.ecb[0];
+  size[0] = nfc_cb.max_ce_table;
+  for (xx = 0; xx < NFA_EE_NUM_ECBS; xx++, p_cb++) {
+    size[1] += p_cb->size_mask_proto;
+    size[2] += p_cb->size_mask_tech;
+    size[3] += p_cb->size_aid;
+    size[4] += p_cb->size_sys_code;
+  }
+}
+
+/*******************************************************************************
+**
+** Function         NFA_GetRoutingTable
+**
+** Description      This function is used to parse the routing configuration
+**                  which is stored in the cache and encoding the routing table
+**                  to p_table
+**
+** Returns          void
+**
+*******************************************************************************/
+void NFA_GetRoutingTable(std::vector<uint8_t>& p_table) {
+  const uint8_t nfa_ee_tech_mask_list[3] = {
+      NFA_TECHNOLOGY_MASK_A, NFA_TECHNOLOGY_MASK_B, NFA_TECHNOLOGY_MASK_F};
+
+  const uint8_t nfa_ee_proto_mask_list[5] = {
+      NFA_PROTOCOL_MASK_T1T, NFA_PROTOCOL_MASK_T2T, NFA_PROTOCOL_MASK_T3T,
+      NFA_PROTOCOL_MASK_ISO_DEP, NFA_PROTOCOL_MASK_NFC_DEP};
+
+  int xx = 0;
+  tNFA_EE_ECB* p_cb = &nfa_ee_cb.ecb[0];
+
+  for (xx = 0; xx < NFA_EE_NUM_ECBS; xx++, p_cb++) {
+    if (p_cb->tech_switch_on | p_cb->tech_switch_off | p_cb->tech_battery_off) {
+      for (int t_xx = 0; t_xx < 3; t_xx++) {
+        uint8_t power_cfg = 0;
+        if (p_cb->tech_switch_off & nfa_ee_tech_mask_list[t_xx])
+          power_cfg |= NCI_ROUTE_PWR_STATE_SWITCH_OFF;
+        if (p_cb->tech_battery_off & nfa_ee_tech_mask_list[t_xx])
+          power_cfg |= NCI_ROUTE_PWR_STATE_BATT_OFF;
+        if (p_cb->tech_switch_on & nfa_ee_tech_mask_list[t_xx]) {
+          power_cfg |= NCI_ROUTE_PWR_STATE_ON;
+          if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
+            if (p_cb->tech_screen_lock & nfa_ee_tech_mask_list[t_xx])
+              power_cfg |= NCI_ROUTE_PWR_STATE_SCREEN_ON_LOCK();
+            if (p_cb->tech_screen_off & nfa_ee_tech_mask_list[t_xx])
+              power_cfg |= NCI_ROUTE_PWR_STATE_SCREEN_OFF_UNLOCK();
+            if (p_cb->tech_screen_off_lock & nfa_ee_tech_mask_list[t_xx])
+              power_cfg |= NCI_ROUTE_PWR_STATE_SCREEN_OFF_LOCK();
+          }
+        }
+        if (power_cfg) {
+          p_table.push_back((uint8_t)'T');
+          p_table.push_back(nfa_ee_tech_mask_list[t_xx]);
+          p_table.push_back(p_cb->nfcee_id);
+          p_table.push_back(power_cfg);
+          p_table.push_back(0x00);
+        }
+      }
+    }
+    if (p_cb->proto_switch_on | p_cb->proto_switch_off |
+        p_cb->proto_battery_off) {
+      for (int p_xx = 0; p_xx < 5; p_xx++) {
+        uint8_t power_cfg = 0;
+        if (p_cb->proto_switch_off & nfa_ee_proto_mask_list[p_xx])
+          power_cfg |= NCI_ROUTE_PWR_STATE_SWITCH_OFF;
+        if (p_cb->proto_battery_off & nfa_ee_proto_mask_list[p_xx])
+          power_cfg |= NCI_ROUTE_PWR_STATE_BATT_OFF;
+        if (p_cb->proto_switch_on & nfa_ee_proto_mask_list[p_xx])
+          power_cfg |= NCI_ROUTE_PWR_STATE_ON;
+
+        if (power_cfg ||
+            (p_cb->nfcee_id == NFC_DH_ID &&
+             nfa_ee_proto_mask_list[p_xx] == NFA_PROTOCOL_MASK_NFC_DEP)) {
+          uint8_t block_ctrl = 0;
+          if (nfa_ee_proto_mask_list[p_xx] == NFA_PROTOCOL_MASK_ISO_DEP) {
+            block_ctrl = nfa_ee_cb.route_block_control;
+            if ((power_cfg & NCI_ROUTE_PWR_STATE_ON) &&
+                (NFC_GetNCIVersion() == NCI_VERSION_2_0)) {
+              if (p_cb->proto_screen_lock & nfa_ee_proto_mask_list[p_xx])
+                power_cfg |= NCI_ROUTE_PWR_STATE_SCREEN_ON_LOCK();
+              if (p_cb->proto_screen_off & nfa_ee_proto_mask_list[p_xx])
+                power_cfg |= NCI_ROUTE_PWR_STATE_SCREEN_OFF_UNLOCK();
+              if (p_cb->proto_screen_off_lock & nfa_ee_proto_mask_list[p_xx])
+                power_cfg |= NCI_ROUTE_PWR_STATE_SCREEN_OFF_LOCK();
+            }
+          }
+          if (p_cb->nfcee_id == NFC_DH_ID &&
+              nfa_ee_proto_mask_list[p_xx] == NFA_PROTOCOL_MASK_NFC_DEP) {
+            /* add to routing table if NFC_DEP interface is supported */
+            if (nfc_cb.nci_interfaces & (1 << NCI_INTERFACE_NFC_DEP)) {
+              p_table.push_back((uint8_t)'P');
+              p_table.push_back(NFA_PROTOCOL_MASK_NFC_DEP);
+              p_table.push_back(p_cb->nfcee_id);
+              p_table.push_back(power_cfg);
+              p_table.push_back(0x00);
+            } else {
+              continue;
+            }
+          } else {
+            p_table.push_back((uint8_t)'P');
+            p_table.push_back(nfa_ee_proto_mask_list[p_xx]);
+            p_table.push_back(p_cb->nfcee_id);
+            p_table.push_back(power_cfg);
+            p_table.push_back(block_ctrl);
+          }
+        }
+      }
+    }
+    if (p_cb->aid_entries) {
+      int offset = 0;
+      for (int a_xx = 0; a_xx < p_cb->aid_entries; a_xx++) {
+        if (p_cb->aid_rt_info[a_xx] & NFA_EE_AE_ROUTE) {
+          p_table.push_back((uint8_t)'A');
+          p_table.push_back(p_cb->aid_len[a_xx] - 2);
+
+          for (int i = 2; i < p_cb->aid_len[a_xx]; i++) {
+            p_table.push_back(p_cb->aid_cfg[i + offset]);
+          }
+
+          p_table.push_back(p_cb->nfcee_id);
+          p_table.push_back(p_cb->aid_pwr_cfg[a_xx]);
+          p_table.push_back(nfa_ee_cb.route_block_control);
+
+          uint8_t route_qual = 0;
+          if (p_cb->aid_info[a_xx] & NCI_ROUTE_QUAL_LONG_SELECT)
+            route_qual |= NCI_ROUTE_QUAL_LONG_SELECT;
+          if (p_cb->aid_info[a_xx] & NCI_ROUTE_QUAL_SHORT_SELECT)
+            route_qual |= NCI_ROUTE_QUAL_SHORT_SELECT;
+          p_table.push_back(route_qual);
+        }
+        offset += p_cb->aid_len[a_xx];
+      }
+    }
+    if (p_cb->sys_code_cfg_entries) {
+      int offset = 0;
+      for (int s_xx = 0; s_xx < p_cb->sys_code_cfg_entries; s_xx++) {
+        if (p_cb->sys_code_rt_loc_vs_info[s_xx] & NFA_EE_AE_ROUTE) {
+          if (nfa_ee_is_active(p_cb->sys_code_rt_loc[s_xx] |
+                               NFA_HANDLE_GROUP_EE)) {
+            p_table.push_back((uint8_t)'S');
+            p_table.push_back(NFA_EE_SYSTEM_CODE_LEN);
+            for (int i = 0; i < NFA_EE_SYSTEM_CODE_LEN; i++) {
+              p_table.push_back(p_cb->sys_code_cfg[offset + i]);
+            }
+            p_table.push_back(p_cb->nfcee_id);
+            p_table.push_back(p_cb->sys_code_pwr_cfg[s_xx]);
+            p_table.push_back(nfa_ee_cb.route_block_control);
+          }
+        }
+        offset += NFA_EE_SYSTEM_CODE_LEN;
+      }
+    }
+  }
+}
