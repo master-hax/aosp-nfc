@@ -2251,7 +2251,9 @@ void nfa_ee_report_update_evt(void) {
 
     if (nfa_ee_cb.ee_wait_evt & NFA_EE_WAIT_UPDATE) {
       nfa_ee_cb.ee_wait_evt &= ~NFA_EE_WAIT_UPDATE;
-      /* finished updating NFCC; report NFA_EE_UPDATED_EVT now */
+      /* finished updating NFCC; record the committed listen mode routing
+       * configuration command; report NFA_EE_UPDATED_EVT now */
+      committed_lmrt_cmd.swap(last_lmrt_cmd);
       evt_data.status = NFA_STATUS_OK;
       nfa_ee_report_event(nullptr, NFA_EE_UPDATED_EVT, &evt_data);
     }
@@ -2860,6 +2862,10 @@ void nfa_ee_lmrt_to_nfcc(__attribute__((unused)) tNFA_EE_MSG* p_data) {
     nfa_ee_route_add_one_ecb_by_route_order(&nfa_ee_cb.ecb[NFA_EE_CB_4_DH], rt,
                                             &max_len, more, p, &cur_offset);
   }
+
+  /* record the last listen mode routing configuration command */
+  std::vector<uint8_t> temp(p + 1, p + cur_offset + 1);
+  temp.swap(last_lmrt_cmd);
 
   GKI_freebuf(p);
 }
