@@ -64,6 +64,7 @@ enum {
   NFA_DM_TIMEOUT_DISABLE_EVT,
   NFA_DM_API_SET_POWER_SUB_STATE_EVT,
   NFA_DM_API_SEND_RAW_VS_EVT,
+  NFA_DM_API_SET_DTA_PATTERN_EVT,
   NFA_DM_MAX_EVT
 };
 
@@ -190,6 +191,38 @@ typedef struct {
   uint8_t screen_state;
 } tNFA_DM_API_SET_POWER_SUB_STATE;
 
+enum {
+  NFA_DM_DTA_PN0000 = 0x0000,
+  NFA_DM_DTA_PN0001 = 0x0001,
+  NFA_DM_DTA_PN0011 = 0x0011,
+  NFA_DM_DTA_PN0021 = 0x0021,
+  NFA_DM_DTA_PN0031 = 0x0031,
+  NFA_DM_DTA_PN0002 = 0x0002,
+  NFA_DM_DTA_PN0012 = 0x0012,
+  NFA_DM_DTA_PN0003 = 0x0003,
+  NFA_DM_DTA_PN0004 = 0x0004,
+  NFA_DM_DTA_PN0005 = 0x0005,
+  NFA_DM_DTA_PN0006 = 0x0006,
+  NFA_DM_DTA_PN0007 = 0x0007,
+  NFA_DM_DTA_PN0008 = 0x0008,
+  NFA_DM_DTA_PN0009 = 0x0009,
+  NFA_DM_DTA_PN000A = 0x000A,
+  NFA_DM_DTA_PN000B = 0x000B,
+  NFA_DM_DTA_PN1200 = 0x1200,
+  NFA_DM_DTA_PN1201 = 0x1201,
+  NFA_DM_DTA_PN1240 = 0x1240,
+  NFA_DM_DTA_PN1241 = 0x1241,
+  NFA_DM_DTA_PN1280 = 0x1280,
+  NFA_DM_DTA_PN1281 = 0x1281
+};
+typedef uint16_t tNFA_DM_DTA_PATTERN;
+
+/* data type for NFA_DM_API_SET_DTA_PATTERN_EVT */
+typedef struct {
+  NFC_HDR hdr;
+  tNFA_DM_DTA_PATTERN pattern_no;
+} tNFA_DM_API_SET_DTA_PATTERN;
+
 /* union of all data types */
 typedef union {
   /* GKI event buffer header */
@@ -221,6 +254,8 @@ typedef union {
   tNFA_DM_API_REG_VSC reg_vsc;       /* NFA_DM_API_REG_VSC_EVT               */
   /* NFA_DM_API_SET_POWER_SUB_STATE_EVT */
   tNFA_DM_API_SET_POWER_SUB_STATE set_power_state;
+  tNFA_DM_API_SET_DTA_PATTERN
+      set_dta_pattern; /* NFA_DM_API_SET_DTA_PATTERN_EVT */
 } tNFA_DM_MSG;
 
 /* DM RF discovery state */
@@ -445,6 +480,8 @@ typedef struct {
 #define NFA_DM_FLAGS_P2P_PAUSED 0x00002000
 /* Power Off Sleep                                                      */
 #define NFA_DM_FLAGS_POWER_OFF_SLEEP 0x00008000
+/* Send NFA_DM_DTA_PATTERN_SETUP_EVT after setting DTA pattern configs  */
+#define NFA_DM_FLAGS_SET_DTA_PATTERN_EVT 0x00010000
 /* stored parameters */
 typedef struct {
   uint8_t total_duration[NCI_PARAM_LEN_TOTAL_DURATION];
@@ -507,6 +544,8 @@ typedef struct {
 
   tNFA_CONN_CBACK* p_excl_conn_cback; /* exclusive RF mode callback           */
   tNFA_NDEF_CBACK* p_excl_ndef_cback; /* ndef callback for exclusive RF mdoe  */
+  tNFA_DM_SET_DTA_PATTERN_CBACK*
+      p_dm_set_pattern_cback; /* callback for NFA_SetDtaPatternNo */
 
   tNFA_NDEF_CHO_CBACK*
       p_ndef_cho_cback; /* NDEF callback for static connection handover */
@@ -637,6 +676,7 @@ uint16_t nfa_dm_act_get_rf_disc_duration();
 bool nfa_dm_act_disable_timeout(tNFA_DM_MSG* p_data);
 
 bool nfa_dm_set_power_sub_state(tNFA_DM_MSG* p_data);
+bool nfa_dm_config_dta_pattern(tNFA_DM_MSG* p_data);
 
 void nfa_dm_proc_nfcc_power_mode(uint8_t nfcc_power_mode);
 
