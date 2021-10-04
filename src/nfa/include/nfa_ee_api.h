@@ -601,4 +601,36 @@ extern tNFA_STATUS NFA_EeDisconnect(tNFA_HANDLE ee_handle);
 extern tNFA_STATUS NFA_EePowerAndLinkCtrl(tNFA_HANDLE ee_handle,
                                           uint8_t config);
 
+/*******************************************************************************
+**
+** Function         NFA_GetRoutingTableSize
+**
+** Description      This fuction is used to calculate the size of each entry
+**
+**                  index | meanings
+**                  ------+---------------
+**                    0   | max_size
+**                    1   | total_proto
+**                    2   | total_tech
+**                    3   | total_aid
+**                    4   | total_sys_code
+**
+** Returns          void
+**
+*******************************************************************************/
+void NFA_GetRoutingTableSize(std::vector<int>& size);
+
+/*******************************************************************************
+**
+** Function         NFA_GetRoutingTable
+**
+** Description      This function is used to parse the routing configuration
+**                  which is stored in the cache and encoding the routing table
+**                  to p_table
+**
+** Returns          void
+**
+*******************************************************************************/
+extern void NFA_GetRoutingTable(std::vector<uint8_t>& p_table);
+
 #endif /* NFA_EE_API_H */
