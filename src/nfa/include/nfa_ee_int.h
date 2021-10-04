@@ -524,6 +524,12 @@ typedef struct {
 /* NFA EE control block */
 extern tNFA_EE_CB nfa_ee_cb;
 
+/* Last RF_SET_LISTEN_MODE_ROUTING_CMD */
+extern std::vector<uint8_t> last_lmrt_cmd;
+
+/* Committed RF_SET_LISTEN_MODE_ROUTING_CMD */
+extern std::vector<uint8_t> committed_lmrt_cmd;
+
 /*****************************************************************************
 **  External functions
 *****************************************************************************/

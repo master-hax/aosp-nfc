@@ -22,13 +22,16 @@
  *  commands (for DH).
  *
  ******************************************************************************/
+#include "nci_hmsgs.h"
+
 #include <string.h>
-#include "nfc_target.h"
+
+#include <vector>
 
 #include "nci_defs.h"
-#include "nci_hmsgs.h"
 #include "nfc_api.h"
 #include "nfc_int.h"
+#include "nfc_target.h"
 
 /*******************************************************************************
 **
@@ -655,6 +658,33 @@ uint8_t nci_snd_set_routing_cmd(bool more, uint8_t num_tlv, uint8_t tlv_size,
     UINT8_TO_STREAM(pp, num_tlv);
     ARRAY_TO_STREAM(pp, p_param_tlvs, tlv_size);
   }
+
+  /* record the last listen mode routing configuration command */
+  if (last_lmrt_cmd.size() > 0) {
+    /* if the size of last_lmrt_cmd > 0,
+     * check each MORE setting of the lmrt commands */
+    int more_index = 3;
+    while (more_index < last_lmrt_cmd.size()) {
+      if (last_lmrt_cmd[more_index] == 0x01) {
+        /* if the MORE setting of this lmrt command is 0x01,
+         * move to the next position of MORE setting */
+        int cmd_size = last_lmrt_cmd[more_index - 1];
+        more_index += cmd_size + 3;
+      } else {
+        /* if the MORE setting of this lmrt command is 0x00,
+         * that means the data in last_lmrt_cmd is obsolete, empty it */
+        std::vector<uint8_t> empty(0);
+        empty.swap(last_lmrt_cmd);
+        break;
+      }
+    }
+  }
+
+  /* append the lmrt command to last_lmrt_cmd */
+  uint8_t* lmrt_head_ptr = (uint8_t*)(p + 1) + p->offset;
+  std::vector<uint8_t> temp(lmrt_head_ptr, lmrt_head_ptr + size + 3);
+  last_lmrt_cmd.insert(last_lmrt_cmd.end(), temp.begin(), temp.end());
+
   nfc_ncif_send_cmd(p);
 
   return (NCI_STATUS_OK);

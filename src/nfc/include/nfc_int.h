@@ -239,6 +239,12 @@ typedef struct {
 /* Global NFC data */
 extern tNFC_CB nfc_cb;
 
+/* Last RF_SET_LISTEN_MODE_ROUTING_CMD */
+extern std::vector<uint8_t> last_lmrt_cmd;
+
+/* Committed RF_SET_LISTEN_MODE_ROUTING_CMD */
+extern std::vector<uint8_t> committed_lmrt_cmd;
+
 /****************************************************************************
 ** Internal nfc functions
 ****************************************************************************/

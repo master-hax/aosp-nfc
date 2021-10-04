@@ -604,4 +604,28 @@ extern tNFA_STATUS NFA_EeDisconnect(tNFA_HANDLE ee_handle);
 extern tNFA_STATUS NFA_EePowerAndLinkCtrl(tNFA_HANDLE ee_handle,
                                           uint8_t config);
 
+/*******************************************************************************
+**
+** Function         NFA_GetMaxRoutingTableSize
+**
+** Description      This function is used to get the max size of the routing
+**                  table from cache
+**
+** Returns          Max Routing Table Size
+**
+*******************************************************************************/
+extern int NFA_GetMaxRoutingTableSize(void);
+
+/*******************************************************************************
+**
+** Function         NFA_GetRoutingTable
+**
+** Description      This function is used to get the committed listen mode
+**                  routing configuration command
+**
+** Returns          The committed listen mode routing configuration command
+**
+*******************************************************************************/
+extern std::vector<uint8_t>* NFA_GetRoutingTable();
+
 #endif /* NFA_EE_API_H */
