@@ -999,3 +999,27 @@ tNFA_STATUS NFA_EePowerAndLinkCtrl(tNFA_HANDLE ee_handle, uint8_t config) {
 
   return status;
 }
+
+/*******************************************************************************
+**
+** Function         NFA_GetMaxRoutingTableSize
+**
+** Description      This function is used to get the max size of the routing
+**                  table from cache
+**
+** Returns          Max Routing Table Size
+**
+*******************************************************************************/
+int NFA_GetMaxRoutingTableSize(void) { return nfc_cb.max_ce_table; }
+
+/*******************************************************************************
+**
+** Function         NFA_GetRoutingTable
+**
+** Description      This function is used to get the committed listen mode
+**                  routing configuration command
+**
+** Returns          The committed listen mode routing configuration command
+**
+*******************************************************************************/
+std::vector<uint8_t>* NFA_GetRoutingTable() { return &committed_lmrt_cmd; }
