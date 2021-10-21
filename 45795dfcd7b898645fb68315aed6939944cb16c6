@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "638cc91f_f74d5ec6",
+        "filename": "src/rust/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T22:56:33Z",
+      "side": 1,
+      "message": "nit: spaces instead of tabs (other instances here)",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 1
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9413bed_48387c83",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T22:56:33Z",
+      "side": 1,
+      "message": "nit: remove",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf595873_a699118b",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T22:56:33Z",
+      "side": 1,
+      "message": "doesn\u0027t look used?",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 5
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c76f95e2_96891704",
+        "filename": "src/rust/hal/hidl_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T22:56:33Z",
+      "side": 1,
+      "message": "nit: remove?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 3
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec997e9d_ab0952b2",
+        "filename": "src/rust/hal/hidl_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T22:56:33Z",
+      "side": 1,
+      "message": "expand to OpenComplete, CloseComplete, etc?",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 12
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "319cefef_7e1fb024",
+        "filename": "src/rust/hal/rootcanal_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T22:56:33Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d382cb43_4329cd12",
+        "filename": "src/rust/hal/rootcanal_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T22:56:33Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
