@@ -261,6 +261,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98a3862b_87d70916",
+        "filename": "src/rust/hal/hidl_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T23:41:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6042f2cc_e976d830",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 3
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec997e9d_ab0952b2",
