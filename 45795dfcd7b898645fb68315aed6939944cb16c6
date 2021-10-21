@@ -239,6 +239,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6042f2cc_e976d830",
+        "filename": "src/rust/hal/hidl_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T23:39:20Z",
+      "side": 1,
+      "message": "Unfortunately it is in a different repository.",
+      "parentUuid": "305e9a26_05fabf9e",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 3
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ec997e9d_ab0952b2",
         "filename": "src/rust/hal/hidl_hal.rs",
         "patchSetId": 4
