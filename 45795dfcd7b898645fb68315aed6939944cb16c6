@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5689b7d1_7495c161",
+        "filename": "src/rust/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T23:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "638cc91f_f74d5ec6",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 1
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9413bed_48387c83",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-10-21T22:56:33Z",
       "side": 1,
       "message": "nit: remove",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90c81faa_0c27e6ef",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T23:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9413bed_48387c83",
       "range": {
         "startLine": 19,
         "startChar": 0,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abb4b36c_98eab7bc",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T23:18:19Z",
+      "side": 1,
+      "message": "Hm, how would I get the lower ends of a channel otherwise?",
+      "parentUuid": "bf595873_a699118b",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 5
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c76f95e2_96891704",
         "filename": "src/rust/hal/hidl_hal.rs",
         "patchSetId": 4
@@ -83,6 +155,30 @@
       "writtenOn": "2021-10-21T22:56:33Z",
       "side": 1,
       "message": "nit: remove?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 3
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eea2480c_75e63611",
+        "filename": "src/rust/hal/hidl_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T23:18:19Z",
+      "side": 1,
+      "message": "This is a reference to the HAL enum, I think it would be good to keep it as documentation if someone decided to update the enum in the HAL interface.",
+      "parentUuid": "c76f95e2_96891704",
       "range": {
         "startLine": 52,
         "startChar": 0,
@@ -118,6 +214,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "558f4636_75ebb818",
+        "filename": "src/rust/hal/hidl_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T23:18:19Z",
+      "side": 1,
+      "message": "Again, the enum matches HAL names, changing the names IMHO introduce more confusion.",
+      "parentUuid": "ec997e9d_ab0952b2",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 12
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "319cefef_7e1fb024",
         "filename": "src/rust/hal/rootcanal_hal.rs",
         "patchSetId": 4
@@ -129,6 +249,24 @@
       "writtenOn": "2021-10-21T22:56:33Z",
       "side": 1,
       "message": "nit: remove",
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f11a37c2_739070d8",
+        "filename": "src/rust/hal/rootcanal_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T23:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "319cefef_7e1fb024",
       "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -146,6 +284,24 @@
       "writtenOn": "2021-10-21T22:56:33Z",
       "side": 1,
       "message": "nit: remove",
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f41a4b75_d7ca2929",
+        "filename": "src/rust/hal/rootcanal_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T23:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d382cb43_4329cd12",
       "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
