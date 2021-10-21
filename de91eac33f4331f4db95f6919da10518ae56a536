@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a0b92df_ac992fd9",
+        "filename": "src/rust/rootcanal/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T21:25:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bdac51f7_1bc4ed90",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 1
+      },
+      "revId": "de91eac33f4331f4db95f6919da10518ae56a536",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "574c73e9_eb65ed6b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-10-21T21:12:44Z",
       "side": 1,
       "message": "recommend importing log::debug at the beginning",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 14
+      },
+      "revId": "de91eac33f4331f4db95f6919da10518ae56a536",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e70a18c_109f61d6",
+        "filename": "src/rust/rootcanal/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T21:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "574c73e9_eb65ed6b",
       "range": {
         "startLine": 73,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb91282b_4374440a",
+        "filename": "src/rust/test/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T21:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28a00f59_7183cf42",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 6
+      },
+      "revId": "de91eac33f4331f4db95f6919da10518ae56a536",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "873b4f07_74869f90",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-10-21T21:12:44Z",
       "side": 1,
       "message": "remove commented out code",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 2
+      },
+      "revId": "de91eac33f4331f4db95f6919da10518ae56a536",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93630296_e1f6c3b5",
+        "filename": "src/rust/test/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-10-21T21:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "873b4f07_74869f90",
       "range": {
         "startLine": 145,
         "startChar": 0,
