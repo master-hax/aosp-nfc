@@ -142,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d313affa_5fca806f",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T23:25:09Z",
+      "side": 1,
+      "message": "oh I see it is used, nevermind. ignore me haha",
+      "parentUuid": "abb4b36c_98eab7bc",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 5
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c76f95e2_96891704",
@@ -191,6 +215,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "305e9a26_05fabf9e",
+        "filename": "src/rust/hal/hidl_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T23:25:09Z",
+      "side": 1,
+      "message": "is the HAL definition in this git repo? if so we can use go/gerrit-ifthisthenthat to make sure they stay in sync instead",
+      "parentUuid": "eea2480c_75e63611",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 3
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ec997e9d_ab0952b2",
         "filename": "src/rust/hal/hidl_hal.rs",
         "patchSetId": 4
@@ -226,6 +274,30 @@
       "side": 1,
       "message": "Again, the enum matches HAL names, changing the names IMHO introduce more confusion.",
       "parentUuid": "ec997e9d_ab0952b2",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 12
+      },
+      "revId": "45795dfcd7b898645fb68315aed6939944cb16c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "866a6f37_9dfaebed",
+        "filename": "src/rust/hal/hidl_hal.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-10-21T23:25:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "558f4636_75ebb818",
       "range": {
         "startLine": 67,
         "startChar": 4,
