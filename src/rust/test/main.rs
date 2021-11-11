@@ -5,10 +5,10 @@
 use log::{debug, Level};
 use logger::{self, Config};
 use nfc_packets::nci::NciPacket;
-use nfc_packets::nci::ResetCommandBuilder;
-use nfc_packets::nci::{PacketBoundaryFlag, ResetType};
+use nfc_packets::nci::{FeatureEnable, PacketBoundaryFlag, ResetType};
+use nfc_packets::nci::{InitCommandBuilder, ResetCommandBuilder};
 use tokio::select;
-use tokio::sync::mpsc::{UnboundedReceiver, UnboundedSender};
+use tokio::sync::mpsc::{Receiver, Sender};
 
 /// Result type
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
@@ -16,18 +16,15 @@ type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>
 #[tokio::main]
 async fn main() -> Result<()> {
     logger::init(Config::default().with_tag_on_device("lnfc").with_min_level(Level::Trace));
-    let (out_tx, in_rx) = nfc_hal::init().await;
-    let out_tx_cmd = out_tx.clone();
-    let task = tokio::spawn(command_response(out_tx, in_rx));
-    send_reset(out_tx_cmd).await?;
+    let (out_tx, in_rx) = nfc_rnci::init().await;
+    let task = tokio::spawn(command_response(in_rx));
+    send_reset(&out_tx).await?;
+    send_init(&out_tx).await?;
     task.await.unwrap();
     Ok(())
 }
 
-async fn command_response(
-    _out_tx: UnboundedSender<NciPacket>,
-    mut in_rx: UnboundedReceiver<NciPacket>,
-) {
+async fn command_response(mut in_rx: Receiver<NciPacket>) {
     loop {
         select! {
             Some(cmd) = in_rx.recv() => debug!("{} - response received", cmd.get_op()),
@@ -36,10 +33,19 @@ async fn command_response(
     }
 }
 
-async fn send_reset(out: UnboundedSender<NciPacket>) -> Result<()> {
+async fn send_reset(out: &Sender<NciPacket>) -> Result<()> {
     let pbf = PacketBoundaryFlag::CompleteOrFinal;
     out.send(
         (ResetCommandBuilder { gid: 0, pbf, reset_type: ResetType::ResetConfig }).build().into(),
-    )?;
+    )
+    .await?;
+    Ok(())
+}
+async fn send_init(out: &Sender<NciPacket>) -> Result<()> {
+    let pbf = PacketBoundaryFlag::CompleteOrFinal;
+    out.send(
+        (InitCommandBuilder { gid: 0, pbf, feature_eneble: FeatureEnable::Rfu }).build().into(),
+    )
+    .await?;
     Ok(())
 }
