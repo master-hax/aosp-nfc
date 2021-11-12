@@ -106,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74a64bcd_a692bd7c",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-11-12T18:29:00Z",
+      "side": 1,
+      "message": "Changed it to cmd_resp.",
+      "parentUuid": "7e3b820c_5893d7c6",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "00cf0761baaede14c97154b12e54fd1bf8b18565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b2d7f26_6c5148ed",
@@ -143,6 +167,30 @@
       "side": 1,
       "message": "Yes, should have called it \"main stream\". Mistranslation.",
       "parentUuid": "4b2d7f26_6c5148ed",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "00cf0761baaede14c97154b12e54fd1bf8b18565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a1520ea_9336b06e",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-11-12T18:29:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7fabab01_b06a09e4",
       "range": {
         "startLine": 29,
         "startChar": 9,
