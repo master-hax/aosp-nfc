@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a4b2120_0ae040bc",
+        "filename": "src/rust/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-11-12T18:23:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6126fa9c_5f6d927b",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "00cf0761baaede14c97154b12e54fd1bf8b18565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd90a479_c3289d0a",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-11-12T01:22:42Z",
       "side": 1,
       "message": "looking through the file and diagramming it out, I think it should be possible to make this file a bit easier to follow (and remove some of the channels and simplify to one task, you won\u0027t need the notify between tasks because it can be handled locally with a boolean):\n\npub async fn init() -\u003e (Sender\u003cNciPacket\u003e, Receiver\u003cNciPacket\u003e) {\n    let (hal_tx, hal_rx) \u003d nfc_hal::init().await;\n    let (nci_in_tx, nci_in_rx) \u003d channel(10);\n    let (nci_out_tx, nci_out_rx) \u003d channel(10);\n    \n    tokio::spawn(dispatch(hal_tx, hal_rx, nci_in_tx, nci_out_rx));\n    \n    (nci_out_tx, nci_in_rx)\n}\n\nasync fn dispatch(... params here...) -\u003e Result\u003c()\u003e {\n    let nci_timeout \u003d Alarm::new();\n    let mut has_pending_command \u003d false;\n    loop {\n        select! {\n            some(packet) \u003d hal_rx.recv() \u003d\u003e {\n                if packet.get_mt() \u003d\u003d NciMsgType::Response {\n                    nci_timeout.cancel();\n                    has_pending_command \u003d false;\n                    // check the opcode to make sure it matches the pending command?\n                    // if so, you can use Option\u003c\u003e and .take like the bluetooth hci code\n                }\n                in_int.send(packet)?;\n                // consider splitting out data into their own channel?\n            }\n            some(packet) \u003d nci_in_rx.recv(), if !has_pending_command \u003d\u003e {\n                if cmd.get_mt() \u003d\u003d NciMsgType::Command {\n                    nci_timeout.reset(Duration::from_millis(20));\n                    has_pending_command \u003d true;\n                    // you have a couple options with what you can do here to split data from commands\n                    // you can break the input channels into data vs command at the source, or hold a buffer of pending commands locally\n                    // I would probably recommend splitting the input into two channels to preserve backpressure\n                }\n                out_tx.send(cmd)?;\n            }\n            _ \u003d nci_timeout.expired() \u003d\u003e {\n                error!(\"Command flow interrupted\");\n            }\n        }\n    }\n}",
+      "revId": "00cf0761baaede14c97154b12e54fd1bf8b18565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b5674e8_f75e7fe6",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-11-12T18:23:17Z",
+      "side": 1,
+      "message": "Since the DATA and COMMAND paths are not split yet, the proposed code will block the communication on the DATA channel, no?",
+      "parentUuid": "cd90a479_c3289d0a",
       "revId": "00cf0761baaede14c97154b12e54fd1bf8b18565",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -77,6 +119,30 @@
       "writtenOn": "2021-11-12T01:22:42Z",
       "side": 1,
       "message": "what does straight mean here?",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "00cf0761baaede14c97154b12e54fd1bf8b18565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fabab01_b06a09e4",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-11-12T18:23:17Z",
+      "side": 1,
+      "message": "Yes, should have called it \"main stream\". Mistranslation.",
+      "parentUuid": "4b2d7f26_6c5148ed",
       "range": {
         "startLine": 29,
         "startChar": 9,
