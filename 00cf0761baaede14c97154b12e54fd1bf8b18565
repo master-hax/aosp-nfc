@@ -83,6 +83,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "baf827fa_a0436b9c",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-11-16T01:08:39Z",
+      "side": 1,
+      "message": "Next patch will contain this change with Data and Command channels split",
+      "parentUuid": "3b5674e8_f75e7fe6",
+      "revId": "00cf0761baaede14c97154b12e54fd1bf8b18565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e3b820c_5893d7c6",
@@ -224,6 +242,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e7082c1_ea94c795",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-11-16T01:08:39Z",
+      "side": 1,
+      "message": "I\u0027ll try to do it in the future commits",
+      "parentUuid": "60a310bb_84d1062f",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 55
+      },
+      "revId": "00cf0761baaede14c97154b12e54fd1bf8b18565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d264e329_181e74a8",
@@ -261,6 +303,30 @@
       "side": 1,
       "message": "I believe it is safe not to wake up the system on error here.",
       "parentUuid": "d264e329_181e74a8",
+      "range": {
+        "startLine": 70,
+        "startChar": 24,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "00cf0761baaede14c97154b12e54fd1bf8b18565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d934e158_3f406c69",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-11-16T01:08:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f32a32ab_5a8a264a",
       "range": {
         "startLine": 70,
         "startChar": 24,
