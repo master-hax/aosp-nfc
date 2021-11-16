@@ -16,7 +16,7 @@ type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>
 #[tokio::main]
 async fn main() -> Result<()> {
     logger::init(Config::default().with_tag_on_device("lnfc").with_min_level(Level::Trace));
-    let (out_tx, in_rx) = nfc_rnci::init().await;
+    let (out_tx, in_rx, _out_dta, _in_dta) = nfc_rnci::init().await;
     let task = tokio::spawn(command_response(in_rx));
     send_reset(&out_tx).await?;
     send_init(&out_tx).await?;

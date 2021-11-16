@@ -67,13 +67,13 @@ where
     W: AsyncWriteExt + Unpin,
 {
     let mut buffer = BytesMut::with_capacity(1024);
-    let pkt_type = reader.read_u8().await?;
     let len: usize = reader.read_u16().await?.into();
-    debug!("packet {} received len={}", &pkt_type, &len);
     buffer.resize(len, 0);
     reader.read_exact(&mut buffer).await?;
     let frozen = buffer.freeze();
     debug!("{:?}", &frozen);
+    let pkt_type = (frozen[0] >> 5) & 0x7;
+    debug!("packet {} received len={}", &pkt_type, &len);
     if pkt_type == NciMsgType::Command as u8 {
         match NciPacket::parse(&frozen) {
             Ok(p) => command_response(writer, p).await,
@@ -147,10 +147,8 @@ where
     T: Into<NciPacket>,
 {
     let pkt = rsp.into();
-    let pkt_type = pkt.get_mt() as u8;
     let b = pkt.to_bytes();
-    let mut data = BytesMut::with_capacity(b.len() + 3);
-    data.put_u8(pkt_type);
+    let mut data = BytesMut::with_capacity(b.len() + 2);
     data.put_u16(b.len().try_into().unwrap());
     data.extend(b);
     let frozen = data.freeze();
