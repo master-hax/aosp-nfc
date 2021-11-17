@@ -20,6 +20,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a6df7124_49b6a9af",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-11-17T03:01:43Z",
+      "side": 1,
+      "message": "simplify to\n\nihal::init().await",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 62
+      },
+      "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6db6fc7_217f0287",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-11-17T03:01:43Z",
+      "side": 1,
+      "message": "use this object instead of HalChannels, and rename to Hal",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "337c95b6_b0fe033c",
         "filename": "src/rust/hal/hidl_hal.rs",
         "patchSetId": 1
@@ -59,6 +105,29 @@
         "startChar": 13,
         "endLine": 20,
         "endChar": 16
+      },
+      "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4707a00_bc390201",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-11-17T03:01:43Z",
+      "side": 1,
+      "message": "this object should be returned by the hal directly, rather than needing to assemble it ourselves from the tuple returned.\n\nalso recommend renaming to Hal",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 18
       },
       "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
