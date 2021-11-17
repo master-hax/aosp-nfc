@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "693eaa94_b7f05a50",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-11-17T10:14:38Z",
+      "side": 1,
+      "message": "It\u0027s different implementation, there\u0027s no android::sp object.\n\nmDeathRecipient \u003d ::ndk::ScopedAIBinder_DeathRecipient(      AIBinder_DeathRecipient_new(NfcAdaptation::HalAidlBinderDied));\n\nmNfcHalDeathRecipient \u003d new NfcHalDeathRecipient(mHal);",
+      "parentUuid": "8f3283e9_b1158513",
+      "range": {
+        "startLine": 502,
+        "startChar": 20,
+        "endLine": 502,
+        "endChar": 28
+      },
+      "revId": "6f40c158c00a3680f137185c81dd151a844579fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "04b31363_fa13d909",
         "filename": "src/adaptation/NfcAdaptation.cc",
         "patchSetId": 3
@@ -37,6 +61,24 @@
       "writtenOn": "2021-11-17T09:27:49Z",
       "side": 1,
       "message": "Add log msg to indicate aidl is used instead of hidl?",
+      "revId": "6f40c158c00a3680f137185c81dd151a844579fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f701a44_5bf29040",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-11-17T10:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b31363_fa13d909",
       "revId": "6f40c158c00a3680f137185c81dd151a844579fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
