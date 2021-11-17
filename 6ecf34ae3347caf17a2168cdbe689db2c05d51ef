@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7c78b20_1c68b88e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-11-17T02:56:45Z",
+      "side": 1,
+      "message": "getting closer! Can you squash this commit into the other one? since the files changed are largely the same, and this is fine tuning that commit and it\u0027s not submitted yet.",
+      "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "337c95b6_b0fe033c",
+        "filename": "src/rust/hal/hidl_hal.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-11-17T02:56:45Z",
+      "side": 1,
+      "message": "instead of matching bits in the packet, do the NciPacket::parse and then specialize to decide which queue to send it in?\n\nactually, the other side can do the specialize and you can simplify by one channel",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 34
+      },
+      "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "573376ce_ef97091f",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-11-17T02:56:45Z",
+      "side": 1,
+      "message": "nit: prefer data over dta since it\u0027s just one more char",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48298238_f5484457",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-11-17T02:56:45Z",
+      "side": 1,
+      "message": "nit: InternalChannels",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 22
+      },
+      "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9e3d31a_2aef7101",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-11-17T02:56:45Z",
+      "side": 1,
+      "message": "nit: it\u0027s not commands coming back from the chip, it\u0027s data/response/notification\n\nlet\u0027s name it hal_rx?",
+      "range": {
+        "startLine": 53,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca1ef19c_306d554e",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-11-17T02:56:45Z",
+      "side": 1,
+      "message": "do the data split here, since we\u0027re already checking the type",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7037a1a4_4b5bfb19",
+        "filename": "src/rust/nci/flow.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-11-17T02:56:45Z",
+      "side": 1,
+      "message": "it\u0027s ok to keep the single outbound channel on the HAL side, since there isn\u0027t any special queueing needed\n\nlet\u0027s name it hal_tx?",
+      "range": {
+        "startLine": 68,
+        "startChar": 52,
+        "endLine": 68,
+        "endChar": 62
+      },
+      "revId": "6ecf34ae3347caf17a2168cdbe689db2c05d51ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
