@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "244cf7b0_59a46ec1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-11-18T12:39:15Z",
+      "side": 1,
+      "message": "How about the p_old that used in line#87,91,201?\nI thought the timing issue might happen between NCI command and response based on the description in your patch and the modification in nci_proc_ee_management_rsp.",
+      "parentUuid": "ec4cdcf2_1a769ae6",
+      "revId": "24ef6cc9a01faac4e2666ad4104b95e27c5d6bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "683c90f3_9ab87da5",
         "filename": "src/nfc/nfc/nfc_ncif.cc",
         "patchSetId": 1
@@ -49,6 +67,30 @@
       "writtenOn": "2021-11-18T08:58:41Z",
       "side": 1,
       "message": "is it possible to avoid using hard code value?",
+      "range": {
+        "startLine": 286,
+        "startChar": 16,
+        "endLine": 286,
+        "endChar": 20
+      },
+      "revId": "24ef6cc9a01faac4e2666ad4104b95e27c5d6bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59fb8345_f6375249",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-11-18T12:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "683c90f3_9ab87da5",
       "range": {
         "startLine": 286,
         "startChar": 16,
