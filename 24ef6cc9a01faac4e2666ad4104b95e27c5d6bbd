@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03937476_5dc9699c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-11-18T08:58:41Z",
+      "side": 1,
+      "message": "Hi Alexandra,\nThis seems to be a timing issue.\nnfc_cb.last_cmd is also used in other cmds.\nIs it necessary to separate the other usage like core_rsp and rf_management_rsp?",
+      "revId": "24ef6cc9a01faac4e2666ad4104b95e27c5d6bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "683c90f3_9ab87da5",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-11-18T08:58:41Z",
+      "side": 1,
+      "message": "is it possible to avoid using hard code value?",
+      "range": {
+        "startLine": 286,
+        "startChar": 16,
+        "endLine": 286,
+        "endChar": 20
+      },
+      "revId": "24ef6cc9a01faac4e2666ad4104b95e27c5d6bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
