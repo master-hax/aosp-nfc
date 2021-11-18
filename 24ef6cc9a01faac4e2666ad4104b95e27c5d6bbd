@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5157775e_876749f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2021-11-18T12:58:46Z",
+      "side": 1,
+      "message": "Indeed the commit could be changed to \"If another NCI command (not NFCEE) is sent between the last NFCEE command and its corresponding notification\". I tried to change it myself but could not do it.\nThe modification could be done only in the nci_proc_ee_management_ntf() but as a specific variable is used for the NFCEE command, it makes more sense to also use it in the nci_proc_ee_management_rsp().",
+      "parentUuid": "244cf7b0_59a46ec1",
+      "revId": "24ef6cc9a01faac4e2666ad4104b95e27c5d6bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "683c90f3_9ab87da5",
         "filename": "src/nfc/nfc/nfc_ncif.cc",
         "patchSetId": 1
