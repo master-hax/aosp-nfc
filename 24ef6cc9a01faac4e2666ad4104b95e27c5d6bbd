@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec4cdcf2_1a769ae6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2021-11-18T10:46:45Z",
+      "side": 1,
+      "message": "Hello Jack,\nIt is indeed a timing issue: if 2 commands are sent before the first one is fully processed when its NCI Notification message is received.\nSo this could theorically happen for all NCI commands that are fully executed after their corresponding NCI Notification is received.\nThe last_cmd value is used in few cases, but never in nci_proc_core_ntf() and nci_proc_rf_management_ntf().\nSo this change should cover the nci_proc_ee_management_ntf() case.",
+      "parentUuid": "03937476_5dc9699c",
+      "revId": "24ef6cc9a01faac4e2666ad4104b95e27c5d6bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "683c90f3_9ab87da5",
         "filename": "src/nfc/nfc/nfc_ncif.cc",
         "patchSetId": 1
