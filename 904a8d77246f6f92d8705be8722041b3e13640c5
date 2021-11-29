@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a52ca4c5_e709be25",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2868,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-11-29T05:29:37Z",
+      "side": 1,
+      "message": "When the lmrt is large, the content would be sent separately with set_route cmd multiple times.\nI wondered whether you capture the correct route table content or only the last part of the lmrt that was sent to the nfcc.",
+      "revId": "904a8d77246f6f92d8705be8722041b3e13640c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
