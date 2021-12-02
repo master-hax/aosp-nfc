@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "88fc09c4_4459837b",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-12-02T21:38:54Z",
+      "side": 1,
+      "message": "since the notification oneshot is inside an Option, you can perform a take() operation on it on line 166 and then the option inside the struct would turn into a None.\n\nthat way, you can use one struct called QueuedCommand, which is easier to reason about based on the name rather than understanding the difference between a CmdRsp and a QueuedCommand when both are really queued",
+      "parentUuid": "befd4560_b85e595d",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 1
+      },
+      "revId": "de307d96e8449e94c34e18815a25b5f6adcde2b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f0db78b7_f6d420e5",
         "filename": "src/rust/test/main.rs",
         "patchSetId": 1

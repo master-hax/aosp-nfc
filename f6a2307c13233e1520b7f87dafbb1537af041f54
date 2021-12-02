@@ -45,6 +45,29 @@
       },
       "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8e54cc1_aad5a446",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-12-02T21:38:54Z",
+      "side": 1,
+      "message": "send_with_notify?\n\nsince send_notify may imply sending a notification",
+      "range": {
+        "startLine": 88,
+        "startChar": 17,
+        "endLine": 88,
+        "endChar": 28
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
