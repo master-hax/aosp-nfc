@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df55d7bb_a9ae72a4",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-12-02T13:10:10Z",
+      "side": 1,
+      "message": "Notify?",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 51
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3540586_4cfbc56a",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-12-02T13:10:10Z",
+      "side": 1,
+      "message": "How about using \"is_control_packet\"?\nBoth control/data msg are nci packet.",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 20
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
