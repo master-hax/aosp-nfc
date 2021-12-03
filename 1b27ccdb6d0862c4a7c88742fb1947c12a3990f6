@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71e78c02_f4710c5b",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-12-03T20:38:43Z",
+      "side": 1,
+      "message": "nit: timeout\n\n\"time out\" is a verb, timeout is a noun :)\n\nlike shut down vs shutdown",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 16
+      },
+      "revId": "1b27ccdb6d0862c4a7c88742fb1947c12a3990f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
