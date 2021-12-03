@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f0eb096_48cb9492",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-12-03T01:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df55d7bb_a9ae72a4",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 51
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3540586_4cfbc56a",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-02T13:10:10Z",
       "side": 1,
       "message": "How about using \"is_control_packet\"?\nBoth control/data msg are nci packet.",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 20
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34830689_96d80708",
+        "filename": "src/rust/hal/hal.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-12-03T01:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3540586_4cfbc56a",
       "range": {
         "startLine": 61,
         "startChar": 7,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bab9a8fe_04e07324",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-12-03T01:54:31Z",
+      "side": 1,
+      "message": "hopefully sndr_ntf is acceptable",
+      "parentUuid": "8a1211a8_e55af054",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 7
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c00835d6_bc1236f9",
         "filename": "src/rust/nci/nci.rs",
         "patchSetId": 2
@@ -83,6 +155,30 @@
       "writtenOn": "2021-12-02T22:25:01Z",
       "side": 1,
       "message": "ResponsePendingNotification?",
+      "range": {
+        "startLine": 72,
+        "startChar": 11,
+        "endLine": 72,
+        "endChar": 19
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e00273f_f6cca0e2",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-12-03T01:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c00835d6_bc1236f9",
       "range": {
         "startLine": 72,
         "startChar": 11,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c01bfbcf_0c176a9a",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-12-03T01:54:31Z",
+      "side": 1,
+      "message": "thanks",
+      "parentUuid": "6552f114_df8b49c7",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 68
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e8e54cc1_aad5a446",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-12-02T21:38:54Z",
       "side": 1,
       "message": "send_with_notify?\n\nsince send_notify may imply sending a notification",
+      "range": {
+        "startLine": 88,
+        "startChar": 17,
+        "endLine": 88,
+        "endChar": 28
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa30b0d5_aeecc69a",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-12-03T01:54:31Z",
+      "side": 1,
+      "message": "Doesn\u0027t send_and_notify sound better? Since both of them are actions.",
+      "parentUuid": "e8e54cc1_aad5a446",
       "range": {
         "startLine": 88,
         "startChar": 17,
