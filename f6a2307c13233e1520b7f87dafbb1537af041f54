@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20121583_bc02aeed",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-12-03T21:30:51Z",
+      "side": 1,
+      "message": "Thanks for pointing out to the manual, I\u0027ll keep it on my desktop :)",
+      "parentUuid": "b8348a17_01f0bb9c",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 7
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c00835d6_bc1236f9",
@@ -321,6 +345,30 @@
       "side": 1,
       "message": "SGTM",
       "parentUuid": "aa30b0d5_aeecc69a",
+      "range": {
+        "startLine": 88,
+        "startChar": 17,
+        "endLine": 88,
+        "endChar": 28
+      },
+      "revId": "f6a2307c13233e1520b7f87dafbb1537af041f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "550bb301_6eed9814",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-12-03T21:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c34213d_80ac8e53",
       "range": {
         "startLine": 88,
         "startChar": 17,
