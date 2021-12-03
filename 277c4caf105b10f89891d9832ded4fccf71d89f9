@@ -16,6 +16,69 @@
       "message": "lgtm, ready for rust readability review",
       "revId": "277c4caf105b10f89891d9832ded4fccf71d89f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99c7d10b_dd56706c",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208973
+      },
+      "writtenOn": "2021-12-03T22:11:49Z",
+      "side": 1,
+      "message": "You don\u0027t need license blocks here?",
+      "revId": "277c4caf105b10f89891d9832ded4fccf71d89f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "241afc22_e7e3c697",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1208973
+      },
+      "writtenOn": "2021-12-03T22:11:49Z",
+      "side": 1,
+      "message": "You don\u0027t want a shorter timeout?",
+      "range": {
+        "startLine": 142,
+        "startChar": 24,
+        "endLine": 142,
+        "endChar": 37
+      },
+      "revId": "277c4caf105b10f89891d9832ded4fccf71d89f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1ae2130_00f7c14b",
+        "filename": "src/rust/test/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1208973
+      },
+      "writtenOn": "2021-12-03T22:11:49Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter, but this uses a tab while the rest are spaces.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 1
+      },
+      "revId": "277c4caf105b10f89891d9832ded4fccf71d89f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
