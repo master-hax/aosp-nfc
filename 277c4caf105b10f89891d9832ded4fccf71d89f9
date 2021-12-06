@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "759de8e0_d5169dc7",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-12-06T23:39:02Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ll add the header to all the files in the following commit.",
+      "parentUuid": "6bbff13a_90f46235",
+      "revId": "277c4caf105b10f89891d9832ded4fccf71d89f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "241afc22_e7e3c697",
@@ -132,6 +150,30 @@
       "side": 1,
       "message": "Ah, that makes sense, thanks.  I\u0027m not a tokio expert but that does seem reasonable to me.  It might be nice to describe some of this as a comment in the code, though.",
       "parentUuid": "8795bf26_632d85ac",
+      "range": {
+        "startLine": 142,
+        "startChar": 24,
+        "endLine": 142,
+        "endChar": 37
+      },
+      "revId": "277c4caf105b10f89891d9832ded4fccf71d89f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a1ebdc3_85a22c45",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2021-12-06T23:39:02Z",
+      "side": 1,
+      "message": "I will add the comment in following commit.",
+      "parentUuid": "fa528747_16f648d8",
       "range": {
         "startLine": 142,
         "startChar": 24,
