@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6bbff13a_90f46235",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208973
+      },
+      "writtenOn": "2021-12-06T21:39:46Z",
+      "side": 1,
+      "message": "Sure.  Keystore2 has some, e.g., https://cs.android.com/android/platform/superproject/+/master:system/security/keystore2/src/database.rs (although note that the year is different).",
+      "parentUuid": "4aee0306_1039348b",
+      "revId": "277c4caf105b10f89891d9832ded4fccf71d89f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "241afc22_e7e3c697",
         "filename": "src/rust/nci/nci.rs",
         "patchSetId": 4
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "It is possibly a misleading variable name, the purpose of this code is to implement alarm(2) style interface: the alarm is set to 20mS while a command is being processed by NFCC, and set to a very distant future otherwise. I simply did not find a better way to implement this except to copy BT solution which implements Alarm class on top of Linux timerfd interface.",
       "parentUuid": "241afc22_e7e3c697",
+      "range": {
+        "startLine": 142,
+        "startChar": 24,
+        "endLine": 142,
+        "endChar": 37
+      },
+      "revId": "277c4caf105b10f89891d9832ded4fccf71d89f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa528747_16f648d8",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1208973
+      },
+      "writtenOn": "2021-12-06T21:39:46Z",
+      "side": 1,
+      "message": "Ah, that makes sense, thanks.  I\u0027m not a tokio expert but that does seem reasonable to me.  It might be nice to describe some of this as a comment in the code, though.",
+      "parentUuid": "8795bf26_632d85ac",
       "range": {
         "startLine": 142,
         "startChar": 24,
