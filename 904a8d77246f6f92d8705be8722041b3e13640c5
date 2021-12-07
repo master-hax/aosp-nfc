@@ -16,6 +16,42 @@
       "message": "When the lmrt is large, the content would be sent separately with set_route cmd multiple times.\nI wondered whether you capture the correct route table content or only the last part of the lmrt that was sent to the nfcc.",
       "revId": "904a8d77246f6f92d8705be8722041b3e13640c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbf47740_3a2e5f62",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2868,
+      "author": {
+        "id": 1887710
+      },
+      "writtenOn": "2021-12-07T20:18:40Z",
+      "side": 1,
+      "message": "Move the recording function to nci_hmsgs.cc(662). By doing this, I could record every lmrt command and append them to last_lmrt_cmd.",
+      "parentUuid": "a52ca4c5_e709be25",
+      "revId": "904a8d77246f6f92d8705be8722041b3e13640c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c436404_5c6de1e0",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2868,
+      "author": {
+        "id": 1887710
+      },
+      "writtenOn": "2021-12-07T20:18:40Z",
+      "side": 1,
+      "message": "Move the recording function to nci_hmsgs.cc(662). By doing this, I could record every lmrt command and append them to last_lmrt_cmd.",
+      "parentUuid": "a52ca4c5_e709be25",
+      "revId": "904a8d77246f6f92d8705be8722041b3e13640c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
