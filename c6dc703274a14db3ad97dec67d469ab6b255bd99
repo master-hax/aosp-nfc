@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b83a7ec5_66fd855b",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-12-23T21:32:05Z",
+      "side": 1,
+      "message": "instead of creating statics, can this be constructed in such a way that creates an ownership object that contains the fields?\n\ne.g.\n\nNfcStack\n\nand then\n\nNfcStack.enable()\nNfcStack.disable()\nNfcStack.init()\n\nwhen doing FFI later, the legacy code can own the NfcStack object",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 1
+      },
+      "revId": "c6dc703274a14db3ad97dec67d469ab6b255bd99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a5bb322_206f8697",
+        "filename": "src/rust/nci/nci.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-12-23T21:32:05Z",
+      "side": 1,
+      "message": "should look like\n\n} else {\n    break;\n}",
+      "range": {
+        "startLine": 213,
+        "startChar": 19,
+        "endLine": 213,
+        "endChar": 27
+      },
+      "revId": "c6dc703274a14db3ad97dec67d469ab6b255bd99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "922ed4b6_0d0a4075",
+        "filename": "src/rust/rootcanal/main.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-12-23T21:32:05Z",
+      "side": 1,
+      "message": "why are we iterating?",
+      "range": {
+        "startLine": 60,
+        "startChar": 13,
+        "endLine": 60,
+        "endChar": 17
+      },
+      "revId": "c6dc703274a14db3ad97dec67d469ab6b255bd99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
