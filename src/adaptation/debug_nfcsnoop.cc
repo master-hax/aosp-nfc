@@ -52,6 +52,7 @@ static const uint8_t MAX_LINE_LENGTH = 128;
 
 static std::mutex buffer_mutex;
 static ringbuffer_t* buffer = nullptr;
+static ringbuffer_t* buffer_vs = nullptr;
 static uint64_t last_timestamp_ms = 0;
 static bool isDebuggable = false;
 
@@ -84,6 +85,35 @@ static void nfcsnoop_cb(const uint8_t* data, const size_t length,
 
   ringbuffer_insert(buffer, (uint8_t*)&header, sizeof(nfcsnooz_header_t));
   ringbuffer_insert(buffer, data, length);
+}
+
+static void nfcsnoop_vs_cb(const uint8_t* data, const size_t length,
+                           bool is_received, const uint64_t timestamp_us) {
+  nfcsnooz_header_t header;
+
+  std::lock_guard<std::mutex> lock(buffer_mutex);
+
+  // Make room in the ring buffer
+
+  while (ringbuffer_available(buffer_vs) < (length + sizeof(nfcsnooz_header_t))) {
+    ringbuffer_pop(buffer_vs, (uint8_t*)&header, sizeof(nfcsnooz_header_t));
+    ringbuffer_delete(buffer_vs, header.length);
+  }
+
+  // Insert data
+  header.length = length;
+  header.is_received = is_received ? 1 : 0;
+
+  uint64_t delta_time_ms = 0;
+  if (last_timestamp_ms) {
+    __builtin_sub_overflow(timestamp_us, last_timestamp_ms, &delta_time_ms);
+  }
+  header.delta_time_ms = delta_time_ms;
+
+  last_timestamp_ms = timestamp_us;
+
+  ringbuffer_insert(buffer_vs, (uint8_t*)&header, sizeof(nfcsnooz_header_t));
+  ringbuffer_insert(buffer_vs, data, length);
 }
 
 static bool nfcsnoop_compress(ringbuffer_t* rb_dst, ringbuffer_t* rb_src) {
@@ -133,6 +163,7 @@ void nfcsnoop_capture(const NFC_HDR* packet, bool is_received) {
                        static_cast<uint64_t>(tv.tv_usec);
   uint8_t* p = (uint8_t*)(packet + 1) + packet->offset;
   uint8_t mt = (*(p)&NCI_MT_MASK) >> NCI_MT_SHIFT;
+  uint8_t gid = *(p) & NCI_GID_MASK;
   if (isDebuggable &&
       ringbuffer_available(buffer) < NFCSNOOP_MEM_BUFFER_THRESHOLD) {
     if (storeNfcSnoopLogs(DEFAULT_NFCSNOOP_PATH, DEFAULT_NFCSNOOP_FILE_SIZE)) {
@@ -144,7 +175,10 @@ void nfcsnoop_capture(const NFC_HDR* packet, bool is_received) {
       debug_nfcsnoop_init();
     }
   }
-  if (mt == NCI_MT_DATA) {
+
+  if (mt == NCI_MT_NTF && gid == NCI_GID_PROP) {
+    nfcsnoop_vs_cb(p, p[2] + NCI_MSG_HDR_SIZE, is_received, timestamp);
+  } else if (mt == NCI_MT_DATA) {
     nfcsnoop_cb(p, NCI_DATA_HDR_SIZE, is_received, timestamp);
   } else if (packet->len > 2) {
     nfcsnoop_cb(p, p[2] + NCI_MSG_HDR_SIZE, is_received, timestamp);
@@ -153,17 +187,25 @@ void nfcsnoop_capture(const NFC_HDR* packet, bool is_received) {
 
 void debug_nfcsnoop_init(void) {
   if (buffer == nullptr) buffer = ringbuffer_init(NFCSNOOP_MEM_BUFFER_SIZE);
+  if (buffer_vs == nullptr) buffer_vs = ringbuffer_init(NFCSNOOP_MEM_BUFFER_SIZE);
   isDebuggable = property_get_int32("ro.debuggable", 0);
 }
 
 void debug_nfcsnoop_dump(int fd) {
-  if (buffer == nullptr) {
+  if (buffer == nullptr || buffer_vs == nullptr) {
     dprintf(fd, "%s Nfcsnoop is not ready\n", __func__);
     return;
   }
   ringbuffer_t* ringbuffer = ringbuffer_init(NFCSNOOP_MEM_BUFFER_SIZE);
   if (ringbuffer == nullptr) {
     dprintf(fd, "%s Unable to allocate memory for compression", __func__);
+    return;
+  }
+
+  ringbuffer_t* ringbuffer_vs = ringbuffer_init(NFCSNOOP_MEM_BUFFER_SIZE);
+  if (ringbuffer_vs == nullptr) {
+    dprintf(fd, "%s Unable to allocate memory for compression", __func__);
+    ringbuffer_free(ringbuffer);
     return;
   }
 
@@ -209,8 +251,42 @@ void debug_nfcsnoop_dump(int fd) {
 
   dprintf(fd, "\n--- END:NFCSNOOP_LOG_SUMMARY ---\n");
 
+  // Prepend preamble
+
+  ringbuffer_insert(ringbuffer_vs, (uint8_t*)&preamble,
+                    sizeof(nfcsnooz_preamble_t));
+
+  // Compress data
+  {
+    std::lock_guard<std::mutex> lock(buffer_mutex);
+    dprintf(fd, "--- BEGIN:NFCSNOOP_VS_LOG_SUMMARY (%zu bytes in) ---\n",
+            ringbuffer_size(buffer_vs));
+    rc = nfcsnoop_compress(ringbuffer_vs, buffer_vs);
+  }
+
+  if (rc == false) {
+    dprintf(fd, "%s Log compression failed", __func__);
+    goto error;
+  }
+
+  // Base64 encode & output
+  memset(b64_in, 0, 3);
+  memset(b64_out, 0, 5);
+  line_length = 0;
+  while (ringbuffer_size(ringbuffer_vs) > 0) {
+    size_t read = ringbuffer_pop(ringbuffer_vs, b64_in, 3);
+    if (line_length >= MAX_LINE_LENGTH) {
+      dprintf(fd, "\n");
+      line_length = 0;
+    }
+    line_length += b64_ntop(b64_in, read, b64_out, 5);
+    dprintf(fd, "%s", b64_out);
+  }
+
+  dprintf(fd, "\n--- END:NFCSNOOP_VS_LOG_SUMMARY ---\n");
 error:
   ringbuffer_free(ringbuffer);
+  ringbuffer_free(ringbuffer_vs);
 }
 
 bool storeNfcSnoopLogs(std::string filepath, off_t maxFileSize) {
