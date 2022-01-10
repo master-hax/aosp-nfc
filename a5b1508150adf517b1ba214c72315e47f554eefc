@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7573adff_59337137",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2022-01-10T12:29:08Z",
+      "side": 1,
+      "message": "Yes. NCI configuration are sent in HalCoreInitialized. But in repeated NFC-ON/OFF scenarios, NCI_RESET_CFG will lead to sending configurations to NFCC every time which may impact memory lifecycles.",
+      "parentUuid": "e5ab8aba_a48037b2",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 66
+      },
+      "revId": "a5b1508150adf517b1ba214c72315e47f554eefc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "497e7fc8_efb98c76",
         "filename": "src/nfc/nfc/nfc_task.cc",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-09T12:25:20Z",
       "side": 1,
       "message": "All vendor specific setting should set after NfcAdaptation::HalCoreInitialized.\nWhy you need to keep cfg here?",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 367,
+        "endChar": 50
+      },
+      "revId": "a5b1508150adf517b1ba214c72315e47f554eefc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ff70d2a_a3ea7593",
+        "filename": "src/nfc/nfc/nfc_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2022-01-10T12:29:08Z",
+      "side": 1,
+      "message": "Yes. Same comment as above",
+      "parentUuid": "497e7fc8_efb98c76",
       "range": {
         "startLine": 367,
         "startChar": 0,
