@@ -22,6 +22,30 @@
       },
       "revId": "5b1b3c077c93b2e48cd44384a96ad5991aa6006f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62889a65_b61ee99c",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-01-12T12:42:22Z",
+      "side": 1,
+      "message": "Inside libnfc-nci scope, it only matters in NfcConfig::hasKey and configMap.emplace. And I already change them all.\n\nFor vendor HAL, they need to fill the aidlConfigValue.hostAllowlist by AIDL definition.\nIt depends on how vendor HAL reads and fill in from their vendor configuration files.",
+      "parentUuid": "00c308fb_0c194083",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "5b1b3c077c93b2e48cd44384a96ad5991aa6006f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
