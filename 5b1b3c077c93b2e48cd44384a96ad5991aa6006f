@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00c308fb_0c194083",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2022-01-12T06:53:23Z",
+      "side": 1,
+      "message": "Does it mean we need to update this naming in current configuration file for all projects?",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "5b1b3c077c93b2e48cd44384a96ad5991aa6006f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
