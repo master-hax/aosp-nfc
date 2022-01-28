@@ -21,16 +21,20 @@ use logger::{self, Config};
 use nfc_packets::nci;
 use nfc_packets::nci::{CommandChild, NciChild};
 use nfc_packets::nci::{
-    ConfigStatus, NciVersion, ResetNotificationBuilder, ResetResponseBuilder, ResetTrigger,
-    ResetType,
+    ConfigParams, ConfigStatus, GetConfigResponseBuilder, NciVersion, ParamIds,
+    ResetNotificationBuilder, ResetResponseBuilder, ResetTrigger, ResetType,
+    SetConfigResponseBuilder,
 };
 use nfc_packets::nci::{InitResponseBuilder, NfccFeatures, RfInterface};
 use nfc_packets::nci::{NciMsgType, NciPacket, Packet, PacketBoundaryFlag};
+use std::collections::HashMap;
 use std::convert::TryInto;
+use std::sync::Arc;
 use thiserror::Error;
 use tokio::io;
 use tokio::io::{AsyncReadExt, AsyncWriteExt, BufReader, ErrorKind};
 use tokio::net::TcpListener;
+use tokio::sync::RwLock;
 
 /// Result type
 type Result<T> = std::result::Result<T, RootcanalError>;
@@ -49,6 +53,38 @@ enum RootcanalError {
     UnsupportedPacket,
 }
 
+/// Provides storage for internal configuration parameters
+#[derive(Clone)]
+pub struct InternalConfiguration {
+    map: Arc<RwLock<HashMap<ParamIds, Vec<u8>>>>,
+}
+
+impl InternalConfiguration {
+    /// InternalConfiguration constructor
+    pub async fn new() -> Self {
+        let ic = InternalConfiguration { map: Arc::new(RwLock::new(HashMap::new())) };
+        let mut map = ic.map.write().await;
+        map.insert(ParamIds::LfT3tMax, vec![0x10u8]);
+        drop(map);
+        ic
+    }
+
+    /// Set a configuration parameter
+    pub async fn set(&mut self, parameter: ParamIds, value: Vec<u8>) {
+        self.map.write().await.insert(parameter, value);
+    }
+
+    /// Gets a parameter value or None
+    pub async fn get(&mut self, parameter: ParamIds) -> Option<Vec<u8>> {
+        self.map.read().await.get(&parameter).map(|v| (*v).clone())
+    }
+
+    /// Clears the allocated storage
+    pub async fn clear(&mut self) {
+        self.map.write().await.clear();
+    }
+}
+
 const TERMINATION: u8 = 4u8;
 
 #[tokio::main]
@@ -63,8 +99,9 @@ async fn main() -> io::Result<()> {
         tokio::spawn(async move {
             let (rd, mut wr) = sock.split();
             let mut rd = BufReader::new(rd);
+            let config = InternalConfiguration::new().await;
             loop {
-                if let Err(e) = process(&mut rd, &mut wr).await {
+                if let Err(e) = process(config.clone(), &mut rd, &mut wr).await {
                     match e {
                         RootcanalError::TerminateTask => break,
                         RootcanalError::IoError(e) => {
@@ -82,7 +119,7 @@ async fn main() -> io::Result<()> {
     Ok(())
 }
 
-async fn process<R, W>(reader: &mut R, writer: &mut W) -> Result<()>
+async fn process<R, W>(config: InternalConfiguration, reader: &mut R, writer: &mut W) -> Result<()>
 where
     R: AsyncReadExt + Unpin,
     W: AsyncWriteExt + Unpin,
@@ -97,7 +134,7 @@ where
     debug!("packet {} received len={}", &pkt_type, &len);
     if pkt_type == NciMsgType::Command as u8 {
         match NciPacket::parse(&frozen) {
-            Ok(p) => command_response(writer, p).await,
+            Ok(p) => command_response(config, writer, p).await,
             Err(_) => Err(RootcanalError::InvalidPacket),
         }
     } else if pkt_type == TERMINATION {
@@ -107,7 +144,11 @@ where
     }
 }
 
-async fn command_response<W>(out: &mut W, cmd: NciPacket) -> Result<()>
+async fn command_response<W>(
+    mut config: InternalConfiguration,
+    out: &mut W,
+    cmd: NciPacket,
+) -> Result<()>
 where
     W: AsyncWriteExt + Unpin,
 {
@@ -159,6 +200,38 @@ where
                         rf_interface: vec![RfInterface::parse(&rf_int).unwrap(); 1],
                     })
                     .build(),
+                )
+                .await
+            }
+            CommandChild::SetConfigCommand(sc) => {
+                for cp in sc.get_params() {
+                    config.set(cp.paramid, cp.valm.clone()).await;
+                }
+                write_nci(
+                    out,
+                    (SetConfigResponseBuilder {
+                        gid,
+                        pbf,
+                        status: nci::Status::Ok,
+                        paramids: Vec::new(),
+                    })
+                    .build(),
+                )
+                .await
+            }
+            CommandChild::GetConfigCommand(gc) => {
+                let mut cpv: Vec<ConfigParams> = Vec::new();
+                for paramid in gc.get_paramids() {
+                    let mut cp = ConfigParams { paramid: paramid.pids, valm: Vec::new() };
+                    if let Some(val) = config.get(paramid.pids).await {
+                        cp.valm = val;
+                    }
+                    cpv.push(cp);
+                }
+                write_nci(
+                    out,
+                    (GetConfigResponseBuilder { gid, pbf, status: nci::Status::Ok, params: cpv })
+                        .build(),
                 )
                 .await
             }
