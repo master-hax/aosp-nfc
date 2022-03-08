@@ -136,6 +136,9 @@ cc_fuzz {
         "fuzzers/*.cc",
         "fuzzers/nci/*.cc",
     ],
+    fuzz_config: {
+       cc: ["android-security-assurance-redteam@google.com"],
+    },
 }
 
 cc_fuzz {
@@ -149,6 +152,9 @@ cc_fuzz {
         "fuzzers/*.cc",
         "fuzzers/rw/*.cc",
     ],
+    fuzz_config: {
+       cc: ["android-security-assurance-redteam@google.com"],
+    },
 }
 
 cc_fuzz {
@@ -162,6 +168,9 @@ cc_fuzz {
         "fuzzers/*.cc",
         "fuzzers/ce/*.cc",
     ],
+    fuzz_config: {
+       cc: ["android-security-assurance-redteam@google.com"],
+    },
 }
 
 cc_fuzz {
