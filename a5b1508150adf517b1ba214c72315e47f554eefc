@@ -65,6 +65,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "533b8713_8e327ba3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2022-03-16T13:51:04Z",
+      "side": 1,
+      "message": "Thanks George.\nNew approach looks fine.",
+      "parentUuid": "f25cba5e_4430a31c",
+      "revId": "a5b1508150adf517b1ba214c72315e47f554eefc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "497e7fc8_efb98c76",
