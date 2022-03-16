@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e378a7ec_8d199581",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-03-16T12:04:06Z",
+      "side": 1,
+      "message": "Test build on aosp-master pass\nBuild ID: P31452298\nTarget: aosp_x86-eng\nBranch: aosp-master\nBuild ID: P31452297\nTarget: aosp_x86_64-userdebug\nBranch: aosp-master",
+      "revId": "0d83eb0c8cc08f812e31fca34ab7906a39687347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
