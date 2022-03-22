@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a51bbf1a_84b2fabc",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-03-22T12:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f757261f_d77e89a3",
+      "range": {
+        "startLine": 346,
+        "startChar": 8,
+        "endLine": 346,
+        "endChar": 19
+      },
+      "revId": "3a2f6e4ccba7d05aff334d6208fbe6e0b9f9366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e791458d_1b00cdcf",
@@ -37,6 +61,24 @@
       "writtenOn": "2022-03-22T11:02:59Z",
       "side": 1,
       "message": "same comment aidlConfigValue.offHostRouteEse.size()",
+      "revId": "3a2f6e4ccba7d05aff334d6208fbe6e0b9f9366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eda8aaa_5945f828",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-03-22T12:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e791458d_1b00cdcf",
       "revId": "3a2f6e4ccba7d05aff334d6208fbe6e0b9f9366d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
