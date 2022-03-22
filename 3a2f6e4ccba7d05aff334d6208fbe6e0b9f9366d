@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f757261f_d77e89a3",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2022-03-22T11:02:59Z",
+      "side": 1,
+      "message": "I think it should be aidlConfigValue.offHostRouteUicc.size()",
+      "range": {
+        "startLine": 346,
+        "startChar": 8,
+        "endLine": 346,
+        "endChar": 19
+      },
+      "revId": "3a2f6e4ccba7d05aff334d6208fbe6e0b9f9366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e791458d_1b00cdcf",
+        "filename": "src/adaptation/NfcAdaptation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2022-03-22T11:02:59Z",
+      "side": 1,
+      "message": "same comment aidlConfigValue.offHostRouteEse.size()",
+      "revId": "3a2f6e4ccba7d05aff334d6208fbe6e0b9f9366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
