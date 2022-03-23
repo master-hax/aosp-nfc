@@ -125,7 +125,7 @@ void GKI_init(void) {
   pthread_mutexattr_init(&attr);
 
 #ifndef __CYGWIN__
-  pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE_NP);
+  pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
 #endif
   p_os = &gki_cb.os;
   pthread_mutex_init(&p_os->GKI_mutex, &attr);
@@ -550,13 +550,12 @@ uint16_t GKI_wait(uint16_t flag, uint32_t timeout) {
 
   gki_pthread_info_t* p_pthread_info = &gki_pthread_info[rtask];
   if (p_pthread_info->pCond != nullptr && p_pthread_info->pMutex != nullptr) {
-    int ret;
     DLOG_IF(INFO, nfc_debug_enabled)
         << StringPrintf("GKI_wait task=%i, pCond/pMutex = %p/%p", rtask,
                         p_pthread_info->pCond, p_pthread_info->pMutex);
-    ret = pthread_mutex_lock(p_pthread_info->pMutex);
-    ret = pthread_cond_signal(p_pthread_info->pCond);
-    ret = pthread_mutex_unlock(p_pthread_info->pMutex);
+    pthread_mutex_lock(p_pthread_info->pMutex);
+    pthread_cond_signal(p_pthread_info->pCond);
+    pthread_mutex_unlock(p_pthread_info->pMutex);
     p_pthread_info->pMutex = nullptr;
     p_pthread_info->pCond = nullptr;
   }
