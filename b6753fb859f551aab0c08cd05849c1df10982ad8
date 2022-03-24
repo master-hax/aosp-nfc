@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b622c5ed_fc60bf60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-03-24T15:33:02Z",
+      "side": 1,
+      "message": "verified nfc on/off, R/W",
+      "revId": "b6753fb859f551aab0c08cd05849c1df10982ad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
