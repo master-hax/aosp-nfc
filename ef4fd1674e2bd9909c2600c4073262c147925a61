@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efb83947_eff35598",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-03-27T16:48:48Z",
+      "side": 1,
+      "message": "It just fixed in b/226573153.\nI think if you just update the comment message or submit another patset, the Lint -1 would disappear automatically.\nOr just Lint +2 to ignore it.",
+      "parentUuid": "0088e184_cd1af341",
+      "revId": "ef4fd1674e2bd9909c2600c4073262c147925a61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
