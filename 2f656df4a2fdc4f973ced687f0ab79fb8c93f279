@@ -22,6 +22,29 @@
       },
       "revId": "2f656df4a2fdc4f973ced687f0ab79fb8c93f279",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcc8b5b6_3c33d9f6",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-03-29T10:24:44Z",
+      "side": 1,
+      "message": "Refine it to two lines would be enough.",
+      "range": {
+        "startLine": 847,
+        "startChar": 0,
+        "endLine": 850,
+        "endChar": 18
+      },
+      "revId": "2f656df4a2fdc4f973ced687f0ab79fb8c93f279",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
