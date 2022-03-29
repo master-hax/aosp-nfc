@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70e82bb8_a7dd3c3d",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-03-29T10:21:53Z",
+      "side": 1,
+      "message": "Could you refine the format here?\n```\n    /* Skip RF Tech Specific Parametres +                                       \n     * Skip RF Technology mode, Tx , Rx baud rate \u0026 length params               \n     * Byte 1         Byte 2     Byte 3    Byte 4                               \n     * Tech and Mode  Tx BR      Rx BR     Length of Act Param                  \n     * */ \n```",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 844,
+        "endChar": 66
+      },
+      "revId": "2f656df4a2fdc4f973ced687f0ab79fb8c93f279",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
