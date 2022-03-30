@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22206cd8_e00d77f8",
+        "filename": "src/adaptation/debug_nfcsnoop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1941275
+      },
+      "writtenOn": "2022-03-30T09:39:09Z",
+      "side": 1,
+      "message": "Keep `NFCSNOOP_LOG` to be the default for all the headers?",
+      "revId": "c18c2fd7acd2e77c73427a1899df08cc4fbb2cd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
