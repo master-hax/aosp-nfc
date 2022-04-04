@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db45625e_fc4c8a6f",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2022-04-04T10:06:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "70e82bb8_a7dd3c3d",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 844,
+        "endChar": 66
+      },
+      "revId": "2f656df4a2fdc4f973ced687f0ab79fb8c93f279",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fcc8b5b6_3c33d9f6",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-03-29T10:24:44Z",
       "side": 1,
       "message": "Refine it to two lines would be enough.",
+      "range": {
+        "startLine": 847,
+        "startChar": 0,
+        "endLine": 850,
+        "endChar": 18
+      },
+      "revId": "2f656df4a2fdc4f973ced687f0ab79fb8c93f279",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0927641_0263b732",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2022-04-04T10:06:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fcc8b5b6_3c33d9f6",
       "range": {
         "startLine": 847,
         "startChar": 0,
