@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "127a9688_37787251",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-04-06T14:24:42Z",
+      "side": 1,
+      "message": "Could you remove the redundant new line here?",
+      "revId": "b4690e9d11db3f3dca90f3d1e41f04cf00057547",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab160580_698193f7",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3091,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-04-06T14:24:42Z",
+      "side": 1,
+      "message": "Look into line 3151, p_i93-\u003estate is still mote to IDLE when sent_cmd \u003d\u003d I93_CMD_STAY_QUIET.",
+      "range": {
+        "startLine": 3091,
+        "startChar": 8,
+        "endLine": 3091,
+        "endChar": 47
+      },
+      "revId": "b4690e9d11db3f3dca90f3d1e41f04cf00057547",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12b648fc_248fee45",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3151,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-04-06T14:24:42Z",
+      "side": 1,
+      "message": "Here the state still moved to IDLE.",
+      "range": {
+        "startLine": 3151,
+        "startChar": 4,
+        "endLine": 3151,
+        "endChar": 37
+      },
+      "revId": "b4690e9d11db3f3dca90f3d1e41f04cf00057547",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
