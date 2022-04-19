@@ -22,6 +22,30 @@
       },
       "revId": "8ecf787ef115742af079856d3c6aa8229bdeb0f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69af1ac1_2aaf8cea",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2022-04-19T03:57:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9c4def8_6433ecfa",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 840,
+        "endChar": 9
+      },
+      "revId": "8ecf787ef115742af079856d3c6aa8229bdeb0f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
