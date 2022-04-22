@@ -443,7 +443,8 @@ packet ConnCloseResponse : Response (cmd_op = CORE_CONN_CLOSE) {
 }
 
 struct CreditsPerConn {
-  conn_id : 8,
+  conn_id : 4,
+  rfu : 4,
   ncredits : 8,
 }
 

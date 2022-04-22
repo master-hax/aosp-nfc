@@ -14,20 +14,25 @@
 
 //! NCI API module
 
-use crate::{CommandSender, Result};
+use crate::{CommandSender, LogicalConnectionsRegistry, Result};
 use bytes::Bytes;
-use log::debug;
+use log::{debug, error};
 use nfc_hal::{HalEvent, HalEventRegistry, HalEventStatus};
-use nfc_packets::nci::{self, CommandBuilder, Opcode};
+use nfc_packets::nci::{self, CommandBuilder, DataPacket, Opcode};
+use nfc_packets::nci::{ConnCloseCommandBuilder, ConnCreateCommandBuilder};
+use nfc_packets::nci::{DestParamTypes, DestParams, DestTypes};
 use nfc_packets::nci::{FeatureEnable, PacketBoundaryFlag, ResetType};
 use nfc_packets::nci::{InitCommandBuilder, ResetCommandBuilder};
 use nfc_packets::nci::{InitResponsePacket, ResponseChild};
+use num_traits::cast::FromPrimitive;
 use tokio::sync::oneshot;
 
 /// NCI API object to manage static API data
 pub struct NciApi {
     /// Command Sender external interface
     commands: Option<CommandSender>,
+    /// Interface to Logical Connections Registry
+    connections: Option<LogicalConnectionsRegistry>,
     /// The NFC response callback
     callback: Option<fn(u16, &[u8])>,
     /// HalEventRegistry is used to register for HAL events
@@ -37,13 +42,15 @@ pub struct NciApi {
 
 struct NfcData {
     init_response: Option<InitResponsePacket>,
+    rf_callback: Option<fn(u8, u16, &[u8])>,
+    hci_callback: Option<fn(u8, u16, &[u8])>,
 }
 
 impl NciApi {
     /// NciApi constructor
     pub fn new() -> NciApi {
-        let nfc_data = NfcData { init_response: None };
-        NciApi { commands: None, callback: None, hal_events: None, nfc_data }
+        let nfc_data = NfcData { init_response: None, rf_callback: None, hci_callback: None };
+        NciApi { commands: None, connections: None, callback: None, hal_events: None, nfc_data }
     }
 
     /** ****************************************************************************
@@ -70,6 +77,7 @@ impl NciApi {
         let nci = crate::init().await;
 
         self.commands = Some(nci.commands);
+        self.connections = Some(nci.connections);
         self.callback = Some(callback);
         self.hal_events = Some(nci.hal_events);
     }
@@ -96,6 +104,9 @@ impl NciApi {
 
             if let Some(cmd) = self.commands.take() {
                 drop(cmd);
+            }
+            if let Some(conn) = self.connections.take() {
+                drop(conn);
             }
             let status = rx.await.unwrap();
             debug!("Shutdown complete {:?}.", status);
@@ -135,6 +146,18 @@ impl NciApi {
                 )
                 .await?;
             if let ResponseChild::InitResponse(irp) = init.specialize() {
+                if let Some(conn) = self.connections.as_mut() {
+                    // Open static RF connection
+                    conn.open(0, self.nfc_data.rf_callback, 0, 0).await;
+                    // Open static HCI connection
+                    conn.open(
+                        1,
+                        self.nfc_data.hci_callback,
+                        irp.get_max_data_payload(),
+                        irp.get_num_of_credits(),
+                    )
+                    .await;
+                }
                 self.nfc_data.init_response = Some(irp);
             }
         }
@@ -233,6 +256,235 @@ impl NciApi {
                 cb(3, &raw[3..]);
             }
             Ok(raw[3])
+        } else {
+            Ok(nci::Status::NotInitialized as u8)
+        }
+    }
+    /** ****************************************************************************
+     **
+     ** Function         NFC_ConnCreate
+     **
+     ** Description      This function is called to create a logical connection with
+     **                  NFCC for data exchange.
+     **                  The response from NFCC is reported in tNFC_CONN_CBACK
+     **                  as NFC_CONN_CREATE_CEVT.
+     **
+     ** Parameters       dest_type - the destination type
+     **                  id   - the NFCEE ID or RF Discovery ID .
+     **                  protocol - the protocol
+     **                  p_cback - the data callback function to receive data from
+     **                  NFCC
+     **
+     ** Returns          tNFC_STATUS
+     **
+     *******************************************************************************/
+    //extern tNFC_STATUS NFC_ConnCreate(uint8_t dest_type, uint8_t id,
+    //                                  uint8_t protocol, tNFC_CONN_CBACK* p_cback);
+    pub async fn nfc_conn_create(
+        &mut self,
+        dest_type: u8,
+        id: u8,
+        protocol: u8,
+        callback: fn(u8, u16, &[u8]),
+    ) -> Result<u8> {
+        let pbf = PacketBoundaryFlag::CompleteOrFinal;
+        let mut destparams: Vec<DestParams> = Vec::new();
+        let dt = DestTypes::from_u8(dest_type).unwrap();
+        match dt {
+            DestTypes::NfccLpbk => (),
+            DestTypes::Remote => {
+                let valdsp: Vec<u8> = vec![id, protocol];
+                destparams.push(DestParams { ptype: DestParamTypes::RfDisc, valdsp });
+            }
+            DestTypes::Nfcee => {
+                let valdsp: Vec<u8> = vec![id, protocol];
+                destparams.push(DestParams { ptype: DestParamTypes::Nfcee, valdsp });
+            }
+            _ => return Ok(nci::Status::InvalidParam as u8),
+        }
+        if let Some(cmd) = self.commands.as_mut() {
+            let rp = cmd
+                .send(ConnCreateCommandBuilder { gid: 0, pbf, dt, destparams }.build().into())
+                .await?;
+            if let ResponseChild::ConnCreateResponse(ccrp) = rp.specialize() {
+                let status = ccrp.get_status();
+                if status == nci::Status::Ok {
+                    if let Some(conn) = self.connections.as_mut() {
+                        conn.open(
+                            ccrp.get_conn_id(),
+                            Some(callback),
+                            ccrp.get_mpps(),
+                            ccrp.get_ncreds(),
+                        )
+                        .await;
+                        let mut conn_create_evt = [0u8; 5];
+                        conn_create_evt[0] = status as u8;
+                        conn_create_evt[1] = dest_type;
+                        conn_create_evt[2] = id;
+                        conn_create_evt[3] = ccrp.get_mpps();
+                        conn_create_evt[4] = ccrp.get_ncreds();
+                        callback(ccrp.get_conn_id(), 0, &conn_create_evt[..]);
+                    } else {
+                        return Ok(nci::Status::NotInitialized as u8);
+                    }
+                }
+                Ok(status as u8)
+            } else {
+                Ok(nci::Status::Failed as u8)
+            }
+        } else {
+            Ok(nci::Status::NotInitialized as u8)
+        }
+    }
+
+    /** ****************************************************************************
+     **
+     ** Function         NFC_ConnClose
+     **
+     ** Description      This function is called to close a logical connection with
+     **                  NFCC.
+     **                  The response from NFCC is reported in tNFC_CONN_CBACK
+     **                  as NFC_CONN_CLOSE_CEVT.
+     **
+     ** Parameters       conn_id - the connection id.
+     **
+     ** Returns          tNFC_STATUS
+     **
+     *******************************************************************************/
+    //extern tNFC_STATUS NFC_ConnClose(uint8_t conn_id);
+    pub async fn nfc_conn_close(&mut self, conn_id: u8) -> Result<u8> {
+        let pbf = PacketBoundaryFlag::CompleteOrFinal;
+        if let Some(conn) = self.connections.as_mut() {
+            if let Some(cb) = conn.close(conn_id).await {
+                if let Some(cmd) = self.commands.as_mut() {
+                    let rp = cmd
+                        .send(ConnCloseCommandBuilder { gid: 0, pbf, conn_id }.build().into())
+                        .await?;
+                    if let ResponseChild::ConnCloseResponse(ccrp) = rp.specialize() {
+                        let status = ccrp.get_status() as u8;
+                        let conn_close_evt = [status];
+                        cb(conn_id, 1, &conn_close_evt[..]);
+                        return Ok(status);
+                    } else {
+                        return Ok(nci::Status::Failed as u8);
+                    }
+                }
+            } else {
+                return Ok(nci::Status::InvalidParam as u8);
+            }
+        }
+        Ok(nci::Status::NotInitialized as u8)
+    }
+
+    /** *****************************************************************************
+     **
+     ** Function         NFC_SetStaticRfCback
+     **
+     ** Description      This function is called to update the data callback function
+     **                  to receive the data for the given connection id.
+     **
+     ** Parameters       p_cback - the connection callback function
+     **
+     ** Returns          Nothing
+     **
+     *******************************************************************************/
+    //extern void NFC_SetStaticRfCback(tNFC_CONN_CBACK* p_cback);
+    pub async fn nfc_set_static_rf_callback(&mut self, callback: fn(u8, u16, &[u8])) {
+        self.nfc_data.rf_callback = Some(callback);
+        if let Some(conn) = self.connections.as_mut() {
+            conn.set_static_callback(0, Some(callback)).await;
+        }
+    }
+
+    /** *****************************************************************************
+     **
+     ** Function         NFC_SetStaticHciCback
+     **
+     ** Description      This function to update the data callback function
+     **                  to receive the data for the static Hci connection id.
+     **
+     ** Parameters       p_cback - the connection callback function
+     **
+     ** Returns          Nothing
+     **
+     *******************************************************************************/
+    //extern void NFC_SetStaticHciCback(tNFC_CONN_CBACK* p_cback);
+    pub async fn nfc_set_static_hci_callback(&mut self, callback: fn(u8, u16, &[u8])) {
+        self.nfc_data.hci_callback = Some(callback);
+        if let Some(conn) = self.connections.as_mut() {
+            conn.set_static_callback(1, Some(callback)).await;
+        }
+    }
+
+    /*******************************************************************************
+     **
+     ** Function         NFC_SetReassemblyFlag
+     **
+     ** Description      This function is called to set if nfc will reassemble
+     **                  nci packet as much as its buffer can hold or it should not
+     **                  reassemble but forward the fragmented nci packet to layer
+     **                  above. If nci data pkt is fragmented, nfc may send multiple
+     **                  NFC_DATA_CEVT with status NFC_STATUS_CONTINUE before sending
+     **                  NFC_DATA_CEVT with status NFC_STATUS_OK based on reassembly
+     **                  configuration and reassembly buffer size
+     **
+     ** Parameters       reassembly - flag to indicate if nfc may reassemble or not
+     **
+     ** Returns          Nothing
+     **
+     *******************************************************************************/
+    //extern void NFC_SetReassemblyFlag(bool reassembly);
+
+    /** ****************************************************************************
+     **
+     ** Function         NFC_SendData
+     **
+     ** Description      This function is called to send the given data packet
+     **                  to the connection identified by the given connection id.
+     **
+     ** Parameters       conn_id - the connection id.
+     **                  p_data - the data packet
+     **
+     ** Returns          tNFC_STATUS
+     **
+     *******************************************************************************/
+    //extern tNFC_STATUS NFC_SendData(uint8_t conn_id, NFC_HDR* p_data);
+    pub async fn nfc_send_data(&mut self, conn_id: u8, data: &[u8]) -> Result<u8> {
+        if let Some(conn) = self.connections.as_mut() {
+            match DataPacket::parse(data) {
+                Ok(pkt) => {
+                    conn.send_packet(conn_id, pkt).await;
+                    return Ok(nci::Status::Ok as u8);
+                }
+                Err(e) => {
+                    error!("Data packet is invalid:{:?}", e);
+                    return Ok(nci::Status::InvalidParam as u8);
+                }
+            }
+        }
+        Ok(nci::Status::NotInitialized as u8)
+    }
+
+    /** ****************************************************************************
+     **
+     ** Function         NFC_FlushData
+     **
+     ** Description      This function is called to discard the tx data queue of
+     **                  the given connection id.
+     **
+     ** Parameters       conn_id - the connection id.
+     **
+     ** Returns          tNFC_STATUS
+     **
+     *******************************************************************************/
+    //extern tNFC_STATUS NFC_FlushData(uint8_t conn_id);
+    pub async fn nfc_flush_data(&mut self, conn_id: u8) -> Result<u8> {
+        if let Some(conn) = self.connections.as_mut() {
+            if conn.flush_data(conn_id).await {
+                Ok(nci::Status::Ok as u8)
+            } else {
+                Ok(nci::Status::Failed as u8)
+            }
         } else {
             Ok(nci::Status::NotInitialized as u8)
         }
