@@ -36,6 +36,7 @@ rust_library {
         "libnfc_packets",
         "libbytes",
         "libnfc_hal",
+        "libnum_traits",
         "libtokio",
         "libcxx",
         "liblazy_static",
