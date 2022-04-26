@@ -20,6 +20,9 @@ FuzzedDataProvider* g_fuzzed_data;
 static bool g_saw_event = false;
 static tNFA_EE_DISCOVER_REQ g_ee_info;
 
+constexpr int32_t kMaxFramesSize =
+    USHRT_MAX - NFC_HDR_SIZE - NCI_MSG_OFFSET_SIZE - NCI_DATA_HDR_SIZE - 3;
+
 static void nfa_dm_callback(uint8_t event, tNFA_DM_CBACK_DATA*) {
   g_saw_event = true;
   LOG(INFO) << android::base::StringPrintf("nfa_dm_callback got event %d",
@@ -301,7 +304,9 @@ void NfcIntegrationFuzzer::DoOneCommand(
       std::vector<uint8_t> frame(
           command.send_raw_frame().data(),
           command.send_raw_frame().data() + command.send_raw_frame().size());
-      NFA_SendRawFrame(frame.data(), frame.size(),
+      uint16_t frameSize =
+          frame.size() <= kMaxFramesSize ? frame.size() : kMaxFramesSize;
+      NFA_SendRawFrame(frame.data(), frameSize,
                        /*presence check start delay*/ 0);
       break;
     }
