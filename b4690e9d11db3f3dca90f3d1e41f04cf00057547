@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5a2f265b_0d9120bc",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3091,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2022-06-13T13:10:15Z",
+      "side": 1,
+      "message": "But event is set to error in line 3096 if state is set to IDLE here",
+      "parentUuid": "ab160580_698193f7",
+      "range": {
+        "startLine": 3091,
+        "startChar": 8,
+        "endLine": 3091,
+        "endChar": 47
+      },
+      "revId": "b4690e9d11db3f3dca90f3d1e41f04cf00057547",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "12b648fc_248fee45",
         "filename": "src/nfc/tags/rw_i93.cc",
         "patchSetId": 2
