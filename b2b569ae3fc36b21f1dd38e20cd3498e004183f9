@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc35adf5_c51cd993",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-06-22T11:32:09Z",
+      "side": 1,
+      "message": "Notify Arach due to the original change comes from aosp/1456258",
+      "revId": "b2b569ae3fc36b21f1dd38e20cd3498e004183f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
