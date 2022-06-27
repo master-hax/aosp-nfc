@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfa385ec_39711073",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2022-06-27T09:25:36Z",
+      "side": 1,
+      "message": "One more minor update needed to save start_offset for empty AID.\n",
+      "revId": "b0b404230ff1e5ba16528186716d7bfa7abc9c8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be9ca97b_afb0c592",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2022-06-27T09:25:36Z",
+      "side": 1,
+      "message": "start_offset of Empty AID also needs to be updated",
+      "range": {
+        "startLine": 434,
+        "startChar": 8,
+        "endLine": 434,
+        "endChar": 21
+      },
+      "revId": "b0b404230ff1e5ba16528186716d7bfa7abc9c8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
