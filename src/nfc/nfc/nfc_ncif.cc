@@ -838,6 +838,15 @@ Available after Technology Detection
   } else if (NCI_DISCOVERY_TYPE_POLL_ACTIVE == p_param->mode) {
     acm_p = &p_param->param.acm_p;
 
+    /* Skip RF Tech Specific Parametres +
+     * Skip RF Technology mode, Tx , Rx baud rate & length params
+     * Byte 1         Byte 2     Byte 3    Byte 4
+     * Tech and Mode  Tx BR      Rx BR     Length of Act Param
+     */
+    p = p + len + 3;
+    plen = *p++;
+    LOG(INFO) << StringPrintf(
+        "RF Tech Specific Params, plen: 0x%x, atr_res_len: 0x%x", plen, *p);
     if (plen < 1) {
       goto invalid_packet;
     }
@@ -1476,6 +1485,11 @@ void nfc_ncif_proc_ee_discover_req(uint8_t* p, uint16_t plen) {
 
   DLOG_IF(INFO, nfc_debug_enabled)
       << StringPrintf("nfc_ncif_proc_ee_discover_req %d len:%d", *p, plen);
+
+  if (!plen) {
+    android_errorWriteLog(0x534e4554, "221856662");
+    return;
+  }
 
   if (*p > NFC_MAX_EE_DISC_ENTRIES) {
     android_errorWriteLog(0x534e4554, "122361874");
