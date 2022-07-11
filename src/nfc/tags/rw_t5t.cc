@@ -834,6 +834,12 @@ void rw_t5t_sm_set_read_only(NFC_HDR* p_resp) {
 
     case RW_I93_SUBSTATE_LOCK_T5T_AREA:
 
+      if (p_i93->block_size == 0) {
+        LOG(ERROR) << StringPrintf("%s - zero block_size error", __func__);
+        rw_i93_handle_error(NFC_STATUS_FAILED);
+        break;
+      }
+
       DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
           "%s - rw_offset:0x%02x, t5t_area_last_offset:0x%02x", __func__,
           p_i93->rw_offset, p_i93->t5t_area_last_offset);
