@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd646379_a1c9a1b6",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-07-13T07:50:09Z",
+      "side": 1,
+      "message": "num_bytes is uint8_t, but p_t2t-\u003emem_tlv[count].num_bytes is uint16_t.\nPossible endless loop here.\n\nmem_tlv change from aosp/1454988",
+      "range": {
+        "startLine": 2051,
+        "startChar": 11,
+        "endLine": 2051,
+        "endChar": 54
+      },
+      "revId": "bd8fceae812c28b59ceec5b59c6ae82385f7dc11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
