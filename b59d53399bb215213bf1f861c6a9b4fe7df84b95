@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bf94705_a8fdf35e",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-07-13T07:47:01Z",
+      "side": 1,
+      "message": "tlv_data.num_bytes is uint8_t, but p_t2t-\u003emem_tlv[p_t2t-\u003enum_mem_tlvs].num_bytes are uint16_t, it might be overflow here.",
+      "range": {
+        "startLine": 294,
+        "startChar": 17,
+        "endLine": 294,
+        "endChar": 26
+      },
+      "revId": "b59d53399bb215213bf1f861c6a9b4fe7df84b95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "070e6b4b_502be16f",
+        "filename": "src/nfc/tags/rw_t2t_ndef.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-07-13T07:47:01Z",
+      "side": 1,
+      "message": "num_bytes is uint8_t, but p_t2t-\u003emem_tlv[count].num_bytes is uint16_t.\nPossible endless loop here.\nFix in aosp/2152593",
+      "range": {
+        "startLine": 2011,
+        "startChar": 11,
+        "endLine": 2011,
+        "endChar": 20
+      },
+      "revId": "b59d53399bb215213bf1f861c6a9b4fe7df84b95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
