@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c3c615a_6d278b12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869221
+      },
+      "writtenOn": "2022-08-01T18:47:37Z",
+      "side": 1,
+      "message": "These NFC fuzzers are not able to be built for AFL right now. Adding the fuzzing_frameworks field will specify that these fuzzers will only be able to be built for libfuzzer to prevent build breaks.",
+      "revId": "e289e52bbb672aa8f13434db9032cdc4ef147f1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
