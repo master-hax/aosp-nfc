@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f8081ff_20538842",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869221
+      },
+      "writtenOn": "2022-08-02T23:56:16Z",
+      "side": 1,
+      "message": "Hi Zach and Alisher, the presubmit issue is fixed now. Please let me know if you have any questions about this CL, or if you are not the correct people to reach out to for approvals here.\n\nbasically this CL is to opt these fuzzers out of a feature that is getting released because they do not build as AFL++ fuzz targets right now",
+      "revId": "b1031b60bc34281abe59787bbd16781dba251f7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
