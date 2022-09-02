@@ -1776,7 +1776,7 @@ tNFC_STATUS rw_i93_get_next_block_sec(void) {
     num_blocks = RW_I93_GET_MULTI_BLOCK_SEC_SIZE;
 
   DLOG_IF(INFO, nfc_debug_enabled)
-      << __func__ << std::hex << rw_cb.tcb.i93.intl_flags;
+      << StringPrintf("%s intl_flags=%d", __func__, rw_cb.tcb.i93.intl_flags);
   return rw_i93_send_cmd_get_multi_block_sec(p_i93->rw_offset, num_blocks);
 }
 
@@ -3087,7 +3087,10 @@ void rw_i93_handle_error(tNFC_STATUS status) {
 
   if (rw_cb.p_cback) {
     rw_data.status = status;
-
+    if ((NFC_STATUS_TIMEOUT == rw_data.status) &&
+        (p_i93->sent_cmd != I93_CMD_STAY_QUIET)) {
+      p_i93->state = RW_I93_STATE_IDLE;
+    }
     switch (p_i93->state) {
       case RW_I93_STATE_IDLE: /* in case of RawFrame */
         event = RW_I93_INTF_ERROR_EVT;
