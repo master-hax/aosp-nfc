@@ -27,6 +27,7 @@
 // aidl => syslog.h
 #undef LOG_INFO
 #undef LOG_WARNING
+#include <android-base/properties.h>
 #include <android-base/stringprintf.h>
 #include <android/hardware/nfc/1.1/INfc.h>
 #include <android/hardware/nfc/1.2/INfc.h>
@@ -60,8 +61,8 @@ using INfcV1_1 = android::hardware::nfc::V1_1::INfc;
 using INfcV1_2 = android::hardware::nfc::V1_2::INfc;
 using NfcVendorConfigV1_1 = android::hardware::nfc::V1_1::NfcConfig;
 using NfcVendorConfigV1_2 = android::hardware::nfc::V1_2::NfcConfig;
-using android::hardware::nfc::V1_1::INfcClientCallback;
 using android::hardware::hidl_vec;
+using android::hardware::nfc::V1_1::INfcClientCallback;
 using INfcAidl = ::aidl::android::hardware::nfc::INfc;
 using NfcAidlConfig = ::aidl::android::hardware::nfc::NfcConfig;
 using AidlPresenceCheckAlgorithm =
@@ -72,6 +73,10 @@ using NfcAidlEvent = ::aidl::android::hardware::nfc::NfcEvent;
 using NfcAidlStatus = ::aidl::android::hardware::nfc::NfcStatus;
 using ::aidl::android::hardware::nfc::NfcCloseType;
 using Status = ::ndk::ScopedAStatus;
+
+#define VERBOSE_VENDOR_LOG_PROPERTY "persist.nfc.verbosevendorlog"
+#define VERBOSE_VENDOR_LOG_ENABLED "enabled"
+#define VERBOSE_VENDOR_LOG_DISABLED "disabled"
 
 std::string NFC_AIDL_HAL_SERVICE_NAME = "android.hardware.nfc.INfc/default";
 
@@ -540,12 +545,12 @@ void NfcAdaptation::Initialize() {
 
   GKI_init();
   GKI_enable();
-  GKI_create_task((TASKPTR)NFCA_TASK, BTU_TASK, (int8_t*)"NFCA_TASK", nullptr, 0,
-                  (pthread_cond_t*)nullptr, nullptr);
+  GKI_create_task((TASKPTR)NFCA_TASK, BTU_TASK, (int8_t*)"NFCA_TASK", nullptr,
+                  0, (pthread_cond_t*)nullptr, nullptr);
   {
     AutoThreadMutex guard(mCondVar);
-    GKI_create_task((TASKPTR)Thread, MMI_TASK, (int8_t*)"NFCA_THREAD", nullptr, 0,
-                    (pthread_cond_t*)nullptr, nullptr);
+    GKI_create_task((TASKPTR)Thread, MMI_TASK, (int8_t*)"NFCA_THREAD", nullptr,
+                    0, (pthread_cond_t*)nullptr, nullptr);
     mCondVar.wait();
   }
 
@@ -660,8 +665,8 @@ uint32_t NfcAdaptation::Thread(__attribute__((unused)) uint32_t arg) {
   {
     ThreadCondVar CondVar;
     AutoThreadMutex guard(CondVar);
-    GKI_create_task((TASKPTR)nfc_task, NFC_TASK, (int8_t*)"NFC_TASK", nullptr, 0,
-                    (pthread_cond_t*)CondVar, (pthread_mutex_t*)CondVar);
+    GKI_create_task((TASKPTR)nfc_task, NFC_TASK, (int8_t*)"NFC_TASK", nullptr,
+                    0, (pthread_cond_t*)CondVar, (pthread_mutex_t*)CondVar);
     CondVar.wait();
   }
 
@@ -792,6 +797,15 @@ void NfcAdaptation::HalOpen(tHAL_NFC_CBACK* p_hal_cback,
                  << ::aidl::android::hardware::nfc::toString(
                         static_cast<NfcAidlStatus>(
                             status.getServiceSpecificError()));
+    } else {
+      bool verbose_vendor_log =
+          android::base::GetProperty(VERBOSE_VENDOR_LOG_PROPERTY, "")
+                  .compare(VERBOSE_VENDOR_LOG_ENABLED)
+              ? false
+              : true;
+      mAidlHal->setEnableVerboseLogging(verbose_vendor_log);
+      DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+          "%s: verbose_vendor_log=%u", __func__, verbose_vendor_log);
     }
   } else if (mHal_1_1 != nullptr) {
     mCallback = new NfcClientCallback(p_hal_cback, p_data_cback);
