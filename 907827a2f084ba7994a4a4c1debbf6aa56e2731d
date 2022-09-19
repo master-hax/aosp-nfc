@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3bb7fa6_83c993ce",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-09-19T14:50:40Z",
+      "side": 1,
+      "message": "int8_t index range -127 to 127\nIt\u0027s too small when max_aid_entries is larger than 127.",
+      "range": {
+        "startLine": 449,
+        "startChar": 22,
+        "endLine": 449,
+        "endChar": 33
+      },
+      "revId": "907827a2f084ba7994a4a4c1debbf6aa56e2731d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98953d83_fac0c54f",
+        "filename": "src/nfa/include/nfa_ee_int.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-09-19T14:50:40Z",
+      "side": 1,
+      "message": "2 or 0x02",
+      "range": {
+        "startLine": 152,
+        "startChar": 30,
+        "endLine": 152,
+        "endChar": 32
+      },
+      "revId": "907827a2f084ba7994a4a4c1debbf6aa56e2731d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "441a9bad_4a63e14a",
+        "filename": "src/nfa/include/nfa_ee_int.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-09-19T14:50:40Z",
+      "side": 1,
+      "message": "int8_t range -127 to 127\nIt\u0027s too small when max_aid_entries is larger than 127.",
+      "range": {
+        "startLine": 231,
+        "startChar": 2,
+        "endLine": 231,
+        "endChar": 8
+      },
+      "revId": "907827a2f084ba7994a4a4c1debbf6aa56e2731d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
