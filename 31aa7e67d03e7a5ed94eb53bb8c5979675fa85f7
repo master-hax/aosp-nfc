@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dda97f55_32be6447",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2022-09-22T03:51:34Z",
+      "side": 1,
+      "message": "Greetings Colleagues\n\nCould you please take a look into this CL at your convenience\n\nThis change eliminates extra shared libraries dependencies\\reduces memory consumption\n\nChanges are done in accordance to statsd logging approach\n\nMore details here b/248061365\n\nMany thanks in advance\n\nSincerely\nVova",
+      "revId": "31aa7e67d03e7a5ed94eb53bb8c5979675fa85f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
