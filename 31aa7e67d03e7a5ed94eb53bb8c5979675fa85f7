@@ -33,6 +33,24 @@
       "message": "do you know if any minApiVersin is needed? eg if this is logged from a mainline module?",
       "revId": "31aa7e67d03e7a5ed94eb53bb8c5979675fa85f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b20ed2c_bad07502",
+        "filename": "src/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2022-09-23T01:24:33Z",
+      "side": 1,
+      "message": "I do not see relevant mainline module for nfc. However there is an nfc application - which uses also api auto gen - see packages/apps/Nfc/Android.bp without API version restriction",
+      "parentUuid": "e70ad4ab_238ef495",
+      "revId": "31aa7e67d03e7a5ed94eb53bb8c5979675fa85f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
