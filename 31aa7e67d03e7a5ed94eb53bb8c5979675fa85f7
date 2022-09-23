@@ -16,6 +16,23 @@
       "message": "Greetings Colleagues\n\nCould you please take a look into this CL at your convenience\n\nThis change eliminates extra shared libraries dependencies\\reduces memory consumption\n\nChanges are done in accordance to statsd logging approach\n\nMore details here b/248061365\n\nMany thanks in advance\n\nSincerely\nVova",
       "revId": "31aa7e67d03e7a5ed94eb53bb8c5979675fa85f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e70ad4ab_238ef495",
+        "filename": "src/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2022-09-23T00:34:18Z",
+      "side": 1,
+      "message": "do you know if any minApiVersin is needed? eg if this is logged from a mainline module?",
+      "revId": "31aa7e67d03e7a5ed94eb53bb8c5979675fa85f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
