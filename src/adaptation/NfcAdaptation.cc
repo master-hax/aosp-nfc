@@ -182,12 +182,10 @@ class NfcHalDeathRecipient : public hidl_death_recipient {
     ALOGE(
         "NfcHalDeathRecipient::serviceDied - Nfc-Hal service died. Killing "
         "NfcService");
-    if (mNfcDeathHal) {
-      mNfcDeathHal->unlinkToDeath(this);
-    }
     mNfcDeathHal = NULL;
     abort();
   }
+
   void finalize() {
     if (mNfcDeathHal) {
       mNfcDeathHal->unlinkToDeath(this);
@@ -1042,11 +1040,7 @@ void NfcAdaptation::HalDownloadFirmwareDataCallback(__attribute__((unused))
 *******************************************************************************/
 void NfcAdaptation::HalAidlBinderDiedImpl() {
   LOG(WARNING) << __func__ << "INfc aidl hal died, resetting the state";
-  if (mAidlHal != nullptr) {
-    AIBinder_unlinkToDeath(mAidlHal->asBinder().get(), mDeathRecipient.get(),
-                           this);
-    mAidlHal = nullptr;
-  }
+  mAidlHal = nullptr;
   abort();
 }
 
