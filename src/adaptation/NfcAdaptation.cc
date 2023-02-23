@@ -186,7 +186,7 @@ class NfcHalDeathRecipient : public hidl_death_recipient {
       mNfcDeathHal->unlinkToDeath(this);
     }
     mNfcDeathHal = NULL;
-    abort();
+    GKI_shutdown();
   }
   void finalize() {
     if (mNfcDeathHal) {
@@ -1047,7 +1047,7 @@ void NfcAdaptation::HalAidlBinderDiedImpl() {
                            this);
     mAidlHal = nullptr;
   }
-  abort();
+  GKI_shutdown();
 }
 
 // static
