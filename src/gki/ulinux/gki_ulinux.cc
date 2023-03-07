@@ -294,6 +294,10 @@ void GKI_shutdown(void) {
             TASK_MBOX_3_EVT_MASK);
       GKI_send_event(task_id - 1, EVENT_MASK(GKI_SHUTDOWN_EVT));
 
+      if (((task_id - 1) == BTU_TASK)) {
+        gki_cb.com.system_tick_running = false;
+        *p_run_cond = GKI_TIMER_TICK_EXIT_COND; /* stop system tick */
+      }
 #if (FALSE == GKI_PTHREAD_JOINABLE)
       i = 0;
 
@@ -490,6 +494,7 @@ void GKI_run(__attribute__((unused)) void* p_task_id) {
 #endif
   } /* for */
 #endif
+  gki_cb.com.OSWaitEvt[BTU_TASK] = 0;
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s exit", __func__);
 }
 
