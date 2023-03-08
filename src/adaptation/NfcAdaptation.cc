@@ -74,9 +74,9 @@ using NfcAidlStatus = ::aidl::android::hardware::nfc::NfcStatus;
 using ::aidl::android::hardware::nfc::NfcCloseType;
 using Status = ::ndk::ScopedAStatus;
 
-#define VERBOSE_VENDOR_LOG_PROPERTY "persist.nfc.verbosevendorlog"
-#define VERBOSE_VENDOR_LOG_ENABLED "enabled"
-#define VERBOSE_VENDOR_LOG_DISABLED "disabled"
+#define VERBOSE_VENDOR_LOG_PROPERTY "persist.nfc.vendor_debug_enabled"
+#define VERBOSE_VENDOR_LOG_ENABLED "true"
+#define VERBOSE_VENDOR_LOG_DISABLED "false"
 
 std::string NFC_AIDL_HAL_SERVICE_NAME = "android.hardware.nfc.INfc/default";
 
@@ -576,7 +576,10 @@ void NfcAdaptation::Finalize() {
 
   NfcConfig::clear();
 
-  if (mHal != nullptr) {
+  if (mAidlHal != nullptr) {
+    AIBinder_unlinkToDeath(mAidlHal->asBinder().get(), mDeathRecipient.get(),
+                           this);
+  } else if (mHal != nullptr) {
     mNfcHalDeathRecipient->finalize();
   }
   DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s: exit", func);
@@ -598,6 +601,7 @@ void NfcAdaptation::DeviceShutdown() {
     mAidlHal->close(NfcCloseType::HOST_SWITCHED_OFF);
     AIBinder_unlinkToDeath(mAidlHal->asBinder().get(), mDeathRecipient.get(),
                            this);
+    mAidlHal = nullptr;
   } else {
     if (mHal_1_2 != nullptr) {
       mHal_1_2->closeForPowerOffCase();
