@@ -358,9 +358,6 @@ uint32_t nfc_task(__attribute__((unused)) uint32_t arg) {
   /* main loop */
   while (true) {
     event = GKI_wait(0xFFFF, 0);
-    if (event & EVENT_MASK(GKI_SHUTDOWN_EVT)) {
-      break;
-    }
     /* Handle NFC_TASK_EVT_TRANSPORT_READY from NFC HAL */
     if (event & NFC_TASK_EVT_TRANSPORT_READY) {
       DLOG_IF(INFO, nfc_debug_enabled)
@@ -443,6 +440,10 @@ uint32_t nfc_task(__attribute__((unused)) uint32_t arg) {
 
     if (event & NFA_TIMER_EVT_MASK) {
       nfa_sys_timer_update();
+    }
+
+    if (event & EVENT_MASK(GKI_SHUTDOWN_EVT)) {
+      break;
     }
   }
 
