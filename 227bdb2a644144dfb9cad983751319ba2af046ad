@@ -46,6 +46,30 @@
       },
       "revId": "227bdb2a644144dfb9cad983751319ba2af046ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6222f017_3127626a",
+        "filename": "src/nfc/nfc/nfc_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-03-20T15:19:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2eb0e749_41a766bb",
+      "range": {
+        "startLine": 361,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 5
+      },
+      "revId": "227bdb2a644144dfb9cad983751319ba2af046ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
