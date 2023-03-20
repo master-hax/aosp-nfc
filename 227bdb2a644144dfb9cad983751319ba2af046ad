@@ -22,6 +22,30 @@
       },
       "revId": "227bdb2a644144dfb9cad983751319ba2af046ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2eb0e749_41a766bb",
+        "filename": "src/nfc/nfc/nfc_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1986260
+      },
+      "writtenOn": "2023-03-20T12:02:29Z",
+      "side": 1,
+      "message": "Moved this handling from here to down. Because, if it receives 2 Events(including ShutDown) at the same time, it misses to handle the event and miss to deallocate the resources of the event other than shutdown event.",
+      "parentUuid": "1d8fa004_95dc2523",
+      "range": {
+        "startLine": 361,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 5
+      },
+      "revId": "227bdb2a644144dfb9cad983751319ba2af046ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
