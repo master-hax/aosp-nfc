@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b782cc19_d874d70b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-03-23T10:08:51Z",
+      "side": 1,
+      "message": "Could you check whether it\u0027s necessary to move it from the beginning to the end?\nI think the struck problem should already fixed in aosp/2467420 .\nIt\u0027s not a issue now.",
+      "revId": "148f91d8e1e50e0de10b27ccf8489fefadf0ac95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
