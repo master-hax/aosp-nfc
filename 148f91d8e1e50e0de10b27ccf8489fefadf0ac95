@@ -16,6 +16,24 @@
       "message": "Could you check whether it\u0027s necessary to move it from the beginning to the end?\nI think the struck problem should already fixed in aosp/2467420 .\nIt\u0027s not a issue now.",
       "revId": "148f91d8e1e50e0de10b27ccf8489fefadf0ac95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c6d65d9_3419a44c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1986260
+      },
+      "writtenOn": "2023-04-03T10:57:04Z",
+      "side": 1,
+      "message": "Issue is not reproducible with latest AOSP change.",
+      "parentUuid": "b782cc19_d874d70b",
+      "revId": "148f91d8e1e50e0de10b27ccf8489fefadf0ac95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
