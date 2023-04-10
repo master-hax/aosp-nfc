@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fe934b9_9feb5a8c",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-04-10T14:41:57Z",
+      "side": 1,
+      "message": "Remove this?\nYou will update offset at line 1048 and p_mfc-\u003endef_start_pos will not change for failed cases.",
+      "range": {
+        "startLine": 1040,
+        "startChar": 0,
+        "endLine": 1041,
+        "endChar": 39
+      },
+      "revId": "4688e70dfa9cd3448c0007200adeab12574ad01c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
