@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "daafd700_83a43838",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1476,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-04-11T14:16:58Z",
+      "side": 1,
+      "message": "Why update the cur_size for both fail or completed cases?\nIs it more reasonable to update it only for RW_MFC_NDEF_WRITE_CPLT_EVT?",
+      "range": {
+        "startLine": 1475,
+        "startChar": 0,
+        "endLine": 1476,
+        "endChar": 36
+      },
+      "revId": "9cba3fedf08c4df7178b9fd95a737fc88c9ad7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
