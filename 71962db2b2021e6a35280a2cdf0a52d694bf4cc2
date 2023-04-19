@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20e61067_6361f1bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-04-19T12:52:48Z",
+      "side": 1,
+      "message": "Could you add a bug id?\n\nBug: 199367240",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "71962db2b2021e6a35280a2cdf0a52d694bf4cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c33cf82c_1aa85d53",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-04-19T12:52:48Z",
+      "side": 1,
+      "message": "Don\u0027t need to add \"\u003d\u003d true\"",
+      "range": {
+        "startLine": 482,
+        "startChar": 33,
+        "endLine": 482,
+        "endChar": 41
+      },
+      "revId": "71962db2b2021e6a35280a2cdf0a52d694bf4cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc4e5627_10c93dbb",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-04-19T12:52:48Z",
+      "side": 1,
+      "message": "Don\u0027t need to add \"\u003d\u003d true\"",
+      "range": {
+        "startLine": 679,
+        "startChar": 33,
+        "endLine": 679,
+        "endChar": 41
+      },
+      "revId": "71962db2b2021e6a35280a2cdf0a52d694bf4cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
