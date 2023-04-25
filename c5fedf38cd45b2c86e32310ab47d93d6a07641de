@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b59a23a_f5590071",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-04-25T12:41:04Z",
+      "side": 1,
+      "message": "Test: R/W Tags",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "c5fedf38cd45b2c86e32310ab47d93d6a07641de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6235c36e_2e303c2b",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-04-25T12:41:04Z",
+      "side": 1,
+      "message": "clang-format\n```\n-    if (nfa_rw_cb.pres_check_tag \u0026\u0026\n-        (nfa_rw_cb.pres_check_tag_err_count !\u003d 0)) {\n+    if (nfa_rw_cb.pres_check_tag \u0026\u0026 (nfa_rw_cb.pres_check_tag_err_count !\u003d 0)) {\n```",
+      "range": {
+        "startLine": 482,
+        "startChar": 0,
+        "endLine": 483,
+        "endChar": 52
+      },
+      "revId": "c5fedf38cd45b2c86e32310ab47d93d6a07641de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a872113_7a1f9be7",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-04-25T12:41:04Z",
+      "side": 1,
+      "message": "clang-format\n```\n-            \"%s - ISO_DEP_NAK presence check retry nb #%d failed, do not deactivate\",\n+            \"%s - ISO_DEP_NAK presence check retry nb #%d failed, do not \"\n+            \"deactivate\",\n```",
+      "range": {
+        "startLine": 567,
+        "startChar": 0,
+        "endLine": 567,
+        "endChar": 85
+      },
+      "revId": "c5fedf38cd45b2c86e32310ab47d93d6a07641de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
