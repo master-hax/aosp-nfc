@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8276df8e_3ae3ce6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2023-04-25T08:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20e61067_6361f1bf",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "71962db2b2021e6a35280a2cdf0a52d694bf4cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c33cf82c_1aa85d53",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad94171f_ae065d04",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2023-04-25T08:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c33cf82c_1aa85d53",
+      "range": {
+        "startLine": 482,
+        "startChar": 33,
+        "endLine": 482,
+        "endChar": 41
+      },
+      "revId": "71962db2b2021e6a35280a2cdf0a52d694bf4cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc4e5627_10c93dbb",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-04-19T12:52:48Z",
       "side": 1,
       "message": "Don\u0027t need to add \"\u003d\u003d true\"",
+      "range": {
+        "startLine": 679,
+        "startChar": 33,
+        "endLine": 679,
+        "endChar": 41
+      },
+      "revId": "71962db2b2021e6a35280a2cdf0a52d694bf4cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "556cc5b7_8a8563d1",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2023-04-25T08:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc4e5627_10c93dbb",
       "range": {
         "startLine": 679,
         "startChar": 33,
