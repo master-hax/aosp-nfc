@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3c2128ca_6768235d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-05-09T12:54:48Z",
+      "side": 1,
+      "message": "Set OSTicks to 0 on NFC task init",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "0715b4aabdb732ee41c5fa2da5fc30a973696eb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc7a39c1_90ead3f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-05-09T12:54:48Z",
+      "side": 1,
+      "message": "Could you summarize this decritions to something like\n\ntimes() returns a number close to 0xFFFFFFFF on 32-bit systems, causing OSTicks to overflow. OSTicks is only a counter, not a timestamp, so there\u0027s no need to set it to the value of times().",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "0715b4aabdb732ee41c5fa2da5fc30a973696eb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ea08344c_7a6379f9",
         "filename": "src/gki/ulinux/gki_ulinux.cc",
         "patchSetId": 1
