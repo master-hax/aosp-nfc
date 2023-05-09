@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea08344c_7a6379f9",
+        "filename": "src/gki/ulinux/gki_ulinux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-05-09T12:51:29Z",
+      "side": 1,
+      "message": "Add some comments like\n\n// Start ticks from 0.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 25
+      },
+      "revId": "0715b4aabdb732ee41c5fa2da5fc30a973696eb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20383622_cd1a9186",
+        "filename": "src/gki/ulinux/gki_ulinux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-05-09T12:51:29Z",
+      "side": 1,
+      "message": "GKI_TICKS_TO_MS(times(nullptr));",
+      "range": {
+        "startLine": 927,
+        "startChar": 12,
+        "endLine": 927,
+        "endChar": 35
+      },
+      "revId": "0715b4aabdb732ee41c5fa2da5fc30a973696eb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
