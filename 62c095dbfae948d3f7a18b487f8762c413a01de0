@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c85ff55f_219d33e5",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "13cc19c4_3800e6b9",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b69bd766_214fa91b",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-04-29T00:20:59Z",
       "side": 1,
       "message": "nit: Can you move this above \"pub struct NciApi\"? That way both the NciApi struct and its impl block will be together which improves readability.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 16
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "596cce35_36c818be",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b69bd766_214fa91b",
       "range": {
         "startLine": 43,
         "startChar": 0,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "868f86f4_51c95f83",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2bcc34e_121e5013",
+      "range": {
+        "startLine": 45,
+        "startChar": 24,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b750e8cd_06312052",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-04-29T00:20:59Z",
       "side": 1,
       "message": "define a new type or use closures as mentioned earlier",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 63
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "778f35dc_d90898dc",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b750e8cd_06312052",
       "range": {
         "startLine": 76,
         "startChar": 49,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a1af7be_6f07f89e",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e38f195b_e4d420f8",
+      "range": {
+        "startLine": 102,
+        "startChar": 24,
+        "endLine": 102,
+        "endChar": 26
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a3d6d64_db437973",
@@ -146,6 +266,30 @@
       "writtenOn": "2022-04-29T00:20:59Z",
       "side": 1,
       "message": "is the intent here to fill this in later?",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 27
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fae01c0_3d35b6a1",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "More like safe clean up",
+      "parentUuid": "1a3d6d64_db437973",
       "range": {
         "startLine": 109,
         "startChar": 16,
@@ -179,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78fd9cbe_4c342818",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "74cf2dc6_a66e17a0",
+      "range": {
+        "startLine": 115,
+        "startChar": 19,
+        "endLine": 115,
+        "endChar": 20
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d13f833_be744680",
@@ -192,6 +360,30 @@
       "writtenOn": "2022-04-29T00:20:59Z",
       "side": 1,
       "message": "why not use a channel instead of a callback? If you use channels, you can enforce additional semantics such as how many callbacks could be pending by controlling the size of the channel. For instance, a oneshot channel will only allow a single callback. I feel like that is much more readable as it conveys the intent of the code clearly.",
+      "range": {
+        "startLine": 151,
+        "startChar": 33,
+        "endLine": 151,
+        "endChar": 58
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63123c1b_ecd4cd58",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Thanks! Great idea, I\u0027ll move all callbacks to shim.",
+      "parentUuid": "1d13f833_be744680",
       "range": {
         "startLine": 151,
         "startChar": 33,
@@ -225,6 +417,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d01fe6a_41114b27",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6b10ec40_b72b262e",
+      "range": {
+        "startLine": 154,
+        "startChar": 24,
+        "endLine": 154,
+        "endChar": 26
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0635077_a68992d0",
@@ -238,6 +454,30 @@
       "writtenOn": "2022-04-29T00:20:59Z",
       "side": 1,
       "message": "let mut destparams \u003d vec![];",
+      "range": {
+        "startLine": 291,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 57
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21a82e17_e1999820",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0635077_a68992d0",
       "range": {
         "startLine": 291,
         "startChar": 8,
@@ -294,6 +534,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6402c5cb_69d449ec",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce297adf_ac3a8ed5",
+      "range": {
+        "startLine": 296,
+        "startChar": 20,
+        "endLine": 296,
+        "endChar": 26
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72759cb7_d2315e9d",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "740e29b0_aa7df470",
+      "range": {
+        "startLine": 296,
+        "startChar": 26,
+        "endLine": 296,
+        "endChar": 36
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16e578c9_a555343e",
@@ -307,6 +595,30 @@
       "writtenOn": "2022-04-29T00:20:59Z",
       "side": 1,
       "message": "declare as constant and then use here?",
+      "range": {
+        "startLine": 320,
+        "startChar": 56,
+        "endLine": 320,
+        "endChar": 57
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "057dbdff_d834b7c5",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "16e578c9_a555343e",
       "range": {
         "startLine": 320,
         "startChar": 56,
@@ -340,6 +652,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b66975a_08a59512",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "It didn\u0027t.",
+      "parentUuid": "f46bac8e_30544ab6",
+      "range": {
+        "startLine": 333,
+        "startChar": 38,
+        "endLine": 333,
+        "endChar": 44
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9144f10_32da7b53",
@@ -363,6 +699,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88b3f64e_e38e97bf",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b9144f10_32da7b53",
+      "range": {
+        "startLine": 395,
+        "startChar": 37,
+        "endLine": 395,
+        "endChar": 38
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c37b326_c4a61aa9",
@@ -376,6 +736,30 @@
       "writtenOn": "2022-04-29T00:20:59Z",
       "side": 1,
       "message": "define as constant",
+      "range": {
+        "startLine": 415,
+        "startChar": 37,
+        "endLine": 415,
+        "endChar": 38
+      },
+      "revId": "62c095dbfae948d3f7a18b487f8762c413a01de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6239509_eb9d7bdc",
+        "filename": "src/rust/nci/api.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2023-06-21T22:45:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8c37b326_c4a61aa9",
       "range": {
         "startLine": 415,
         "startChar": 37,
