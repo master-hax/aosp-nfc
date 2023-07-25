@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3347a5b_3acb92a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-25T12:35:59Z",
+      "side": 1,
+      "message": "Could you also mention what worked well with this CL?\n\nI tried this when it\u0027s in the user git, but NFC module constantly crashes because `casimir` doesn\u0027t send expected packets. Am I missing something?\n\nIf the constant crash is expected, we should wait and submit this CL later when it doesn\u0027t break anything.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "d9363eb2ee06d4305ef17ee527ea7bf04ea18e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75743314_d571f6cc",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-25T12:35:59Z",
+      "side": 1,
+      "message": "This is not even declared in `/system/nfc`. It\u0027s not in [system/nfc/src/nci_packets.pdl](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:system/nfc/src/nci_packets.pdl?q\u003df:nci_packets.pdl%20VERSION_2_\u0026sq\u003drepo:googleplex-android%2Fplatform%2Fsuperproject%2Fmain%20b:main%20-f:%5Eprebuilts%20-f:amlogic%20-f:mediatek%20-f:qcom%20-f:broadcom%20-f:panasonic%20-f:linaro%20-f:samsung%20-f:%22%2Fnxp%2F%22%20-f:%22%2Fst%2F%22) nor [system/nfc/src/include/nfc_target.h](https://source.corp.google.com/h/android/platform/superproject/main/+/main:system/nfc/src/include/nfc_target.h;l\u003d157?q\u003df:system%2Fnfc%20symbol:NCI_VERSION_2_\u0026sq\u003drepo:android%2Fplatform%2Fsuperproject%2Fmain%20b:main\u0026ssfr\u003d1), and NFC module doesn\u0027t seem to handle it in [nfc_ncif_proc_reset_rsp](https://source.corp.google.com/h/android/platform/superproject/main/+/refs/heads/main:system/nfc/src/nfc/nfc/nfc_ncif.cc;l\u003d1703;drc\u003d8ea96e718c31f838d8af553b0492d33fa4155536;bpv\u003d0;bpt\u003d1)\n\nDo you also have a pending change in NFC module to support ToT? FYI, I tried `Version20` myself but NFC module still crashes. NFC module seems to be advanced bit more, though.\n\nIf I understand correctly, [nfc_ncif_proc_reset_rsp](https://source.corp.google.com/h/android/platform/superproject/main/+/main:system/nfc/src/nfc/nfc/nfc_ncif.cc;l\u003d1666?q\u003dnfc_stop_timer.*nci_wait_rsp_timer\u0026sq\u003drepo:android%2Fplatform%2Fsuperproject%2Fmain%20b:main) expects `CORE_RESET_NTF` but I couldn\u0027t find the code in this CL\u0027s `nci_packets.pdl`. Could you check if my understanding is correct?\n\nJust FYI, I often reference Linux\u0027 kernel\u0027s simple NFC rootcanal implementation ([nci_dev.c](https://source.corp.google.com/h/android/platform/superproject/main/+/main:external/linux-kselftest/tools/testing/selftests/nci/nci_dev.c;l\u003d361?q\u003dnci_dev.c\u0026sq\u003drepo:android%2Fplatform%2Fsuperproject%2Fmain%20b:main)) to take a look at raw packet values.. Hope this helps.",
+      "range": {
+        "startLine": 78,
+        "startChar": 42,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "d9363eb2ee06d4305ef17ee527ea7bf04ea18e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
