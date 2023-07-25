@@ -1,0 +1,27 @@
+
+genrule {
+    name: "casimir_nci_packets_rust_gen",
+    defaults: ["pdl_rust_generator_defaults"],
+    srcs: ["src/nci_packets.pdl"],
+    out: ["nci_packets.rs"],
+}
+
+rust_binary_host {
+    name: "casimir",
+    crate_name: "casimir",
+    edition: "2018",
+    vendor_available: true,
+    srcs: [
+        "src/main.rs",
+        ":casimir_nci_packets_rust_gen",
+    ],
+    rustlibs: [
+        "libanyhow",
+        "libargh",
+        "libtokio",
+        "libthiserror",
+        "libbytes",
+        "libfutures",
+    ],
+}
+
