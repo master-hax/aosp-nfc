@@ -93,6 +93,30 @@
       },
       "revId": "d9363eb2ee06d4305ef17ee527ea7bf04ea18e3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b41990b4_91839f69",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-25T14:27:44Z",
+      "side": 1,
+      "message": "\u003e I am not using the NCI specification in system/nfc/src/nci_packets.pdl, instead the one in system/tools/casimir/src. The main reason for this is to make it more practical to handle segmented packets, and disambiguate NCI OIDs. The older specification has inaccuracies in that aspect and shouldn\u0027t be used.\n\nI\u0027m not telling you about `casimir`\u0027s internal PDL definitions. I\u0027m only saying the problem in the NFC apex module. NFC apex module is the bridge between framework Java API and HAL, and also service as `DH` (a.k.a Device host) in `NCI` specification. NFC apex module can only understand up to version 2.0, so `casimir`\u0027s return would be simply ignored.\n\n\u003e The version V2.2 is the latest version of the specification, published 2021-07-29\n\nGlad that you\u0027d referenced the latest spec. But then could you ensure that rest (i.e. non-`casimir`) of the Android stack understand it?\n\n\u003e I don\u0027t have pending changes in the Nfc stack; can you share the crash logs please ?\n\nSee: http://gpaste/6625393472700416\n\nI collected this log based on your CLs here, but only enabled NFC log for richer information. NFC module keeps crashing endlessly, so I can\u0027t turn on NFC via Settings\u0027 UI.\n\nYour doc says that NFC stack is booting. What does that mean exactly? For others point of view, the viable status looks the same as the CF\u0027s old skeleton implementation.",
+      "parentUuid": "62208f09_e8fff6af",
+      "range": {
+        "startLine": 78,
+        "startChar": 42,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "d9363eb2ee06d4305ef17ee527ea7bf04ea18e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
