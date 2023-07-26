@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82618c67_2eda010a",
+        "filename": "tools/casimir/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T14:27:40Z",
+      "side": 1,
+      "message": "It is the rust edition, same as the field in Cargo.toml\nUpdated to 2021 to match the other version.",
+      "parentUuid": "129d0639_8a2b51a9",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4b36e4ed_44203623",
         "filename": "tools/casimir/Android.bp",
         "patchSetId": 3
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ac01b363_a5d3ddee",
+        "filename": "tools/casimir/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T14:27:40Z",
+      "side": 1,
+      "message": "I think it is to include it in the cuttlefish image.",
+      "parentUuid": "4b36e4ed_44203623",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44602c4a_db66b62d",
         "filename": "tools/casimir/Android.bp",
         "patchSetId": 3
@@ -77,6 +125,24 @@
       "writtenOn": "2023-07-26T14:08:02Z",
       "side": 1,
       "message": "remove one of the empty line.",
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f528a4d6_c9786d5d",
+        "filename": "tools/casimir/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T14:27:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44602c4a_db66b62d",
       "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -106,6 +172,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "014ac2ac_c62ff250",
+        "filename": "tools/casimir/Cargo.toml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T14:27:40Z",
+      "side": 1,
+      "message": "The current default is 2021",
+      "parentUuid": "6b590acc_707592f7",
+      "range": {
+        "startLine": 4,
+        "startChar": 11,
+        "endLine": 4,
+        "endChar": 15
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0950768d_623609f8",
         "filename": "tools/casimir/README.md",
         "patchSetId": 3
@@ -117,6 +207,24 @@
       "writtenOn": "2023-07-26T14:08:02Z",
       "side": 1,
       "message": "nit; also mention about `pldc` dependency for building?",
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25828d56_023c7e3d",
+        "filename": "tools/casimir/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T14:27:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0950768d_623609f8",
       "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -134,6 +242,30 @@
       "writtenOn": "2023-07-26T14:08:02Z",
       "side": 1,
       "message": "2023",
+      "range": {
+        "startLine": 2,
+        "startChar": 14,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0f6ea07_591f49bd",
+        "filename": "tools/casimir/build.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T14:27:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebfda6ea_4110f6c4",
       "range": {
         "startLine": 2,
         "startChar": 14,
@@ -169,6 +301,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "26ea8c8d_2f26a4b3",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T14:27:40Z",
+      "side": 1,
+      "message": "Can you clarify your comment ?\nWhat specifically are you referring to ?",
+      "parentUuid": "57af06c7_0f0c93b4",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2243562c_2a9d1092",
         "filename": "tools/casimir/src/main.rs",
         "patchSetId": 3
@@ -180,6 +336,30 @@
       "writtenOn": "2023-07-26T14:08:02Z",
       "side": 1,
       "message": "`vec![u8; 3]`?",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "492226f6_cc8b6b76",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T14:27:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2243562c_2a9d1092",
       "range": {
         "startLine": 47,
         "startChar": 39,
@@ -203,6 +383,30 @@
       "writtenOn": "2023-07-26T14:08:02Z",
       "side": 1,
       "message": "give readable name",
+      "range": {
+        "startLine": 96,
+        "startChar": 32,
+        "endLine": 96,
+        "endChar": 36
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e4a4f34_67df527f",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T14:27:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb4b9202_cc3e1332",
       "range": {
         "startLine": 96,
         "startChar": 32,
