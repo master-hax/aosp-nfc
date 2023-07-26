@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5a3afdb_ad82c5f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T06:46:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ee2efb68_7da9bb09",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "d9363eb2ee06d4305ef17ee527ea7bf04ea18e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75743314_d571f6cc",
@@ -205,6 +229,30 @@
       "side": 1,
       "message": "My apology; You\u0027re right and there\u0027s no crash. I didn\u0027t run your CLs with `-enable_host_nfc\u003d1`. And I run my HAL CLs with strict packet verification with `nci_packets.pdl` in `/system/nfc`. I verified twice that there\u0027s no crash at least.\n\nVINTF message seems to be a red-herring. I think that it\u0027s irrelevant with our work.\n\nBut still, we need to address Version issue here because simply changing version to 2.2 to 2.0 from casimir cause crash.",
       "parentUuid": "5a8f2e79_cb62c4d8",
+      "range": {
+        "startLine": 78,
+        "startChar": 42,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "d9363eb2ee06d4305ef17ee527ea7bf04ea18e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14a9c04e_3d179b29",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-26T06:46:10Z",
+      "side": 1,
+      "message": "Great!\nI was working on changing the version to 2.0 yesterday evening and also noticed the timeout and crash during startup. It is likely that the default configuration I put into casimir is not well supported by the stack; I will experiment a bit to find one that passes.",
+      "parentUuid": "32e7f57e_4e997f48",
       "range": {
         "startLine": 78,
         "startChar": 42,
