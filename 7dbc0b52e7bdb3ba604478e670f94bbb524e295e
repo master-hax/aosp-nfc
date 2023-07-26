@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3668a5b5_66b30a1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-26T14:08:02Z",
+      "side": 1,
+      "message": "Two overall comments:\n- Comment 1) License headers are missing\n- Comment 2) What would be the relationship between `/system/nfc/src/rust/rootcanal`? I thought that `casimir` would implement the existing `rootcanal`. Could you confirm? The `rootcanal` seems to be only used for testing purpose, so replacing `rootcanal` with `casimir` seems to be a good initial test.",
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "129d0639_8a2b51a9",
+        "filename": "tools/casimir/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-26T14:08:02Z",
+      "side": 1,
+      "message": "Q) what is this?",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b36e4ed_44203623",
+        "filename": "tools/casimir/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-26T14:08:02Z",
+      "side": 1,
+      "message": "Q) Is it necessary?",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44602c4a_db66b62d",
+        "filename": "tools/casimir/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-26T14:08:02Z",
+      "side": 1,
+      "message": "remove one of the empty line.",
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b590acc_707592f7",
+        "filename": "tools/casimir/Cargo.toml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-26T14:08:02Z",
+      "side": 1,
+      "message": "2023?",
+      "range": {
+        "startLine": 4,
+        "startChar": 11,
+        "endLine": 4,
+        "endChar": 15
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0950768d_623609f8",
+        "filename": "tools/casimir/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-26T14:08:02Z",
+      "side": 1,
+      "message": "nit; also mention about `pldc` dependency for building?",
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebfda6ea_4110f6c4",
+        "filename": "tools/casimir/build.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-26T14:08:02Z",
+      "side": 1,
+      "message": "2023",
+      "range": {
+        "startLine": 2,
+        "startChar": 14,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57af06c7_0f0c93b4",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-26T14:08:02Z",
+      "side": 1,
+      "message": "Q) why do we need all of these? Can we just use `\u0026impl Packet`?\n\nHere\u0027s code snippet from generated code.\n```\npub trait Packet {\n  fn to_bytes(self) -\u003e Bytes;\n  fn to_vec(self) -\u003e Vec\u003cu8\u003e;\n}\n```",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2243562c_2a9d1092",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-26T14:08:02Z",
+      "side": 1,
+      "message": "`vec![u8; 3]`?",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb4b9202_cc3e1332",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-26T14:08:02Z",
+      "side": 1,
+      "message": "give readable name",
+      "range": {
+        "startLine": 96,
+        "startChar": 32,
+        "endLine": 96,
+        "endChar": 36
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
