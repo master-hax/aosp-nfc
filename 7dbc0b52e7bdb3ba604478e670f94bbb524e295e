@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47dfd6b7_3f4147d8",
+        "filename": "tools/casimir/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-28T02:26:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "82618c67_2eda010a",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b36e4ed_44203623",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "I think it is to include it in the cuttlefish image.",
       "parentUuid": "4b36e4ed_44203623",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40255122_e015cdc0",
+        "filename": "tools/casimir/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-28T02:26:35Z",
+      "side": 1,
+      "message": "Could you remove and try build? IIUC, this is required for tools/libraries that are required for building `vendor.img`, so should not be necessary for host tool.",
+      "parentUuid": "ac01b363_a5d3ddee",
       "range": {
         "startLine": 13,
         "startChar": 4,
@@ -184,6 +232,30 @@
       "side": 1,
       "message": "The current default is 2021",
       "parentUuid": "6b590acc_707592f7",
+      "range": {
+        "startLine": 4,
+        "startChar": 11,
+        "endLine": 4,
+        "endChar": 15
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d678b087_1fc3e3e6",
+        "filename": "tools/casimir/Cargo.toml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-28T02:26:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "014ac2ac_c62ff250",
       "range": {
         "startLine": 4,
         "startChar": 11,
@@ -313,6 +385,30 @@
       "side": 1,
       "message": "Can you clarify your comment ?\nWhat specifically are you referring to ?",
       "parentUuid": "57af06c7_0f0c93b4",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01b6c0f5_0a9aa53f",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-28T02:26:35Z",
+      "side": 1,
+      "message": "I\u0027m proposing to merge `send_control()`, `send_data()`, `send_rf()` and make `send()` instead as follows.\n\n```\nasync fn send(\u0026mut self, packet: impl nci::Packet) -\u003e Result\u003c()\u003e {\n  self.nci_writer.write(\u0026packet.into().to_vec()).await\n}\n```\n\nFYI, you can see generated code from `out/soong/.intermediates`. Here\u0027s the link to the genrated `nci_packets.rs`: `out/soong/.intermediates/system/nfc/tools/casimir/casimir/linux_glibc_x86_64/out/nci_packets.rs`",
+      "parentUuid": "26ea8c8d_2f26a4b3",
       "range": {
         "startLine": 61,
         "startChar": 0,
