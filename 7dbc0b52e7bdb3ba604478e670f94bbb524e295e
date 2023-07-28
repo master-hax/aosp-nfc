@@ -511,6 +511,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "84ec35e1_cd946ffa",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-28T07:20:57Z",
+      "side": 1,
+      "message": "Got it. You can either merge `send_control()` and `send_data()` or not. Resolve this comment accordingly.",
+      "parentUuid": "529604db_e0555aed",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2243562c_2a9d1092",
         "filename": "tools/casimir/src/main.rs",
         "patchSetId": 3
