@@ -533,6 +533,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "819a6c57_979cee2c",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-28T07:24:29Z",
+      "side": 1,
+      "message": "I would prefer keeping them separate as it brings better typing validation: it validates that you are sending a packet of appropriate format to the NCI transport.",
+      "parentUuid": "84ec35e1_cd946ffa",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2243562c_2a9d1092",
