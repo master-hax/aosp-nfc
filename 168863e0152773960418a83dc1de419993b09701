@@ -16,6 +16,24 @@
       "message": "LGTM with minor comments.\n\nHave you talked with Alisher? It would be better if we can get review from Alisher as well.\n\nBut if it would take extra time, then we can submit this first, and address his feedback later.",
       "revId": "168863e0152773960418a83dc1de419993b09701",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b17a27c5_db87092b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-28T07:20:21Z",
+      "side": 1,
+      "message": "I will discuss that with him next week, will be in the same timezone",
+      "parentUuid": "72bd0fa1_eebdcf0b",
+      "revId": "168863e0152773960418a83dc1de419993b09701",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
