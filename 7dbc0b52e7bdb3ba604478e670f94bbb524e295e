@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5743172e_bf0a047d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-07-28T07:19:42Z",
+      "side": 1,
+      "message": "As far as I can tell nfc/rootcanal is not used at all: https://source.corp.google.com/search?q\u003dnfc_rootcanal.\n\nWill update the license headers 👍",
+      "parentUuid": "3668a5b5_66b30a1d",
+      "revId": "7dbc0b52e7bdb3ba604478e670f94bbb524e295e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "129d0639_8a2b51a9",
