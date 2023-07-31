@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8e7548a_fe8a6205",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-07-31T00:42:48Z",
+      "side": 1,
+      "message": "LGTM. You can either wait for Alisher\u0027s review or submit first.",
+      "revId": "ea2e6c2603388e2d7509ced65fe730bd262ed48f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
