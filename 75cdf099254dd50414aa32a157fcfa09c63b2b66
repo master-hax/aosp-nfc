@@ -16,6 +16,24 @@
       "message": "Should technically only be needed on host target.",
       "revId": "75cdf099254dd50414aa32a157fcfa09c63b2b66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c610f9b1_5b78507c",
+        "filename": "src/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2023-08-02T21:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d331dd6_1d9d383c",
+      "revId": "75cdf099254dd50414aa32a157fcfa09c63b2b66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
