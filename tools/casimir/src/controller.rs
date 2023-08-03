@@ -50,6 +50,7 @@ pub struct Controller {
     rf_tx: mpsc::Sender<(usize, Vec<u8>)>,
     config_parameters: HashMap<nci::ConfigParameterId, Vec<u8>>,
     logical_connections: [Option<LogicalConnection>; MAX_LOGICAL_CONNECTIONS as usize],
+    discover_map: Vec<nci::MappingConfiguration>,
 }
 
 impl Controller {
@@ -69,6 +70,7 @@ impl Controller {
             rf_tx,
             config_parameters: HashMap::new(),
             logical_connections: [None; MAX_LOGICAL_CONNECTIONS as usize],
+            discover_map: vec![],
         }
     }
 
@@ -135,10 +137,14 @@ impl Controller {
             max_data_packet_payload_size: MAX_DATA_PACKET_PAYLOAD_SIZE,
             number_of_credits: NUMBER_OF_CREDITS,
             max_nfcv_rf_frame_size: MAX_NFCV_RF_FRAME_SIZE,
-            supported_rf_interfaces: vec![nci::RfInterface {
-                interface: nci::RfInterfaceType::NfcDep,
-                extensions: vec![],
-            }],
+            supported_rf_interfaces: vec![
+                nci::RfInterface { interface: nci::RfInterfaceType::Frame, extensions: vec![] },
+                nci::RfInterface {
+                    interface: nci::RfInterfaceType::NfceeDirect,
+                    extensions: vec![nci::RfInterfaceExtensionType::FrameAggregated],
+                },
+                nci::RfInterface { interface: nci::RfInterfaceType::NfcDep, extensions: vec![] },
+            ],
         })
         .await?;
 
@@ -152,6 +158,10 @@ impl Controller {
         for parameter in cmd.get_parameters().iter() {
             match parameter.id {
                 nci::ConfigParameterId::Rfu(_) => invalid_parameters.push(parameter.id),
+                // TODO
+                // Unless otherwise specified, discovery related configuration
+                // defined in Sections 6.1, 6.2, 6.3 and 7.1 SHALL only be set
+                // while in IDLE state.
                 _ => {
                     self.config_parameters.insert(parameter.id, parameter.value.clone());
                 }
@@ -330,9 +340,10 @@ impl Controller {
         Ok(())
     }
 
-    async fn rf_discover_map(&mut self, _cmd: nci::RfDiscoverMapCommand) -> Result<()> {
+    async fn rf_discover_map(&mut self, cmd: nci::RfDiscoverMapCommand) -> Result<()> {
         println!("+ rf_discover_map()");
 
+        self.discover_map = cmd.get_mapping_configurations().clone();
         self.send_control(nci::RfDiscoverMapResponseBuilder { status: nci::Status::Ok }).await?;
 
         Ok(())
