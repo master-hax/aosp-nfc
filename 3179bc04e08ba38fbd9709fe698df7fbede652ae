@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30bb0951_7c96371b",
+        "filename": "src/include/nci_defs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-08-04T07:18:39Z",
+      "side": 1,
+      "message": "minor comment) you may want to rename this to `NCI_2_X_` to indicate that it\u0027s not `2.0` specific. Here and other places.",
+      "range": {
+        "startLine": 236,
+        "startChar": 8,
+        "endLine": 236,
+        "endChar": 35
+      },
+      "revId": "3179bc04e08ba38fbd9709fe698df7fbede652ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
