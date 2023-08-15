@@ -14,8 +14,8 @@
 
 //! Implementation of the NFCC.
 
-use crate::packets::nci;
 use crate::packets::nci::Packet;
+use crate::packets::{nci, rf};
 use crate::NciReader;
 use crate::NciWriter;
 use anyhow::Result;
@@ -42,12 +42,12 @@ enum LogicalConnection {
 /// State of an NFCC instance.
 pub struct Controller {
     #[allow(dead_code)]
-    id: usize,
+    id: u16,
     nci_reader: NciReader,
     nci_writer: NciWriter,
-    rf_rx: mpsc::Receiver<Vec<u8>>,
+    rf_rx: mpsc::Receiver<rf::RfPacket>,
     #[allow(dead_code)]
-    rf_tx: mpsc::Sender<(usize, Vec<u8>)>,
+    rf_tx: mpsc::Sender<rf::RfPacket>,
     config_parameters: HashMap<nci::ConfigParameterId, Vec<u8>>,
     logical_connections: [Option<LogicalConnection>; MAX_LOGICAL_CONNECTIONS as usize],
     discover_map: Vec<nci::MappingConfiguration>,
@@ -56,11 +56,11 @@ pub struct Controller {
 impl Controller {
     /// Create a new NFCC instance with default configuration.
     pub fn new(
-        id: usize,
+        id: u16,
         nci_reader: NciReader,
         nci_writer: NciWriter,
-        rf_rx: mpsc::Receiver<Vec<u8>>,
-        rf_tx: mpsc::Sender<(usize, Vec<u8>)>,
+        rf_rx: mpsc::Receiver<rf::RfPacket>,
+        rf_tx: mpsc::Sender<rf::RfPacket>,
     ) -> Controller {
         Controller {
             id,
@@ -84,8 +84,8 @@ impl Controller {
     }
 
     #[allow(dead_code)]
-    async fn send_rf(&mut self, packet: Vec<u8>) -> Result<()> {
-        self.rf_tx.send((self.id, packet)).await?;
+    async fn send_rf(&mut self, packet: rf::RfPacket) -> Result<()> {
+        self.rf_tx.send(packet).await?;
         Ok(())
     }
 
@@ -448,7 +448,7 @@ impl Controller {
         todo!()
     }
 
-    async fn receive_rf(&mut self, _packet: Vec<u8>) {
+    async fn receive_rf(&mut self, _packet: rf::RfPacket) {
         todo!()
     }
 
