@@ -536,6 +536,83 @@ packet RfDiscoverNotification : RfPacket (mt = NOTIFICATION, oid = DISCOVER) {
   notification_type : DiscoverNotificationType,
 }
 
+packet NfcAPollModeTechnologySpecificParameters {
+  sens_res : 16,
+  _size_(nfcid1) : 8,
+  nfcid1 : 8[],
+  _fixed_ = 1 : 8,
+  sel_res : 8,
+  _fixed_ = 0 : 8,
+}
+
+packet NfcBPollModeTechnologySpecificParameters {
+  _size_(sensb_res) : 8,
+  sensb_res : 8[],
+}
+
+packet NfcBListenModeTechnologySpecificParameters {
+  sensb_cmd : 8,
+}
+
+packet NfcFPollModeTechnologySpecificParameters {
+  bit_rate : 8,
+  _size_(sensf_res) : 8,
+  sensf_res : 8[],
+}
+
+packet NfcFListenModeTechnologySpecificParameters {
+  _size_(local_nfcid2) : 8,
+  local_nfcid2 : 8[],
+}
+
+packet NfcVPollModeTechnologySpecificParameters {
+  res_flag : 8,
+  dsfid : 8,
+  uid : 8[8],
+}
+
+packet RfDiscoverSelectCommand : RfPacket (mt = COMMAND, oid = DISCOVER_SELECT) {
+  rf_discovery_id : 8,
+  rf_protocol : RfProtocolType,
+  rf_interface : RfInterfaceType,
+}
+
+packet RfDiscoverSelectResponse : RfPacket (mt = RESPONSE, oid = DISCOVER_SELECT) {
+  status : Status,
+}
+
+enum BitRate : 8 {
+  BIT_RATE_106_KBIT_S = 0x00,
+  BIT_RATE_212_KBIT_S = 0x01,
+  BIT_RATE_424_KBIT_S = 0x02,
+  BIT_RATE_848_KBIT_S = 0x03,
+  BIT_RATE_1695_KBIT_S = 0x04,
+  BIT_RATE_3390_KBIT_S = 0x05,
+  BIT_RATE_6780_KBIT_S = 0x06,
+  BIT_RATE_26_KBIT_S = 0x20,
+}
+
+packet RfIntfActivatedNotification : RfPacket (mt = NOTIFICATION, oid = INTF_ACTIVATED) {
+  rf_discovery_id : 8,
+  rf_interface : RfInterfaceType,
+  rf_protocol : RfProtocolType,
+  activation_rf_technology_and_mode : RfTechnologyAndMode,
+  max_data_packet_payload_size : 8,
+  initial_number_of_credits : 8,
+  _size_(rf_technology_specific_parameters) : 8,
+  rf_technology_specific_parameters : 8[],
+  data_exchange_rf_technology_and_mode : RfTechnologyAndMode,
+  data_exchange_transmit_bit_rate : BitRate,
+  data_exchange_receive_bit_rate : BitRate,
+  _size_(activation_parameters) : 8,
+  activation_parameters : 8[],
+}
+
+packet NfcAIsoDepPollModeActivationParameters {
+  _size_(rats_response) : 8,
+  rats_response : 8[],
+}
+
 enum DeactivationType : 8 {
   IDLE_MODE = 0x00,
   SLEEP_MODE = 0x01,
