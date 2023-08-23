@@ -615,6 +615,8 @@ impl Controller {
     }
 
     async fn poll_command(&self, cmd: rf::PollCommand) -> Result<()> {
+        println!("+ poll_command()");
+
         let state = self.state.lock().await;
         if state.rf_state != RfState::Discovery {
             return Ok(());
@@ -643,8 +645,10 @@ impl Controller {
     }
 
     async fn nfca_poll_response(&self, cmd: rf::NfcAPollResponse) -> Result<()> {
+        println!("+ nfca_poll_response()");
+
         let mut state = self.state.lock().await;
-        if state.rf_state == RfState::Discovery {
+        if state.rf_state != RfState::Discovery {
             return Ok(());
         }
 
@@ -684,10 +688,14 @@ impl Controller {
     }
 
     async fn t4at_select_command(&self, _cmd: rf::T4ATSelectCommand) -> Result<()> {
+        println!("+ t4at_select_command()");
+
         Ok(())
     }
 
     async fn t4at_select_response(&self, cmd: rf::T4ATSelectResponse) -> Result<()> {
+        println!("+ t4at_select_response()");
+
         let mut state = self.state.lock().await;
         let (rf_discovery_id, rf_interface, rf_protocol) = match state.rf_state {
             RfState::WaitForSelectResponse { rf_discovery_id, rf_interface, rf_protocol } => {
@@ -767,6 +775,8 @@ impl Controller {
         rf_protocol: nci::RfProtocolType,
         rf_interface: nci::RfInterfaceType,
     ) -> Result<()> {
+        println!("+ activate_poll_interface({:?})", rf_interface);
+
         let rf_technology = state.rf_poll_responses[rf_discovery_id].rf_technology;
         match (rf_interface, rf_technology) {
             (nci::RfInterfaceType::Frame, rf::Technology::NfcA) => {
@@ -806,92 +816,101 @@ impl Controller {
     /// Timer handler method. This function is invoked at regular interval
     /// on the NFCC instance and is used to drive internal timers.
     async fn tick(&self) -> Result<()> {
-        let mut state = self.state.lock().await;
-        if state.rf_state != RfState::Discovery {
-            return Ok(());
-        }
+        {
+            let mut state = self.state.lock().await;
+            if state.rf_state != RfState::Discovery {
+                return Ok(());
+            }
 
-        // [UCI] 5.2.2 State RFST_DISCOVERY
-        //
-        // In this state the NFCC stays in Poll Mode and/or Listen Mode (based
-        // on the discovery configuration) until at least one Remote NFC
-        // Endpoint is detected or the RF Discovery Process is stopped by
-        // the DH.
-        //
-        // The following implements the Poll Mode Discovery, Listen Mode
-        // Discover is implicitely implemented in response to poll and
-        // select commands.
+            println!("+ poll");
 
-        // RF Discovery is ongoing and no peer device has been discovered
-        // so far. Send a RF poll command for all enabled technologies.
-        state.rf_poll_responses.clear();
-        for configuration in state.discover_configuration.iter() {
-            self.send_rf(rf::PollCommandBuilder {
-                sender: self.id,
-                receiver: u16::MAX,
-                protocol: rf::Protocol::Undetermined,
-                technology: match configuration.technology_and_mode {
-                    nci::RfTechnologyAndMode::NfcAPassivePollMode => rf::Technology::NfcA,
-                    nci::RfTechnologyAndMode::NfcBPassivePollMode => rf::Technology::NfcB,
-                    nci::RfTechnologyAndMode::NfcFPassivePollMode => rf::Technology::NfcF,
-                    nci::RfTechnologyAndMode::NfcVPassivePollMode => rf::Technology::NfcV,
-                    _ => continue,
-                },
-            })
-            .await?
+            // [UCI] 5.2.2 State RFST_DISCOVERY
+            //
+            // In this state the NFCC stays in Poll Mode and/or Listen Mode (based
+            // on the discovery configuration) until at least one Remote NFC
+            // Endpoint is detected or the RF Discovery Process is stopped by
+            // the DH.
+            //
+            // The following implements the Poll Mode Discovery, Listen Mode
+            // Discover is implicitely implemented in response to poll and
+            // select commands.
+
+            // RF Discovery is ongoing and no peer device has been discovered
+            // so far. Send a RF poll command for all enabled technologies.
+            state.rf_poll_responses.clear();
+            for configuration in state.discover_configuration.iter() {
+                self.send_rf(rf::PollCommandBuilder {
+                    sender: self.id,
+                    receiver: u16::MAX,
+                    protocol: rf::Protocol::Undetermined,
+                    technology: match configuration.technology_and_mode {
+                        nci::RfTechnologyAndMode::NfcAPassivePollMode => rf::Technology::NfcA,
+                        nci::RfTechnologyAndMode::NfcBPassivePollMode => rf::Technology::NfcB,
+                        nci::RfTechnologyAndMode::NfcFPassivePollMode => rf::Technology::NfcF,
+                        nci::RfTechnologyAndMode::NfcVPassivePollMode => rf::Technology::NfcV,
+                        _ => continue,
+                    },
+                })
+                .await?
+            }
         }
 
         // Wait for poll responses to return.
         time::sleep(Duration::from_millis(10)).await;
 
-        // Check if device was activated in Listen mode during
-        // the poll interval, or if the discovery got cancelled.
-        if state.rf_state != RfState::Discovery || state.rf_poll_responses.is_empty() {
-            return Ok(());
-        }
+        {
+            let mut state = self.state.lock().await;
+            println!(" > received {} poll response(s)", state.rf_poll_responses.len());
 
-        // While polling, if the NFCC discovers just one Remote NFC Endpoint
-        // that supports just one protocol, the NFCC SHALL try to automatically
-        // activate it. The NFCC SHALL first establish any underlying
-        // protocol(s) with the Remote NFC Endpoint that are needed by the
-        // configured RF Interface. On completion, the NFCC SHALL activate the
-        // RF Interface and send RF_INTF_ACTIVATED_NTF (Poll Mode) to the DH.
-        // At this point, the state is changed to RFST_POLL_ACTIVE. If the
-        // protocol activation is not successful, the NFCC SHALL send
-        // CORE_GENERIC_ERROR_NTF to the DH with status
-        // DISCOVERY_TARGET_ACTIVATION_FAILED and SHALL stay in the
-        // RFST_DISCOVERY state.
-        if state.rf_poll_responses.len() == 1 {
-            let rf_protocol = state.rf_poll_responses[0].rf_protocol.into();
-            let rf_interface = state.select_interface(RfMode::Poll, rf_protocol);
-            return self.activate_poll_interface(&mut state, 0, rf_protocol, rf_interface).await;
-        }
+            // Check if device was activated in Listen mode during
+            // the poll interval, or if the discovery got cancelled.
+            if state.rf_state != RfState::Discovery || state.rf_poll_responses.is_empty() {
+                return Ok(());
+            }
 
-        // While polling, if the NFCC discovers more than one Remote NFC
-        // Endpoint, or a Remote NFC Endpoint that supports more than one RF
-        // Protocol, it SHALL start sending RF_DISCOVER_NTF messages to the DH.
-        // At this point, the state is changed to RFST_W4_ALL_DISCOVERIES.
-        state.rf_state = RfState::WaitForHostSelect;
-        let last_index = state.rf_poll_responses.len() - 1;
-        for (index, response) in state.rf_poll_responses.clone().iter().enumerate() {
-            self.send_control(nci::RfDiscoverNotificationBuilder {
-                rf_discovery_id: index as u8,
-                rf_protocol: response.rf_protocol.into(),
-                rf_technology_and_mode: match response.rf_technology {
-                    rf::Technology::NfcA => nci::RfTechnologyAndMode::NfcAPassivePollMode,
-                    rf::Technology::NfcB => nci::RfTechnologyAndMode::NfcBPassivePollMode,
-                    _ => todo!(),
-                },
-                rf_technology_specific_parameters: response
-                    .rf_technology_specific_parameters
-                    .clone(),
-                notification_type: if index == last_index {
-                    nci::DiscoverNotificationType::LastNotification
-                } else {
-                    nci::DiscoverNotificationType::MoreNotifications
-                },
-            })
-            .await?
+            // While polling, if the NFCC discovers just one Remote NFC Endpoint
+            // that supports just one protocol, the NFCC SHALL try to automatically
+            // activate it. The NFCC SHALL first establish any underlying
+            // protocol(s) with the Remote NFC Endpoint that are needed by the
+            // configured RF Interface. On completion, the NFCC SHALL activate the
+            // RF Interface and send RF_INTF_ACTIVATED_NTF (Poll Mode) to the DH.
+            // At this point, the state is changed to RFST_POLL_ACTIVE. If the
+            // protocol activation is not successful, the NFCC SHALL send
+            // CORE_GENERIC_ERROR_NTF to the DH with status
+            // DISCOVERY_TARGET_ACTIVATION_FAILED and SHALL stay in the
+            // RFST_DISCOVERY state.
+            if state.rf_poll_responses.len() == 1 {
+                let rf_protocol = state.rf_poll_responses[0].rf_protocol.into();
+                let rf_interface = state.select_interface(RfMode::Poll, rf_protocol);
+                return self.activate_poll_interface(&mut state, 0, rf_protocol, rf_interface).await;
+            }
+
+            // While polling, if the NFCC discovers more than one Remote NFC
+            // Endpoint, or a Remote NFC Endpoint that supports more than one RF
+            // Protocol, it SHALL start sending RF_DISCOVER_NTF messages to the DH.
+            // At this point, the state is changed to RFST_W4_ALL_DISCOVERIES.
+            state.rf_state = RfState::WaitForHostSelect;
+            let last_index = state.rf_poll_responses.len() - 1;
+            for (index, response) in state.rf_poll_responses.clone().iter().enumerate() {
+                self.send_control(nci::RfDiscoverNotificationBuilder {
+                    rf_discovery_id: index as u8,
+                    rf_protocol: response.rf_protocol.into(),
+                    rf_technology_and_mode: match response.rf_technology {
+                        rf::Technology::NfcA => nci::RfTechnologyAndMode::NfcAPassivePollMode,
+                        rf::Technology::NfcB => nci::RfTechnologyAndMode::NfcBPassivePollMode,
+                        _ => todo!(),
+                    },
+                    rf_technology_specific_parameters: response
+                        .rf_technology_specific_parameters
+                        .clone(),
+                    notification_type: if index == last_index {
+                        nci::DiscoverNotificationType::LastNotification
+                    } else {
+                        nci::DiscoverNotificationType::MoreNotifications
+                    },
+                })
+                .await?
+            }
         }
 
         Ok(())
@@ -919,7 +938,7 @@ impl Controller {
         .await?;
 
         // Timer for tick events.
-        let mut timer = time::interval(Duration::from_millis(10));
+        let mut timer = time::interval(Duration::from_millis(1000));
 
         let result: Result<((), (), ())> = futures::future::try_join3(
             // NCI event handler.
