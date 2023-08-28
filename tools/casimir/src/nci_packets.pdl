@@ -120,7 +120,7 @@ packet ControlPacket {
 // Pre-framed NCI data packet. The framing information is ignored
 // including the payload length.
 packet DataPacket {
-  conn_id : GroupId,
+  conn_id : 4,
   _reserved_ : 1,
   mt : MessageType,
   cr : 2,
