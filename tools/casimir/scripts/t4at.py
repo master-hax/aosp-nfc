@@ -57,7 +57,7 @@ class T4AT:
         while True:
             packet = await self._read()
             match packet:
-                case rf.PollCommand(_):
+                case rf.PollCommand(technology=rf.Technology.NFC_A):
                     self._write(rf.NfcAPollResponse(
                         nfcid1=self.nfcid1, int_protocol=0b01))
                 case rf.T4ATSelectCommand(_):
