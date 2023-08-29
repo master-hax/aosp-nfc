@@ -59,7 +59,12 @@ pub enum RfState {
         rf_protocol: rf::Protocol,
     },
     ListenSleep,
-    ListenActive,
+    ListenActive {
+        id: u16,
+        rf_interface: nci::RfInterfaceType,
+        rf_technology: rf::Technology,
+        rf_protocol: rf::Protocol,
+    },
     WaitForHostSelect,
     WaitForSelectResponse {
         id: u16,
@@ -587,11 +592,11 @@ impl Controller {
             (RfState::ListenSleep, IdleMode) => (nci::Status::Ok, RfState::Idle),
             (RfState::ListenSleep, Discover) => (nci::Status::Ok, RfState::Discovery),
             (RfState::ListenSleep, _) => (nci::Status::SemanticError, RfState::ListenSleep),
-            (RfState::ListenActive, IdleMode) => (nci::Status::Ok, RfState::Idle),
-            (RfState::ListenActive, SleepMode | SleepAfMode) => {
+            (RfState::ListenActive { .. }, IdleMode) => (nci::Status::Ok, RfState::Idle),
+            (RfState::ListenActive { .. }, SleepMode | SleepAfMode) => {
                 (nci::Status::Ok, RfState::ListenSleep)
             }
-            (RfState::ListenActive, Discover) => (nci::Status::Ok, RfState::Discovery),
+            (RfState::ListenActive { .. }, Discover) => (nci::Status::Ok, RfState::Discovery),
             (RfState::WaitForHostSelect, IdleMode) => (nci::Status::Ok, RfState::Idle),
             (RfState::WaitForHostSelect, _) => {
                 (nci::Status::SemanticError, RfState::WaitForHostSelect)
@@ -697,6 +702,13 @@ impl Controller {
                 rf_protocol: rf::Protocol::IsoDep,
                 rf_interface: nci::RfInterfaceType::IsoDep,
                 ..
+            }
+            | RfState::ListenActive {
+                id,
+                rf_technology,
+                rf_protocol: rf::Protocol::IsoDep,
+                rf_interface: nci::RfInterfaceType::IsoDep,
+                ..
             } => {
                 self.send_rf(rf::DataBuilder {
                     receiver: id,
@@ -718,12 +730,12 @@ impl Controller {
                 )
                 .await
             }
-            RfState::PollActive { rf_protocol, rf_interface, .. } => unimplemented!(
+            RfState::PollActive { rf_protocol, rf_interface, .. }
+            | RfState::ListenActive { rf_protocol, rf_interface, .. } => unimplemented!(
                 "unsupported combination of RF protocol {:?} and interface {:?}",
                 rf_protocol,
                 rf_interface
             ),
-            RfState::ListenActive => unimplemented!("unsupported data in active listen mode"),
             _ => {
                 println!("  > ignored RF data packet while not in active listen or poll mode");
                 Ok(())
@@ -759,23 +771,32 @@ impl Controller {
             return Ok(());
         }
 
-        match cmd.get_technology() {
-            rf::Technology::NfcA => {
-                // Configured for T4AT tag emulation.
-                let int_protocol = 0x01;
-                self.send_rf(rf::NfcAPollResponseBuilder {
-                    protocol: rf::Protocol::Undetermined,
-                    receiver: cmd.get_sender(),
-                    sender: self.id,
-                    nfcid1: self.nfcid1(),
-                    int_protocol,
-                })
-                .await?;
+        let technology = cmd.get_technology();
+        if state.discover_configuration.iter().any(|config| {
+            matches!(
+                (config.technology_and_mode, technology),
+                (nci::RfTechnologyAndMode::NfcAPassiveListenMode, rf::Technology::NfcA)
+                    | (nci::RfTechnologyAndMode::NfcBPassiveListenMode, rf::Technology::NfcB)
+                    | (nci::RfTechnologyAndMode::NfcFPassiveListenMode, rf::Technology::NfcF)
+            )
+        }) {
+            match technology {
+                rf::Technology::NfcA => {
+                    // Configured for T4AT tag emulation.
+                    let int_protocol = 0x01;
+                    self.send_rf(rf::NfcAPollResponseBuilder {
+                        protocol: rf::Protocol::Undetermined,
+                        receiver: cmd.get_sender(),
+                        sender: self.id,
+                        nfcid1: self.nfcid1(),
+                        int_protocol,
+                    })
+                    .await?
+                }
+                rf::Technology::NfcB => todo!(),
+                rf::Technology::NfcF => todo!(),
+                _ => (),
             }
-
-            rf::Technology::NfcB => todo!(),
-            rf::Technology::NfcF => todo!(),
-            rf::Technology::NfcV => todo!(),
         }
 
         Ok(())
@@ -824,8 +845,53 @@ impl Controller {
         Ok(())
     }
 
-    async fn t4at_select_command(&self, _cmd: rf::T4ATSelectCommand) -> Result<()> {
+    async fn t4at_select_command(&self, cmd: rf::T4ATSelectCommand) -> Result<()> {
         println!("+ t4at_select_command()");
+
+        let mut state = self.state.lock().await;
+        if state.rf_state != RfState::Discovery {
+            return Ok(());
+        }
+
+        // TODO: validate that the protocol and technology are valid for the
+        // current discovery settings.
+
+        // TODO: use listen mode routing table to decide which interface
+        // should be used for the activating device.
+
+        state.rf_state = RfState::ListenActive {
+            id: cmd.get_sender(),
+            rf_technology: rf::Technology::NfcA,
+            rf_protocol: rf::Protocol::IsoDep,
+            rf_interface: nci::RfInterfaceType::IsoDep,
+        };
+
+        self.send_rf(rf::T4ATSelectResponseBuilder {
+            receiver: cmd.get_sender(),
+            sender: self.id,
+            rats_response: vec![0x2, 0x0],
+        })
+        .await?;
+
+        self.send_control(nci::RfIntfActivatedNotificationBuilder {
+            rf_discovery_id: 0,
+            rf_interface: nci::RfInterfaceType::IsoDep,
+            rf_protocol: nci::RfProtocolType::IsoDep,
+            activation_rf_technology_and_mode: nci::RfTechnologyAndMode::NfcAPassiveListenMode,
+            max_data_packet_payload_size: MAX_DATA_PACKET_PAYLOAD_SIZE,
+            initial_number_of_credits: 1,
+            // No parameters are currently defined for NFC-A Listen Mode.
+            rf_technology_specific_parameters: vec![],
+            data_exchange_rf_technology_and_mode: nci::RfTechnologyAndMode::NfcAPassiveListenMode,
+            data_exchange_transmit_bit_rate: nci::BitRate::BitRate106KbitS,
+            data_exchange_receive_bit_rate: nci::BitRate::BitRate106KbitS,
+            activation_parameters: nci::NfcAIsoDepListenModeActivationParametersBuilder {
+                param: cmd.get_param(),
+            }
+            .build()
+            .to_vec(),
+        })
+        .await?;
 
         Ok(())
     }
@@ -891,6 +957,12 @@ impl Controller {
                     id, rf_technology, rf_protocol: rf::Protocol::IsoDep, ..
                 },
                 rf::Protocol::IsoDep,
+            )
+            | (
+                RfState::ListenActive {
+                    id, rf_technology, rf_protocol: rf::Protocol::IsoDep, ..
+                },
+                rf::Protocol::IsoDep,
             ) if data.get_sender() == id && data.get_technology() == rf_technology => {
                 self.send_data(nci::DataPacketBuilder {
                     mt: nci::MessageType::Data,
@@ -900,11 +972,13 @@ impl Controller {
                 })
                 .await
             }
-            (RfState::PollActive { id, .. }, _) if id != data.get_sender() => {
+            (RfState::PollActive { id, .. }, _) | (RfState::ListenActive { id, .. }, _)
+                if id != data.get_sender() =>
+            {
                 println!("  > ignored RF data packet sent from an un-selected device");
                 Ok(())
             }
-            (RfState::PollActive { .. }, _) => {
+            (RfState::PollActive { .. }, _) | (RfState::ListenActive { .. }, _) => {
                 unimplemented!("unsupported combination of technology and protocol")
             }
             (_, _) => {
@@ -1018,12 +1092,12 @@ impl Controller {
             // RF Discovery is ongoing and no peer device has been discovered
             // so far. Send a RF poll command for all enabled technologies.
             state.rf_poll_responses.clear();
-            for configuration in state.discover_configuration.iter() {
+            for config in state.discover_configuration.iter() {
                 self.send_rf(rf::PollCommandBuilder {
                     sender: self.id,
                     receiver: u16::MAX,
                     protocol: rf::Protocol::Undetermined,
-                    technology: match configuration.technology_and_mode {
+                    technology: match config.technology_and_mode {
                         nci::RfTechnologyAndMode::NfcAPassivePollMode => rf::Technology::NfcA,
                         nci::RfTechnologyAndMode::NfcBPassivePollMode => rf::Technology::NfcB,
                         nci::RfTechnologyAndMode::NfcFPassivePollMode => rf::Technology::NfcF,
