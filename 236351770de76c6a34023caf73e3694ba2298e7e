@@ -46,6 +46,30 @@
       },
       "revId": "236351770de76c6a34023caf73e3694ba2298e7e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6fb3e98_b016640c",
+        "filename": "tools/casimir/rustfmt.toml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-08-30T02:03:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e5633e87_21472e40",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "236351770de76c6a34023caf73e3694ba2298e7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
