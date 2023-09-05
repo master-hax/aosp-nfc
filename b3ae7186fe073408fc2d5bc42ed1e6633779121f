@@ -22,6 +22,30 @@
       },
       "revId": "b3ae7186fe073408fc2d5bc42ed1e6633779121f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0c73741_0561bda4",
+        "filename": "tools/casimir/Cargo.toml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-05T16:57:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "9c5cd0f9_3d47e9c2",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 96
+      },
+      "revId": "b3ae7186fe073408fc2d5bc42ed1e6633779121f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
