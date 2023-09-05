@@ -22,6 +22,30 @@
       },
       "revId": "7edcb4e302da8f8f3436c36632ea4968c4f04761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e95a35e_46110963",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-05T16:43:39Z",
+      "side": 1,
+      "message": "I assume that the command should return a Semantic Error, that is the case for commands received in the incorrect state as documented in 5.2 State Machine:\n\n\u003e If the NFCC or DH receives a Control Message in a state where that Control Message is not allowed, it SHALL treat this as a semantic error, as defined in 3.2.2.",
+      "parentUuid": "7259216b_bc59e97e",
+      "range": {
+        "startLine": 163,
+        "startChar": 16,
+        "endLine": 166,
+        "endChar": 39
+      },
+      "revId": "7edcb4e302da8f8f3436c36632ea4968c4f04761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
