@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51d71355_b6c33a40",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-05T16:39:35Z",
+      "side": 1,
+      "message": "Question: `NciReader` uses `Mutex` while this doesn\u0027t. What\u0027s the difference?\n\nSame for the `NciWriter` vs `RfWriter`",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 15
+      },
+      "revId": "471377a7d1f1c7cd3e35e9c4a63891da81430929",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cada71a6_c838e49c",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-05T16:39:35Z",
+      "side": 1,
+      "message": "question) Can this be also derived from pdl?",
+      "range": {
+        "startLine": 153,
+        "startChar": 35,
+        "endLine": 153,
+        "endChar": 46
+      },
+      "revId": "471377a7d1f1c7cd3e35e9c4a63891da81430929",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
