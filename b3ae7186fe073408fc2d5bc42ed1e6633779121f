@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c5cd0f9_3d47e9c2",
+        "filename": "tools/casimir/Cargo.toml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-05T12:47:46Z",
+      "side": 0,
+      "message": "revert unrelated changes.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 96
+      },
+      "revId": "b3ae7186fe073408fc2d5bc42ed1e6633779121f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
