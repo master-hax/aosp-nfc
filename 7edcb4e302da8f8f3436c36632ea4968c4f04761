@@ -46,6 +46,30 @@
       },
       "revId": "7edcb4e302da8f8f3436c36632ea4968c4f04761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bcbccbe_6a7c3af3",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-05T16:57:23Z",
+      "side": 1,
+      "message": "Nice finding. This is what I\u0027m seeing.\n\n\u003e In case of a Control Message with a semantic error, meaning that a Control Message with valid syntax is received when it is not expected:\n\u003e - An unexpected Response or Notification SHALL be ignored by the DH.\n\u003e - An unexpected Command SHALL NOT cause any action by the NFCC. Unless otherwise specified, the NFCC SHALL send a Response with a Status value of STATUS_SEMANTIC_ERROR and no additional fields.\n\nCould you update the TODO accordingly to include specific future action item?",
+      "parentUuid": "9e95a35e_46110963",
+      "range": {
+        "startLine": 163,
+        "startChar": 16,
+        "endLine": 166,
+        "endChar": 39
+      },
+      "revId": "7edcb4e302da8f8f3436c36632ea4968c4f04761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
