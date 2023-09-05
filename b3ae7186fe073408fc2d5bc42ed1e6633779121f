@@ -94,6 +94,53 @@
       },
       "revId": "b3ae7186fe073408fc2d5bc42ed1e6633779121f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49a95f95_25737ff2",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-05T16:51:09Z",
+      "side": 1,
+      "message": "Kind of true, because the `tick()` had been there.\n\nBut preferably you should write as mall change as possible. see: go/small-cls",
+      "parentUuid": "92f33940_66ee4b76",
+      "range": {
+        "startLine": 510,
+        "startChar": 12,
+        "endLine": 515,
+        "endChar": 14
+      },
+      "revId": "b3ae7186fe073408fc2d5bc42ed1e6633779121f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf95ec68_062ad62e",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-05T16:51:09Z",
+      "side": 1,
+      "message": "Question) Is `select!` ok here?\n\nIf I only take a look at this CL, it\u0027s not clear why you replaced `select!` with join in `controller.rs`. Guess that would be helpful in later CLs, but behavior looks same in this CL. (correct me if I\u0027m wrong)\n\nSo I\u0027m curious whether `select!` here is intended or not.",
+      "range": {
+        "startLine": 227,
+        "startChar": 8,
+        "endLine": 227,
+        "endChar": 14
+      },
+      "revId": "b3ae7186fe073408fc2d5bc42ed1e6633779121f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
