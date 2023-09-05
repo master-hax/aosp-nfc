@@ -221,6 +221,16 @@
 /**********************************************
  * NCI Proprietary  Group       - F
  **********************************************/
+/* Android Power Saving Opcode */
+#define NCI_MSG_PROP_ANDROID 0x0C
+
+/* Android Parameters */
+#define NCI_ANDROID_POWER_SAVING 0x01
+
+/* Android Power Saving Params */
+#define NCI_ANDROID_POWER_SAVING_PARAM_SIZE 2
+#define NCI_ANDROID_POWER_SAVING_PARAM_DISABLE 0
+#define NCI_ANDROID_POWER_SAVING_PARAM_ENABLE 1
 
 /**********************************************
  * NCI Core Group Params

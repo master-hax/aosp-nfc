@@ -97,6 +97,7 @@ class NfcAdaptation {
   bool DownloadFirmware();
   void GetVendorConfigs(std::map<std::string, ConfigValue>& configMap);
   void Dump(int fd);
+  bool SetPowerSavingMode(bool enable);
 
  private:
   NfcAdaptation();

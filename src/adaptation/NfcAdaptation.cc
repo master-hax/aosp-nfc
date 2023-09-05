@@ -615,6 +615,42 @@ void NfcAdaptation::DeviceShutdown() {
 }
 
 /*******************************************************************************
+ **
+ ** Function         SetPowerSavingMode
+ **
+ ** Description      Set power saving mode flag
+ **
+ ** Returns          true if successfully set power saving mode flag, else false
+ *******************************************************************************/
+bool NfcAdaptation::SetPowerSavingMode(bool enable) {
+  const char* func = "NfcAdaptation::HalSetPowerSavingMode";
+  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("%s:%d", func, enable);
+
+  if (mAidlHal != nullptr) {
+    int ret;
+    uint8_t set_power_saving[NCI_MSG_HDR_SIZE +
+                             NCI_ANDROID_POWER_SAVING_PARAM_SIZE];
+    uint8_t* p = (uint8_t*)set_power_saving;
+
+    NCI_MSG_BLD_HDR0(p, NCI_MT_CMD, NCI_GID_PROP);
+    NCI_MSG_BLD_HDR1(p, NCI_MSG_PROP_ANDROID);
+    UINT8_TO_STREAM(p, NCI_ANDROID_POWER_SAVING_PARAM_SIZE);
+    UINT8_TO_STREAM(p, NCI_ANDROID_POWER_SAVING);
+    UINT8_TO_STREAM(p, enable ? NCI_ANDROID_POWER_SAVING_PARAM_ENABLE
+                              : NCI_ANDROID_POWER_SAVING_PARAM_DISABLE);
+
+    std::vector<uint8_t> aidl_data(set_power_saving,
+                                   set_power_saving + sizeof(set_power_saving));
+    Status status = mAidlHal->write(aidl_data, &ret);
+    if (status.isOk()) return true;
+  } else {
+    DLOG_IF(INFO, nfc_debug_enabled)
+        << StringPrintf("%s: mAidlHal is NULL", __func__);
+  }
+  return false;
+}
+
+/*******************************************************************************
 **
 ** Function:    NfcAdaptation::Dump
 **
