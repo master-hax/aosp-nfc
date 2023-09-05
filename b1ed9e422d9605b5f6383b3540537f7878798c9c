@@ -83,6 +83,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20249b78_f21b5a95",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-05T16:55:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3627660e_bf34d9af",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "b1ed9e422d9605b5f6383b3540537f7878798c9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4df41367_f5f85904",
@@ -106,6 +130,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "322aada2_e5d8d60e",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-05T16:55:57Z",
+      "side": 1,
+      "message": "Correct, thanks for noticing",
+      "parentUuid": "4df41367_f5f85904",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 8,
+        "endChar": 14
+      },
+      "revId": "b1ed9e422d9605b5f6383b3540537f7878798c9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25a63968_fcea16e0",
@@ -119,6 +167,30 @@
       "writtenOn": "2023-09-05T13:05:07Z",
       "side": 1,
       "message": "I\u0027m sorry but could you add references to each values / format / .. and also share me relevant specification? I only have NCI 2.1 specification document and it doesn\u0027t look sufficient to understand definitions here.\n\nOr you can ask review from alisher instead.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "b1ed9e422d9605b5f6383b3540537f7878798c9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eb99bf6_e4f95165",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-05T16:55:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25a63968_fcea16e0",
       "range": {
         "startLine": 34,
         "startChar": 0,
