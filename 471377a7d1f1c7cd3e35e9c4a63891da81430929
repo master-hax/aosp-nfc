@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e6587487_7f007f4d",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-05T20:16:42Z",
+      "side": 1,
+      "message": "I want the interface for NciReader, NciWrite to input \u0026self instead of \u0026mut self to enable concurrent access to the reader/writer. I don\u0027t have this issue with the RfReader, RfWriter since the instance is used only in one place.",
+      "parentUuid": "51d71355_b6c33a40",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 15
+      },
+      "revId": "471377a7d1f1c7cd3e35e9c4a63891da81430929",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cada71a6_c838e49c",
         "filename": "tools/casimir/src/main.rs",
         "patchSetId": 4
@@ -37,6 +61,30 @@
       "writtenOn": "2023-09-05T16:39:35Z",
       "side": 1,
       "message": "question) Can this be also derived from pdl?",
+      "range": {
+        "startLine": 153,
+        "startChar": 35,
+        "endLine": 153,
+        "endChar": 46
+      },
+      "revId": "471377a7d1f1c7cd3e35e9c4a63891da81430929",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d41b3aa_734965f6",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-05T20:16:42Z",
+      "side": 1,
+      "message": "The header size could be applied in pdl e.g.\n```\npacket FramedRfPacket {\n   _size_(packet): 16,\n   packet: 8[],\n}\n```\nbut the framing still needs to be done manually (reading the header, then reading the packet data). I don\u0027t think it brings more visibility.",
+      "parentUuid": "cada71a6_c838e49c",
       "range": {
         "startLine": 153,
         "startChar": 35,
