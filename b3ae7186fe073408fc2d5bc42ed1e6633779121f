@@ -141,6 +141,30 @@
       },
       "revId": "b3ae7186fe073408fc2d5bc42ed1e6633779121f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a747a718_703aeb9d",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-05T19:07:49Z",
+      "side": 1,
+      "message": "The select! {} pattern has the following flaws which I did not anticipate writing the code initially:\n\n- concurrent futures are cancelled when one of the selected futures completes, this is an issue if a future does meaningful work before completing\n- when a selected future completes, the associated handler blocks the select! block when pending\n\nThat means select! {} is not actually concurrent execution, as opposed to join3 which does run the futures concurrently",
+      "parentUuid": "bf95ec68_062ad62e",
+      "range": {
+        "startLine": 227,
+        "startChar": 8,
+        "endLine": 227,
+        "endChar": 14
+      },
+      "revId": "b3ae7186fe073408fc2d5bc42ed1e6633779121f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
