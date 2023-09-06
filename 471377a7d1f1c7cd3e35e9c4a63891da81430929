@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a029800b_0bda15f1",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-06T23:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6587487_7f007f4d",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 15
+      },
+      "revId": "471377a7d1f1c7cd3e35e9c4a63891da81430929",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cada71a6_c838e49c",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "The header size could be applied in pdl e.g.\n```\npacket FramedRfPacket {\n   _size_(packet): 16,\n   packet: 8[],\n}\n```\nbut the framing still needs to be done manually (reading the header, then reading the packet data). I don\u0027t think it brings more visibility.",
       "parentUuid": "cada71a6_c838e49c",
+      "range": {
+        "startLine": 153,
+        "startChar": 35,
+        "endLine": 153,
+        "endChar": 46
+      },
+      "revId": "471377a7d1f1c7cd3e35e9c4a63891da81430929",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08ac2d29_7e9ed956",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-06T23:56:14Z",
+      "side": 1,
+      "message": "Well, actually I asked the questions to encapsulate packet information in one place -- pdl file. For an example, HAL implementation relies on hardcoded `HEADER_SIZE` and using generated packet header cause issue when unimplemented packet arrives.\n\nDo you have a solution here? This change looks good, but it would be better if we have a solution for it in longer term.",
+      "parentUuid": "6d41b3aa_734965f6",
       "range": {
         "startLine": 153,
         "startChar": 35,
