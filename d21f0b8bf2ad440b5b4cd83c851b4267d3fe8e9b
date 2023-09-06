@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d40be70d_e08ed30d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-06T23:52:50Z",
+      "side": 1,
+      "message": "Annotations are super awesome, but I still have some questions.",
+      "revId": "d21f0b8bf2ad440b5b4cd83c851b4267d3fe8e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1f23428_2ca941b2",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-06T23:52:50Z",
+      "side": 1,
+      "message": "Question) I\u0027m sorry but I couldn\u0027t find the matching definition from any specification.\n\nCould you tell me where does `RfPacket` and `PacketType` come from?",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "d21f0b8bf2ad440b5b4cd83c851b4267d3fe8e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a644d23_49012f95",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-06T23:52:50Z",
+      "side": 1,
+      "message": "NCI protocol 7.3.2 uses the term \u0027deactivated\u0027. Is `DeselectNotification` from `RF_DEACTIVATE_NTF`? If so, Could you match the wording?\n\nIIUC, deselect seems to be used in command and deactivate is the result of the deselection.\n\n(And also add note as weel)",
+      "range": {
+        "startLine": 168,
+        "startChar": 41,
+        "endLine": 168,
+        "endChar": 51
+      },
+      "revId": "d21f0b8bf2ad440b5b4cd83c851b4267d3fe8e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd14f685_a21ea1cc",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-06T23:52:50Z",
+      "side": 1,
+      "message": "DeactiveType and DeactivationReason? (From table 79 from NCI spec)\n\nIf it\u0027s unused, then could you at least add `_reserved_` with comment as `NfcDepSelectCommand` is doing?",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 28
+      },
+      "revId": "d21f0b8bf2ad440b5b4cd83c851b4267d3fe8e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
