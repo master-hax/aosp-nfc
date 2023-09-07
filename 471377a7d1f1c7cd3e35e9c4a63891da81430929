@@ -141,6 +141,30 @@
       },
       "revId": "471377a7d1f1c7cd3e35e9c4a63891da81430929",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f68d4f4_f1dd07e4",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-07T06:13:46Z",
+      "side": 1,
+      "message": "| and using generated packet header cause issue when unimplemented packet arrives.\n\nCorrection. Tried to use generated packet header from NFC HAL, but it failed when unimplemented packet arrives.",
+      "parentUuid": "08ac2d29_7e9ed956",
+      "range": {
+        "startLine": 153,
+        "startChar": 35,
+        "endLine": 153,
+        "endChar": 46
+      },
+      "revId": "471377a7d1f1c7cd3e35e9c4a63891da81430929",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
