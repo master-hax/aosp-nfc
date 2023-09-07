@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4aafe8c8_24bc931d",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-07T06:24:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bea6524_09523802",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "d21f0b8bf2ad440b5b4cd83c851b4267d3fe8e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a644d23_49012f95",
@@ -78,6 +102,30 @@
       "writtenOn": "2023-09-06T23:52:50Z",
       "side": 1,
       "message": "NCI protocol 7.3.2 uses the term \u0027deactivated\u0027. Is `DeselectNotification` from `RF_DEACTIVATE_NTF`? If so, Could you match the wording?\n\nIIUC, deselect seems to be used in command and deactivate is the result of the deselection.\n\n(And also add note as weel)",
+      "range": {
+        "startLine": 168,
+        "startChar": 41,
+        "endLine": 168,
+        "endChar": 51
+      },
+      "revId": "d21f0b8bf2ad440b5b4cd83c851b4267d3fe8e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cea34ac7_310d78a5",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-07T06:24:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a644d23_49012f95",
       "range": {
         "startLine": 168,
         "startChar": 41,
@@ -125,6 +173,30 @@
       "side": 1,
       "message": "The _reserved_ field is used to pad the size of the packet. It is a specific to PDL ... and it does not represent any useful information 😕",
       "parentUuid": "cd14f685_a21ea1cc",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 28
+      },
+      "revId": "d21f0b8bf2ad440b5b4cd83c851b4267d3fe8e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e833c7a_c0e521bb",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-07T06:24:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1f844c99_bcc33740",
       "range": {
         "startLine": 170,
         "startChar": 0,
