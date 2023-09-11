@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9df5fe5_2200dd96",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 8
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-11T15:24:03Z",
+      "side": 1,
+      "message": "NCI?",
+      "range": {
+        "startLine": 741,
+        "startChar": 16,
+        "endLine": 741,
+        "endChar": 19
+      },
+      "revId": "bd08a6c5477f8a21b34c9cdc74ad540361b34774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ba87507_6fedbcd5",
+        "filename": "tools/casimir/src/packets.rs",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-11T15:24:03Z",
+      "side": 1,
+      "message": "Question) what about define a common header and import it?",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 52
+      },
+      "revId": "bd08a6c5477f8a21b34c9cdc74ad540361b34774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

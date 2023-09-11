@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b131a9c_d9615a4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-11T15:24:03Z",
+      "side": 1,
+      "message": "Starting from this change, would you be more specific about your tests? Doing test with a feature helps others to understand the progress.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 15
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7652102_10f9853c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-11T15:24:03Z",
+      "side": 1,
+      "message": "First pass.",
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28ef0be2_148ecbad",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 9
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-11T15:24:03Z",
+      "side": 1,
+      "message": "NCI?",
+      "range": {
+        "startLine": 814,
+        "startChar": 12,
+        "endLine": 814,
+        "endChar": 15
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11df958b_91e4c8e8",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 9
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-11T15:24:03Z",
+      "side": 1,
+      "message": "Question) Is this number from the spec or an arbitrary magic number?",
+      "range": {
+        "startLine": 922,
+        "startChar": 61,
+        "endLine": 922,
+        "endChar": 63
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c263a19_c15cd0d0",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-11T15:24:03Z",
+      "side": 1,
+      "message": "Question: Would you like to implement this in near future? Otherwise consider adding TODO.",
+      "range": {
+        "startLine": 547,
+        "startChar": 0,
+        "endLine": 572,
+        "endChar": 1
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
