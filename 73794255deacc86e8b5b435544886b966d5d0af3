@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "18487148_05005f5b",
+        "filename": "tools/casimir/scripts/rf_packets.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-12T16:26:25Z",
+      "side": 1,
+      "message": "I did not want to be dependent on Android build rules for testing;\nsubmitting the generated file is a way to ensure casimir can be used without invoking soong.",
+      "parentUuid": "02f3c964_cce5311e",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5b13eeae_a779f4e6",
         "filename": "tools/casimir/src/controller.rs",
         "patchSetId": 10
