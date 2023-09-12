@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "609431e4_d90c3acd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-12T14:21:59Z",
+      "side": 1,
+      "message": "`Connect to casimir and confirmed message \u0027t4at device selected by xxx\u0027`?",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 15
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02f3c964_cce5311e",
+        "filename": "tools/casimir/scripts/rf_packets.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-12T14:21:59Z",
+      "side": 1,
+      "message": "Question) why not generate this script with build rule? Then you don\u0027t need extra comments here nor concerns of lint warnings.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b13eeae_a779f4e6",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 10
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-12T14:21:59Z",
+      "side": 1,
+      "message": "This would be OK without extra code block because Rust allows to reuse variable. (previous definition will be dropped)",
+      "range": {
+        "startLine": 862,
+        "startChar": 0,
+        "endLine": 862,
+        "endChar": 52
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
