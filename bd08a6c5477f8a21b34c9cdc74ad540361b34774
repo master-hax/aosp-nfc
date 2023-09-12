@@ -69,6 +69,30 @@
       },
       "revId": "bd08a6c5477f8a21b34c9cdc74ad540361b34774",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9b21204_b7efc780",
+        "filename": "tools/casimir/src/packets.rs",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-12T14:52:11Z",
+      "side": 1,
+      "message": "Uh, that\u0027s sad.",
+      "parentUuid": "c4eb500f_9fe8a427",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 52
+      },
+      "revId": "bd08a6c5477f8a21b34c9cdc74ad540361b34774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

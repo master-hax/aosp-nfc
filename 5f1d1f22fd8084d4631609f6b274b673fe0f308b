@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7217bdca_4919b696",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-12T14:52:11Z",
+      "side": 1,
+      "message": "Acknowledged. But please add detailed test steps whenever it\u0027s possible.",
+      "parentUuid": "4d0cc3ed_91fc8ce5",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 15
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d7652102_10f9853c",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 9
@@ -135,6 +159,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2cbaf1b_26d10429",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 9
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-12T14:52:11Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "75511edd_cee5b6ae",
+      "range": {
+        "startLine": 922,
+        "startChar": 61,
+        "endLine": 922,
+        "endChar": 63
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce9427de_fe47d877",
@@ -153,6 +201,29 @@
         "startChar": 7,
         "endLine": 539,
         "endChar": 48
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d553d7c4_64d25673",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-12T14:52:11Z",
+      "side": 1,
+      "message": "Question) Is this for hardcoding `SEL_RES` response length to `1`? Would we not support NFC Forum Type 1?",
+      "range": {
+        "startLine": 543,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 18
       },
       "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
@@ -195,6 +266,30 @@
       "side": 1,
       "message": "I am trying to have complete definitions with regard to the specification, \nin case we want to use this file for the nfc stack rewriting later.\nNot sure that TODOs make sense in this context since they are tied to casimir",
       "parentUuid": "9c263a19_c15cd0d0",
+      "range": {
+        "startLine": 547,
+        "startChar": 0,
+        "endLine": 572,
+        "endChar": 1
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e38d23b_0e92d127",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-12T14:52:11Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ceeb2f77_4b8d47e7",
       "range": {
         "startLine": 547,
         "startChar": 0,
