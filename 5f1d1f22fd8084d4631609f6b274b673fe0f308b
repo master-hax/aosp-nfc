@@ -112,6 +112,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab7cc20b_c01639a7",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 9
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-12T17:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ef0be2_148ecbad",
+      "range": {
+        "startLine": 814,
+        "startChar": 12,
+        "endLine": 814,
+        "endChar": 15
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11df958b_91e4c8e8",
@@ -206,6 +230,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1b50236_5412b272",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-12T17:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce9427de_fe47d877",
+      "range": {
+        "startLine": 539,
+        "startChar": 7,
+        "endLine": 539,
+        "endChar": 48
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d553d7c4_64d25673",
@@ -219,6 +267,30 @@
       "writtenOn": "2023-09-12T14:52:11Z",
       "side": 1,
       "message": "Question) Is this for hardcoding `SEL_RES` response length to `1`? Would we not support NFC Forum Type 1?",
+      "range": {
+        "startLine": 543,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 18
+      },
+      "revId": "5f1d1f22fd8084d4631609f6b274b673fe0f308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "672b3c03_d7794f19",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 9
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-12T17:38:12Z",
+      "side": 1,
+      "message": "T1T have been deprecated for a long time, I don\u0027t think we need/want to support those. I will update the definitions if we do.",
+      "parentUuid": "d553d7c4_64d25673",
       "range": {
         "startLine": 543,
         "startChar": 0,
