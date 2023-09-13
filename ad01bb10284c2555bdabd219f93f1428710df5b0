@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b7ccdea_ae7d2489",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 10
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T05:58:44Z",
+      "side": 1,
+      "message": "Why don\u0027t you handle following codes when response arrives? What\u0027s the reason for waiting for fixed amount time and retry `send_rf()` from the scratch? This can be increased on slower machine.",
+      "range": {
+        "startLine": 859,
+        "startChar": 0,
+        "endLine": 859,
+        "endChar": 53
+      },
+      "revId": "ad01bb10284c2555bdabd219f93f1428710df5b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
