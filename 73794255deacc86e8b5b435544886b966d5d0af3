@@ -50,6 +50,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "692c5425_89c388d4",
+        "filename": "tools/casimir/scripts/rf_packets.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T14:32:00Z",
+      "side": 1,
+      "message": "Prefer use `--input` and pass RF pdl file for others to replicate easily.",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 29
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7dbd272_e9c40d97",
+        "filename": "tools/casimir/scripts/rf_packets.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T14:32:00Z",
+      "side": 1,
+      "message": "Drop `google/pdl`. Seems like your local path.",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 61
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "02f3c964_cce5311e",
         "filename": "tools/casimir/scripts/rf_packets.py",
         "patchSetId": 10
@@ -90,6 +136,53 @@
         "startChar": 0,
         "endLine": 4,
         "endChar": 0
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "992ba514_6f76ecf0",
+        "filename": "tools/casimir/scripts/rf_packets.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T14:32:00Z",
+      "side": 1,
+      "message": "What does `ensure casimir can be used without invoking soong` mean? Are you building casimir with cargo?\n\nThen how would handle any tricky issue when `Cargo.toml`  nor `rf_packets.py` are outdated?",
+      "parentUuid": "18487148_05005f5b",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4cd20ac_6a5e6838",
+        "filename": "tools/casimir/scripts/t4at.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T14:32:00Z",
+      "side": 1,
+      "message": "NFC_A?",
+      "range": {
+        "startLine": 60,
+        "startChar": 36,
+        "endLine": 60,
+        "endChar": 37
       },
       "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
