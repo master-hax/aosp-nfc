@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43bbf510_097fc2ef",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T16:03:27Z",
+      "side": 1,
+      "message": "question) how did you pick this hardcoded value?",
+      "range": {
+        "startLine": 123,
+        "startChar": 11,
+        "endLine": 123,
+        "endChar": 13
+      },
+      "revId": "873f55fc0c7157b7e6befc88729d7ac941775c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
