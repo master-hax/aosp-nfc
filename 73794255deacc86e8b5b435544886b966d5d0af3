@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17d12b9c_c8dfa7b1",
+        "filename": "tools/casimir/scripts/rf_packets.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-13T16:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "692c5425_89c388d4",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 29
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7dbd272_e9c40d97",
@@ -84,6 +108,30 @@
       "writtenOn": "2023-09-13T14:32:00Z",
       "side": 1,
       "message": "Drop `google/pdl`. Seems like your local path.",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 61
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c95f75d_03725172",
+        "filename": "tools/casimir/scripts/rf_packets.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-13T16:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dbd272_e9c40d97",
       "range": {
         "startLine": 2,
         "startChar": 3,
@@ -167,6 +215,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cfdc4f44_1552eae5",
+        "filename": "tools/casimir/scripts/rf_packets.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-13T16:38:53Z",
+      "side": 1,
+      "message": "\u003e What does ensure casimir can be used without invoking soong mean? Are you building casimir with cargo?\n\nI am :) I run the tests by having the cuttlefish instance on cloudtop connect to my local casimir server with ssh port forwarding.\n\n\u003e Then how would handle any tricky issue when Cargo.toml nor rf_packets.py are outdated?\n\nI delayed adding a build rule for it (in build.rs maybe ?) but that will be the solution long term.",
+      "parentUuid": "992ba514_6f76ecf0",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f4cd20ac_6a5e6838",
         "filename": "tools/casimir/scripts/t4at.py",
         "patchSetId": 10
@@ -178,6 +250,30 @@
       "writtenOn": "2023-09-13T14:32:00Z",
       "side": 1,
       "message": "NFC_A?",
+      "range": {
+        "startLine": 60,
+        "startChar": 36,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "73794255deacc86e8b5b435544886b966d5d0af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f0cd43f_e9d0525d",
+        "filename": "tools/casimir/scripts/t4at.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-13T16:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4cd20ac_6a5e6838",
       "range": {
         "startLine": 60,
         "startChar": 36,
