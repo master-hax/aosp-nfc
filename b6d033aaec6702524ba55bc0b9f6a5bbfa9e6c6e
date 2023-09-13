@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "766c9adb_3020306e",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 13
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T16:17:19Z",
+      "side": 1,
+      "message": "Please match TODO style -- either TODO(bug) or TODO(ldap)",
+      "range": {
+        "startLine": 856,
+        "startChar": 11,
+        "endLine": 856,
+        "endChar": 15
+      },
+      "revId": "b6d033aaec6702524ba55bc0b9f6a5bbfa9e6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1f4fbb2_8d5bb27e",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 13
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T16:17:19Z",
+      "side": 1,
+      "message": "Question) Where does this come from?",
+      "range": {
+        "startLine": 872,
+        "startChar": 32,
+        "endLine": 872,
+        "endChar": 40
+      },
+      "revId": "b6d033aaec6702524ba55bc0b9f6a5bbfa9e6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "481077c7_92a2b7ec",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 13
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T16:17:19Z",
+      "side": 1,
+      "message": "Question) is it predefined value?",
+      "range": {
+        "startLine": 877,
+        "startChar": 29,
+        "endLine": 877,
+        "endChar": 31
+      },
+      "revId": "b6d033aaec6702524ba55bc0b9f6a5bbfa9e6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5d262f6_6a8d2259",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 13
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T16:17:19Z",
+      "side": 1,
+      "message": "nit; please avoid such unnecessary changes.",
+      "range": {
+        "startLine": 1095,
+        "startChar": 0,
+        "endLine": 1095,
+        "endChar": 63
+      },
+      "revId": "b6d033aaec6702524ba55bc0b9f6a5bbfa9e6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
