@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46b51d24_9f9c9693",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T15:04:28Z",
+      "side": 1,
+      "message": "Question) Why don\u0027t you simply keep the Map of the devices with key\u003did?",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 43
+      },
+      "revId": "b502bf6135830f8720f12fd1c975edc5b0e3cbd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
