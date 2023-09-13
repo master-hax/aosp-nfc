@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7636eb25_7f0a91b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T15:06:57Z",
+      "side": 1,
+      "message": "QQ)",
+      "revId": "cc6bee8a8cf72a2704a3a92366c9bf04a7f40c58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8bc64ba_953d0b59",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T15:06:57Z",
+      "side": 1,
+      "message": "+1. I wish that it\u0027s added from the beginning..",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 25
+      },
+      "revId": "cc6bee8a8cf72a2704a3a92366c9bf04a7f40c58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
