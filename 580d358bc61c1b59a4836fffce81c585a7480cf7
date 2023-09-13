@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16423f14_ddf3f162",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 11
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T14:45:53Z",
+      "side": 1,
+      "message": "Question) `[NCI] Figure 11` only says `RF_DEACTIVATE_CMD` is only used to go to `RFST_IDLE` and transition to `RFST_DISCOVERY` is done via `RF_DEACTIVATE_NTF`.\n\nGiven that the `rf_deactivate()` is triggered with `RfDeactivateCommand()`, I think that this shouldn\u0027t be here. Could you check whether my understanding is correct?",
+      "range": {
+        "startLine": 584,
+        "startChar": 0,
+        "endLine": 586,
+        "endChar": 0
+      },
+      "revId": "580d358bc61c1b59a4836fffce81c585a7480cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8d6895d_1186ba95",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 11
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-13T14:45:53Z",
+      "side": 1,
+      "message": "receive_data",
+      "range": {
+        "startLine": 686,
+        "startChar": 20,
+        "endLine": 686,
+        "endChar": 24
+      },
+      "revId": "580d358bc61c1b59a4836fffce81c585a7480cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
