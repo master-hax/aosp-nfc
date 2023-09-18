@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b2af49c6_efd6d7ef",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 13
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-18T13:19:30Z",
+      "side": 1,
+      "message": "Please consider adding an enum or at least comment the hardcoded value.",
+      "parentUuid": "c5ee435b_27e4a9b1",
+      "range": {
+        "startLine": 872,
+        "startChar": 32,
+        "endLine": 872,
+        "endChar": 40
+      },
+      "revId": "b6d033aaec6702524ba55bc0b9f6a5bbfa9e6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "481077c7_92a2b7ec",
         "filename": "tools/casimir/src/controller.rs",
         "patchSetId": 13
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "It is a reserved value (see [NCI] Table 67: RF Discovery ID).\n\nI don\u0027t have confirmation from the [NCI@ specification but I am assuming that\nthe reserved discovery Id is used for interface activation in listen mode.\n\nThe following CL will make it clearer.",
       "parentUuid": "481077c7_92a2b7ec",
+      "range": {
+        "startLine": 877,
+        "startChar": 29,
+        "endLine": 877,
+        "endChar": 31
+      },
+      "revId": "b6d033aaec6702524ba55bc0b9f6a5bbfa9e6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3524956f_ec3ca45d",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 13
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-18T13:19:30Z",
+      "side": 1,
+      "message": "Please consider adding an enum or at least comment the hardcoded value.",
+      "parentUuid": "205a9766_d9c69406",
       "range": {
         "startLine": 877,
         "startChar": 29,
