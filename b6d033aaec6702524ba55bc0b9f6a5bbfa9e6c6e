@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f74b0346_491f0273",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 13
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-18T15:30:58Z",
+      "side": 1,
+      "message": "I added a comment to document the value already 👍",
+      "parentUuid": "b2af49c6_efd6d7ef",
+      "range": {
+        "startLine": 872,
+        "startChar": 32,
+        "endLine": 872,
+        "endChar": 40
+      },
+      "revId": "b6d033aaec6702524ba55bc0b9f6a5bbfa9e6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "481077c7_92a2b7ec",
         "filename": "tools/casimir/src/controller.rs",
         "patchSetId": 13
@@ -180,6 +204,30 @@
       "side": 1,
       "message": "Please consider adding an enum or at least comment the hardcoded value.",
       "parentUuid": "205a9766_d9c69406",
+      "range": {
+        "startLine": 877,
+        "startChar": 29,
+        "endLine": 877,
+        "endChar": 31
+      },
+      "revId": "b6d033aaec6702524ba55bc0b9f6a5bbfa9e6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcd76297_66849a58",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 13
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-18T15:30:58Z",
+      "side": 1,
+      "message": "It is done in the next CL",
+      "parentUuid": "3524956f_ec3ca45d",
       "range": {
         "startLine": 877,
         "startChar": 29,
