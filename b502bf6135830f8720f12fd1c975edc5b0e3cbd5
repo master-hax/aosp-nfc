@@ -46,6 +46,30 @@
       },
       "revId": "b502bf6135830f8720f12fd1c975edc5b0e3cbd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d818ac4f_125ca333",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-18T15:32:10Z",
+      "side": 1,
+      "message": "It makes it easier to handle dropping devices on future completion, as you don\u0027t need to take the \u0026mut of scene to iterate, see following CL.",
+      "parentUuid": "bf71b8ad_33385246",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 43
+      },
+      "revId": "b502bf6135830f8720f12fd1c975edc5b0e3cbd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
