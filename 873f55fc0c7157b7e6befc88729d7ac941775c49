@@ -46,6 +46,30 @@
       },
       "revId": "873f55fc0c7157b7e6befc88729d7ac941775c49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e87591f3_e85f4532",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-18T13:12:17Z",
+      "side": 1,
+      "message": "So this is fixing the previous mistake. Am I correct?",
+      "parentUuid": "654d4032_dced8dfe",
+      "range": {
+        "startLine": 123,
+        "startChar": 11,
+        "endLine": 123,
+        "endChar": 13
+      },
+      "revId": "873f55fc0c7157b7e6befc88729d7ac941775c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
