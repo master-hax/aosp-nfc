@@ -46,6 +46,30 @@
       },
       "revId": "ad01bb10284c2555bdabd219f93f1428710df5b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "583abe2b_7488251d",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 10
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-18T14:16:55Z",
+      "side": 1,
+      "message": "I\u0027m asking \u0027what happens cuttlefish takes `\u003e10m` more times for handling responses\u0027. If so, then responses will be discarded by every `tick()` and codes below wouldn\u0027t be called at all.\n\nCuttlefish is the virtual machine and its resources may not be available especially when multiple VMs are running at the same time. -- we\u0027d better not assume hardcoded timeout in Cuttlefish as much as possible.\n\n\nWhat about this?\n\n```\ntick() {\n  send poll command() (L820-L856)\n}\n\n\nreceive_rf() {\n  ...\n  \n  if rf_poll_response.len() \u003e 0 {\n    // handle responses (L861-L914)\n  }\n}\n```\n\nIf we need to test timeout scenario, then my opinion may be wrong, but then I\u0027d propose to make timeouts to be configurable. Correct me if I\u0027m wrong here.",
+      "parentUuid": "fda1adf9_1db1e485",
+      "range": {
+        "startLine": 859,
+        "startChar": 0,
+        "endLine": 859,
+        "endChar": 53
+      },
+      "revId": "ad01bb10284c2555bdabd219f93f1428710df5b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
