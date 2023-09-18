@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "855949cc_6d1a27c9",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 11
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-18T13:08:37Z",
+      "side": 1,
+      "message": "I\u0027m sorry but I don\u0027t understand how your reply answers my question.\n\nLet me ask my question again. In `[NCI] Figure 1`, some transitions happens for all `CMD/RSP/NTF` (e.g. `RFST_DISCOVERY` -\u003e `RFST_POLL_ACTIVE`), but some transitions distinguish `CMD/RSP/NTF` and moves to different state.\n\nMy question here is the `RFST_LISTEN_SLEEP`. It goes to `RFST_IDLE` with `RF_DEACTIVATE_CMD/RS`, but it goes to `RFST_DISCOVERY` with `RF_DEACTIVATE_NTF`.\n\nThis API (`rf_deactivate()`) is triggered by `RfDeactivateCommand()`, so I assumes that it should only be able to go to `RFST_IDLE`, and not `RFST_DISCOVERY`. What do you think? Am I misunderstanding something?",
+      "parentUuid": "b4b65ff0_a944003c",
+      "range": {
+        "startLine": 584,
+        "startChar": 0,
+        "endLine": 586,
+        "endChar": 0
+      },
+      "revId": "580d358bc61c1b59a4836fffce81c585a7480cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f8d6895d_1186ba95",
         "filename": "tools/casimir/src/controller.rs",
         "patchSetId": 11
