@@ -143,6 +143,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "656f3e43_a0ae2cba",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 13
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-21T07:03:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f74b0346_491f0273",
+      "range": {
+        "startLine": 872,
+        "startChar": 32,
+        "endLine": 872,
+        "endChar": 40
+      },
+      "revId": "b6d033aaec6702524ba55bc0b9f6a5bbfa9e6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "481077c7_92a2b7ec",
@@ -228,6 +252,30 @@
       "side": 1,
       "message": "It is done in the next CL",
       "parentUuid": "3524956f_ec3ca45d",
+      "range": {
+        "startLine": 877,
+        "startChar": 29,
+        "endLine": 877,
+        "endChar": 31
+      },
+      "revId": "b6d033aaec6702524ba55bc0b9f6a5bbfa9e6c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0797a13f_88f35fe7",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 13
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-21T07:03:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dcd76297_66849a58",
       "range": {
         "startLine": 877,
         "startChar": 29,
