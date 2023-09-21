@@ -96,6 +96,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f617842c_be956032",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 11
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-21T07:00:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9db73127_50e89f05",
+      "range": {
+        "startLine": 584,
+        "startChar": 0,
+        "endLine": 586,
+        "endChar": 0
+      },
+      "revId": "580d358bc61c1b59a4836fffce81c585a7480cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f8d6895d_1186ba95",
