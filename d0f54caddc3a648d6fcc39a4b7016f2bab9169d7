@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9487d50b_1ab51cc0",
+        "filename": "tools/casimir/scripts/t4at.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-21T07:03:21Z",
+      "side": 1,
+      "message": "Then could you leave comment at least?",
+      "parentUuid": "908fd303_94ab66d3",
+      "range": {
+        "startLine": 80,
+        "startChar": 58,
+        "endLine": 80,
+        "endChar": 62
+      },
+      "revId": "d0f54caddc3a648d6fcc39a4b7016f2bab9169d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "656296a3_e6d1cbed",
         "filename": "tools/casimir/scripts/t4at.py",
         "patchSetId": 13
