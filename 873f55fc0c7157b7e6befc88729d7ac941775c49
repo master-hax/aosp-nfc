@@ -94,6 +94,30 @@
       },
       "revId": "873f55fc0c7157b7e6befc88729d7ac941775c49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1534909_21d02ebc",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-21T07:02:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0008fb33_3aa70228",
+      "range": {
+        "startLine": 123,
+        "startChar": 11,
+        "endLine": 123,
+        "endChar": 13
+      },
+      "revId": "873f55fc0c7157b7e6befc88729d7ac941775c49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
