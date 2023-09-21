@@ -70,6 +70,30 @@
       },
       "revId": "b502bf6135830f8720f12fd1c975edc5b0e3cbd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b321c8ac_cc3731d9",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-21T07:14:06Z",
+      "side": 1,
+      "message": "I checked aosp/2748111 but still doesn\u0027t clear to me.\n\nBoth `poll()` and `disconnect()` takes `\u0026mut self`, so I\u0027m not sure what does \u0027you don\u0027t need to take the \u0026mut of scene to iterate\u0027 mean. Could you explain bit more detail?",
+      "parentUuid": "d818ac4f_125ca333",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 43
+      },
+      "revId": "b502bf6135830f8720f12fd1c975edc5b0e3cbd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
