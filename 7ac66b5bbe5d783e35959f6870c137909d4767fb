@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42ac4258_77ca4321",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-21T07:15:53Z",
+      "side": 1,
+      "message": "Being honest, I don\u0027t fully understand tricky async issue here. Could you find a Rust experts near you (or ask from Android Rust chatroom)? You would get more quality review.",
+      "revId": "7ac66b5bbe5d783e35959f6870c137909d4767fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
