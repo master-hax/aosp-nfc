@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a1639b3_10f2b721",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 12
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-22T02:04:07Z",
+      "side": 1,
+      "message": "Question) I can understand that `RF_DEACTIVATE_NTF` will be called if `poll()` fails (i.e. `disconnected()` is called at L329). But I\u0027m curious about the receivers here.\n\nHere are my questions in detail:\n\n- Question 1: `Scene.devices` has mix of NCI devices and RF devices. Should we also notify other RF devices if connected? I thought that we only need to notify NCI device.\n- Question 2: Can there be more than 2 or more NCI devices, if casimir is only used by on CF? Same for the RF devices. I",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 59
+      },
+      "revId": "90300a8377ec89c369a2ecf6415de79ff0a5f945",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
