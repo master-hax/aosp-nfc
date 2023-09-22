@@ -118,6 +118,30 @@
       },
       "revId": "b502bf6135830f8720f12fd1c975edc5b0e3cbd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb5b7c58_f0e58d7f",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-22T01:52:07Z",
+      "side": 1,
+      "message": "Re 1. Hashmap::retain() helps you to drop item with predicate.\n\nsee: https://doc.rust-lang.org/stable/std/collections/struct.HashMap.html#method.retain\n\nRe 2. Also left question to aosp/2748111 regarding it.",
+      "parentUuid": "dddf421b_e7798108",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 43
+      },
+      "revId": "b502bf6135830f8720f12fd1c975edc5b0e3cbd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
