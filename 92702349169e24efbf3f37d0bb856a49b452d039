@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ced89af7_e482b0c4",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-22T01:00:01Z",
+      "side": 1,
+      "message": "super minor) checkedAdd() for potential overflow",
+      "range": {
+        "startLine": 286,
+        "startChar": 16,
+        "endLine": 286,
+        "endChar": 33
+      },
+      "revId": "92702349169e24efbf3f37d0bb856a49b452d039",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9963d271_9a32f11c",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-09-22T01:00:01Z",
+      "side": 1,
+      "message": "Question) can this happen? `devices[n]` would be `None` and would be skipped above.",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 29
+      },
+      "revId": "92702349169e24efbf3f37d0bb856a49b452d039",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
