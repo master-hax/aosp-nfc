@@ -22,6 +22,30 @@
       },
       "revId": "90300a8377ec89c369a2ecf6415de79ff0a5f945",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b53a650a_5c72a3dc",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 12
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-22T04:21:30Z",
+      "side": 1,
+      "message": "1. connections to the RF port and NCI port are bound to one NFC \"device\", created with a unique identifier. When disconnecting any connection (RF or NCI), both RF and NCI devices might need to know about it happening\n\n2. there can be any number of NCI or RF device connected, within the limit of MAX_DEVICES",
+      "parentUuid": "8a1639b3_10f2b721",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 59
+      },
+      "revId": "90300a8377ec89c369a2ecf6415de79ff0a5f945",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

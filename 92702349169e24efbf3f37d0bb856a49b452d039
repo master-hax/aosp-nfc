@@ -45,6 +45,30 @@
       },
       "revId": "92702349169e24efbf3f37d0bb856a49b452d039",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fdb762f_876406c7",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-09-22T04:21:30Z",
+      "side": 1,
+      "message": "disconnect(n) must be called with n such that devices[n] is not None.\nThat is the case currently.",
+      "parentUuid": "9963d271_9a32f11c",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 29
+      },
+      "revId": "92702349169e24efbf3f37d0bb856a49b452d039",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
