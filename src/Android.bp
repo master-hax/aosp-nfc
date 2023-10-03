@@ -83,7 +83,10 @@ cc_library_shared {
         integer_overflow: true,
         scs: true,
     },
-
+    apex_available: [
+         "//apex_available:platform",
+	 "com.android.nfc"
+    ],
 }
 
 cc_defaults {
@@ -154,6 +157,10 @@ cc_library {
             enabled: false,
         },
     },
+    apex_available: [
+         "//apex_available:platform",
+	 "com.android.nfc"
+    ],
 }
 
 genrule {
