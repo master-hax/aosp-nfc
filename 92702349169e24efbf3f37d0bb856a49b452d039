@@ -69,6 +69,30 @@
       },
       "revId": "92702349169e24efbf3f37d0bb856a49b452d039",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "722e990c_bef92c5c",
+        "filename": "tools/casimir/src/main.rs",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2023-10-04T02:18:53Z",
+      "side": 1,
+      "message": "I mean we can remove this if closure because `self.devices[n] \u003d None` at `L295` and `self.devices[other_n]` should be `Some(device)` (guaranteed by L297)",
+      "parentUuid": "7fdb762f_876406c7",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 29
+      },
+      "revId": "92702349169e24efbf3f37d0bb856a49b452d039",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
