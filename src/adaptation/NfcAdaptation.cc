@@ -854,6 +854,10 @@ void NfcAdaptation::HalWrite(uint16_t data_len, uint8_t* p_data) {
 
   if (mAidlHal != nullptr) {
     int ret;
+    LOG(INFO) << StringPrintf("%s: data_len:%x", func, data_len);
+    for (int i = 0; i < data_len; i++) {
+      LOG(INFO) << StringPrintf("data:%x", p_data[i]);
+    }
     std::vector<uint8_t> aidl_data(p_data, p_data + data_len);
     mAidlHal->write(aidl_data, &ret);
   } else if (mHal != nullptr) {
