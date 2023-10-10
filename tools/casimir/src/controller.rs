@@ -49,7 +49,7 @@ pub enum LogicalConnection {
 /// The state WaitForAllDiscoveries is not represented as it is implied
 /// by the discovery routine.
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-#[allow(dead_code, missing_docs)]
+#[allow(missing_docs)]
 pub enum RfState {
     Idle,
     Discovery,
@@ -59,7 +59,9 @@ pub enum RfState {
         rf_technology: rf::Technology,
         rf_protocol: rf::Protocol,
     },
-    ListenSleep,
+    ListenSleep {
+        id: u16,
+    },
     ListenActive {
         id: u16,
         rf_interface: nci::RfInterfaceType,
@@ -77,7 +79,7 @@ pub enum RfState {
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-#[allow(dead_code, missing_docs)]
+#[allow(missing_docs)]
 pub enum RfMode {
     Poll,
     Listen,
@@ -106,11 +108,9 @@ pub struct State {
 
 /// State of an NFCC instance.
 pub struct Controller {
-    #[allow(dead_code)]
     id: u16,
     nci_writer: NciWriter,
-    #[allow(dead_code)]
-    rf_tx: mpsc::Sender<rf::RfPacket>,
+    rf_tx: mpsc::UnboundedSender<rf::RfPacket>,
     state: Mutex<State>,
 }
 
@@ -164,7 +164,11 @@ impl State {
 
 impl Controller {
     /// Create a new NFCC instance with default configuration.
-    pub fn new(id: u16, nci_writer: NciWriter, rf_tx: mpsc::Sender<rf::RfPacket>) -> Controller {
+    pub fn new(
+        id: u16,
+        nci_writer: NciWriter,
+        rf_tx: mpsc::UnboundedSender<rf::RfPacket>,
+    ) -> Controller {
         Controller {
             id,
             nci_writer,
@@ -190,14 +194,12 @@ impl Controller {
         self.nci_writer.write(&packet.into().to_vec()).await
     }
 
-    #[allow(dead_code)]
     async fn send_data(&self, packet: impl Into<nci::DataPacket>) -> Result<()> {
         self.nci_writer.write(&packet.into().to_vec()).await
     }
 
-    #[allow(dead_code)]
     async fn send_rf(&self, packet: impl Into<rf::RfPacket>) -> Result<()> {
-        self.rf_tx.send(packet.into()).await?;
+        self.rf_tx.send(packet.into())?;
         Ok(())
     }
 
@@ -612,11 +614,11 @@ impl Controller {
                 (nci::Status::Ok, RfState::WaitForHostSelect)
             }
             (RfState::PollActive { .. }, Discover) => (nci::Status::Ok, RfState::Discovery),
-            (RfState::ListenSleep, IdleMode) => (nci::Status::Ok, RfState::Idle),
-            (RfState::ListenSleep, _) => (nci::Status::SemanticError, RfState::ListenSleep),
+            (RfState::ListenSleep { .. }, IdleMode) => (nci::Status::Ok, RfState::Idle),
+            (RfState::ListenSleep { .. }, _) => (nci::Status::SemanticError, state.rf_state),
             (RfState::ListenActive { .. }, IdleMode) => (nci::Status::Ok, RfState::Idle),
-            (RfState::ListenActive { .. }, SleepMode | SleepAfMode) => {
-                (nci::Status::Ok, RfState::ListenSleep)
+            (RfState::ListenActive { id, .. }, SleepMode | SleepAfMode) => {
+                (nci::Status::Ok, RfState::ListenSleep { id })
             }
             (RfState::ListenActive { .. }, Discover) => (nci::Status::Ok, RfState::Discovery),
             (RfState::WaitForHostSelect, IdleMode) => (nci::Status::Ok, RfState::Idle),
@@ -1013,6 +1015,38 @@ impl Controller {
         }
     }
 
+    async fn deactivate_notification(&self, cmd: rf::DeactivateNotification) -> Result<()> {
+        println!("+ deactivate_notification()");
+
+        let mut state = self.state.lock().await;
+        let mut next_state = match state.rf_state {
+            RfState::PollActive { id, .. }
+            | RfState::ListenSleep { id }
+            | RfState::ListenActive { id, .. }
+            | RfState::WaitForSelectResponse { id, .. }
+                if id == cmd.get_sender() =>
+            {
+                RfState::Idle
+            }
+            _ => state.rf_state,
+        };
+
+        // Update the state now to prevent interface activation from
+        // completing if a remote device is being selected.
+        (next_state, state.rf_state) = (state.rf_state, next_state);
+
+        // Deactivate the active RF interface if applicable.
+        if next_state != state.rf_state {
+            self.send_control(nci::RfDeactivateNotificationBuilder {
+                deactivation_type: nci::DeactivationType::IdleMode,
+                deactivation_reason: cmd.get_reason().into(),
+            })
+            .await?
+        }
+
+        Ok(())
+    }
+
     async fn receive_rf(&self, packet: rf::RfPacket) -> Result<()> {
         use rf::RfPacketChild::*;
 
@@ -1028,6 +1062,7 @@ impl Controller {
             T4ATSelectCommand(cmd) => self.t4at_select_command(cmd).await,
             T4ATSelectResponse(cmd) => self.t4at_select_response(cmd).await,
             Data(cmd) => self.data_packet(cmd).await,
+            DeactivateNotification(cmd) => self.deactivate_notification(cmd).await,
             _ => unimplemented!(),
         }
     }
@@ -1199,8 +1234,8 @@ impl Controller {
         id: u16,
         nci_reader: NciReader,
         nci_writer: NciWriter,
-        mut rf_rx: mpsc::Receiver<rf::RfPacket>,
-        rf_tx: mpsc::Sender<rf::RfPacket>,
+        mut rf_rx: mpsc::UnboundedReceiver<rf::RfPacket>,
+        rf_tx: mpsc::UnboundedSender<rf::RfPacket>,
     ) -> Result<()> {
         // Local controller state.
         let nfcc = Controller::new(id, nci_writer, rf_tx);
