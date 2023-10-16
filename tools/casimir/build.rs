@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! Generate PDL backend for NCI and RF packets
+
 use std::env;
 use std::fs::File;
 use std::path::{Path, PathBuf};
@@ -22,6 +24,12 @@ fn main() {
         "nci_packets.rs",
         "NCI_PACKETS_PREBUILT",
         &PathBuf::from("src/nci_packets.pdl").canonicalize().unwrap(),
+    );
+
+    install_generated_module(
+        "rf_packets.rs",
+        "RF_PACKETS_PREBUILT",
+        &PathBuf::from("src/rf_packets.pdl").canonicalize().unwrap(),
     );
 }
 
