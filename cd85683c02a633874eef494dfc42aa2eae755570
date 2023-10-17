@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef39a8f8_2959ad0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-10-17T15:09:30Z",
+      "side": 1,
+      "message": "Could you add these two bug IDs in the commit message for tracking?\n\n```\nBug: 298125194\nBug: 293959530\n```",
+      "revId": "cd85683c02a633874eef494dfc42aa2eae755570",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7fd714a_be8040bd",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4356,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-10-17T15:09:30Z",
+      "side": 1,
+      "message": "Could you use spaces, and remove tese \u0027TAB\u0027s?",
+      "range": {
+        "startLine": 4342,
+        "startChar": 0,
+        "endLine": 4356,
+        "endChar": 2
+      },
+      "revId": "cd85683c02a633874eef494dfc42aa2eae755570",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
