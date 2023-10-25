@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86893b20_22bce6a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2023-10-25T08:23:02Z",
+      "side": 1,
+      "message": "@All, NXP will further validate required tag R/W sequences with this change. Please hold on to merge this until we confirm",
+      "revId": "74464d51d3e57cb47dd11b845e89b1f99b516639",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f098c61_fe8ddd81",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4332,
+      "author": {
+        "id": 1296738
+      },
+      "writtenOn": "2023-10-25T08:23:02Z",
+      "side": 1,
+      "message": "As NXP want to align implementation to Nfc forum T5T spec by default, Can you please skip this condition check for NXP MFG CODE. By default this function shall return false for NXP tag and then MW to proceed to send read single block as per NDEF detect as next command as per NFC Forum spec.",
+      "range": {
+        "startLine": 4332,
+        "startChar": 7,
+        "endLine": 4332,
+        "endChar": 42
+      },
+      "revId": "74464d51d3e57cb47dd11b845e89b1f99b516639",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
