@@ -320,9 +320,8 @@ rust_library {
     proc_macros: ["libnum_derive"],
     rustlibs: [
         "libbytes",
-        "libnum_traits",
-        "libthiserror",
         "liblog_rust",
+        "libpdl_runtime",
     ],
 }
 
@@ -334,8 +333,7 @@ rust_test_host {
     proc_macros: ["libnum_derive"],
     rustlibs: [
         "libbytes",
-        "libnum_traits",
-        "libthiserror",
         "liblog_rust",
+        "libpdl_runtime",
     ],
 }
