@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6df28757_b2b619ee",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4009,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-11-06T14:34:42Z",
+      "side": 1,
+      "message": "Could you also remove tabs here?",
+      "range": {
+        "startLine": 4009,
+        "startChar": 3,
+        "endLine": 4009,
+        "endChar": 77
+      },
+      "revId": "d481ce52008a28db53b4eca0c68bf4da57cd7bb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
