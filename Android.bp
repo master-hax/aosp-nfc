@@ -16,3 +16,18 @@ license {
 }
 
 subdirs = ["src", "utils"]
+
+test_spec {
+    name: "nfc1226-test-spec-5962312512864256",
+    teamId: "5962312512864256",
+    tests: [
+        "nfc_test_utils",
+        "nfc_utils_ringbuffer_fuzzer",
+        "nfc_rw_fuzzer",
+        "nfc_ce_fuzzer",
+        "nfc_ndef_fuzzer",
+        "nfc_integration_fuzzer",
+        "libnfc_packets_test",
+        "nfc_nci_fuzzer"
+    ],
+}
