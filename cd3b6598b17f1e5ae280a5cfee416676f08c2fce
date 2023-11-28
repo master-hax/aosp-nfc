@@ -22,6 +22,30 @@
       },
       "revId": "cd3b6598b17f1e5ae280a5cfee416676f08c2fce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "189a22b5_442dfb96",
+        "filename": "src/include/nfc_target.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1986260
+      },
+      "writtenOn": "2023-11-28T04:48:50Z",
+      "side": 1,
+      "message": "Yes,updating the default value is needed. As there are codes which uses directly the value of NFA_EE_MAX_EE_SUPPORTED like the one below,\nhttps://cs.android.com/android/platform/superproject/main/+/main:system/nfc/src/nfa/ee/nfa_ee_main.cc;drc\u003d61fa1bc3608169918609576e0a8124a0d778f51e;l\u003d105",
+      "parentUuid": "7916ce27_0c79c2b9",
+      "range": {
+        "startLine": 631,
+        "startChar": 0,
+        "endLine": 631,
+        "endChar": 33
+      },
+      "revId": "cd3b6598b17f1e5ae280a5cfee416676f08c2fce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
