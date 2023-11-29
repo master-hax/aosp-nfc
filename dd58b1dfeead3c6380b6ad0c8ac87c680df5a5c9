@@ -22,6 +22,30 @@
       },
       "revId": "dd58b1dfeead3c6380b6ad0c8ac87c680df5a5c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "737bcfc3_76aea88d",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1986260
+      },
+      "writtenOn": "2023-11-29T16:25:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6a91d62_d0ae8309",
+      "range": {
+        "startLine": 1370,
+        "startChar": 43,
+        "endLine": 1370,
+        "endChar": 55
+      },
+      "revId": "dd58b1dfeead3c6380b6ad0c8ac87c680df5a5c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
