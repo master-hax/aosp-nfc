@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6a91d62_d0ae8309",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-11-29T00:08:24Z",
+      "side": 1,
+      "message": "Could you move this to next line to keep 80 chars limits?",
+      "range": {
+        "startLine": 1370,
+        "startChar": 43,
+        "endLine": 1370,
+        "endChar": 55
+      },
+      "revId": "dd58b1dfeead3c6380b6ad0c8ac87c680df5a5c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
