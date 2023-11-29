@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c4204a6_377d5bfc",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-11-29T22:51:49Z",
+      "side": 1,
+      "message": "the Enable state isn\u0027t a todo, we just want to ignore it",
+      "parentUuid": "a5f3247f_9f5e4fe0",
+      "range": {
+        "startLine": 853,
+        "startChar": 12,
+        "endLine": 859,
+        "endChar": 49
+      },
+      "revId": "6593dac833e6345e4f1b1c560ec719c5250424ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54f23d7b_4677a1c4",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-29T22:22:09Z",
       "side": 1,
       "message": "nit: to be exact, the width is 6, and the control packet has two reserved bits in the same byte.",
+      "range": {
+        "startLine": 71,
+        "startChar": 27,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "6593dac833e6345e4f1b1c560ec719c5250424ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ff29b66_3cf63398",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-11-29T22:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54f23d7b_4677a1c4",
       "range": {
         "startLine": 71,
         "startChar": 27,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb0a0e02_c7d2b7ad",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-11-29T22:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45a1ee6f_d52cef93",
+      "range": {
+        "startLine": 733,
+        "startChar": 2,
+        "endLine": 733,
+        "endChar": 17
+      },
+      "revId": "6593dac833e6345e4f1b1c560ec719c5250424ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a6745db_28e787cd",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-11-29T22:22:09Z",
       "side": 1,
       "message": "Should be removed.\nAccording the go/nfc-behaviour-change:\n```\nGID - 0x0F (NCI_GID_PROP)\nMT -  0x1 (NCI_MT_CMD)\nOID - 0xC (NCI_MSG_ANDROID)\nPAYLOAD_LEN - 2 bytes\nPAYLOAD [0] - 0x2 (NCI_ANDROID_PASSIVE_OBSERVER_MODE)\nPAYLOAD [1] - \u003c1 to enable, 0 to disable\u003e\n```\n`PAYLOAD_LEN` is already present in the `ProprietaryPacket` (it is actually `_reserved_ : 8` here)",
+      "range": {
+        "startLine": 740,
+        "startChar": 2,
+        "endLine": 740,
+        "endChar": 16
+      },
+      "revId": "6593dac833e6345e4f1b1c560ec719c5250424ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7e770a5_0603e62b",
+        "filename": "tools/casimir/src/nci_packets.pdl",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-11-29T22:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6745db_28e787cd",
       "range": {
         "startLine": 740,
         "startChar": 2,
