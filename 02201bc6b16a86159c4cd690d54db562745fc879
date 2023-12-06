@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3ee4d8af_22e63152",
+        "filename": "tools/casimir/scripts/t4at.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-12-06T22:16:49Z",
+      "side": 1,
+      "message": "Without the sleep, we rapid fire polling frames at the NFC stack and get an error or abort (I forget the actual error) after a couple (i.e. 2 or 3) polling frames. Real polling loops have a set delay in them, so adding this sleep avoids that issue and reflects reality more closely.",
+      "parentUuid": "eec34614_5ae3a3a8",
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d7a94c3c_1b4b8cae",
         "filename": "tools/casimir/src/controller.rs",
         "patchSetId": 1
@@ -43,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d33b0f4e_818154ba",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-12-06T22:16:49Z",
+      "side": 1,
+      "message": "That works, can you point to how to get that?",
+      "parentUuid": "d7a94c3c_1b4b8cae",
+      "range": {
+        "startLine": 848,
+        "startChar": 17,
+        "endLine": 848,
+        "endChar": 63
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fa0b2904_1a40e3ca",
         "filename": "tools/casimir/src/controller.rs",
         "patchSetId": 1
@@ -54,6 +96,30 @@
       "writtenOn": "2023-12-06T22:06:48Z",
       "side": 1,
       "message": "Shouldn\u0027t this notification only be sent when the observe mode is enabled ?",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 16
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d078d38_2443b97d",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-12-06T22:16:49Z",
+      "side": 1,
+      "message": "No, observe mode is only means that the NFC chip should not respond to the polling loop. We should be getting these notifications whether we\u0027re in observe mode or nto.",
+      "parentUuid": "fa0b2904_1a40e3ca",
       "range": {
         "startLine": 857,
         "startChar": 0,
