@@ -22,6 +22,7 @@ use core::time::Duration;
 use pdl_runtime::Packet;
 use std::collections::HashMap;
 use std::convert::TryFrom;
+use std::time::{SystemTime, UNIX_EPOCH};
 use tokio::sync::mpsc;
 use tokio::sync::Mutex;
 use tokio::time;
@@ -842,8 +843,25 @@ impl Controller {
         if state.rf_state != RfState::Discovery {
             return Ok(());
         }
-
         let technology = cmd.get_technology();
+
+        let ts = SystemTime::now().duration_since(UNIX_EPOCH)?;
+        let ts_u32 = (((ts.as_secs() * 1000) + ts.subsec_millis() as u64) % (2 ^ 32)) as u32;
+        let frame_type = match technology {
+            rf::Technology::NfcA => nci::PollingFrameType::Reqa,
+            rf::Technology::NfcB => nci::PollingFrameType::Reqb,
+            rf::Technology::NfcF => nci::PollingFrameType::Reqf,
+            _ => todo!(),
+        };
+
+        self.send_control(nci::AndroidPollingLoopNtfBuilder {
+            timestamp: ts_u32,
+            gain: 2,
+            frametype: frame_type,
+            polling_frame_data: vec![],
+        })
+        .await?;
+
         if state.discover_configuration.iter().any(|config| {
             matches!(
                 (config.technology_and_mode, technology),
