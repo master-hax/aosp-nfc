@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eec34614_5ae3a3a8",
+        "filename": "tools/casimir/scripts/t4at.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-06T22:06:48Z",
+      "side": 1,
+      "message": "What is this timer used for ?",
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7a94c3c_1b4b8cae",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-06T22:06:48Z",
+      "side": 1,
+      "message": "Rather than the time from epoch, can you return the timestamp relative to the TCP connection creation ?",
+      "range": {
+        "startLine": 848,
+        "startChar": 17,
+        "endLine": 848,
+        "endChar": 63
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa0b2904_1a40e3ca",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-06T22:06:48Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this notification only be sent when the observe mode is enabled ?",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 16
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
