@@ -85,6 +85,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ebd71829_46fce344",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-06T22:47:18Z",
+      "side": 1,
+      "message": "I suggest adding `start_time: std::time::Instant` to the `State` struct, and initializing it to `Instant::now()` in `new`",
+      "parentUuid": "d33b0f4e_818154ba",
+      "range": {
+        "startLine": 848,
+        "startChar": 17,
+        "endLine": 848,
+        "endChar": 63
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fa0b2904_1a40e3ca",
         "filename": "tools/casimir/src/controller.rs",
         "patchSetId": 1
@@ -120,6 +144,30 @@
       "side": 1,
       "message": "No, observe mode is only means that the NFC chip should not respond to the polling loop. We should be getting these notifications whether we\u0027re in observe mode or nto.",
       "parentUuid": "fa0b2904_1a40e3ca",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 16
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f460f73_e2bf2766",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-06T22:47:18Z",
+      "side": 1,
+      "message": "There is no independent way to disable these notifications ? \nThey look very verbose. \n\nDo you get notifications for technologies that are not in the discover configuration?",
+      "parentUuid": "8d078d38_2443b97d",
       "range": {
         "startLine": 857,
         "startChar": 0,
