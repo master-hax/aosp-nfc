@@ -125,6 +125,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3fd3e02_0a5e387e",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-12-07T21:05:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebd71829_46fce344",
+      "range": {
+        "startLine": 848,
+        "startChar": 17,
+        "endLine": 848,
+        "endChar": 63
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa0b2904_1a40e3ca",
