@@ -266,6 +266,30 @@
       },
       "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad41fe6a_97564b77",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-12-09T01:54:08Z",
+      "side": 1,
+      "message": "That isn\u0027t my reading (or intended writing) of that doc, it should *still* send the RF_FIELD_INFO_NTF and the NCI_ANDROID_POLLING_FRAME_NTF when the mode is turned on. I can clarify that in the doc.",
+      "parentUuid": "a2cee750_e8110090",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 16
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
