@@ -853,6 +853,7 @@ impl Controller {
             rf::Technology::NfcA => nci::PollingFrameType::Reqa,
             rf::Technology::NfcB => nci::PollingFrameType::Reqb,
             rf::Technology::NfcF => nci::PollingFrameType::Reqf,
+            rf::Technology::NfcRaw => nci::PollingFrameType::Unknown,
             _ => todo!(),
         };
 
@@ -860,7 +861,7 @@ impl Controller {
             timestamp: ts_u32,
             gain: 2,
             frametype: frame_type,
-            polling_frame_data: vec![],
+            polling_frame_data: cmd.get_data().to_vec(),
         })
         .await?;
 
@@ -1233,6 +1234,7 @@ impl Controller {
                         nci::RfTechnologyAndMode::NfcVPassivePollMode => rf::Technology::NfcV,
                         _ => continue,
                     },
+                    data: [].to_vec(),
                 })
                 .await?
             }
