@@ -290,6 +290,30 @@
       },
       "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "544f73a2_949042fd",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-09T02:13:26Z",
+      "side": 1,
+      "message": "Sorry to bring that up again but that sounds very counter intuitive to me 😕\nIs this vendor extension already implemented by OEMs ?\n\nTo confirm a couple points:\n\n- observe mode only affects listen mode activity\n- NCI_ANDROID_POLLING_FRAME_NTF is sent for detected polling requests \n  from terminal\n\nI would better understand:\n- when the vendor observer mode is on:\n  the controller does not respond to poll requests but sends\n  NCI_ANDROID_POLLING_FRAME_NTF to host instead;    \n- when the vendor observer mode is off:\n  the behavior is _exactly_ as described in the specification, and the host\n  only receives interface activation notifications;\n  \nIs there a particular need for continuously forwarding the notifications ?",
+      "parentUuid": "ad41fe6a_97564b77",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 16
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
