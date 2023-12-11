@@ -386,6 +386,30 @@
       },
       "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f731ac7_5062bdde",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-12-11T16:42:49Z",
+      "side": 1,
+      "message": "1) We don\u0027t detect support for polling loop notifications beyond the API level (it will be a CDD requirement). We haven\u0027t heard any feedback that apps will need to query for support beyond that, but if we do we can do something like we did with `isObserveModeSupported()` where we have a config that can be overlayed.\n\n2) Yes\n\n3) In terms of NCI messages, there is obviously overlap because field on and field off are send in both. The polling loop notification also has timestamps and field strength information. On the API side, the field on notifications are sent by boradcast versus a binder call with the polling loop notifcaitons.",
+      "parentUuid": "ee4bd7af_6d18687e",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 16
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
