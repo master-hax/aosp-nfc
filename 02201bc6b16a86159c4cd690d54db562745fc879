@@ -338,6 +338,30 @@
       },
       "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee4bd7af_6d18687e",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-11T16:26:48Z",
+      "side": 1,
+      "message": "Thanks for the answers !\nMore questions to follow on 😄\n\n1. how is support for the polling loop notification detected in the android stack ? Do you decide based on support for observe mode ?\n\n2. does that mean that when observe mode is off the notification is sent but the interface also gets activated ?\n \n3. how is polling loop notification different from the regular RF Discover Ntf ?",
+      "parentUuid": "2c06599b_ef7309ae",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 16
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
