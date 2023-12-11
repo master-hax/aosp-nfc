@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "345eef67_6e3847d6",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-11T16:51:16Z",
+      "side": 1,
+      "message": "`state.start_time.elapsed().as_millis() as u32`",
+      "range": {
+        "startLine": 851,
+        "startChar": 20,
+        "endLine": 851,
+        "endChar": 73
+      },
+      "revId": "5051083d9b4cbf8c97a4eb1f7c85590964caa138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
