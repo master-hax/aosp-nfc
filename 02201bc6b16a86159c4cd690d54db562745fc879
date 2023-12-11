@@ -314,6 +314,30 @@
       },
       "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c06599b_ef7309ae",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2023-12-11T14:45:23Z",
+      "side": 1,
+      "message": "\u003e Sorry to bring that up again but that sounds very counter intuitive to me 😕 Is this vendor extension already implemented by OEMs ?\nYes\n\n\u003e To confirm a couple points:\n\n\u003e observe mode only affects listen mode activity\nYes\n\u003e NCI_ANDROID_POLLING_FRAME_NTF is sent for detected polling requests from terminal\nYes\n\u003e I would better understand:\n\n\u003e when the vendor observer mode is on:\n\u003e the controller does not respond to poll requests but sends\n\u003e NCI_ANDROID_POLLING_FRAME_NTF to host instead;\nYes, though I\u0027d strike the \"instead\" and add that it will also send the FIELD_ACTIVATED notificaiton\n\n \u003e when the vendor observer mode is off:\n\u003e the behavior is exactly as described in the specification, and the host\n\u003e only receives interface activation notifications;\nNo, it will also receive the polling loop notifications \n\n\u003e Is there a particular need for continuously forwarding the notifications ?\n\nObserve mode and polling loop fingerprints are separate features. Obviously they\u0027re both NFC features, so they\u0027ll interact, but they both can stand alone.\n\nTo give an example, it is entirely reasonable for an NFC application to use Polling Loop Fingerprints and not Observe mode. A very strait forward example would be if they\u0027re using only NFC-B and are making decisions based on the AFI byte of the NFC-B polling frame.",
+      "parentUuid": "544f73a2_949042fd",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 16
+      },
+      "revId": "02201bc6b16a86159c4cd690d54db562745fc879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
