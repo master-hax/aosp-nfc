@@ -158,8 +158,8 @@ uint8_t nci_snd_core_set_config(uint8_t* p_param_tlvs, uint8_t tlv_size) {
   pt = p_param_tlvs;
   while (len > 1) {
     len -= 2;
-    pt++;
-    num++;
+    ++pt;
+    ++num;
     ulen = *pt++;
     pt += ulen;
     if (len >= ulen) {
@@ -361,10 +361,16 @@ uint8_t nci_snd_discover_cmd(uint8_t num, tNCI_DISCOVER_PARAMS* p_param) {
   NFC_HDR* p;
   uint8_t *pp, *p_size, *p_start;
   int xx;
+#if (HCI_USE_VARIABLE_SIZE_CMD_BUF != FALSE)
   int size;
 
   size = num * sizeof(tNCI_DISCOVER_PARAMS) + 1;
-  p = NCI_GET_CMD_BUF(size);
+#endif
+  p = NCI_GET_CMD_BUF(
+#if (HCI_USE_VARIABLE_SIZE_CMD_BUF != FALSE)
+      size
+#endif
+  );
   if (p == nullptr) return (NCI_STATUS_FAILED);
 
   p->event = BT_EVT_TO_NFC_NCI;
@@ -375,10 +381,10 @@ uint8_t nci_snd_discover_cmd(uint8_t num, tNCI_DISCOVER_PARAMS* p_param) {
   NCI_MSG_BLD_HDR0(pp, NCI_MT_CMD, NCI_GID_RF_MANAGE);
   NCI_MSG_BLD_HDR1(pp, NCI_MSG_RF_DISCOVER);
   p_size = pp;
-  pp++;
+  ++pp;
   p_start = pp;
   UINT8_TO_STREAM(pp, num);
-  for (xx = 0; xx < num; xx++) {
+  for (xx = 0; xx < num; ++xx) {
     UINT8_TO_STREAM(pp, p_param[xx].type);
     UINT8_TO_STREAM(pp, p_param[xx].frequency);
   }
@@ -472,11 +478,16 @@ uint8_t nci_snd_discover_map_cmd(uint8_t num, tNCI_DISCOVER_MAPS* p_maps) {
   NFC_HDR* p;
   uint8_t *pp, *p_size, *p_start;
   int xx;
+#if (HCI_USE_VARIABLE_SIZE_CMD_BUF != FALSE)
   int size;
-
   size = num * sizeof(tNCI_DISCOVER_MAPS) + 1;
+#endif
 
-  p = NCI_GET_CMD_BUF(size);
+  p = NCI_GET_CMD_BUF(
+#if (HCI_USE_VARIABLE_SIZE_CMD_BUF != FALSE)
+      size
+#endif
+  );
   if (p == nullptr) return (NCI_STATUS_FAILED);
 
   p->event = BT_EVT_TO_NFC_NCI;
@@ -487,10 +498,10 @@ uint8_t nci_snd_discover_map_cmd(uint8_t num, tNCI_DISCOVER_MAPS* p_maps) {
   NCI_MSG_BLD_HDR0(pp, NCI_MT_CMD, NCI_GID_RF_MANAGE);
   NCI_MSG_BLD_HDR1(pp, NCI_MSG_RF_DISCOVER_MAP);
   p_size = pp;
-  pp++;
+  ++pp;
   p_start = pp;
   UINT8_TO_STREAM(pp, num);
-  for (xx = 0; xx < num; xx++) {
+  for (xx = 0; xx < num; ++xx) {
     UINT8_TO_STREAM(pp, p_maps[xx].protocol);
     UINT8_TO_STREAM(pp, p_maps[xx].mode);
     UINT8_TO_STREAM(pp, p_maps[xx].intf_type);
@@ -564,8 +575,8 @@ uint8_t nci_snd_parameter_update_cmd(uint8_t* p_param_tlvs, uint8_t tlv_size) {
   pt = p_param_tlvs;
   while (len > 1) {
     len -= 2;
-    pt++;
-    num++;
+    ++pt;
+    ++num;
     ulen = *pt++;
     pt += ulen;
     if (len >= ulen) {
