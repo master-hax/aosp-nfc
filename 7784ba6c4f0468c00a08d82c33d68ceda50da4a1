@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "890c2aec_5f51f798",
+        "filename": "src/nfc/nci/nci_hmsgs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-15T01:01:48Z",
+      "side": 1,
+      "message": "This variable is _never_ defined (https://cs.android.com/search?q\u003dHCI_USE_VARIABLE_SIZE_CMD_BUF). How about using `[[maybe_unused]]` on the faulty variable instead ?",
+      "range": {
+        "startLine": 487,
+        "startChar": 5,
+        "endLine": 487,
+        "endChar": 34
+      },
+      "revId": "7784ba6c4f0468c00a08d82c33d68ceda50da4a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
