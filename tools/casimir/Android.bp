@@ -35,12 +35,17 @@ rust_binary_host {
         ":casimir_nci_packets_rust_gen",
         ":casimir_rf_packets_rust_gen",
     ],
+    features: [
+        "android-logger",
+    ],
     rustlibs: [
+        "libandroid_logger",
         "libanyhow",
         "libargh",
         "libtokio",
         "libbytes",
         "libfutures",
+        "liblog_rust",
         "libpdl_runtime",
     ],
 }
