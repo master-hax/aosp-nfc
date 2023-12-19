@@ -55,4 +55,7 @@ bool storeNfcSnoopLogs(std::string filepath, off_t maxFileSize);
 
 // check whether either buffer is under memory threshold
 bool buffers_under_threshold();
+
+// store NCI log to file and clear nfcsnoop buffers
+void store_and_clear_nfcsnoop(std::string filepath, off_t maxFileSize);
 #endif /* _DEBUG_NFCSNOOP_ */
