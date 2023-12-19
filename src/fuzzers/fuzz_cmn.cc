@@ -5,6 +5,7 @@ void delete_stack_non_volatile_store(bool){};
 void debug_nfcsnoop_dump(int){};
 std::string nfc_storage_path;
 bool storeNfcSnoopLogs(std::string, off_t) { return true; };
+void store_and_clear_nfcsnoop(std::string, off_t){};
 
 uint8_t appl_dta_mode_flag = 0;
 bool nfc_debug_enabled = true;
