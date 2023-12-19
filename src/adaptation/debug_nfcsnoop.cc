@@ -153,16 +153,7 @@ void nfcsnoop_capture(const NFC_HDR* packet, bool is_received) {
   uint8_t mt = (*(p)&NCI_MT_MASK) >> NCI_MT_SHIFT;
   uint8_t gid = *(p)&NCI_GID_MASK;
   if (isDebuggable && (ringbuffer_available(buffers[SYSTEM_BUFFER_INDEX]) < NFCSNOOP_MEM_BUFFER_THRESHOLD || ringbuffer_available(buffers[VENDOR_BUFFER_INDEX]) < NFCSNOOP_MEM_BUFFER_THRESHOLD) {
-    if (storeNfcSnoopLogs(DEFAULT_NFCSNOOP_PATH, DEFAULT_NFCSNOOP_FILE_SIZE)) {
-      std::lock_guard<std::mutex> lock(buffer_mutex);
-      // Free the buffer after the content is stored in log file
-      ringbuffer_free(buffers[SYSTEM_BUFFER_INDEX]);
-      buffers[SYSTEM_BUFFER_INDEX] = nullptr;
-      ringbuffer_free(buffers[VENDOR_BUFFER_INDEX]);
-      buffers[VENDOR_BUFFER_INDEX] = nullptr;
-      // Allocate new buffer to store new NCI logs
-      debug_nfcsnoop_init();
-    }
+    store_and_clear_nfcsnoop(DEFAULT_NFCSNOOP_PATH, DEFAULT_NFCSNOOP_FILE_SIZE);
   }
 
   if (mt == NCI_MT_NTF && gid == NCI_GID_PROP) {
@@ -300,4 +291,19 @@ bool storeNfcSnoopLogs(std::string filepath, off_t maxFileSize) {
                                errno);
     return false;
   }
+}
+
+bool store_and_clear_nfcsnoop(std::string filepath, off_t maxFileSize) {
+  if (storeNfcSnoopLogs(filepath, maxFileSize)) {
+    std::lock_guard<std::mutex> lock(buffer_mutex);
+    // Free the buffer after the content is stored in log file
+    ringbuffer_free(buffers[SYSTEM_BUFFER_INDEX]);
+    buffers[SYSTEM_BUFFER_INDEX] = nullptr;
+    ringbuffer_free(buffers[VENDOR_BUFFER_INDEX]);
+    buffers[VENDOR_BUFFER_INDEX] = nullptr;
+    // Allocate new buffer to store new NCI logs
+    debug_nfcsnoop_init();
+    return true;
+  }
+  return false;
 }

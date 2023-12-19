@@ -52,4 +52,7 @@ void nfcsnoop_capture(const NFC_HDR* packet, bool is_received);
 
 // store NCI log to file
 bool storeNfcSnoopLogs(std::string filepath, off_t maxFileSize);
+
+// clear nfcsnoop buffers
+bool store_and_clear_nfcsnoop(std::string filepath, off_t maxFileSize);
 #endif /* _DEBUG_NFCSNOOP_ */
