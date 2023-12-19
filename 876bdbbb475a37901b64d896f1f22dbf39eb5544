@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54f431f8_b492931e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-12-19T11:03:24Z",
+      "side": 1,
+      "message": "I got some feedback form CELINE, I will update to b/309749099 for your reference.",
+      "revId": "876bdbbb475a37901b64d896f1f22dbf39eb5544",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
