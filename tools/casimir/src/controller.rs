@@ -855,13 +855,15 @@ impl Controller {
             _ => todo!(),
         };
 
-        self.send_control(nci::AndroidPollingLoopNtfBuilder {
+        let frame = nci::PollingFrame {
+            frametype: frame_type,
+            frame_length: 5,
             timestamp: ts_u32,
             gain: 2,
-            frametype: frame_type,
             polling_frame_data: vec![],
-        })
-        .await?;
+        };
+
+        self.send_control(nci::AndroidPollingLoopNtfBuilder { frames: vec![frame] }).await?;
 
         if state.discover_configuration.iter().any(|config| {
             matches!(
