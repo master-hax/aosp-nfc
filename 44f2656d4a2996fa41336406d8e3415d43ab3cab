@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "734af2d1_1b44a3b0",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-22T08:36:16Z",
+      "side": 1,
+      "message": "nit: `vec![]`",
+      "range": {
+        "startLine": 1236,
+        "startChar": 26,
+        "endLine": 1236,
+        "endChar": 38
+      },
+      "revId": "44f2656d4a2996fa41336406d8e3415d43ab3cab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ed55269_01057f69",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-22T08:36:16Z",
+      "side": 1,
+      "message": "Is NFC-raw a proprietary technology introduced by the NFC behavior change ?\nIf so could you reuse the assigned technology number from the range 0x80-0xfe ?\n(see [NCI] Table 130: RF Technologies)\nIs this related to https://github.com/kormax/apple-enhanced-contactless-polling ?",
+      "revId": "44f2656d4a2996fa41336406d8e3415d43ab3cab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "831e0ae7_156f3a9f",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2023-12-22T08:36:16Z",
+      "side": 1,
+      "message": "nit: `_payload_` to allow specializing the contents based on the technology",
+      "revId": "44f2656d4a2996fa41336406d8e3415d43ab3cab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
