@@ -53,6 +53,16 @@ pub mod nci {
         }
     }
 
+    impl NfceeId {
+        pub fn nfcee(id: u8) -> Self {
+            NfceeId::try_from(id).unwrap()
+        }
+
+        pub fn hci_nfcee(id: u8) -> Self {
+            NfceeId::try_from(id).unwrap()
+        }
+    }
+
     use std::pin::Pin;
     use tokio::io::{AsyncRead, AsyncWrite};
     use tokio::sync::Mutex;
