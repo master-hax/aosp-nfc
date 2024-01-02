@@ -16,9 +16,10 @@
 
 use anyhow::Result;
 use argh::FromArgs;
+use futures::stream::{self, Stream};
 use std::future::Future;
 use std::net::{Ipv4Addr, SocketAddrV4};
-use std::pin::Pin;
+use std::pin::{pin, Pin};
 use std::task::Context;
 use std::task::Poll;
 use tokio::io::AsyncReadExt;
@@ -26,7 +27,6 @@ use tokio::io::AsyncWriteExt;
 use tokio::net::{tcp, TcpListener, TcpStream};
 use tokio::select;
 use tokio::sync::mpsc;
-use tokio::sync::Mutex;
 
 pub mod controller;
 pub mod packets;
@@ -40,26 +40,25 @@ type Id = u16;
 /// Read NCI Control and Data packets received on the NCI transport.
 /// Performs recombination of the segmented packets.
 pub struct NciReader {
-    socket: Mutex<tcp::OwnedReadHalf>,
+    socket: tcp::OwnedReadHalf,
 }
 
 /// Write NCI Control and Data packets received to the NCI transport.
 /// Performs segmentation of the packets.
 pub struct NciWriter {
-    socket: Mutex<tcp::OwnedWriteHalf>,
+    socket: tcp::OwnedWriteHalf,
 }
 
 impl NciReader {
     /// Create a new NCI reader from the TCP socket half.
     pub fn new(socket: tcp::OwnedReadHalf) -> Self {
-        NciReader { socket: Mutex::new(socket) }
+        NciReader { socket }
     }
 
     /// Read a single NCI packet from the reader. The packet is automatically
     /// re-assembled if segmented on the NCI transport.
-    pub async fn read(&self) -> Result<Vec<u8>> {
+    pub async fn read(&mut self) -> Result<Vec<u8>> {
         const HEADER_SIZE: usize = 3;
-        let mut socket = self.socket.lock().await;
         let mut complete_packet = vec![0; HEADER_SIZE];
 
         // Note on reassembly:
@@ -71,13 +70,13 @@ impl NciReader {
         // packet.
         loop {
             // Read the common packet header.
-            socket.read_exact(&mut complete_packet[0..HEADER_SIZE]).await?;
+            self.socket.read_exact(&mut complete_packet[0..HEADER_SIZE]).await?;
             let header = nci::PacketHeader::parse(&complete_packet[0..HEADER_SIZE])?;
 
             // Read the packet payload.
             let payload_length = header.get_payload_length() as usize;
             let mut payload_bytes = vec![0; payload_length];
-            socket.read_exact(&mut payload_bytes).await?;
+            self.socket.read_exact(&mut payload_bytes).await?;
             complete_packet.extend(payload_bytes);
 
             // Check the Packet Boundary Flag.
@@ -87,18 +86,24 @@ impl NciReader {
             }
         }
     }
+
+    pub fn into_stream(self) -> impl Stream<Item = Result<Vec<u8>>> {
+        stream::try_unfold(
+            self,
+            |mut reader| async move { Ok(Some((reader.read().await?, reader))) },
+        )
+    }
 }
 
 impl NciWriter {
     /// Create a new NCI writer from the TCP socket half.
     pub fn new(socket: tcp::OwnedWriteHalf) -> Self {
-        NciWriter { socket: Mutex::new(socket) }
+        NciWriter { socket }
     }
 
     /// Write a single NCI packet to the writer. The packet is automatically
     /// segmented if the payload exceeds the maximum size limit.
-    async fn write(&self, mut packet: &[u8]) -> Result<()> {
-        let mut socket = self.socket.lock().await;
+    async fn write(&mut self, mut packet: &[u8]) -> Result<()> {
         let mut header_bytes = [packet[0], packet[1], 0];
         packet = &packet[3..];
 
@@ -116,8 +121,8 @@ impl NciWriter {
             header_bytes[2] = chunk_length as u8;
 
             // Write the header and payload segment bytes.
-            socket.write_all(&header_bytes).await?;
-            socket.write_all(&packet[..chunk_length]).await?;
+            self.socket.write_all(&header_bytes).await?;
+            self.socket.write_all(&packet[..chunk_length]).await?;
             packet = &packet[chunk_length..];
 
             if packet.is_empty() {
@@ -213,7 +218,7 @@ impl Device {
                 let (nci_rx, nci_tx) = socket.into_split();
                 Controller::run(
                     id,
-                    NciReader::new(nci_rx),
+                    pin!(NciReader::new(nci_rx).into_stream()),
                     NciWriter::new(nci_tx),
                     rf_rx,
                     controller_rf_tx,
