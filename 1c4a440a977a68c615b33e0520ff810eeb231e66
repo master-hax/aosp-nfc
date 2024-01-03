@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8565ad2_e7b19713",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 5
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2024-01-03T08:16:41Z",
+      "side": 1,
+      "message": "This is illegal, self.nci_reader.read() is not cancellable",
+      "range": {
+        "startLine": 1211,
+        "startChar": 16,
+        "endLine": 1211,
+        "endChar": 48
+      },
+      "revId": "1c4a440a977a68c615b33e0520ff810eeb231e66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
