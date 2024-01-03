@@ -22,6 +22,30 @@
       },
       "revId": "1c4a440a977a68c615b33e0520ff810eeb231e66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d1a3189_bf20e7ff",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 5
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1881539
+      },
+      "writtenOn": "2024-01-03T11:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8565ad2_e7b19713",
+      "range": {
+        "startLine": 1211,
+        "startChar": 16,
+        "endLine": 1211,
+        "endChar": 48
+      },
+      "revId": "1c4a440a977a68c615b33e0520ff810eeb231e66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
