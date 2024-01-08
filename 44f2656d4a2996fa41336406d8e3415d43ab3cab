@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa9ea968_70c25b7e",
+        "filename": "tools/casimir/src/controller.rs",
+        "patchSetId": 2
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2024-01-08T21:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "734af2d1_1b44a3b0",
+      "range": {
+        "startLine": 1236,
+        "startChar": 26,
+        "endLine": 1236,
+        "endChar": 38
+      },
+      "revId": "44f2656d4a2996fa41336406d8e3415d43ab3cab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ed55269_01057f69",
@@ -37,6 +61,24 @@
       "writtenOn": "2023-12-22T08:36:16Z",
       "side": 1,
       "message": "Is NFC-raw a proprietary technology introduced by the NFC behavior change ?\nIf so could you reuse the assigned technology number from the range 0x80-0xfe ?\n(see [NCI] Table 130: RF Technologies)\nIs this related to https://github.com/kormax/apple-enhanced-contactless-polling ?",
+      "revId": "44f2656d4a2996fa41336406d8e3415d43ab3cab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40aff83b_1dae6918",
+        "filename": "tools/casimir/src/rf_packets.pdl",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2024-01-08T21:34:39Z",
+      "side": 1,
+      "message": "This is sending of custom frames, which are by their nature proprietary so using a code point in that range makes sense.\n\nEnhanced contactless polling is an example of a custom/proprietary frame format.",
+      "parentUuid": "3ed55269_01057f69",
       "revId": "44f2656d4a2996fa41336406d8e3415d43ab3cab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
