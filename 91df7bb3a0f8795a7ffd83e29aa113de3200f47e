@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fec6093_c3c51c00",
+        "filename": "src/include/debug_nfcsnoop.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-01-11T14:02:21Z",
+      "side": 1,
+      "message": "You never check the result, how about just set it as void?",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 4
+      },
+      "revId": "91df7bb3a0f8795a7ffd83e29aa113de3200f47e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
