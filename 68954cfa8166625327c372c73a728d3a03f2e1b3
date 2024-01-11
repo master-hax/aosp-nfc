@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55ac20ea_b62f38d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-01-11T13:52:57Z",
+      "side": 1,
+      "message": "I think it\u0027s better to correct the word.\n\nThe ring buffer will not overflow, but just full.",
+      "range": {
+        "startLine": 7,
+        "startChar": 26,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "68954cfa8166625327c372c73a728d3a03f2e1b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
