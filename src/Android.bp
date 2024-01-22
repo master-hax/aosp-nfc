@@ -35,6 +35,7 @@ cc_library {
         "android.hardware.nfc-V1-ndk",
         "libnfcutils",
         "libstatslog_nfc",
+        "libnfc-nci_flags",
     ],
     cflags: [
         "-DDYN_ALLOC=1",
