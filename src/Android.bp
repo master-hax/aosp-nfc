@@ -35,6 +35,7 @@ cc_library {
         "android.hardware.nfc-V1-ndk",
         "libnfcutils",
         "libstatslog_nfc",
+        "libnfc-nci_flags",
     ],
     cflags: [
         "-DDYN_ALLOC=1",
@@ -81,7 +82,7 @@ cc_library {
     stl: "libc++_static",
     apex_available: [
         "//apex_available:platform",
-        "com.android.nfcservices"
+        "com.android.nfcservices",
     ],
 }
 
