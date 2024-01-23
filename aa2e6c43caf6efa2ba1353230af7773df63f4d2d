@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac18bc6e_c2106fb7",
+        "filename": "flags/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-01-23T17:36:55Z",
+      "side": 1,
+      "message": "maybe call this `nci`",
+      "range": {
+        "startLine": 4,
+        "startChar": 30,
+        "endLine": 4,
+        "endChar": 33
+      },
+      "revId": "aa2e6c43caf6efa2ba1353230af7773df63f4d2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
