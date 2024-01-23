@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6d4cb25_13f3606d",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-01-23T13:59:34Z",
+      "side": 0,
+      "message": "It seems not relate to the change of this topic.\nCould we remove this part first and add it back in another commit?",
+      "range": {
+        "startLine": 388,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 51
+      },
+      "revId": "1a78485df83bf6c03c72e60fef13c8ebdc4007fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
