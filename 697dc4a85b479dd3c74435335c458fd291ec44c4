@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45e462f1_d318e19e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-01-23T15:01:06Z",
+      "side": 1,
+      "message": "Could you help me review the naming of the package/flags?",
+      "revId": "697dc4a85b479dd3c74435335c458fd291ec44c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
