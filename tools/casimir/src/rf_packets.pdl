@@ -107,6 +107,8 @@ packet NfcAPollResponse : RfPacket (technology = NFC_A, type = POLL_RESPONSE) {
     // - `11b`: Configured for the NFC-DEP Protocol and Type 4A Tag Platform
     int_protocol : 2,
     _reserved_ : 6,
+    // Cf [DIGITAL] Table 10: Byte 1 of SENS_RES (Anticollision Information)
+    bit_frame_sdd: 8,
 }
 
 /// Select command for an NFC-A Listener using ISO-DEP protocol (Type-4A Tag platform).
@@ -122,6 +124,8 @@ packet T4ATSelectCommand : RfPacket (technology = NFC_A, protocol = ISO_DEP, typ
 /// Cf [DIGITAL] 14.6.2 RATS Response (Answer To Select).
 packet T4ATSelectResponse : RfPacket (technology = NFC_A, protocol = ISO_DEP, type = SELECT_RESPONSE) {
     // Cf [DIGITAL] Table 58: RATS Response Format
+    // `rats_response` contains all the bytes from the RATS Response, starting
+    // from and including Byte 2.
     _size_(rats_response) : 8,
     rats_response : 8[],
 }
@@ -157,6 +161,15 @@ packet NfcDepSelectResponse : RfPacket (protocol = NFC_DEP, type = SELECT_RESPON
 packet SelectCommand : RfPacket (type = SELECT_COMMAND) {
 }
 
+/// Deactivation types.
+/// The values are taken from [NCI] Table 80: Deactivation Types.
+enum DeactivateType : 8 {
+    IDLE_MODE = 0x00,
+    SLEEP_MODE = 0x01,
+    SLEEP_AF_MODE = 0x02,
+    DISCOVERY = 0x03,
+}
+
 /// Deactivation reason.
 /// The values are taken from [NCI] Table 81: Deactivation Reasons.
 enum DeactivateReason : 8 {
@@ -174,6 +187,7 @@ enum DeactivateReason : 8 {
 /// This command may also be sent spuriously by the emulator to notify
 /// of a loss of link.
 packet DeactivateNotification : RfPacket (type = DEACTIVATE_NOTIFICATION) {
+    type_ : DeactivateType,
     reason : DeactivateReason,
 }
 
