@@ -19,13 +19,13 @@ cc_library {
         "liblog",
         "libdl",
         "libz",
-        "libchrome",
         "libbase",
         // Treble configuration
         "libhidlbase",
         "libutils",
         "libbinder_ndk",
         "libstatssocket",
+        "server_configurable_flags",
     ],
     static_libs: [
         "android.hardware.nfc@1.0",
@@ -35,6 +35,7 @@ cc_library {
         "android.hardware.nfc-V1-ndk",
         "libnfcutils",
         "libstatslog_nfc",
+        "libnfc-nci_flags",
     ],
     cflags: [
         "-DDYN_ALLOC=1",
@@ -66,11 +67,6 @@ cc_library {
         "gki/common/*.cc",
         "gki/ulinux/*.cc",
     ],
-    required: [
-        // Provide a default libnfc-nci.conf in /system/etc for devices that
-        // does not ship one in /product
-        "libnfc-nci.conf-default",
-    ],
     product_variables: {
         debuggable: {
             cflags: [
@@ -85,8 +81,8 @@ cc_library {
     },
     stl: "libc++_static",
     apex_available: [
-         "//apex_available:platform",
-	 "com.android.nfcservices"
+        "//apex_available:platform",
+        "com.android.nfcservices"
     ],
 }
 
@@ -99,7 +95,9 @@ cc_defaults {
         "libcutils",
         "liblog",
         "libbase",
-        "libchrome",
+    ],
+    shared_libs: [
+	"libnfc-nci_flags",
     ],
     cflags: [
         "-DBUILDCFG=1",
@@ -142,16 +140,13 @@ cc_library {
     generated_sources: ["statslog_nfc.cpp"],
     generated_headers: ["statslog_nfc.h"],
     export_generated_headers: ["statslog_nfc.h"],
+    shared_libs: [
+        "libstatssocket",
+    ],
     target: {
-        android: {
-            shared_libs: [
-                "libstatssocket",
-            ],
-        },
         host: {
             static_libs: [
                 "libbase",
-                "libstatssocket",
             ],
         },
         darwin: {
@@ -159,8 +154,8 @@ cc_library {
         },
     },
     apex_available: [
-         "//apex_available:platform",
-	 "com.android.nfcservices"
+        "//apex_available:platform",
+        "com.android.nfcservices"
     ],
 }
 

@@ -16,6 +16,7 @@
 
 use anyhow::Result;
 use argh::FromArgs;
+use log::{error, info, warn};
 use std::future::Future;
 use std::net::{Ipv4Addr, SocketAddrV4};
 use std::pin::Pin;
@@ -26,7 +27,6 @@ use tokio::io::AsyncWriteExt;
 use tokio::net::{tcp, TcpListener, TcpStream};
 use tokio::select;
 use tokio::sync::mpsc;
-use tokio::sync::Mutex;
 
 pub mod controller;
 pub mod packets;
@@ -34,98 +34,8 @@ pub mod packets;
 use controller::Controller;
 use packets::{nci, rf};
 
-const MAX_DEVICES: usize = 16;
+const MAX_DEVICES: usize = 128;
 type Id = u16;
-
-/// Read NCI Control and Data packets received on the NCI transport.
-/// Performs recombination of the segmented packets.
-pub struct NciReader {
-    socket: Mutex<tcp::OwnedReadHalf>,
-}
-
-/// Write NCI Control and Data packets received to the NCI transport.
-/// Performs segmentation of the packets.
-pub struct NciWriter {
-    socket: Mutex<tcp::OwnedWriteHalf>,
-}
-
-impl NciReader {
-    /// Create a new NCI reader from the TCP socket half.
-    pub fn new(socket: tcp::OwnedReadHalf) -> Self {
-        NciReader { socket: Mutex::new(socket) }
-    }
-
-    /// Read a single NCI packet from the reader. The packet is automatically
-    /// re-assembled if segmented on the NCI transport.
-    pub async fn read(&self) -> Result<Vec<u8>> {
-        const HEADER_SIZE: usize = 3;
-        let mut socket = self.socket.lock().await;
-        let mut complete_packet = vec![0; HEADER_SIZE];
-
-        // Note on reassembly:
-        // - for each segment of a Control Message, the header of the
-        //   Control Packet SHALL contain the same MT, GID and OID values,
-        // - for each segment of a Data Message the header of the Data
-        //   Packet SHALL contain the same MT and Conn ID.
-        // Thus it is correct to keep only the last header of the segmented
-        // packet.
-        loop {
-            // Read the common packet header.
-            socket.read_exact(&mut complete_packet[0..HEADER_SIZE]).await?;
-            let header = nci::PacketHeader::parse(&complete_packet[0..HEADER_SIZE])?;
-
-            // Read the packet payload.
-            let payload_length = header.get_payload_length() as usize;
-            let mut payload_bytes = vec![0; payload_length];
-            socket.read_exact(&mut payload_bytes).await?;
-            complete_packet.extend(payload_bytes);
-
-            // Check the Packet Boundary Flag.
-            match header.get_pbf() {
-                nci::PacketBoundaryFlag::CompleteOrFinal => return Ok(complete_packet),
-                nci::PacketBoundaryFlag::Incomplete => (),
-            }
-        }
-    }
-}
-
-impl NciWriter {
-    /// Create a new NCI writer from the TCP socket half.
-    pub fn new(socket: tcp::OwnedWriteHalf) -> Self {
-        NciWriter { socket: Mutex::new(socket) }
-    }
-
-    /// Write a single NCI packet to the writer. The packet is automatically
-    /// segmented if the payload exceeds the maximum size limit.
-    async fn write(&self, mut packet: &[u8]) -> Result<()> {
-        let mut socket = self.socket.lock().await;
-        let mut header_bytes = [packet[0], packet[1], 0];
-        packet = &packet[3..];
-
-        loop {
-            // Update header with framing information.
-            let chunk_length = std::cmp::min(255, packet.len());
-            let pbf = if chunk_length < packet.len() {
-                nci::PacketBoundaryFlag::Incomplete
-            } else {
-                nci::PacketBoundaryFlag::CompleteOrFinal
-            };
-            const PBF_MASK: u8 = 0x10;
-            header_bytes[0] &= !PBF_MASK;
-            header_bytes[0] |= (pbf as u8) << 4;
-            header_bytes[2] = chunk_length as u8;
-
-            // Write the header and payload segment bytes.
-            socket.write_all(&header_bytes).await?;
-            socket.write_all(&packet[..chunk_length]).await?;
-            packet = &packet[chunk_length..];
-
-            if packet.is_empty() {
-                return Ok(());
-            }
-        }
-    }
-}
 
 /// Read RF Control and Data packets received on the RF transport.
 /// Performs recombination of the segmented packets.
@@ -213,8 +123,8 @@ impl Device {
                 let (nci_rx, nci_tx) = socket.into_split();
                 Controller::run(
                     id,
-                    NciReader::new(nci_rx),
-                    NciWriter::new(nci_tx),
+                    nci::Reader::new(nci_rx),
+                    nci::Writer::new(nci_tx),
                     rf_rx,
                     controller_rf_tx,
                 )
@@ -276,11 +186,17 @@ impl Device {
     }
 }
 
-#[derive(Default)]
 struct Scene {
     next_id: u16,
     waker: Option<std::task::Waker>,
     devices: [Option<Device>; MAX_DEVICES],
+}
+
+impl Default for Scene {
+    fn default() -> Self {
+        const NONE: Option<Device> = None;
+        Scene { next_id: 0, waker: None, devices: [NONE; MAX_DEVICES] }
+    }
 }
 
 impl Scene {
@@ -351,7 +267,7 @@ impl Future for Scene {
                 Some(ref mut device) => match device.task.as_mut().poll(cx) {
                     Poll::Ready(Ok(_)) => unreachable!(),
                     Poll::Ready(Err(err)) => {
-                        println!("dropping device {}: {}", n, err);
+                        warn!("dropping device {}: {}", n, err);
                         true
                     }
                     Poll::Pending => false,
@@ -362,7 +278,6 @@ impl Future for Scene {
                 self.disconnect(n)
             }
         }
-        self.wake();
         self.waker = Some(cx.waker().clone());
         Poll::Pending
     }
@@ -380,6 +295,10 @@ struct Opt {
 }
 
 async fn run() -> Result<()> {
+    env_logger::init_from_env(
+        env_logger::Env::default().filter_or(env_logger::DEFAULT_FILTER_ENV, "debug"),
+    );
+
     let opt: Opt = argh::from_env();
     let nci_listener =
         TcpListener::bind(SocketAddrV4::new(Ipv4Addr::LOCALHOST, opt.nci_port)).await?;
@@ -387,24 +306,24 @@ async fn run() -> Result<()> {
         TcpListener::bind(SocketAddrV4::new(Ipv4Addr::LOCALHOST, opt.rf_port)).await?;
     let (rf_tx, mut rf_rx) = mpsc::unbounded_channel();
     let mut scene = Scene::new();
-    println!("Listening for NCI connections at address 127.0.0.1:{}", opt.nci_port);
-    println!("Listening for RF connections at address 127.0.0.1:{}", opt.rf_port);
+    info!("Listening for NCI connections at address 127.0.0.1:{}", opt.nci_port);
+    info!("Listening for RF connections at address 127.0.0.1:{}", opt.rf_port);
     loop {
         select! {
             result = nci_listener.accept() => {
                 let (socket, addr) = result?;
-                println!("Incoming NCI connection from {}", addr);
+                info!("Incoming NCI connection from {}", addr);
                 match scene.add_device(|id| Device::nci(id, socket, rf_tx.clone())) {
-                    Ok(id) => println!("Accepted NCI connection from {} in slot {}", addr, id),
-                    Err(err) => println!("Failed to accept NCI connection from {}: {}", addr, err)
+                    Ok(id) => info!("Accepted NCI connection from {} in slot {}", addr, id),
+                    Err(err) => error!("Failed to accept NCI connection from {}: {}", addr, err)
                 }
             },
             result = rf_listener.accept() => {
                 let (socket, addr) = result?;
-                println!("Incoming RF connection from {}", addr);
+                info!("Incoming RF connection from {}", addr);
                 match scene.add_device(|id| Device::rf(id, socket, rf_tx.clone())) {
-                    Ok(id) => println!("Accepted RF connection from {} in slot {}", addr, id),
-                    Err(err) => println!("Failed to accept RF connection from {}: {}", addr, err)
+                    Ok(id) => info!("Accepted RF connection from {} in slot {}", addr, id),
+                    Err(err) => error!("Failed to accept RF connection from {}: {}", addr, err)
                 }
             },
             _ = &mut scene => (),
