@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3ecb2cc_750ea7f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-02-07T07:13:53Z",
+      "side": 1,
+      "message": "You didn\u0027t fix it.\n\nHow about \"Abort when out of memory\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "8a4f02b0b8a6097633a52aa1a8da5c6d8bde0fcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
