@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fa5375e_08e42bba",
+        "filename": "src/nfa/dm/nfa_dm_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2024-02-13T22:06:02Z",
+      "side": 1,
+      "message": "```suggestion\n    if(p_raw_data !\u003d nullptr) {\n```",
+      "revId": "e991f7a17fdc435a20721cbb8842426203f880f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
