@@ -16,6 +16,24 @@
       "message": "Hello,\n\nCan you please share the reason for this revert ?\nAs we do not have access to 325582654",
       "revId": "dd7f623a7bb52c40ec4a471bfecf3c76223f6fcc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dc9af84_c1e23e74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-02-19T11:17:18Z",
+      "side": 1,
+      "message": "It\u0027s created due to internal test failure, but it\u0027s not merged.\nI checked b/325582654, it\u0027s fixed, and we don\u0027t need to merge this revert.",
+      "parentUuid": "3a889588_b8b60fd1",
+      "revId": "dd7f623a7bb52c40ec4a471bfecf3c76223f6fcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
