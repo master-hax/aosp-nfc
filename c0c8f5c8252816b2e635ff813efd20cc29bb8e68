@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0d9f3ee_3aa9332b",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-02-26T13:19:40Z",
+      "side": 1,
+      "message": "How you handle 32bit block_number here?",
+      "range": {
+        "startLine": 961,
+        "startChar": 0,
+        "endLine": 964,
+        "endChar": 56
+      },
+      "revId": "c0c8f5c8252816b2e635ff813efd20cc29bb8e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6cb8b6f_202ed777",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-02-26T13:19:40Z",
+      "side": 1,
+      "message": "How you handle 32bit block_number here?",
+      "range": {
+        "startLine": 1053,
+        "startChar": 0,
+        "endLine": 1056,
+        "endChar": 56
+      },
+      "revId": "c0c8f5c8252816b2e635ff813efd20cc29bb8e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93fa7f7f_c04073bd",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-02-26T13:19:40Z",
+      "side": 1,
+      "message": "How you handle 32bit first_block_number here?",
+      "range": {
+        "startLine": 1131,
+        "startChar": 0,
+        "endLine": 1134,
+        "endChar": 68
+      },
+      "revId": "c0c8f5c8252816b2e635ff813efd20cc29bb8e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
