@@ -221,7 +221,8 @@ pub struct State {
     pub nfcee_state: NfceeState,
     pub rf_state: RfState,
     pub rf_poll_responses: Vec<RfPollResponse>,
-    pub passive_observer_mode: nci::PassiveObserverMode,
+    pub rf_activation_parameters: Vec<u8>,
+    pub passive_observe_mode: nci::PassiveObserveMode,
     pub start_time: std::time::Instant,
 }
 
@@ -719,7 +720,8 @@ impl Controller {
                 nfcee_state: NfceeState::Disabled,
                 rf_state: RfState::Idle,
                 rf_poll_responses: vec![],
-                passive_observer_mode: nci::PassiveObserverMode::Disable,
+                rf_activation_parameters: vec![],
+                passive_observe_mode: nci::PassiveObserveMode::Disable,
                 start_time: Instant::now(),
             }),
         }
@@ -1322,17 +1324,47 @@ impl Controller {
         Ok(())
     }
 
-    async fn android_passive_observer_mode(
+    async fn android_get_caps(&self, _cmd: nci::AndroidGetCapsCommand) -> Result<()> {
+        info!("[{}] ANDROID_GET_CAPS_CMD", self.id);
+        let cap_tlvs = vec![
+            nci::CapTlv { t: nci::CapTlvType::PassiveObserverMode, v: vec![1] },
+            nci::CapTlv { t: nci::CapTlvType::PollingFrameNotification, v: vec![1] },
+        ];
+        self.send_control(nci::AndroidGetCapsResponseBuilder {
+            status: nci::Status::Ok,
+            android_version: 0,
+            tlvs: cap_tlvs,
+        })
+        .await?;
+        Ok(())
+    }
+
+    async fn android_passive_observe_mode(
         &self,
-        cmd: nci::AndroidPassiveObserverModeCommand,
+        cmd: nci::AndroidPassiveObserveModeCommand,
     ) -> Result<()> {
-        info!("[{}] ANDROID_PASSIVE_OBSERVER_MODE_CMD", self.id);
-        info!("     Mode: {:?}", cmd.get_passive_observer_mode());
+        info!("[{}] ANDROID_PASSIVE_OBSERVE_MODE_CMD", self.id);
+        info!("     Mode: {:?}", cmd.get_passive_observe_mode());
 
         let mut state = self.state.lock().await;
-        state.passive_observer_mode = cmd.get_passive_observer_mode();
-        self.send_control(nci::AndroidPassiveObserverModeResponseBuilder {
+        state.passive_observe_mode = cmd.get_passive_observe_mode();
+        self.send_control(nci::AndroidPassiveObserveModeResponseBuilder {
             status: nci::Status::Ok,
+        })
+        .await?;
+        Ok(())
+    }
+
+    async fn android_query_passive_observe_mode(
+        &self,
+        _cmd: nci::AndroidQueryPassiveObserveModeCommand,
+    ) -> Result<()> {
+        info!("[{}] ANDROID_QUERY_PASSIVE_OBSERVE_MODE_CMD", self.id);
+
+        let state = self.state.lock().await;
+        self.send_control(nci::AndroidQueryPassiveObserveModeResponseBuilder {
+            status: nci::Status::Ok,
+            passive_observe_mode: state.passive_observe_mode,
         })
         .await?;
         Ok(())
@@ -1373,8 +1405,12 @@ impl Controller {
             },
             ProprietaryPacket(packet) => match packet.specialize() {
                 AndroidPacket(packet) => match packet.specialize() {
-                    AndroidPassiveObserverModeCommand(cmd) => {
-                        self.android_passive_observer_mode(cmd).await
+                    AndroidGetCapsCommand(cmd) => self.android_get_caps(cmd).await,
+                    AndroidPassiveObserveModeCommand(cmd) => {
+                        self.android_passive_observe_mode(cmd).await
+                    }
+                    AndroidQueryPassiveObserveModeCommand(cmd) => {
+                        self.android_query_passive_observe_mode(cmd).await
                     }
                     _ => {
                         unimplemented!("unsupported android oid {:?}", packet.get_android_sub_oid())
@@ -1437,23 +1473,26 @@ impl Controller {
                     // TODO(henrichataing) Send back the response received from
                     // the peer in the RF packet.
                     [0xe0, _] => {
+                        warn!("[{}] frame RATS command", self.id);
                         self.send_data(nci::DataPacketBuilder {
                             mt: nci::MessageType::Data,
                             conn_id: nci::ConnId::StaticRf,
                             cr: 0,
-                            payload: Some(bytes::Bytes::copy_from_slice(&[120, 128, 112, 2])),
+                            payload: Some(bytes::Bytes::copy_from_slice(
+                                &state.rf_activation_parameters,
+                            )),
                         })
                         .await?
                     }
                     // DESELECT command
                     // TODO(henrichataing) check if the command should be
                     // forwarded to the peer, and if it warrants a response
-                    [0xc2] => (),
+                    [0xc2] => warn!("[{}] unimplemented frame DESELECT command", self.id),
                     // SLP_REQ command
                     // No response is expected for this command.
                     // TODO(henrichataing) forward a deactivation request to
                     // the peer and deactivate the local interface.
-                    [0x50, 0x00] => (),
+                    [0x50, 0x00] => warn!("[{}] unimplemented frame SLP_REQ command", self.id),
                     _ => unimplemented!(),
                 };
                 // Resplenish the credit count for the RF Connection.
@@ -1557,8 +1596,8 @@ impl Controller {
         // Android proprietary extension for polling frame notifications.
         // The NFCC should send the NCI_ANDROID_POLLING_FRAME_NTF to the Host
         // after each polling loop frame
-        // This notification is independent of whether Passive Observer Mode is
-        // active or not. When Passive Observer Mode is active, the NFCC
+        // This notification is independent of whether Passive Observe Mode is
+        // active or not. When Passive Observe Mode is active, the NFCC
         // should always send this notification before proceeding with the
         // transaction.
         self.send_control(nci::AndroidPollingLoopNotificationBuilder {
@@ -1569,6 +1608,7 @@ impl Controller {
                     rf::Technology::NfcF => nci::PollingFrameType::Reqf,
                     rf::Technology::NfcV => nci::PollingFrameType::Reqv,
                 },
+                flags: 0,
                 timestamp: state.start_time.elapsed().as_millis() as u32,
                 gain: 2,
                 data: vec![],
@@ -1576,10 +1616,10 @@ impl Controller {
         })
         .await?;
 
-        // When the Passive Observer Mode is active, the NFCC shall not respond
+        // When the Passive Observe Mode is active, the NFCC shall not respond
         // to any poll requests during the polling loop in Listen Mode, until
         // explicitly authorized by the Host.
-        if state.passive_observer_mode == nci::PassiveObserverMode::Enable {
+        if state.passive_observe_mode == nci::PassiveObserveMode::Enable {
             return Ok(());
         }
 
@@ -1753,6 +1793,12 @@ impl Controller {
             rf_interface,
         };
 
+        // Save the activation parameters for the RF frame interface
+        // implementation. Note: TL is not included in the RATS response
+        // and needs to be added manually to the activation parameters.
+        state.rf_activation_parameters = vec![cmd.get_rats_response().len() as u8];
+        state.rf_activation_parameters.extend_from_slice(cmd.get_rats_response());
+
         info!("[{}] RF_INTF_ACTIVATED_NTF", self.id);
         info!("         DiscoveryID: {:?}", nci::RfDiscoveryId::from_index(rf_discovery_id));
         info!("         Interface: {:?}", rf_interface);
@@ -1773,6 +1819,9 @@ impl Controller {
             data_exchange_rf_technology_and_mode: nci::RfTechnologyAndMode::NfcAPassivePollMode,
             data_exchange_transmit_bit_rate: nci::BitRate::BitRate106KbitS,
             data_exchange_receive_bit_rate: nci::BitRate::BitRate106KbitS,
+            // TODO(hchataing) the activation parameters should be empty
+            // when the RF frame interface is used, since the protocol
+            // activation is managed by the DH.
             activation_parameters: pdl_runtime::Packet::to_vec(
                 nci::NfcAIsoDepPollModeActivationParametersBuilder {
                     rats_response: cmd.get_rats_response().clone(),
