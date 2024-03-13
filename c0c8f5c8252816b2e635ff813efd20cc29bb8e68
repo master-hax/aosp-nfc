@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e825251_5d363764",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-03-13T12:09:35Z",
+      "side": 1,
+      "message": "Got it, there\u0027s no such case for block_number larger than 2 bytes, just use uint32_t for avoid copying/comparing between different sizes.",
+      "parentUuid": "4278e943_6306d937",
+      "range": {
+        "startLine": 961,
+        "startChar": 0,
+        "endLine": 964,
+        "endChar": 56
+      },
+      "revId": "c0c8f5c8252816b2e635ff813efd20cc29bb8e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6cb8b6f_202ed777",
