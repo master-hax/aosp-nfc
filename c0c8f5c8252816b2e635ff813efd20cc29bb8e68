@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4278e943_6306d937",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2024-03-13T10:01:31Z",
+      "side": 1,
+      "message": "The cast to uint8_t and uint16_t is done in the macro. We changed the function prototype to uint32_t to have block_number prototype aligned to other variables and to avoid copying (or comparing) e.g. uint32_t into uint16_t. Same was applied to num_block.\nAt the end the commands only accept 1 or 2-byte coding for address.\n\nThe initial problem solved by the commit was when computations arrived at the boundary of the 16-bit addressing. Information/detection was lost and the last bytes where not written properly.",
+      "parentUuid": "c0d9f3ee_3aa9332b",
+      "range": {
+        "startLine": 961,
+        "startChar": 0,
+        "endLine": 964,
+        "endChar": 56
+      },
+      "revId": "c0c8f5c8252816b2e635ff813efd20cc29bb8e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6cb8b6f_202ed777",
         "filename": "src/nfc/tags/rw_i93.cc",
         "patchSetId": 1
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c65c6ab7_981520d9",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2024-03-13T10:01:31Z",
+      "side": 1,
+      "message": "Same as above comment",
+      "parentUuid": "d6cb8b6f_202ed777",
+      "range": {
+        "startLine": 1053,
+        "startChar": 0,
+        "endLine": 1056,
+        "endChar": 56
+      },
+      "revId": "c0c8f5c8252816b2e635ff813efd20cc29bb8e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "93fa7f7f_c04073bd",
         "filename": "src/nfc/tags/rw_i93.cc",
         "patchSetId": 1
@@ -60,6 +108,30 @@
       "writtenOn": "2024-02-26T13:19:40Z",
       "side": 1,
       "message": "How you handle 32bit first_block_number here?",
+      "range": {
+        "startLine": 1131,
+        "startChar": 0,
+        "endLine": 1134,
+        "endChar": 68
+      },
+      "revId": "c0c8f5c8252816b2e635ff813efd20cc29bb8e68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf151409_216480d5",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2024-03-13T10:01:31Z",
+      "side": 1,
+      "message": "Same as above comment",
+      "parentUuid": "93fa7f7f_c04073bd",
       "range": {
         "startLine": 1131,
         "startChar": 0,
