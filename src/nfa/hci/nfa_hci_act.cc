@@ -236,7 +236,7 @@ static void nfa_hci_api_register(tNFA_HCI_EVENT_DATA* p_evt_data) {
     if ((nfa_hci_cb.cfg.reg_app_names[xx][0] != 0) &&
         !strncmp(p_app_name, &nfa_hci_cb.cfg.reg_app_names[xx][0],
                  strlen(p_app_name))) {
-      LOG(DEBUG) << StringPrintf("nfa_hci_api_register (%s)  Reusing: %u",
+      LOG(VERBOSE) << StringPrintf("nfa_hci_api_register (%s)  Reusing: %u",
                                  p_app_name, xx);
       break;
     }
@@ -262,7 +262,7 @@ static void nfa_hci_api_register(tNFA_HCI_EVENT_DATA* p_evt_data) {
         strlcpy(&nfa_hci_cb.cfg.reg_app_names[xx][0], p_app_name,
                 NFA_MAX_HCI_APP_NAME_LEN);
         nfa_hci_cb.nv_write_needed = true;
-        LOG(DEBUG) << StringPrintf("nfa_hci_api_register (%s)  Allocated: %u",
+        LOG(VERBOSE) << StringPrintf("nfa_hci_api_register (%s)  Allocated: %u",
                                    p_app_name, xx);
         break;
       }
@@ -315,7 +315,7 @@ void nfa_hci_api_deregister(tNFA_HCI_EVENT_DATA* p_evt_data) {
           !strncmp(p_evt_data->app_info.app_name,
                    &nfa_hci_cb.cfg.reg_app_names[xx][0],
                    strlen(p_evt_data->app_info.app_name))) {
-        LOG(DEBUG) << StringPrintf("nfa_hci_api_deregister (%s) inx: %u",
+        LOG(VERBOSE) << StringPrintf("nfa_hci_api_deregister (%s) inx: %u",
                                    p_evt_data->app_info.app_name, xx);
         break;
       }
@@ -1346,7 +1346,7 @@ void nfa_hci_handle_admin_gate_rsp(uint8_t* p_data, uint8_t data_len) {
   uint8_t host_id = 0;
   uint32_t os_tick;
 
-  LOG(DEBUG) << StringPrintf(
+  LOG(VERBOSE) << StringPrintf(
       "nfa_hci_handle_admin_gate_rsp - LastCmdSent: %s  App: 0x%04x  Gate: "
       "0x%02x  Pipe: 0x%02x",
       nfa_hciu_instr_2_str(nfa_hci_cb.cmd_sent).c_str(), nfa_hci_cb.app_in_use,
@@ -1670,7 +1670,7 @@ void nfa_hci_handle_admin_gate_evt() {
     return;
   }
 
-  LOG(DEBUG) << StringPrintf(
+  LOG(VERBOSE) << StringPrintf(
       "nfa_hci_handle_admin_gate_evt - HOT PLUG EVT event on ADMIN Pipe");
   nfa_hci_cb.num_hot_plug_evts++;
 

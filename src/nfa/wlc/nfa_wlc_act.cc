@@ -42,7 +42,7 @@ using android::base::StringPrintf;
 **
 *******************************************************************************/
 bool nfa_wlc_enable(tNFA_WLC_MSG* p_data) {
-  LOG(DEBUG) << StringPrintf("%s; nfa_dm_cb.flags=0x%x", __func__,
+  LOG(VERBOSE) << StringPrintf("%s; nfa_dm_cb.flags=0x%x", __func__,
                              nfa_dm_cb.flags);
   tNFA_WLC_EVT_DATA wlc_cback_data;
 
@@ -55,7 +55,7 @@ bool nfa_wlc_enable(tNFA_WLC_MSG* p_data) {
 
     wlc_cback_data.status = NFA_STATUS_OK;
   } else {
-    LOG(DEBUG) << StringPrintf(
+    LOG(VERBOSE) << StringPrintf(
         "%s; DM not active or enable event pending or DM disabling NFC ",
         __func__);
     wlc_cback_data.status = NFA_STATUS_FAILED;
@@ -78,7 +78,7 @@ bool nfa_wlc_enable(tNFA_WLC_MSG* p_data) {
 **
 *******************************************************************************/
 bool nfa_wlc_start(tNFA_WLC_MSG* p_data) {
-  LOG(DEBUG) << StringPrintf("%s; ", __func__);
+  LOG(VERBOSE) << StringPrintf("%s; ", __func__);
 
   /* If mode is WLC-P Non-Autonomous mode:
    * Support for WLC-P Non-Autonomous RF Interface Extension in CORE_INIT_RSP
@@ -161,7 +161,7 @@ bool nfa_wlc_start(tNFA_WLC_MSG* p_data) {
 **
 *******************************************************************************/
 bool nfa_wlc_non_auto_start_wpt(tNFA_WLC_MSG* p_data) {
-  LOG(DEBUG) << StringPrintf("%s; power_adj_req=0x%x, wpt_time_int=0x%x",
+  LOG(VERBOSE) << StringPrintf("%s; power_adj_req=0x%x, wpt_time_int=0x%x",
                              __func__, p_data->non_auto_start_wpt.power_adj_req,
                              p_data->non_auto_start_wpt.wpt_time_int);
 

@@ -66,7 +66,7 @@ static std::string nfa_wlc_evt_2_str(uint16_t event);
 **
 *******************************************************************************/
 void nfa_wlc_init(void) {
-  LOG(DEBUG) << __func__;
+  LOG(VERBOSE) << __func__;
 
   /* initialize control block */
   memset(&nfa_wlc_cb, 0, sizeof(tNFA_WLC_CB));
@@ -86,7 +86,7 @@ void nfa_wlc_init(void) {
 **
 *******************************************************************************/
 void nfa_wlc_sys_disable(void) {
-  LOG(DEBUG) << __func__;
+  LOG(VERBOSE) << __func__;
 
   nfa_sys_deregister(NFA_ID_WLC);
 }
@@ -101,12 +101,12 @@ void nfa_wlc_sys_disable(void) {
 **
 *******************************************************************************/
 void nfa_wlc_event_notify(tNFA_WLC_EVT event, tNFA_WLC_EVT_DATA* p_data) {
-  LOG(DEBUG) << __func__;
+  LOG(VERBOSE) << __func__;
 
   if (nfa_wlc_cb.p_wlc_cback) {
     (*nfa_wlc_cb.p_wlc_cback)(event, p_data);
   } else {
-    LOG(DEBUG) << StringPrintf("%s; callback pointer null", __func__);
+    LOG(VERBOSE) << StringPrintf("%s; callback pointer null", __func__);
   }
 }
 
@@ -122,7 +122,7 @@ void nfa_wlc_event_notify(tNFA_WLC_EVT event, tNFA_WLC_EVT_DATA* p_data) {
 bool nfa_wlc_handle_event(NFC_HDR* p_msg) {
   uint16_t act_idx;
 
-  LOG(DEBUG) << StringPrintf("%s; event: %s (0x%02x), flags: %08x", __func__,
+  LOG(VERBOSE) << StringPrintf("%s; event: %s (0x%02x), flags: %08x", __func__,
                              nfa_wlc_evt_2_str(p_msg->event).c_str(),
                              p_msg->event, nfa_wlc_cb.flags);
 
