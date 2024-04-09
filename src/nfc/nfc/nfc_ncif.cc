@@ -299,6 +299,7 @@ void nfc_ncif_check_cmd_queue(NFC_HDR* p_buf) {
       nfc_cb.nci_cmd_window--;
 
       /* send to HAL */
+      nfcsnoop_capture(p_buf, false);
       HAL_WRITE(p_buf);
       /* start NFC command-timeout timer */
       nfc_start_timer(&nfc_cb.nci_wait_rsp_timer,
@@ -363,7 +364,6 @@ void nfc_ncif_send_cmd(NFC_HDR* p_buf) {
   /* post the p_buf to NCIT task */
   p_buf->event = BT_EVT_TO_NFC_NCI;
   p_buf->layer_specific = 0;
-  nfcsnoop_capture(p_buf, false);
   nfc_ncif_check_cmd_queue(p_buf);
 }
 
@@ -404,6 +404,8 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
     return free;
   }
 
+  nfcsnoop_capture(p_msg, true);
+
   NCI_MSG_PRS_HDR0(p, mt, pbf, gid);
   oid = ((*p) & NCI_OID_MASK);
   if (nfc_cb.rawVsCbflag == true &&
@@ -413,7 +415,6 @@ bool nfc_ncif_process_event(NFC_HDR* p_msg) {
     return free;
   }
 
-  nfcsnoop_capture(p_msg, true);
   switch (mt) {
     case NCI_MT_DATA:
       LOG(DEBUG) << StringPrintf("NFC received data");
