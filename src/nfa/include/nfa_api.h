@@ -286,59 +286,50 @@ typedef enum {
 #define NFA_SELECT_CPLT_EVT 10    /* Select completed */
 #define NFA_READ_CPLT_EVT 11      /* Read completed */
 #define NFA_WRITE_CPLT_EVT 12     /* Write completed */
-#define NFA_LLCP_ACTIVATED_EVT 13 /* LLCP link is activated */
-/* LLCP link is deactivated */
-#define NFA_LLCP_DEACTIVATED_EVT 14
 /* Response to NFA_RwPresenceCheck */
-#define NFA_PRESENCE_CHECK_EVT 15
+#define NFA_PRESENCE_CHECK_EVT 13
 /* Tag Formating completed */
-#define NFA_FORMAT_CPLT_EVT 16
+#define NFA_FORMAT_CPLT_EVT 14
 /* ISO 15693 command completed */
-#define NFA_I93_CMD_CPLT_EVT 17
-#define NFA_SET_TAG_RO_EVT 18 /* Tag set as Read only */
+#define NFA_I93_CMD_CPLT_EVT 15
+#define NFA_SET_TAG_RO_EVT 16 /* Tag set as Read only */
 /* Result for NFA_RequestExclusiveRfControl */
-#define NFA_EXCLUSIVE_RF_CONTROL_STARTED_EVT 19
+#define NFA_EXCLUSIVE_RF_CONTROL_STARTED_EVT 17
 /* Result for NFA_ReleaseExclusiveRfControl */
-#define NFA_EXCLUSIVE_RF_CONTROL_STOPPED_EVT 20
+#define NFA_EXCLUSIVE_RF_CONTROL_STOPPED_EVT 18
 /* DH Card emulation: AID or System code reg'd  */
-#define NFA_CE_REGISTERED_EVT 21
+#define NFA_CE_REGISTERED_EVT 19
 /* DH Card emulation: AID or System code dereg'd */
-#define NFA_CE_DEREGISTERED_EVT 22
+#define NFA_CE_DEREGISTERED_EVT 20
 /* DH Card emulation: data received event */
-#define NFA_CE_DATA_EVT 23
+#define NFA_CE_DATA_EVT 21
 /* DH Card emulation: activation event */
-#define NFA_CE_ACTIVATED_EVT 24
+#define NFA_CE_ACTIVATED_EVT 22
 /* DH Card emulation: deactivation event */
-#define NFA_CE_DEACTIVATED_EVT 25
+#define NFA_CE_DEACTIVATED_EVT 23
 /* DH Card emulation: local NDEF configured */
-#define NFA_CE_LOCAL_TAG_CONFIGURED_EVT 26
+#define NFA_CE_LOCAL_TAG_CONFIGURED_EVT 24
 /* DH Card emulation: NDEF write started */
-#define NFA_CE_NDEF_WRITE_START_EVT 27
+#define NFA_CE_NDEF_WRITE_START_EVT 25
 /* DH Card emulation: NDEF write completed */
-#define NFA_CE_NDEF_WRITE_CPLT_EVT 28
-#define NFA_CE_UICC_LISTEN_CONFIGURED_EVT 29 /* UICC Listen configured */
+#define NFA_CE_NDEF_WRITE_CPLT_EVT 26
+#define NFA_CE_UICC_LISTEN_CONFIGURED_EVT 27 /* UICC Listen configured */
 /* RF Discovery started event */
-#define NFA_RF_DISCOVERY_STARTED_EVT 30
+#define NFA_RF_DISCOVERY_STARTED_EVT 28
 /* RF Discovery stopped event */
-#define NFA_RF_DISCOVERY_STOPPED_EVT 31
+#define NFA_RF_DISCOVERY_STOPPED_EVT 29
 /* status of updating RF communication paramters */
-#define NFA_UPDATE_RF_PARAM_RESULT_EVT 32
+#define NFA_UPDATE_RF_PARAM_RESULT_EVT 30
 /* RF Interface error event */
-#define NFA_RW_INTF_ERROR_EVT 34
+#define NFA_RW_INTF_ERROR_EVT 31
 /* status of setting P2P listen technologies */
-#define NFA_SET_P2P_LISTEN_TECH_EVT 33
-/* First packet received over LLCP link */
-#define NFA_LLCP_FIRST_PACKET_RECEIVED_EVT 35
+#define NFA_SET_P2P_LISTEN_TECH_EVT 32
 /* Listening enabled event */
-#define NFA_LISTEN_ENABLED_EVT 36
+#define NFA_LISTEN_ENABLED_EVT 33
 /* Listening disabled event */
-#define NFA_LISTEN_DISABLED_EVT 37
-/* P2P services paused event */
-#define NFA_P2P_PAUSED_EVT 38
-/* P2P services resumed event */
-#define NFA_P2P_RESUMED_EVT 39
+#define NFA_LISTEN_DISABLED_EVT 34
 /* T2T command completed */
-#define NFA_T2T_CMD_CPLT_EVT 40
+#define NFA_T2T_CMD_CPLT_EVT 35
 
 /* NFC deactivation type */
 #define NFA_DEACTIVATE_TYPE_IDLE NFC_DEACTIVATE_TYPE_IDLE
@@ -429,21 +420,6 @@ typedef struct {
   uint8_t* p_data;    /* data buffer                      */
 } tNFA_CE_NDEF_WRITE_CPLT;
 
-/* Data for NFA_LLCP_ACTIVATED_EVT */
-typedef struct {
-  bool is_initiator;        /* TRUE if initiator                */
-  uint16_t remote_wks;      /* Well-Known service mask of peer  */
-  uint8_t remote_lsc;       /* Link Service Class of peer       */
-  uint16_t remote_link_miu; /* Link MIU of peer                 */
-  uint16_t local_link_miu;  /* Link MIU of local                */
-  uint8_t remote_version;   /* LLCP version of remote           */
-} tNFA_LLCP_ACTIVATED;
-
-/* Data for NFA_LLCP_DEACTIVATED_EVT */
-typedef struct {
-  uint8_t reason; /* reason of deactivation           */
-} tNFA_LLCP_DEACTIVATED;
-
 /* Data for NFA_I93_CMD_CPLT_EVT */
 typedef struct {
   uint8_t dsfid;                 /* DSFID                       */
@@ -515,8 +491,6 @@ typedef union {
   tNFA_TLV_DETECT tlv_detect;   /* NFA_TLV_DETECT_EVT                   */
   tNFA_RX_DATA data;            /* NFA_DATA_EVT                         */
   tNFA_CE_NDEF_WRITE_CPLT ndef_write_cplt; /* NFA_CE_NDEF_WRITE_CPLT_EVT */
-  tNFA_LLCP_ACTIVATED llcp_activated; /* NFA_LLCP_ACTIVATED_EVT               */
-  tNFA_LLCP_DEACTIVATED llcp_deactivated; /* NFA_LLCP_DEACTIVATED_EVT */
   tNFA_I93_CMD_CPLT i93_cmd_cplt;   /* NFA_I93_CMD_CPLT_EVT                 */
   tNFA_CE_REGISTERED ce_registered; /* NFA_CE_REGISTERED_EVT                */
   tNFA_CE_DEREGISTERED ce_deregistered; /* NFA_CE_DEREGISTERED_EVT */
@@ -909,8 +883,6 @@ extern tNFA_STATUS NFA_ReleaseExclusiveRfControl(void);
 **                  - NFA_ACTIVATED_EVT is generated when an NFC link is
 **                    activated.
 **                  - NFA_NDEF_DETECT_EVT is generated if tag is activated
-**                  - NFA_LLCP_ACTIVATED_EVT/NFA_LLCP_DEACTIVATED_EVT is
-**                    generated if NFC-DEP is activated
 **                  - NFA_DEACTIVATED_EVT will be returned after deactivating
 **                    NFC link.
 **
