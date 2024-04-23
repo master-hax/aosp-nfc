@@ -62,6 +62,9 @@ extern tNFA_PROPRIETARY_CFG* p_nfa_proprietary_cfg;
 #ifndef NCI_PROTOCOL_MIFARE
 #define NCI_PROTOCOL_MIFARE (p_nfa_proprietary_cfg->pro_protocol_mfc)
 #endif
+#ifndef NCI_PROTOCOL_CI
+#define NCI_PROTOCOL_CI 0x84
+#endif
 
 /**********************************************
  * Proprietary Discovery technology and mode

@@ -119,6 +119,8 @@ enum {
   NFA_RW_OP_I93_GET_SYS_INFO,
   NFA_RW_OP_I93_GET_MULTI_BLOCK_STATUS,
   NFA_RW_OP_I93_SET_ADDR_MODE,
+  NFA_RW_OP_CI_ATTRIB,
+  NFA_RW_OP_CI_UID,
   NFA_RW_OP_MAX
 };
 typedef uint8_t tNFA_RW_OP;
@@ -196,6 +198,10 @@ typedef struct {
   uint8_t* p_data;
 } tNFA_RW_OP_PARAMS_I93_CMD;
 
+typedef struct {
+  uint8_t nfcid0[NFC_NFCID0_MAX_LEN];
+} tNFA_RW_OP_PARAMS_CI;
+
 /* Union of params for all reader/writer operations */
 typedef union {
   /* params for NFA_RW_OP_WRITE_NDEF */
@@ -227,6 +233,7 @@ typedef union {
 
   /* params for ISO 15693 */
   tNFA_RW_OP_PARAMS_I93_CMD i93_cmd;
+  tNFA_RW_OP_PARAMS_CI ci_param;
 
 } tNFA_RW_OP_PARAMS;
 

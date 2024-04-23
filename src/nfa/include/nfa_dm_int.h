@@ -304,6 +304,7 @@ typedef uint8_t tNFA_DM_RF_DISC_EVT;
 /* Legacy/proprietary/non-NFC Forum protocol (e.g Shanghai transit card) */
 #define NFA_DM_DISC_MASK_P_LEGACY 0x00002000
 #define NFA_DM_DISC_MASK_PA_MIFARE 0x00004000
+#define NFA_DM_DISC_MASK_PB_CI 0x00008000
 #define NFA_DM_DISC_MASK_POLL 0x0000FFFF
 
 #define NFA_DM_DISC_MASK_LA_T1T 0x00010000

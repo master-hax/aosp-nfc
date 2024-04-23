@@ -612,6 +612,9 @@ static tNFA_DM_DISC_TECH_PROTO_MASK nfa_dm_disc_get_disc_mask(
   } else if (NFC_DISCOVERY_TYPE_POLL_B == tech_n_mode) {
     if (protocol == NFC_PROTOCOL_ISO_DEP)
       disc_mask = NFA_DM_DISC_MASK_PB_ISO_DEP;
+    else if (protocol == NCI_PROTOCOL_UNKNOWN) {
+      disc_mask = NFA_DM_DISC_MASK_PB_CI;
+    }
   } else if (NFC_DISCOVERY_TYPE_POLL_F == tech_n_mode) {
     if (protocol == NFC_PROTOCOL_T3T)
       disc_mask = NFA_DM_DISC_MASK_PF_T3T;
