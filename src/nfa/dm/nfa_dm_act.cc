@@ -913,6 +913,7 @@ tNFA_STATUS nfa_dm_start_polling(void) {
     }
     if (poll_tech_mask & NFA_TECHNOLOGY_MASK_B) {
       poll_disc_mask |= NFA_DM_DISC_MASK_PB_ISO_DEP;
+      poll_disc_mask |= NFA_DM_DISC_MASK_PB_CI;
     }
     if (poll_tech_mask & NFA_TECHNOLOGY_MASK_F) {
       poll_disc_mask |= NFA_DM_DISC_MASK_PF_T3T;
@@ -1527,6 +1528,14 @@ static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
             (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T5T) ||
             (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_KOVIO) ||
             (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_MIFARE)) {
+          /* Notify NFA tag sub-system */
+          nfa_rw_proc_disc_evt(NFA_DM_RF_DISC_ACTIVATED_EVT, p_data, true);
+        }
+        // Special case for chinese ID card
+        else if ((nfa_dm_cb.disc_cb.activated_protocol ==
+                  NFC_PROTOCOL_UNKNOWN) &&
+                 (nfa_dm_cb.disc_cb.activated_rf_interface ==
+                  NFC_DISCOVERY_TYPE_POLL_B)) {
           /* Notify NFA tag sub-system */
           nfa_rw_proc_disc_evt(NFA_DM_RF_DISC_ACTIVATED_EVT, p_data, true);
         } else /* if NFC-DEP/ISO-DEP with frame interface */
