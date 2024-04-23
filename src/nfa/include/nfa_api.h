@@ -134,6 +134,7 @@ typedef uint8_t tNFA_TECHNOLOGY_MASK;
 #define NFA_PROTOCOL_NFC_DEP NFC_PROTOCOL_NFC_DEP
 /* NFC_PROTOCOL_T5T in NCI2.0 and NFC_PROTOCOL_ISO15693 proprietary in NCI1.0*/
 #define NFA_PROTOCOL_T5T NFC_PROTOCOL_T5T
+#define NFA_PROTOCOL_CI NFC_PROTOCOL_CI
 #define NFA_PROTOCOL_INVALID 0xFF
 typedef uint8_t tNFA_NFC_PROTOCOL;
 
@@ -365,11 +366,16 @@ typedef struct {
   uint8_t IC_reference; /* IC Reference if I93_INFO_FLAG_IC_REF         */
 } tNFA_I93_PARAMS;
 
+typedef struct {
+  uint8_t mbi;
+  uint8_t uid[8]; /* UID of Chinese Id Card           */
+} tNFA_CI_PARAMS;
 typedef union {
   tNFA_T1T_PARAMS t1t; /* HR and UID of T1T                */
   tNFA_T2T_PARAMS t2t; /* UID of T2T                       */
   tNFA_T3T_PARAMS t3t; /* System codes                     */
   tNFA_I93_PARAMS i93; /* System Information of ISO 15693  */
+  tNFA_CI_PARAMS ci;
 } tNFA_TAG_PARAMS;
 
 typedef struct {
