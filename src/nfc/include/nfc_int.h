@@ -55,6 +55,7 @@
 #define NFC_TTYPE_RW_I93_RESPONSE 108
 #define NFC_TTYPE_CE_T4T_UPDATE 109
 #define NFC_TTYPE_RW_MFC_RESPONSE 112
+#define NFC_TTYPE_RW_CI_RESPONSE 113
 /* time out for mode set notification */
 #define NFC_MODE_SET_NTF_TIMEOUT 2
 /* NFC Task event messages */

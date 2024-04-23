@@ -1533,6 +1533,62 @@ static void nfa_rw_handle_mfc_evt(tRW_EVENT event, tRW_DATA* p_rw_data) {
 
 /*******************************************************************************
 **
+** Function         nfa_rw_handle_ci_evt
+**
+** Description      Handler for Chinese Id Card tag reader events
+**
+** Returns          Nothing
+**
+*******************************************************************************/
+static void nfa_rw_handle_ci_evt(tRW_EVENT event, tRW_DATA* p_rw_data) {
+  tNFA_CONN_EVT_DATA conn_evt_data;
+  tNFA_TAG_PARAMS tag_params;
+
+  conn_evt_data.status = p_rw_data->status;
+  LOG(DEBUG)
+      << StringPrintf("%s; event = 0x%X", __func__, event);
+
+  if (p_rw_data->status == NFC_STATUS_REJECTED) {
+    /* Received NACK. Let DM wakeup the tag first (by putting tag to sleep and
+     * then waking it up) */
+    if ((p_rw_data->status = nfa_dm_disc_sleep_wakeup()) == NFC_STATUS_OK) {
+      nfa_rw_cb.halt_event = event;
+      memcpy(&nfa_rw_cb.rw_data, p_rw_data, sizeof(tRW_DATA));
+      return;
+    }
+  }
+
+  switch (event) {
+    case RW_CI_PRESENCE_CHECK_EVT: /* Presence check completed */
+      nfa_rw_handle_presence_check_rsp(p_rw_data->status);
+      break;
+
+    case RW_CI_RAW_FRAME_EVT: /* Raw Frame data event         */
+      nfa_rw_send_data_to_upper(p_rw_data);
+
+      if (p_rw_data->status != NFC_STATUS_CONTINUE) {
+        /* Command complete - perform cleanup */
+        nfa_rw_command_complete();
+        nfa_rw_cb.cur_op = NFA_RW_OP_MAX;
+      }
+      break;
+
+    case RW_CI_CPLT_EVT: {
+      tag_params.ci.mbi = p_rw_data->ci_info.mbi;
+      memcpy(tag_params.ci.uid, p_rw_data->ci_info.uid,
+             sizeof(tag_params.ci.uid));
+      nfa_dm_notify_activation_status(NFA_STATUS_OK, &tag_params);
+      nfa_rw_command_complete();
+    } break;
+
+    case RW_CI_INTF_ERROR_EVT:
+      nfa_dm_rf_deactivate(NFA_DEACTIVATE_TYPE_DISCOVERY);
+      break;
+  }
+}
+
+/*******************************************************************************
+**
 ** Function         nfa_rw_cback
 **
 ** Description      Callback for reader/writer event notification
@@ -1562,6 +1618,8 @@ static void nfa_rw_cback(tRW_EVENT event, tRW_DATA* p_rw_data) {
   } else if (event < RW_MFC_MAX_EVT) {
     /* Handle Mifare Classic tag events */
     nfa_rw_handle_mfc_evt(event, p_rw_data);
+  } else if (event < RW_CI_MAX_EVT) {
+    nfa_rw_handle_ci_evt(event, p_rw_data);
   } else {
     LOG(ERROR) << StringPrintf("nfa_rw_cback: unhandled event=0x%02x", event);
   }
@@ -1928,6 +1986,9 @@ void nfa_rw_presence_check(tNFA_RW_MSG* p_data) {
     /* T5T/ISO 15693 */
     nfa_rw_cb.pres_check_tag = true;
     status = RW_I93PresenceCheck();
+  } else if (NFC_PROTOCOL_CI == protocol) {
+    // Chinese ID card
+    status = RW_CiPresenceCheck();
   } else {
     /* Protocol unsupported by RW module... */
     unsupported = true;
@@ -2634,10 +2695,15 @@ bool nfa_rw_activate_ntf(tNFA_RW_MSG* p_data) {
 
   /* check if the protocol is activated with supported interface */
   if (p_activate_params->intf_param.type == NCI_INTERFACE_FRAME) {
-    if ((p_activate_params->protocol != NFA_PROTOCOL_T1T) &&
-        (p_activate_params->protocol != NFA_PROTOCOL_T2T) &&
-        (p_activate_params->protocol != NFA_PROTOCOL_T3T) &&
-        (p_activate_params->protocol != NFA_PROTOCOL_T5T)) {
+    // Chinese ID Card
+    if ((nfa_rw_cb.protocol == NFC_PROTOCOL_UNKNOWN) &&
+        (nfa_rw_cb.activated_tech_mode == NFC_DISCOVERY_TYPE_POLL_B)) {
+      LOG(DEBUG) << StringPrintf("%s; Chinese ID Card protocol", __func__);
+      nfa_rw_cb.protocol = NFA_PROTOCOL_CI;
+    } else if ((p_activate_params->protocol != NFA_PROTOCOL_T1T) &&
+               (p_activate_params->protocol != NFA_PROTOCOL_T2T) &&
+               (p_activate_params->protocol != NFA_PROTOCOL_T3T) &&
+               (p_activate_params->protocol != NFA_PROTOCOL_T5T)) {
       nfa_rw_cb.protocol = NFA_PROTOCOL_INVALID;
     }
   } else if (p_activate_params->intf_param.type == NCI_INTERFACE_ISO_DEP) {
@@ -2661,7 +2727,10 @@ bool nfa_rw_activate_ntf(tNFA_RW_MSG* p_data) {
    * start presence check if needed */
   if (!nfa_dm_is_protocol_supported(
           p_activate_params->protocol,
-          p_activate_params->rf_tech_param.param.pa.sel_rsp)) {
+          p_activate_params->rf_tech_param.param.pa.sel_rsp)
+      && (nfa_rw_cb.protocol != NFA_PROTOCOL_CI)) {
+    LOG(DEBUG)
+        << StringPrintf("%s; Protocol not supported", __func__);
     /* Notify upper layer of NFA_ACTIVATED_EVT if needed, and start presence
      * check timer */
     /* Set data callback (pass all incoming data to upper layer using
@@ -2796,6 +2865,15 @@ bool nfa_rw_activate_ntf(tNFA_RW_MSG* p_data) {
         memcpy(tag_params.i93.uid, nfa_rw_cb.i93_uid, I93_UID_BYTE_LEN);
       }
     }
+  } else if (NFC_PROTOCOL_CI == nfa_rw_cb.protocol) {
+    tNFA_RW_MSG msg;
+    msg.op_req.op = NFA_RW_OP_CI_ATTRIB;
+    memcpy(
+        msg.op_req.params.ci_param.nfcid0,
+        p_data->activate_ntf.p_activate_params->rf_tech_param.param.pb.nfcid0,
+        sizeof(NFC_NFCID0_MAX_LEN));
+    nfa_rw_handle_op_req(&msg);
+    activate_notify = false;
   }
 
   /* Notify upper layer of NFA_ACTIVATED_EVT if needed, and start presence check
@@ -3032,6 +3110,13 @@ bool nfa_rw_handle_op_req(tNFA_RW_MSG* p_data) {
     case NFA_RW_OP_I93_SET_ADDR_MODE:
       nfa_rw_i93_command(p_data);
       break;
+
+    case NFA_RW_OP_CI_ATTRIB: {
+      LOG(DEBUG)
+          << StringPrintf("%s; Sending ATTRIB - nfcid0[0]=0x%02x", __func__,
+                          p_data->op_req.params.ci_param.nfcid0[0]);
+      RW_CiSendAttrib(p_data->op_req.params.ci_param.nfcid0);
+    } break;
 
     default:
       LOG(ERROR) << StringPrintf("nfa_rw_handle_api: unhandled operation: %i",
