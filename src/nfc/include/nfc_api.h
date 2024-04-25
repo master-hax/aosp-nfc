@@ -568,6 +568,7 @@ typedef struct {
                             13) Available after Technology Detection */
   uint8_t sensb_res[NFC_MAX_SENSB_RES_LEN]; /* SENSB_RES Response (ATQ) */
   uint8_t nfcid0[NFC_NFCID0_MAX_LEN];
+  uint8_t fwi;
 } tNFC_RF_PB_PARAMS;
 
 #define NFC_MAX_SENSF_RES_LEN NCI_MAX_SENSF_RES_LEN
