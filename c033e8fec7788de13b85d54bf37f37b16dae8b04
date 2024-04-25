@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee118490_1913e4c1",
+        "filename": "src/nfa/include/nfa_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2024-04-25T16:20:35Z",
+      "side": 0,
+      "message": "Not saying it is incorrect, but editing the constant values brings unnecessary risk to the change.",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 35
+      },
+      "revId": "c033e8fec7788de13b85d54bf37f37b16dae8b04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
