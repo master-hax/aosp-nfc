@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1636d052_e1b178bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-04-25T05:19:19Z",
+      "side": 1,
+      "message": "Hi Himanshu,\n\nCould you help to check it?\n\nThis part is added by NXP in aosp/2895043",
+      "revId": "4e6ad7f00dddec205480c9e5a593184dad217bb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
