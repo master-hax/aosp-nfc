@@ -1726,6 +1726,11 @@ bool nfa_dm_act_change_discovery_tech(tNFA_DM_MSG* p_data) {
 
   LOG(DEBUG) << StringPrintf("nfa_dm_act_change_discovery_tech ()");
 
+  if (p_data->change_discovery_tech.change_default_tech)
+    nfa_dm_cb.flags &= ~NFA_DM_FLAGS_DEFAULT_TECH_CHANGED;
+  else
+    nfa_dm_cb.flags |= NFA_DM_FLAGS_DEFAULT_TECH_CHANGED;
+
   if (p_data->change_discovery_tech.is_revert_poll)
     nfa_dm_cb.flags &= ~NFA_DM_FLAGS_POLL_TECH_CHANGED;
   else
