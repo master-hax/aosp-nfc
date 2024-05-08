@@ -1214,6 +1214,9 @@ void NFA_EnableDtamode(tNFA_eDtaModes eDtaMode) {
 **                               before calling NFA_StopRfDiscovery
 **                               FALSE if changing RF listening tech according
 **                               to listenTech
+**                  change_default_tech : TRUE if the default technolofy mask
+**                               has to be changed according to listenTech
+**                               and pollTech settings
 **
 ** Note:            If RF discovery is started,
 **                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT
@@ -1225,8 +1228,8 @@ void NFA_EnableDtamode(tNFA_eDtaModes eDtaMode) {
 *******************************************************************************/
 tNFA_STATUS NFA_ChangeDiscoveryTech(tNFA_TECHNOLOGY_MASK pollTech,
                                     tNFA_TECHNOLOGY_MASK listenTech,
-                                    bool is_revert_poll,
-                                    bool is_revert_listen) {
+                                    bool is_revert_poll, bool is_revert_listen,
+                                    bool change_default_tech) {
   tNFA_DM_API_CHANGE_DISCOVERY_TECH* p_msg;
   LOG(DEBUG) << StringPrintf("%s: 0x%X 0x%X", __func__, pollTech, listenTech);
 
@@ -1235,6 +1238,7 @@ tNFA_STATUS NFA_ChangeDiscoveryTech(tNFA_TECHNOLOGY_MASK pollTech,
     p_msg->hdr.event = NFA_DM_API_CHANGE_DISCOVERY_TECH_EVT;
     p_msg->is_revert_poll = is_revert_poll;
     p_msg->is_revert_listen = is_revert_listen;
+    p_msg->change_default_tech = change_default_tech;
     p_msg->change_poll_mask = pollTech;
     p_msg->change_listen_mask = listenTech;
 
