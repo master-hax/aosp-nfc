@@ -119,6 +119,7 @@ typedef struct {
   NFC_HDR hdr;
   bool is_revert_poll;
   bool is_revert_listen;
+  bool change_default_tech;
   tNFA_TECHNOLOGY_MASK change_listen_mask;
   tNFA_TECHNOLOGY_MASK change_poll_mask;
 } tNFA_DM_API_CHANGE_DISCOVERY_TECH;
@@ -470,6 +471,7 @@ typedef struct {
 /* NFA_ChangeDiscoveryTech() is called and engaged                      */
 #define NFA_DM_FLAGS_POLL_TECH_CHANGED 0x10000000
 #define NFA_DM_FLAGS_LISTEN_TECH_CHANGED 0x20000000
+#define NFA_DM_FLAGS_DEFAULT_TECH_CHANGED 0x40000000
 /* stored parameters */
 typedef struct {
   uint8_t total_duration[NCI_PARAM_LEN_TOTAL_DURATION];
