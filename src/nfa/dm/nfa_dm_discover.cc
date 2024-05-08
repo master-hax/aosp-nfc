@@ -64,6 +64,87 @@ static void nfa_dm_disc_report_kovio_presence_check(tNFC_STATUS status);
 static std::string nfa_dm_disc_state_2_str(uint8_t state);
 static std::string nfa_dm_disc_event_2_str(uint8_t event);
 
+/*
+** static parameters
+*/
+static tNFA_TECHNOLOGY_MASK dm_disc_listen_mask_dfl = 0;
+static tNFA_TECHNOLOGY_MASK dm_disc_poll_mask_dfl = 0;
+
+tNFA_DM_DISC_TECH_PROTO_MASK nfa_dm_change_listen_mask(
+    tNFA_DM_DISC_TECH_PROTO_MASK dm_disk_mask,
+    tNFA_TECHNOLOGY_MASK change_listen_mask) {
+  if (nfa_dm_cb.change_listen_mask & NFA_TECHNOLOGY_MASK_A) {
+    dm_disc_mask |= (NFA_DM_DISC_MASK_LA_T1T | NFA_DM_DISC_MASK_LA_T2T |
+                     NFA_DM_DISC_MASK_LA_ISO_DEP | NFA_DM_DISC_MASK_LA_NFC_DEP);
+  }
+  if (change_listen_mask & NFA_TECHNOLOGY_MASK_B)
+    dm_disc_mask |= NFA_DM_DISC_MASK_LB_ISO_DEP;
+
+  if (change_listen_mask & NFA_TECHNOLOGY_MASK_F)
+    dm_disc_mask |= (NFA_DM_DISC_MASK_LF_T3T | NFA_DM_DISC_MASK_LF_NFC_DEP);
+
+  if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
+    if ((change_listen_mask & NFA_TECHNOLOGY_MASK_A_ACTIVE) ||
+        (change_listen_mask & NFA_TECHNOLOGY_MASK_F_ACTIVE)) {
+      dm_disc_mask |=
+          NFA_DM_DISC_MASK_LACM_NFC_DEP; /* This shall be deprecated */
+    }
+  } else {
+    if (change_listen_mask & NFA_TECHNOLOGY_MASK_A_ACTIVE)
+      dm_disc_mask |= NFA_DM_DISC_MASK_LAA_NFC_DEP;
+
+    if (change_listen_mask & NFA_TECHNOLOGY_MASK_F_ACTIVE)
+      dm_disc_mask |= NFA_DM_DISC_MASK_LFA_NFC_DEP;
+  }
+
+  LOG(DEBUG) << StringPrintf("listen tech will set to 0x%x",
+                             (dm_disc_mask & NFA_DM_DISC_MASK_LISTEN));
+
+  return dm_disk_mask;
+}
+
+tNFA_DM_DISC_TECH_PROTO_MASK nfa_dm_change_poll_mask(
+    tNFA_DM_DISC_TECH_PROTO_MASK dm_disk_mask,
+    tNFA_TECHNOLOGY_MASK change_poll_mask) {
+  if (change_poll_mask & NFA_TECHNOLOGY_MASK_A) {
+    dm_disc_mask |= (NFA_DM_DISC_MASK_PA_T1T | NFA_DM_DISC_MASK_PA_T2T |
+                     NFA_DM_DISC_MASK_PA_ISO_DEP | NFA_DM_DISC_MASK_PA_NFC_DEP |
+                     NFA_DM_DISC_MASK_P_LEGACY);
+  }
+  if (change_poll_mask & NFA_TECHNOLOGY_MASK_B)
+    dm_disc_mask |= NFA_DM_DISC_MASK_PB_ISO_DEP;
+
+  if (change_poll_mask & NFA_TECHNOLOGY_MASK_F)
+    dm_disc_mask |= (NFA_DM_DISC_MASK_PF_T3T | NFA_DM_DISC_MASK_PF_NFC_DEP);
+
+  if (change_poll_mask & NFA_TECHNOLOGY_MASK_V)
+    dm_disc_mask |= NFA_DM_DISC_MASK_P_T5T;
+
+  if (change_poll_mask & NFA_TECHNOLOGY_MASK_B_PRIME)
+    dm_disc_mask |= NFA_DM_DISC_MASK_P_B_PRIME;
+
+  if (change_poll_mask & NFA_TECHNOLOGY_MASK_KOVIO)
+    dm_disc_mask |= NFA_DM_DISC_MASK_P_KOVIO;
+
+  if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
+    if ((change_poll_mask & NFA_TECHNOLOGY_MASK_A_ACTIVE) ||
+        (change_poll_mask & NFA_TECHNOLOGY_MASK_F_ACTIVE)) {
+      dm_disc_mask |= NFA_DM_DISC_MASK_PACM_NFC_DEP;
+    }
+  } else {
+    if (change_poll_mask & NFA_TECHNOLOGY_MASK_A_ACTIVE)
+      dm_disc_mask |= NFA_DM_DISC_MASK_PAA_NFC_DEP;
+
+    if (change_poll_mask & NFA_TECHNOLOGY_MASK_F_ACTIVE)
+      dm_disc_mask |= NFA_DM_DISC_MASK_PFA_NFC_DEP;
+  }
+
+  LOG(DEBUG) << StringPrintf("poll tech will set to 0x%x",
+                             (dm_disc_mask & NFA_DM_DISC_MASK_POLL));
+
+  return dm_disk_mask;
+}
+
 /*******************************************************************************
 **
 ** Function         nfa_dm_get_rf_discover_config
@@ -85,37 +166,29 @@ static uint8_t nfa_dm_get_rf_discover_config(
     dm_disc_mask &= NFA_DM_DISC_MASK_POLL;
   }
 
+  if (nfa_dm_cb.flags & NFA_DM_FLAGS_DEFAULT_TECH_CHANGED) {
+    if (nfa_dm_cb.flags & NFA_DM_FLAGS_LISTEN_TECH_CHANGED) {
+      dm_disc_listen_mask_dfl = nfa_dm_cb.change_listen_mask;
+    } else {
+      dm_disc_listen_mask_dfl = 0;
+    }
+    if (nfa_dm_cb.flags & NFA_DM_FLAGS_POLL_TECH_CHANGED) {
+      dm_disc_poll_mask_dfl = nfa_dm_cb.change_poll_mask;
+    } else {
+      dm_disc_poll_mask_dfl = 0;
+    }
+  }
+
   if (nfa_dm_cb.flags & NFA_DM_FLAGS_LISTEN_TECH_CHANGED) {
     /* Check listening tech */
     LOG(DEBUG) << StringPrintf("listen tech will be changed to 0x%x",
                                nfa_dm_cb.change_listen_mask);
     dm_disc_mask &= NFA_DM_DISC_MASK_POLL;
-    if (nfa_dm_cb.change_listen_mask & NFA_TECHNOLOGY_MASK_A) {
-      dm_disc_mask |=
-          (NFA_DM_DISC_MASK_LA_T1T | NFA_DM_DISC_MASK_LA_T2T |
-           NFA_DM_DISC_MASK_LA_ISO_DEP | NFA_DM_DISC_MASK_LA_NFC_DEP);
-    }
-    if (nfa_dm_cb.change_listen_mask & NFA_TECHNOLOGY_MASK_B)
-      dm_disc_mask |= NFA_DM_DISC_MASK_LB_ISO_DEP;
-
-    if (nfa_dm_cb.change_listen_mask & NFA_TECHNOLOGY_MASK_F)
-      dm_disc_mask |= (NFA_DM_DISC_MASK_LF_T3T | NFA_DM_DISC_MASK_LF_NFC_DEP);
-
-    if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
-      if ((nfa_dm_cb.change_listen_mask & NFA_TECHNOLOGY_MASK_A_ACTIVE) ||
-          (nfa_dm_cb.change_listen_mask & NFA_TECHNOLOGY_MASK_F_ACTIVE)) {
-        dm_disc_mask |= NFA_DM_DISC_MASK_LACM_NFC_DEP;
-      }
-    } else {
-      if (nfa_dm_cb.change_listen_mask & NFA_TECHNOLOGY_MASK_A_ACTIVE)
-        dm_disc_mask |= NFA_DM_DISC_MASK_LAA_NFC_DEP;
-
-      if (nfa_dm_cb.change_listen_mask & NFA_TECHNOLOGY_MASK_F_ACTIVE)
-        dm_disc_mask |= NFA_DM_DISC_MASK_LFA_NFC_DEP;
-    }
-
-    LOG(DEBUG) << StringPrintf("listen tech will set to 0x%x",
-                               (dm_disc_mask & NFA_DM_DISC_MASK_LISTEN));
+    dm_disc_mask =
+        nfa_dm_change_listen_mask(dm_disc_mask, nfa_dm_cb.change_listen_mask);
+  } else if (dm_disc_listen_mask_dfl != 0) {
+    dm_disc_mask =
+        nfa_dm_change_listen_mask(dm_disc_mask, dm_disc_listen_mask_dfl);
   }
 
   if (nfa_dm_cb.flags & NFA_DM_FLAGS_POLL_TECH_CHANGED) {
@@ -123,41 +196,10 @@ static uint8_t nfa_dm_get_rf_discover_config(
     LOG(DEBUG) << StringPrintf("poll tech will be changed to 0x%x",
                                nfa_dm_cb.change_poll_mask);
     dm_disc_mask &= NFA_DM_DISC_MASK_LISTEN;
-    if (nfa_dm_cb.change_poll_mask & NFA_TECHNOLOGY_MASK_A) {
-      dm_disc_mask |= (NFA_DM_DISC_MASK_PA_T1T | NFA_DM_DISC_MASK_PA_T2T |
-                       NFA_DM_DISC_MASK_PA_ISO_DEP |
-                       NFA_DM_DISC_MASK_PA_NFC_DEP | NFA_DM_DISC_MASK_P_LEGACY);
-    }
-    if (nfa_dm_cb.change_poll_mask & NFA_TECHNOLOGY_MASK_B)
-      dm_disc_mask |= NFA_DM_DISC_MASK_PB_ISO_DEP;
-
-    if (nfa_dm_cb.change_poll_mask & NFA_TECHNOLOGY_MASK_F)
-      dm_disc_mask |= (NFA_DM_DISC_MASK_PF_T3T | NFA_DM_DISC_MASK_PF_NFC_DEP);
-
-    if (nfa_dm_cb.change_poll_mask & NFA_TECHNOLOGY_MASK_V)
-      dm_disc_mask |= NFA_DM_DISC_MASK_P_T5T;
-
-    if (nfa_dm_cb.change_poll_mask & NFA_TECHNOLOGY_MASK_B_PRIME)
-      dm_disc_mask |= NFA_DM_DISC_MASK_P_B_PRIME;
-
-    if (nfa_dm_cb.change_poll_mask & NFA_TECHNOLOGY_MASK_KOVIO)
-      dm_disc_mask |= NFA_DM_DISC_MASK_P_KOVIO;
-
-    if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
-      if ((nfa_dm_cb.change_poll_mask & NFA_TECHNOLOGY_MASK_A_ACTIVE) ||
-          (nfa_dm_cb.change_poll_mask & NFA_TECHNOLOGY_MASK_F_ACTIVE)) {
-        dm_disc_mask |= NFA_DM_DISC_MASK_PACM_NFC_DEP;
-      }
-    } else {
-      if (nfa_dm_cb.change_poll_mask & NFA_TECHNOLOGY_MASK_A_ACTIVE)
-        dm_disc_mask |= NFA_DM_DISC_MASK_PAA_NFC_DEP;
-
-      if (nfa_dm_cb.change_poll_mask & NFA_TECHNOLOGY_MASK_F_ACTIVE)
-        dm_disc_mask |= NFA_DM_DISC_MASK_PFA_NFC_DEP;
-    }
-
-    LOG(DEBUG) << StringPrintf("poll tech will set to 0x%x",
-                               (dm_disc_mask & NFA_DM_DISC_MASK_POLL));
+    dm_disc_mask =
+        nfa_dm_change_poll_mask(dm_disc_mask, nfa_dm_cb.change_poll_mask);
+  } else if (dm_disc_poll_mask_dfl != 0) {
+    dm_disc_mask = nfa_dm_change_poll_mask(dm_disc_mask, dm_disc_poll_mask_dfl);
   }
 
   /* Check polling A */
