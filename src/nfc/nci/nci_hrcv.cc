@@ -22,13 +22,10 @@
  *  commands.
  *
  ******************************************************************************/
-#include <string.h>
-
+#include <android-base/logging.h>
 #include <android-base/stringprintf.h>
-#include <base/logging.h>
 #include <log/log.h>
-
-#include "nfc_target.h"
+#include <string.h>
 
 #include "bt_types.h"
 #include "gki.h"
@@ -36,10 +33,9 @@
 #include "nci_hmsgs.h"
 #include "nfc_api.h"
 #include "nfc_int.h"
+#include "nfc_target.h"
 
 using android::base::StringPrintf;
-
-extern bool nfc_debug_enabled;
 
 /*******************************************************************************
 **
@@ -60,8 +56,7 @@ bool nci_proc_core_rsp(NFC_HDR* p_msg) {
   p = (uint8_t*)(p_msg + 1) + p_msg->offset;
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nci_proc_core_rsp opcode:0x%x", op_code);
+  LOG(DEBUG) << StringPrintf("nci_proc_core_rsp opcode:0x%x", op_code);
   len = *pp++;
 
   /* process the message based on the opcode and message type */
@@ -125,8 +120,7 @@ void nci_proc_core_ntf(NFC_HDR* p_msg) {
     return;
   }
   NCI_MSG_PRS_HDR1(pp, op_code);
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nci_proc_core_ntf opcode:0x%x", op_code);
+  LOG(DEBUG) << StringPrintf("nci_proc_core_ntf opcode:0x%x", op_code);
   pp++;
   len -= NCI_MSG_HDR_SIZE;
   /* process the message based on the opcode and message type */
@@ -179,7 +173,6 @@ void nci_proc_rf_management_rsp(NFC_HDR* p_msg) {
 
   switch (op_code) {
     case NCI_MSG_RF_DISCOVER:
-      nfa_dm_p2p_prio_logic(op_code, pp, NFA_DM_P2P_PRIO_RSP);
       nfc_ncif_rf_management_status(NFC_START_DEVT, *pp);
       break;
 
@@ -196,9 +189,6 @@ void nci_proc_rf_management_rsp(NFC_HDR* p_msg) {
       break;
 
     case NCI_MSG_RF_DEACTIVATE:
-      if (nfa_dm_p2p_prio_logic(op_code, pp, NFA_DM_P2P_PRIO_RSP) == false) {
-        return;
-      }
       nfc_ncif_proc_deactivate(*pp, *p_old, false);
       break;
 
@@ -223,6 +213,11 @@ void nci_proc_rf_management_rsp(NFC_HDR* p_msg) {
     case NCI_MSG_RF_ISO_DEP_NAK_PRESENCE:
       nfc_ncif_proc_isodep_nak_presence_check_status(*pp, false);
       break;
+
+    case NCI_MSG_WPT_START:
+      nfc_ncif_rf_management_status(NFC_WPT_START_DEVT, *pp);
+      break;
+
     default:
       LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
       break;
@@ -259,19 +254,13 @@ void nci_proc_rf_management_ntf(NFC_HDR* p_msg) {
         android_errorWriteLog(0x534e4554, "164440989");
         return;
       }
-      if (nfa_dm_p2p_prio_logic(op_code, pp, NFA_DM_P2P_PRIO_NTF) == false) {
-        return;
-      }
-      if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
+      if (NFC_GetNCIVersion() >= NCI_VERSION_2_0) {
         nfc_cb.deact_reason = *(pp + 1);
       }
       nfc_ncif_proc_deactivate(NFC_STATUS_OK, *pp, true);
       break;
 
     case NCI_MSG_RF_INTF_ACTIVATED:
-      if (nfa_dm_p2p_prio_logic(op_code, pp, NFA_DM_P2P_PRIO_NTF) == false) {
-        return;
-      }
       nfc_ncif_proc_activate(pp, len);
       break;
 
@@ -310,6 +299,11 @@ void nci_proc_rf_management_ntf(NFC_HDR* p_msg) {
       }
       nfc_ncif_proc_isodep_nak_presence_check_status(*pp, true);
       break;
+
+    case NCI_MSG_WPT_START:
+      nfc_ncif_proc_charging_status(pp, len);
+      break;
+
     default:
       LOG(ERROR) << StringPrintf("unknown opcode:0x%x", op_code);
       break;
@@ -340,8 +334,7 @@ void nci_proc_ee_management_rsp(NFC_HDR* p_msg) {
   p = (uint8_t*)(p_msg + 1) + p_msg->offset;
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nci_proc_ee_management_rsp opcode:0x%x", op_code);
+  LOG(DEBUG) << StringPrintf("nci_proc_ee_management_rsp opcode:0x%x", op_code);
   len = p_msg->len - NCI_MSG_HDR_SIZE;
   /* Use pmsg->len in boundary checks, skip *pp */
   pp++;
@@ -370,7 +363,7 @@ void nci_proc_ee_management_rsp(NFC_HDR* p_msg) {
       }
       nfc_response.mode_set.nfcee_id = *p_old++;
       nfc_response.mode_set.mode = *p_old++;
-      if (nfc_cb.nci_version != NCI_VERSION_2_0 || *pp != NCI_STATUS_OK) {
+      if (nfc_cb.nci_version < NCI_VERSION_2_0 || *pp != NCI_STATUS_OK) {
         nfc_cb.flags &= ~NFC_FL_WAIT_MODE_SET_NTF;
         event = NFC_NFCEE_MODE_SET_REVT;
       } else {
@@ -421,8 +414,7 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
   p = (uint8_t*)(p_msg + 1) + p_msg->offset;
   pp = p + 1;
   NCI_MSG_PRS_HDR1(pp, op_code);
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nci_proc_ee_management_ntf opcode:0x%x", op_code);
+  LOG(DEBUG) << StringPrintf("nci_proc_ee_management_ntf opcode:0x%x", op_code);
   len = *pp++;
 
   switch (op_code) {
@@ -455,7 +447,7 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
 
       pp = p + yy;
       nfc_response.nfcee_info.num_tlvs = *pp++;
-      DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+      LOG(DEBUG) << StringPrintf(
           "nfcee_id: 0x%x num_interface:0x%x/0x%x, num_tlvs:0x%x",
           nfc_response.nfcee_info.nfcee_id,
           nfc_response.nfcee_info.num_interface, yy,
@@ -479,8 +471,8 @@ void nci_proc_ee_management_ntf(NFC_HDR* p_msg) {
         } else {
           len -= yy + 2;
         }
-        DLOG_IF(INFO, nfc_debug_enabled)
-            << StringPrintf("tag:0x%x, len:0x%x", p_tlv->tag, p_tlv->len);
+        LOG(DEBUG) << StringPrintf("tag:0x%x, len:0x%x", p_tlv->tag,
+                                   p_tlv->len);
         if (p_tlv->len > NFC_MAX_EE_INFO) p_tlv->len = NFC_MAX_EE_INFO;
         STREAM_TO_ARRAY(p_tlv->info, pp, p_tlv->len);
       }

@@ -1,4 +1,5 @@
 package {
+    default_team: "trendy_team_fwk_nfc",
     // See: http://go/android-license-faq
     // A large-scale-change added 'default_applicable_licenses' to import
     // all of the 'license_kinds' from "system_nfc_license"
@@ -7,7 +8,7 @@ package {
     default_applicable_licenses: ["system_nfc_license"],
 }
 
-cc_library_shared {
+cc_library {
     arch: {
         arm: {
             instruction_set: "arm",
@@ -19,22 +20,23 @@ cc_library_shared {
         "liblog",
         "libdl",
         "libz",
-        "libchrome",
         "libbase",
-        "libstatslog_nfc",
-
         // Treble configuration
         "libhidlbase",
         "libutils",
+        "libbinder_ndk",
+        "libstatssocket",
+        "server_configurable_flags",
+    ],
+    static_libs: [
         "android.hardware.nfc@1.0",
         "android.hardware.nfc@1.1",
         "android.hardware.nfc@1.2",
         // Add for AIDL
         "android.hardware.nfc-V1-ndk",
-        "libbinder_ndk",
-    ],
-    static_libs: [
         "libnfcutils",
+        "libstatslog_nfc",
+        "libnfc-nci_flags",
     ],
     cflags: [
         "-DDYN_ALLOC=1",
@@ -56,10 +58,9 @@ cc_library_shared {
         "nfa/dm/*.cc",
         "nfa/ee/*.cc",
         "nfa/hci/*.cc",
-        "nfa/p2p/*.cc",
         "nfa/rw/*.cc",
         "nfa/sys/*.cc",
-        "nfc/llcp/*.cc",
+        "nfa/wlc/*.cc",
         "nfc/nci/*.cc",
         "nfc/ndef/*.cc",
         "nfc/nfc/*.cc",
@@ -67,11 +68,6 @@ cc_library_shared {
         "adaptation/*.cc",
         "gki/common/*.cc",
         "gki/ulinux/*.cc",
-    ],
-    required: [
-        // Provide a default libnfc-nci.conf in /system/etc for devices that
-        // does not ship one in /product
-        "libnfc-nci.conf-default",
     ],
     product_variables: {
         debuggable: {
@@ -85,7 +81,11 @@ cc_library_shared {
         integer_overflow: true,
         scs: true,
     },
-
+    stl: "libc++_static",
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.nfcservices",
+    ],
 }
 
 cc_defaults {
@@ -97,7 +97,9 @@ cc_defaults {
         "libcutils",
         "liblog",
         "libbase",
-        "libchrome",
+    ],
+    shared_libs: [
+        "libnfc-nci_flags",
     ],
     cflags: [
         "-DBUILDCFG=1",
@@ -111,7 +113,7 @@ cc_defaults {
     product_variables: {
         debuggable: {
             cflags: [
-                "-DDCHECK_ALWAYS_ON"
+                "-DDCHECK_ALWAYS_ON",
             ],
         },
     },
@@ -124,7 +126,7 @@ cc_defaults {
         "fuzzers/inc",
     ],
     fuzz_config: {
-       cc: [
+        cc: [
             "android-security-assurance-redteam@google.com",
             "zachoverflow@google.com",
             "jackcwyu@google.com",
@@ -141,23 +143,22 @@ cc_library {
     generated_headers: ["statslog_nfc.h"],
     export_generated_headers: ["statslog_nfc.h"],
     shared_libs: [
-        "libcutils",
+        "libstatssocket",
     ],
     target: {
-        android: {
-            shared_libs: [
-                "libstatssocket",
-            ],
-        },
         host: {
             static_libs: [
-                "libstatssocket",
+                "libbase",
             ],
         },
         darwin: {
             enabled: false,
         },
     },
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.nfcservices",
+    ],
 }
 
 genrule {
@@ -182,7 +183,7 @@ cc_fuzz {
     name: "nfc_nci_fuzzer",
     defaults: ["nfc_fuzzer_defaults"],
     fuzzing_frameworks: {
-      afl: false,
+        afl: false,
     },
     srcs: [
         "nfc/nci/*.cc",
@@ -195,14 +196,14 @@ cc_fuzz {
     ],
     shared_libs: [
         "libstatslog_nfc",
-    ]
+    ],
 }
 
 cc_fuzz {
     name: "nfc_rw_fuzzer",
     defaults: ["nfc_fuzzer_defaults"],
     fuzzing_frameworks: {
-      afl: false,
+        afl: false,
     },
     srcs: [
         "nfc/tags/rw_*.cc",
@@ -218,7 +219,7 @@ cc_fuzz {
     name: "nfc_ce_fuzzer",
     defaults: ["nfc_fuzzer_defaults"],
     fuzzing_frameworks: {
-      afl: false,
+        afl: false,
     },
     srcs: [
         "nfc/tags/ce_*.cc",
@@ -234,7 +235,7 @@ cc_fuzz {
     name: "nfc_ndef_fuzzer",
     defaults: ["nfc_fuzzer_defaults"],
     fuzzing_frameworks: {
-      afl: false,
+        afl: false,
     },
     srcs: [
         "nfa/dm/nfa_dm_ndef.cc",
@@ -243,21 +244,6 @@ cc_fuzz {
         "gki/ulinux/*.cc",
         "fuzzers/*.cc",
         "fuzzers/ndef/*.cc",
-    ],
-}
-
-cc_fuzz {
-    name: "nfc_llcp_fuzzer",
-    defaults: ["nfc_fuzzer_defaults"],
-    fuzzing_frameworks: {
-      afl: false,
-    },
-    srcs: [
-        "nfc/llcp/*.cc",
-        "gki/common/*.cc",
-        "gki/ulinux/*.cc",
-        "fuzzers/*.cc",
-        "fuzzers/llcp/*.cc",
     ],
 }
 
@@ -277,7 +263,7 @@ cc_fuzz {
     name: "nfc_integration_fuzzer",
     defaults: ["nfc_fuzzer_defaults"],
     fuzzing_frameworks: {
-      afl: false,
+        afl: false,
     },
     srcs: [
         "adaptation/debug_nfcsnoop.cc",
@@ -289,10 +275,9 @@ cc_fuzz {
         "nfa/dm/*.cc",
         "nfa/ee/*.cc",
         "nfa/hci/*.cc",
-        "nfa/p2p/*.cc",
         "nfa/rw/*.cc",
         "nfa/sys/*.cc",
-        "nfc/llcp/*.cc",
+        "nfa/wlc/*.cc",
         "nfc/nci/*.cc",
         "nfc/ndef/*.cc",
         "nfc/nfc/*.cc",
@@ -314,48 +299,43 @@ cc_fuzz {
         "libprotobuf-cpp-full",
         "libstatslog_nfc",
         "libz",
-    ]
+    ],
 }
 
 genrule {
     name: "NfcGeneratedPackets_rust",
-    tools: [
-        "bluetooth_packetgen",
-    ],
-    cmd: "$(location bluetooth_packetgen) --include=system/nfc/src --out=$(genDir) $(in) --rust",
-    srcs: [
-        "nci_packets.pdl",
-    ],
-    out: [
-        "nci_packets.rs",
-    ],
+    defaults: ["pdl_rust_generator_defaults"],
+    srcs: ["nci_packets.pdl"],
+    out: ["nci_packets.rs"],
 }
 
 rust_library {
     name: "libnfc_packets",
     defaults: ["nfc_rust_defaults"],
     crate_name: "nfc_packets",
-    srcs: ["rust/packets/lib.rs", ":NfcGeneratedPackets_rust"],
+    srcs: [
+        "rust/packets/lib.rs",
+        ":NfcGeneratedPackets_rust",
+    ],
     host_supported: true,
-    proc_macros: ["libnum_derive"],
     rustlibs: [
         "libbytes",
-        "libnum_traits",
-        "libthiserror",
         "liblog_rust",
+        "libpdl_runtime",
     ],
 }
 
 rust_test_host {
     name: "libnfc_packets_test",
     defaults: ["nfc_rust_defaults"],
-    srcs: ["rust/packets/lib.rs", ":NfcGeneratedPackets_rust"],
+    srcs: [
+        "rust/packets/lib.rs",
+        ":NfcGeneratedPackets_rust",
+    ],
     test_suites: ["general-tests"],
-    proc_macros: ["libnum_derive"],
     rustlibs: [
         "libbytes",
-        "libnum_traits",
-        "libthiserror",
         "liblog_rust",
+        "libpdl_runtime",
     ],
 }

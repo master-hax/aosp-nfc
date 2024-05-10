@@ -24,10 +24,11 @@
 #ifndef NFC_NCI_HMSGS_H
 #define NFC_NCI_HMSGS_H
 
-#include "nci_defs.h"
-#include "nfc_types.h"
-
 #include <stdbool.h>
+
+#include "nci_defs.h"
+#include "nfc_target.h"
+#include "nfc_types.h"
 
 bool nci_proc_core_rsp(NFC_HDR* p_msg);
 void nci_proc_rf_management_rsp(NFC_HDR* p_msg);
@@ -67,5 +68,7 @@ uint8_t nci_snd_set_routing_cmd(bool more, uint8_t num_tlv, uint8_t tlv_size,
 uint8_t nci_snd_get_routing_cmd(void);
 uint8_t nci_snd_nfcee_power_link_control(uint8_t nfcee_id, uint8_t pl_config);
 #endif
+
+uint8_t nci_snd_rf_wpt_control_cmd(uint8_t* p_param_tlvs, uint8_t tlv_size);
 
 #endif /* NFC_NCI_MSGS_H */

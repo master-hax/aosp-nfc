@@ -22,8 +22,8 @@
  *  Reader/Writer mode.
  *
  ******************************************************************************/
+#include <android-base/logging.h>
 #include <android-base/stringprintf.h>
-#include <base/logging.h>
 #include <log/log.h>
 #include <string.h>
 
@@ -34,8 +34,6 @@
 #include "rw_int.h"
 
 using android::base::StringPrintf;
-
-extern bool nfc_debug_enabled;
 
 #if (RW_NDEF_INCLUDED == TRUE)
 
@@ -58,7 +56,6 @@ static tNFC_STATUS rw_t2t_read_ndef_last_block(void);
 static void rw_t2t_update_attributes(void);
 static void rw_t2t_update_lock_attributes(void);
 static bool rw_t2t_is_lock_res_byte(uint16_t index);
-static bool rw_t2t_is_read_only_byte(uint16_t index);
 static tNFC_STATUS rw_t2t_write_ndef_first_block(uint16_t msg_len,
                                                  bool b_update_len);
 static tNFC_STATUS rw_t2t_write_ndef_next_block(uint16_t block,
@@ -768,17 +765,8 @@ static void rw_t2t_handle_tlv_detect_rsp(uint8_t* p_data) {
     } else if (tlvtype == TAG_NDEF_TLV) {
       rw_t2t_extract_default_locks_info();
 
-      if (failed) {
-        rw_t2t_ntf_tlv_detect_complete(NFC_STATUS_FAILED);
-      } else {
-        /* NDEF present,Send command to read the dynamic lock bytes */
-        status = rw_t2t_read_locks();
-        if (status != NFC_STATUS_CONTINUE) {
-          /* If unable to read a lock/all locks read, notify upper layer */
-          rw_t2t_update_lock_attributes();
-          rw_t2t_ntf_tlv_detect_complete(status);
-        }
-      }
+      status = failed ? NFC_STATUS_FAILED : NFC_STATUS_OK;
+      rw_t2t_ntf_tlv_detect_complete(status);
     } else {
       /* Notify Memory/ Proprietary tlv detect result */
       status = failed ? NFC_STATUS_FAILED : NFC_STATUS_OK;
@@ -1388,8 +1376,7 @@ static uint16_t rw_t2t_get_ndef_max_size(void) {
   tRW_T2T_CB* p_t2t = &rw_cb.tcb.t2t;
   uint16_t tag_size = (p_t2t->tag_hdr[T2T_CC2_TMS_BYTE] * T2T_TMS_TAG_FACTOR);
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s - T2T_Area size: %d", __func__, tag_size);
+  LOG(DEBUG) << StringPrintf("%s - T2T_Area size: %d", __func__, tag_size);
 
   /* Add header to compute max T2T NDEF data offset */
   tag_size += (T2T_FIRST_DATA_BLOCK * T2T_BLOCK_LEN);
@@ -1403,16 +1390,14 @@ static uint16_t rw_t2t_get_ndef_max_size(void) {
     /* Tag not formated, assume static tag */
     p_t2t->max_ndef_msg_len = T2T_STATIC_SIZE - T2T_HEADER_SIZE -
                               T2T_TLV_TYPE_LEN - T2T_SHORT_NDEF_LEN_FIELD_LEN;
-    DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("%s - Tag assumed static : max_ndef_msg_len=%d",
-                        __func__, p_t2t->max_ndef_msg_len);
+    LOG(DEBUG) << StringPrintf("%s - Tag assumed static : max_ndef_msg_len=%d",
+                               __func__, p_t2t->max_ndef_msg_len);
     return p_t2t->max_ndef_msg_len;
   }
 
   /* Starting from NDEF Message offset find the first locked data byte */
   while (offset < tag_size) {
     if (rw_t2t_is_lock_res_byte((uint16_t)offset) == false) {
-      if (rw_t2t_is_read_only_byte((uint16_t)offset) == true) break;
       p_t2t->max_ndef_msg_len++;
     }
     offset++;
@@ -1426,9 +1411,8 @@ static uint16_t rw_t2t_get_ndef_max_size(void) {
         (T2T_LONG_NDEF_LEN_FIELD_LEN - T2T_SHORT_NDEF_LEN_FIELD_LEN);
   }
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s - Max NDEF data storage: max_ndef_msg_len=%d",
-                      __func__, p_t2t->max_ndef_msg_len);
+  LOG(DEBUG) << StringPrintf("%s - Max NDEF data storage: max_ndef_msg_len=%d",
+                             __func__, p_t2t->max_ndef_msg_len);
 
   return p_t2t->max_ndef_msg_len;
 }
@@ -1453,7 +1437,7 @@ tNFC_STATUS rw_t2t_add_terminator_tlv(void) {
   block = p_t2t->terminator_byte_index / T2T_BLOCK_LEN;
 
   if (block == p_t2t->ndef_last_block_num) {
-    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+    LOG(DEBUG) << StringPrintf(
         "%s - Terminator TLV in same block %d as last NDEF"
         " bytes",
         __func__, block);
@@ -1475,7 +1459,7 @@ tNFC_STATUS rw_t2t_add_terminator_tlv(void) {
   } else if (p_t2t->terminator_byte_index != 0) {
     /* If there is space for Terminator TLV and if it will reside outside
      * NDEF Final block */
-    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+    LOG(DEBUG) << StringPrintf(
         "%s - Terminator TLV in block %d following the last NDEF block",
         __func__, block);
     p_t2t->terminator_tlv_block[0] = TAG_TERMINATOR_TLV;
@@ -2380,48 +2364,6 @@ static bool rw_t2t_is_lock_res_byte(uint16_t index) {
 
 /*******************************************************************************
 **
-** Function         rw_t2t_is_read_only_byte
-**
-** Description      This function will check if the tag index passed as
-**                  argument is a locked and return
-**                  TRUE or FALSE
-**
-** Parameters:      index, the index of the byte in the tag
-**
-**
-** Returns          TRUE, if the specified index in the tag is a locked or
-**                        reserved or otp byte
-**                  FALSE, otherwise
-**
-*******************************************************************************/
-static bool rw_t2t_is_read_only_byte(uint16_t index) {
-  tRW_T2T_CB* p_t2t = &rw_cb.tcb.t2t;
-
-  p_t2t->segment = (uint8_t)(index / RW_T2T_SEGMENT_BYTES);
-
-  if (p_t2t->lock_attr_seg != p_t2t->segment) {
-    /* Update lock attributes for the current segment */
-    rw_t2t_update_lock_attributes();
-    p_t2t->lock_attr_seg = p_t2t->segment;
-  }
-
-  index = index % RW_T2T_SEGMENT_BYTES;
-  /* Every bit in p_t2t->lock_attr indicates one specific byte of the tag is a
-   * read only byte or read write byte
-   * So, each array element in p_t2t->lock_attr covers two blocks of the tag as
-   * T2 block size is 4 and array element size is 8
-   * Find the block and offset for the index (passed as argument) and Check if
-   * the offset bit in
-   * p_t2t->lock_attr[block/2] is set or not. If the bit is set then it is a
-   * read only byte, otherwise read write byte */
-
-  return ((p_t2t->lock_attr[index / 8] & rw_t2t_mask_bits[index % 8]) == 0)
-             ? false
-             : true;
-}
-
-/*******************************************************************************
-**
 ** Function         rw_t2t_set_dynamic_lock_bits
 **
 ** Description      This function will set dynamic lock bits as part of
@@ -2834,15 +2776,15 @@ tNFC_STATUS RW_T2tLocateTlv(uint8_t tlv_type) {
 
   if ((tlv_type != TAG_LOCK_CTRL_TLV) && (tlv_type != TAG_MEM_CTRL_TLV) &&
       (tlv_type != TAG_NDEF_TLV) && (tlv_type != TAG_PROPRIETARY_TLV)) {
-    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-        "RW_T2tLocateTlv - Cannot search TLV: 0x%02x", tlv_type);
+    LOG(DEBUG) << StringPrintf("RW_T2tLocateTlv - Cannot search TLV: 0x%02x",
+                               tlv_type);
     return (NFC_STATUS_FAILED);
   }
 
   if ((tlv_type == TAG_LOCK_CTRL_TLV) && (p_t2t->b_read_hdr) &&
       (p_t2t->tag_hdr[T2T_CC2_TMS_BYTE] == T2T_CC2_TMS_STATIC)) {
     p_t2t->b_read_hdr = false;
-    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+    LOG(DEBUG) << StringPrintf(
         "RW_T2tLocateTlv - No Lock tlv in static structure tag, CC[0]: 0x%02x",
         p_t2t->tag_hdr[T2T_CC2_TMS_BYTE]);
     return (NFC_STATUS_FAILED);

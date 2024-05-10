@@ -59,6 +59,7 @@
 #define NFA_STATUS_INVALID_PARAM NCI_STATUS_INVALID_PARAM
 /* Already started      */
 #define NFA_STATUS_ALREADY_STARTED NCI_STATUS_ALREADY_STARTED
+#define NFA_STATUS_RF_UNEXPECTED_DATA NCI_STATUS_RF_UNEXPECTED_DATA
 /* RF frame error       */
 #define NFA_STATUS_RF_FRAME_CORRUPTED NCI_STATUS_RF_FRAME_CORRUPTED
 /* RF protocol error    */
@@ -1370,5 +1371,39 @@ extern uint8_t NFA_GetNCIVersion();
 **                  NFA_STATUS_FAILED otherwise
 *******************************************************************************/
 extern tNFA_STATUS NFA_SetPowerSubStateForScreenState(uint8_t ScreenState);
+
+/*******************************************************************************
+**
+** Function         NFA_ChangeDiscoveryTech
+**
+** Description      Change RF discoverying technologies specified by
+**                  pollTech and listenTech.
+**
+**                  NFA_DM_API_CHANGE_DISCOVERY_TECH_EVT will be returned.
+**
+**                  If pollTech/listenTech are set to 0xFF, it revert to
+**                  the polling/listening technologies
+**                  before NFA_ChangeDiscoveryTech() was called.
+**
+**                  is_revert_poll : TRUE if reverting RF polling tech
+**                               before calling NFA_StopRfDiscovery
+**                               FALSE if changing RF polling tech according
+**                               to pollTech
+**                  is_revert_listen : TRUE if reverting RF listening tech
+**                               before calling NFA_StopRfDiscovery
+**                               FALSE if changing RF listening tech according
+**                               to listenTech
+**
+** Note:            If RF discovery is started,
+**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT
+**                  should happen before calling this function
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**
+*******************************************************************************/
+tNFA_STATUS NFA_ChangeDiscoveryTech(tNFA_TECHNOLOGY_MASK pollTech,
+                                    tNFA_TECHNOLOGY_MASK listenTech,
+                                    bool is_revert_poll, bool is_revert_listen);
 
 #endif /* NFA_API_H */

@@ -21,19 +21,17 @@
  *  NFA interface for device management
  *
  ******************************************************************************/
-#include <string.h>
-
+#include <android-base/logging.h>
 #include <android-base/stringprintf.h>
-#include <base/logging.h>
 #include <log/log.h>
+#include <string.h>
 
 #include "ndef_utils.h"
 #include "nfa_api.h"
 #include "nfa_ce_int.h"
+#include "nfa_wlc_int.h"
 
 using android::base::StringPrintf;
-
-extern bool nfc_debug_enabled;
 
 /*****************************************************************************
 **  Constants
@@ -57,11 +55,9 @@ extern bool nfc_debug_enabled;
 **
 *******************************************************************************/
 void NFA_Init(tHAL_NFC_ENTRY* p_hal_entry_tbl) {
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
   nfa_sys_init();
   nfa_dm_init();
-  nfa_p2p_init();
-  nfa_snep_init(false);
   nfa_rw_init();
   nfa_ce_init();
   nfa_ee_init();
@@ -69,6 +65,7 @@ void NFA_Init(tHAL_NFC_ENTRY* p_hal_entry_tbl) {
     nfa_dm_cb.get_max_ee = p_hal_entry_tbl->get_max_ee;
     nfa_hci_init();
   }
+  nfa_wlc_init();
 
   /* Initialize NFC module */
   NFC_Init(p_hal_entry_tbl);
@@ -99,7 +96,7 @@ tNFA_STATUS NFA_Enable(tNFA_DM_CBACK* p_dm_cback,
                        tNFA_CONN_CBACK* p_conn_cback) {
   tNFA_DM_API_ENABLE* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   /* Validate parameters */
   if ((!p_dm_cback) || (!p_conn_cback)) {
@@ -144,8 +141,7 @@ tNFA_STATUS NFA_Enable(tNFA_DM_CBACK* p_dm_cback,
 tNFA_STATUS NFA_Disable(bool graceful) {
   tNFA_DM_API_DISABLE* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("NFA_Disable (graceful=%i)", graceful);
+  LOG(DEBUG) << StringPrintf("NFA_Disable (graceful=%i)", graceful);
 
   p_msg = (tNFA_DM_API_DISABLE*)GKI_getbuf(sizeof(tNFA_DM_API_DISABLE));
   if (p_msg != nullptr) {
@@ -184,8 +180,7 @@ uint8_t NFA_GetNCIVersion() { return NFC_GetNCIVersion(); }
 **
 *******************************************************************************/
 tNFA_STATUS NFA_SetPowerSubStateForScreenState(uint8_t screenState) {
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s: state:0x%X", __func__, screenState);
+  LOG(DEBUG) << StringPrintf("%s: state:0x%X", __func__, screenState);
 
   uint8_t nci_scren_state = 0xFF;
   uint16_t buf_size = sizeof(tNFA_DM_API_SET_POWER_SUB_STATE);
@@ -209,8 +204,7 @@ tNFA_STATUS NFA_SetPowerSubStateForScreenState(uint8_t screenState) {
         break;
 
       default:
-        DLOG_IF(INFO, nfc_debug_enabled)
-            << StringPrintf("%s, unknown screen state", __func__);
+        LOG(DEBUG) << StringPrintf("%s, unknown screen state", __func__);
         break;
     }
 
@@ -242,7 +236,7 @@ tNFA_STATUS NFA_SetPowerSubStateForScreenState(uint8_t screenState) {
 tNFA_STATUS NFA_SetConfig(tNFA_PMID param_id, uint8_t length, uint8_t* p_data) {
   tNFA_DM_API_SET_CONFIG* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("param_id:0x%X", param_id);
+  LOG(DEBUG) << StringPrintf("param_id:0x%X", param_id);
 
   p_msg = (tNFA_DM_API_SET_CONFIG*)GKI_getbuf(
       (uint16_t)(sizeof(tNFA_DM_API_SET_CONFIG) + length));
@@ -279,7 +273,7 @@ tNFA_STATUS NFA_SetConfig(tNFA_PMID param_id, uint8_t length, uint8_t* p_data) {
 tNFA_STATUS NFA_GetConfig(uint8_t num_ids, tNFA_PMID* p_param_ids) {
   tNFA_DM_API_GET_CONFIG* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("num_ids: %i", num_ids);
+  LOG(DEBUG) << StringPrintf("num_ids: %i", num_ids);
 
   p_msg = (tNFA_DM_API_GET_CONFIG*)GKI_getbuf(
       (uint16_t)(sizeof(tNFA_DM_API_GET_CONFIG) + num_ids));
@@ -341,7 +335,7 @@ tNFA_STATUS NFA_RequestExclusiveRfControl(tNFA_TECHNOLOGY_MASK poll_mask,
                                           tNFA_NDEF_CBACK* p_ndef_cback) {
   tNFA_DM_API_REQ_EXCL_RF_CTRL* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("poll_mask=0x%x", poll_mask);
+  LOG(DEBUG) << StringPrintf("poll_mask=0x%x", poll_mask);
 
   if (!p_conn_cback) {
     LOG(ERROR) << StringPrintf("error null callback");
@@ -383,7 +377,7 @@ tNFA_STATUS NFA_RequestExclusiveRfControl(tNFA_TECHNOLOGY_MASK poll_mask,
 tNFA_STATUS NFA_ReleaseExclusiveRfControl(void) {
   NFC_HDR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   if (!nfa_dm_cb.p_excl_conn_cback) {
     LOG(ERROR) << StringPrintf(
@@ -440,7 +434,7 @@ tNFA_STATUS NFA_ReleaseExclusiveRfControl(void) {
 tNFA_STATUS NFA_EnablePolling(tNFA_TECHNOLOGY_MASK poll_mask) {
   tNFA_DM_API_ENABLE_POLL* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("0x%X", poll_mask);
+  LOG(DEBUG) << StringPrintf("0x%X", poll_mask);
 
   p_msg = (tNFA_DM_API_ENABLE_POLL*)GKI_getbuf(sizeof(tNFA_DM_API_ENABLE_POLL));
   if (p_msg != nullptr) {
@@ -474,7 +468,7 @@ tNFA_STATUS NFA_EnablePolling(tNFA_TECHNOLOGY_MASK poll_mask) {
 tNFA_STATUS NFA_DisablePolling(void) {
   NFC_HDR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
   if (p_msg != nullptr) {
@@ -514,7 +508,7 @@ tNFA_STATUS NFA_DisablePolling(void) {
 tNFA_STATUS NFA_EnableListening(void) {
   NFC_HDR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
   if (p_msg != nullptr) {
@@ -548,120 +542,11 @@ tNFA_STATUS NFA_EnableListening(void) {
 tNFA_STATUS NFA_DisableListening(void) {
   NFC_HDR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
   if (p_msg != nullptr) {
     p_msg->event = NFA_DM_API_DISABLE_LISTENING_EVT;
-
-    nfa_sys_sendmsg(p_msg);
-
-    return (NFA_STATUS_OK);
-  }
-
-  return (NFA_STATUS_FAILED);
-}
-
-/*******************************************************************************
-**
-** Function         NFA_PauseP2p
-**
-** Description      Pause P2P services.
-**                  NFA_P2P_PAUSED_EVT will be returned after P2P services are
-**                  disabled.
-**
-**                  The P2P services enabled by NFA_P2p* API functions are not
-**                  available. NFA_ResumeP2p() is called to resume the P2P
-**                  services.
-**
-** Note:            If RF discovery is started,
-**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
-**                  happen before calling this function
-**
-** Returns          NFA_STATUS_OK if successfully initiated
-**                  NFA_STATUS_FAILED otherwise
-**
-*******************************************************************************/
-tNFA_STATUS NFA_PauseP2p(void) {
-  NFC_HDR* p_msg;
-
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
-
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
-  if (p_msg != nullptr) {
-    p_msg->event = NFA_DM_API_PAUSE_P2P_EVT;
-
-    nfa_sys_sendmsg(p_msg);
-
-    return (NFA_STATUS_OK);
-  }
-
-  return (NFA_STATUS_FAILED);
-}
-
-/*******************************************************************************
-**
-** Function         NFA_ResumeP2p
-**
-** Description      Resume P2P services.
-**                  NFA_P2P_RESUMED_EVT will be returned after P2P services are.
-**                  enables again.
-**
-** Note:            If RF discovery is started,
-**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
-**                  happen before calling this function
-**
-** Returns          NFA_STATUS_OK if successfully initiated
-**                  NFA_STATUS_FAILED otherwise
-**
-*******************************************************************************/
-tNFA_STATUS NFA_ResumeP2p(void) {
-  NFC_HDR* p_msg;
-
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
-
-  p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
-  if (p_msg != nullptr) {
-    p_msg->event = NFA_DM_API_RESUME_P2P_EVT;
-
-    nfa_sys_sendmsg(p_msg);
-
-    return (NFA_STATUS_OK);
-  }
-
-  return (NFA_STATUS_FAILED);
-}
-
-/*******************************************************************************
-**
-** Function         NFA_SetP2pListenTech
-**
-** Description      This function is called to set listen technology for
-**                  NFC-DEP. This funtion may be called before or after starting
-**                  any server on NFA P2P/CHO/SNEP.
-**                  If there is no technology for NFC-DEP, P2P listening will be
-**                  stopped.
-**
-**                  NFA_SET_P2P_LISTEN_TECH_EVT without data will be returned.
-**
-** Note:            If RF discovery is started,
-**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
-**                  happen before calling this function
-**
-** Returns          NFA_STATUS_OK if successfully initiated
-**                  NFA_STATUS_FAILED otherwise
-**
-*******************************************************************************/
-tNFA_STATUS NFA_SetP2pListenTech(tNFA_TECHNOLOGY_MASK tech_mask) {
-  tNFA_DM_API_SET_P2P_LISTEN_TECH* p_msg;
-
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("tech_mask:0x%X", tech_mask);
-
-  p_msg = (tNFA_DM_API_SET_P2P_LISTEN_TECH*)GKI_getbuf(
-      sizeof(tNFA_DM_API_SET_P2P_LISTEN_TECH));
-  if (p_msg != nullptr) {
-    p_msg->hdr.event = NFA_DM_API_SET_P2P_LISTEN_TECH_EVT;
-    p_msg->tech_mask = tech_mask;
 
     nfa_sys_sendmsg(p_msg);
 
@@ -688,7 +573,7 @@ tNFA_STATUS NFA_SetP2pListenTech(tNFA_TECHNOLOGY_MASK tech_mask) {
 tNFA_STATUS NFA_StartRfDiscovery(void) {
   NFC_HDR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
   if (p_msg != nullptr) {
@@ -718,7 +603,7 @@ tNFA_STATUS NFA_StartRfDiscovery(void) {
 tNFA_STATUS NFA_StopRfDiscovery(void) {
   NFC_HDR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   p_msg = (NFC_HDR*)GKI_getbuf(sizeof(NFC_HDR));
   if (p_msg != nullptr) {
@@ -757,7 +642,7 @@ tNFA_STATUS NFA_StopRfDiscovery(void) {
 tNFA_STATUS NFA_SetRfDiscoveryDuration(uint16_t discovery_period_ms) {
   tNFA_DM_API_SET_RF_DISC_DUR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   /* Post the API message */
   p_msg = (tNFA_DM_API_SET_RF_DISC_DUR*)GKI_getbuf(
@@ -798,9 +683,9 @@ tNFA_STATUS NFA_Select(uint8_t rf_disc_id, tNFA_NFC_PROTOCOL protocol,
                        tNFA_INTF_TYPE rf_interface) {
   tNFA_DM_API_SELECT* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("rf_disc_id:0x%X, protocol:0x%X, rf_interface:0x%X",
-                      rf_disc_id, protocol, rf_interface);
+  LOG(DEBUG) << StringPrintf(
+      "rf_disc_id:0x%X, protocol:0x%X, rf_interface:0x%X", rf_disc_id, protocol,
+      rf_interface);
 
   if (((rf_interface == NFA_INTERFACE_ISO_DEP) &&
        (protocol != NFA_PROTOCOL_ISO_DEP)) ||
@@ -843,7 +728,7 @@ tNFA_STATUS NFA_Select(uint8_t rf_disc_id, tNFA_NFC_PROTOCOL protocol,
 tNFA_STATUS NFA_UpdateRFCommParams(tNFA_RF_COMM_PARAMS* p_params) {
   tNFA_DM_API_UPDATE_RF_PARAMS* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   p_msg = (tNFA_DM_API_UPDATE_RF_PARAMS*)GKI_getbuf(
       (uint16_t)(sizeof(tNFA_DM_API_UPDATE_RF_PARAMS)));
@@ -893,7 +778,7 @@ tNFA_STATUS NFA_UpdateRFCommParams(tNFA_RF_COMM_PARAMS* p_params) {
 extern tNFA_STATUS NFA_Deactivate(bool sleep_mode) {
   tNFA_DM_API_DEACTIVATE* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("sleep_mode:%i", sleep_mode);
+  LOG(DEBUG) << StringPrintf("sleep_mode:%i", sleep_mode);
 
   p_msg = (tNFA_DM_API_DEACTIVATE*)GKI_getbuf(
       (uint16_t)(sizeof(tNFA_DM_API_DEACTIVATE)));
@@ -934,10 +819,12 @@ tNFA_STATUS NFA_SendRawFrame(uint8_t* p_raw_data, uint16_t data_len,
   uint16_t size;
   uint8_t* p;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("data_len:%d", data_len);
+  LOG(DEBUG) << StringPrintf("data_len:%d", data_len);
 
   /* Validate parameters */
-  if ((data_len == 0) || (p_raw_data == nullptr))
+  if (((data_len == 0) || (p_raw_data == nullptr)) &&
+      (!(nfa_dm_cb.disc_cb.disc_state == NFA_DM_RFST_LISTEN_ACTIVE &&
+         nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_T3T)))
     return (NFA_STATUS_INVALID_PARAM);
 
   size = NFC_HDR_SIZE + NCI_MSG_OFFSET_SIZE + NCI_DATA_HDR_SIZE + data_len;
@@ -954,7 +841,9 @@ tNFA_STATUS NFA_SendRawFrame(uint8_t* p_raw_data, uint16_t data_len,
     p_msg->len = data_len;
 
     p = (uint8_t*)(p_msg + 1) + p_msg->offset;
-    memcpy(p, p_raw_data, data_len);
+    if (p_raw_data != nullptr) {
+      memcpy(p, p_raw_data, data_len);
+    }
 
     nfa_sys_sendmsg(p_msg);
 
@@ -998,7 +887,7 @@ tNFA_STATUS NFA_RegisterNDefTypeHandler(bool handle_whole_message, tNFA_TNF tnf,
                                         tNFA_NDEF_CBACK* p_ndef_cback) {
   tNFA_DM_API_REG_NDEF_HDLR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+  LOG(DEBUG) << StringPrintf(
       "handle whole ndef message: %i, "
       "tnf=0x%02x",
       handle_whole_message, tnf);
@@ -1058,7 +947,7 @@ extern tNFA_STATUS NFA_RegisterNDefUriHandler(bool handle_whole_message,
                                               tNFA_NDEF_CBACK* p_ndef_cback) {
   tNFA_DM_API_REG_NDEF_HDLR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+  LOG(DEBUG) << StringPrintf(
       "handle whole ndef message: %i, "
       "uri_id=0x%02x",
       handle_whole_message, uri_id);
@@ -1112,8 +1001,7 @@ extern tNFA_STATUS NFA_RegisterNDefUriHandler(bool handle_whole_message,
 extern tNFA_STATUS NFA_DeregisterNDefTypeHandler(tNFA_HANDLE ndef_type_handle) {
   tNFA_DM_API_DEREG_NDEF_HDLR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("handle 0x%08x", ndef_type_handle);
+  LOG(DEBUG) << StringPrintf("handle 0x%08x", ndef_type_handle);
 
   p_msg = (tNFA_DM_API_DEREG_NDEF_HDLR*)GKI_getbuf(
       (uint16_t)(sizeof(tNFA_DM_API_DEREG_NDEF_HDLR)));
@@ -1147,7 +1035,7 @@ extern tNFA_STATUS NFA_DeregisterNDefTypeHandler(tNFA_HANDLE ndef_type_handle) {
 tNFA_STATUS NFA_PowerOffSleepMode(bool start_stop) {
   NFC_HDR* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("start_stop=%d", start_stop);
+  LOG(DEBUG) << StringPrintf("start_stop=%d", start_stop);
 
   if (nfa_dm_cb.flags & NFA_DM_FLAGS_SETTING_PWR_MODE) {
     LOG(ERROR) << StringPrintf("NFA DM is busy to update power mode");
@@ -1184,8 +1072,7 @@ tNFA_STATUS NFA_PowerOffSleepMode(bool start_stop) {
 tNFC_STATUS NFA_RegVSCback(bool is_register, tNFA_VSC_CBACK* p_cback) {
   tNFA_DM_API_REG_VSC* p_msg;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("is_register=%d", is_register);
+  LOG(DEBUG) << StringPrintf("is_register=%d", is_register);
 
   if (p_cback == nullptr) {
     LOG(ERROR) << StringPrintf("requires a valid callback function");
@@ -1228,7 +1115,7 @@ tNFA_STATUS NFA_SendVsCommand(uint8_t oid, uint8_t cmd_params_len,
   tNFA_DM_API_SEND_VSC* p_msg;
   uint16_t size = sizeof(tNFA_DM_API_SEND_VSC) + cmd_params_len;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("oid=0x%x", oid);
+  LOG(DEBUG) << StringPrintf("oid=0x%x", oid);
 
   p_msg = (tNFA_DM_API_SEND_VSC*)GKI_getbuf(size);
   if (p_msg != nullptr) {
@@ -1301,8 +1188,60 @@ tNFA_STATUS NFA_SendRawVsCommand(uint8_t cmd_params_len, uint8_t* p_cmd_params,
 **
 *******************************************************************************/
 void NFA_EnableDtamode(tNFA_eDtaModes eDtaMode) {
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s: 0x%x ", __func__, eDtaMode);
+  LOG(DEBUG) << StringPrintf("%s: 0x%x ", __func__, eDtaMode);
   appl_dta_mode_flag = 0x01;
   nfa_dm_cb.eDtaMode = eDtaMode;
+}
+
+/*******************************************************************************
+**
+** Function         NFA_ChangeDiscoveryTech
+**
+** Description      Change RF discoverying technologies specified by
+**                  pollTech and listenTech.
+**
+**                  NFA_DM_API_CHANGE_DISCOVERY_TECH_EVT will be returned.
+**
+**                  If pollTech/listenTech are set to 0xFF, it revert to
+**                  the polling/listening technologies
+**                  before NFA_ChangeDiscoveryTech() was called.
+**
+**                  is_revert_poll : TRUE if reverting RF polling tech
+**                               before calling NFA_StopRfDiscovery
+**                               FALSE if changing RF polling tech according
+**                               to pollTech
+**                  is_revert_listen : TRUE if reverting RF listening tech
+**                               before calling NFA_StopRfDiscovery
+**                               FALSE if changing RF listening tech according
+**                               to listenTech
+**
+** Note:            If RF discovery is started,
+**                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT
+**                  should happen before calling this function
+**
+** Returns          NFA_STATUS_OK if successfully initiated
+**                  NFA_STATUS_FAILED otherwise
+**
+*******************************************************************************/
+tNFA_STATUS NFA_ChangeDiscoveryTech(tNFA_TECHNOLOGY_MASK pollTech,
+                                    tNFA_TECHNOLOGY_MASK listenTech,
+                                    bool is_revert_poll,
+                                    bool is_revert_listen) {
+  tNFA_DM_API_CHANGE_DISCOVERY_TECH* p_msg;
+  LOG(DEBUG) << StringPrintf("%s: 0x%X 0x%X", __func__, pollTech, listenTech);
+
+  if ((p_msg = (tNFA_DM_API_CHANGE_DISCOVERY_TECH*)GKI_getbuf(
+           sizeof(tNFA_DM_API_CHANGE_DISCOVERY_TECH))) != nullptr) {
+    p_msg->hdr.event = NFA_DM_API_CHANGE_DISCOVERY_TECH_EVT;
+    p_msg->is_revert_poll = is_revert_poll;
+    p_msg->is_revert_listen = is_revert_listen;
+    p_msg->change_poll_mask = pollTech;
+    p_msg->change_listen_mask = listenTech;
+
+    nfa_sys_sendmsg(p_msg);
+
+    return (NFA_STATUS_OK);
+  }
+
+  return (NFA_STATUS_FAILED);
 }

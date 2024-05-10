@@ -16,9 +16,9 @@
 use crate::internal::InnerHal;
 #[allow(unused)]
 use crate::{is_control_packet, Hal, HalEvent, HalEventRegistry, HalEventStatus, Result};
-use lazy_static::lazy_static;
 use log::{debug, error};
-use nfc_packets::nci::{DataPacket, NciPacket, Packet};
+use nfc_packets::nci::{DataPacket, NciPacket};
+use pdl_runtime::Packet;
 use std::sync::Mutex;
 use tokio::select;
 use tokio::sync::mpsc::{UnboundedReceiver, UnboundedSender};
@@ -51,6 +51,7 @@ pub async fn init() -> Hal {
 #[cxx::bridge(namespace = nfc::hal)]
 // TODO Either use or remove these functions, this shouldn't be the long term state
 #[allow(dead_code)]
+#[allow(unsafe_op_in_unsafe_fn)]
 mod ffi {
 
     #[repr(u32)]
@@ -115,9 +116,7 @@ struct Callbacks {
     in_data_tx: UnboundedSender<DataPacket>,
 }
 
-lazy_static! {
-    static ref CALLBACKS: Mutex<Option<Callbacks>> = Mutex::new(None);
-}
+static CALLBACKS: Mutex<Option<Callbacks>> = Mutex::new(None);
 
 fn on_event(evt: ffi::NfcEvent, status: ffi::NfcStatus) {
     debug!("got event: {:?} with status {:?}", evt, status);

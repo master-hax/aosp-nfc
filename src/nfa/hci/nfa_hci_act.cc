@@ -21,8 +21,8 @@
  *  This file contains the action functions for the NFA HCI.
  *
  ******************************************************************************/
+#include <android-base/logging.h>
 #include <android-base/stringprintf.h>
-#include <base/logging.h>
 #include <log/log.h>
 #include <string.h>
 
@@ -32,8 +32,6 @@
 #include "nfa_hci_int.h"
 
 using android::base::StringPrintf;
-
-extern bool nfc_debug_enabled;
 
 /* Static local functions       */
 static void nfa_hci_api_register(tNFA_HCI_EVENT_DATA* p_evt_data);
@@ -238,8 +236,8 @@ static void nfa_hci_api_register(tNFA_HCI_EVENT_DATA* p_evt_data) {
     if ((nfa_hci_cb.cfg.reg_app_names[xx][0] != 0) &&
         !strncmp(p_app_name, &nfa_hci_cb.cfg.reg_app_names[xx][0],
                  strlen(p_app_name))) {
-      DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-          "nfa_hci_api_register (%s)  Reusing: %u", p_app_name, xx);
+      LOG(DEBUG) << StringPrintf("nfa_hci_api_register (%s)  Reusing: %u",
+                                 p_app_name, xx);
       break;
     }
   }
@@ -264,8 +262,8 @@ static void nfa_hci_api_register(tNFA_HCI_EVENT_DATA* p_evt_data) {
         strlcpy(&nfa_hci_cb.cfg.reg_app_names[xx][0], p_app_name,
                 NFA_MAX_HCI_APP_NAME_LEN);
         nfa_hci_cb.nv_write_needed = true;
-        DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-            "nfa_hci_api_register (%s)  Allocated: %u", p_app_name, xx);
+        LOG(DEBUG) << StringPrintf("nfa_hci_api_register (%s)  Allocated: %u",
+                                   p_app_name, xx);
         break;
       }
     }
@@ -317,9 +315,8 @@ void nfa_hci_api_deregister(tNFA_HCI_EVENT_DATA* p_evt_data) {
           !strncmp(p_evt_data->app_info.app_name,
                    &nfa_hci_cb.cfg.reg_app_names[xx][0],
                    strlen(p_evt_data->app_info.app_name))) {
-        DLOG_IF(INFO, nfc_debug_enabled)
-            << StringPrintf("nfa_hci_api_deregister (%s) inx: %u",
-                            p_evt_data->app_info.app_name, xx);
+        LOG(DEBUG) << StringPrintf("nfa_hci_api_deregister (%s) inx: %u",
+                                   p_evt_data->app_info.app_name, xx);
         break;
       }
     }
@@ -1097,7 +1094,7 @@ static void nfa_hci_api_add_static_pipe(tNFA_HCI_EVENT_DATA* p_evt_data) {
 ** Returns          none
 **
 *******************************************************************************/
-void nfa_hci_handle_link_mgm_gate_cmd(uint8_t* p_data) {
+void nfa_hci_handle_link_mgm_gate_cmd(uint8_t* p_data, uint16_t data_len) {
   uint8_t index;
   uint8_t data[2];
   uint8_t rsp_len = 0;
@@ -1112,15 +1109,23 @@ void nfa_hci_handle_link_mgm_gate_cmd(uint8_t* p_data) {
 
   switch (nfa_hci_cb.inst) {
     case NFA_HCI_ANY_SET_PARAMETER:
+      if (data_len < 1) {
+        response = NFA_HCI_ANY_E_CMD_NOT_SUPPORTED;
+        break;
+      }
       STREAM_TO_UINT8(index, p_data);
 
-      if (index == 1) {
+      if (index == 1 && data_len > 2) {
         STREAM_TO_UINT16(nfa_hci_cb.cfg.link_mgmt_gate.rec_errors, p_data);
       } else
         response = NFA_HCI_ANY_E_REG_PAR_UNKNOWN;
       break;
 
     case NFA_HCI_ANY_GET_PARAMETER:
+      if (data_len < 1) {
+        response = NFA_HCI_ANY_E_CMD_NOT_SUPPORTED;
+        break;
+      }
       STREAM_TO_UINT8(index, p_data);
       if (index == 1) {
         data[0] =
@@ -1191,7 +1196,7 @@ void nfa_hci_handle_pipe_open_close_cmd(tNFA_HCI_DYN_PIPE* p_pipe) {
 ** Returns          none
 **
 *******************************************************************************/
-void nfa_hci_handle_admin_gate_cmd(uint8_t* p_data) {
+void nfa_hci_handle_admin_gate_cmd(uint8_t* p_data, uint16_t data_len) {
   uint8_t source_host, source_gate, dest_host, dest_gate, pipe;
   uint8_t data = 0;
   uint8_t rsp_len = 0;
@@ -1217,6 +1222,10 @@ void nfa_hci_handle_admin_gate_cmd(uint8_t* p_data) {
       break;
 
     case NFA_HCI_ADM_NOTIFY_PIPE_CREATED:
+      if (data_len < 5) {
+        response = NFA_HCI_ANY_E_CMD_NOT_SUPPORTED;
+        break;
+      }
       STREAM_TO_UINT8(source_host, p_data);
       STREAM_TO_UINT8(source_gate, p_data);
       STREAM_TO_UINT8(dest_host, p_data);
@@ -1264,11 +1273,19 @@ void nfa_hci_handle_admin_gate_cmd(uint8_t* p_data) {
       break;
 
     case NFA_HCI_ADM_NOTIFY_PIPE_DELETED:
+      if (data_len < 1) {
+        response = NFA_HCI_ANY_E_CMD_NOT_SUPPORTED;
+        break;
+      }
       STREAM_TO_UINT8(pipe, p_data);
       response = nfa_hciu_release_pipe(pipe);
       break;
 
     case NFA_HCI_ADM_NOTIFY_ALL_PIPE_CLEARED:
+      if (data_len < 1) {
+        response = NFA_HCI_ANY_E_CMD_NOT_SUPPORTED;
+        break;
+      }
       STREAM_TO_UINT8(source_host, p_data);
 
       nfa_hciu_remove_all_pipes_from_host(source_host);
@@ -1329,7 +1346,7 @@ void nfa_hci_handle_admin_gate_rsp(uint8_t* p_data, uint8_t data_len) {
   uint8_t host_id = 0;
   uint32_t os_tick;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+  LOG(DEBUG) << StringPrintf(
       "nfa_hci_handle_admin_gate_rsp - LastCmdSent: %s  App: 0x%04x  Gate: "
       "0x%02x  Pipe: 0x%02x",
       nfa_hciu_instr_2_str(nfa_hci_cb.cmd_sent).c_str(), nfa_hci_cb.app_in_use,
@@ -1363,7 +1380,7 @@ void nfa_hci_handle_admin_gate_rsp(uint8_t* p_data, uint8_t data_len) {
           if ((nfa_hci_cb.hci_state == NFA_HCI_STATE_STARTUP) ||
               (nfa_hci_cb.hci_state == NFA_HCI_STATE_RESTORE))
             nfa_hci_dh_startup_complete();
-          if (NFA_GetNCIVersion() == NCI_VERSION_2_0) {
+          if (NFA_GetNCIVersion() >= NCI_VERSION_2_0) {
             nfa_hci_cb.hci_state = NFA_HCI_STATE_WAIT_NETWK_ENABLE;
             NFA_EeGetInfo(&nfa_hci_cb.num_nfcee, nfa_hci_cb.ee_info);
             nfa_hci_enable_one_nfcee();
@@ -1653,7 +1670,7 @@ void nfa_hci_handle_admin_gate_evt() {
     return;
   }
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+  LOG(DEBUG) << StringPrintf(
       "nfa_hci_handle_admin_gate_evt - HOT PLUG EVT event on ADMIN Pipe");
   nfa_hci_cb.num_hot_plug_evts++;
 

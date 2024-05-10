@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  ******************************************************************************/
+#include <android-base/logging.h>
 #include <android-base/stringprintf.h>
-#include <base/logging.h>
 #include <log/log.h>
 
 #include "gki_int.h"
@@ -29,8 +29,6 @@
 static void gki_add_to_pool_list(uint8_t pool_id);
 static void gki_remove_from_pool_list(uint8_t pool_id);
 #endif /*  BTU_STACK_LITE_ENABLED == FALSE */
-
-extern bool nfc_debug_enabled;
 
 using android::base::StringPrintf;
 
@@ -280,11 +278,8 @@ void* GKI_getbuf(uint16_t size) {
   p_hdr = (BUFFER_HDR_T*)GKI_os_malloc(total_sz);
   if (!p_hdr) {
     LOG(ERROR) << StringPrintf("unable to allocate buffer!!!!!");
-#ifndef DYN_ALLOC
+    LOG(ERROR) << StringPrintf("total_sz:%d size:%d", total_sz, size);
     abort();
-#else
-    return (nullptr);
-#endif
   }
 
   memset(p_hdr, 0, total_sz);
@@ -305,9 +300,9 @@ void* GKI_getbuf(uint16_t size) {
   if (++Q->cur_cnt > Q->max_cnt) Q->max_cnt = Q->cur_cnt;
   GKI_enable();
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
-      "%s %p %d:%d", __func__, ((uint8_t*)p_hdr + BUFFER_HDR_SIZE), Q->cur_cnt,
-      Q->max_cnt);
+  LOG(DEBUG) << StringPrintf("%s %p %d:%d", __func__,
+                             ((uint8_t*)p_hdr + BUFFER_HDR_SIZE), Q->cur_cnt,
+                             Q->max_cnt);
   UNUSED(gki_alloc_free_queue);
   return (void*)((uint8_t*)p_hdr + BUFFER_HDR_SIZE);
 #else

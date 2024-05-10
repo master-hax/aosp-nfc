@@ -132,8 +132,8 @@
 /* Logical target ID 0x01-0xFE */
 
 /* CORE_RESET_NTF reset trigger type*/
-#define NCI2_0_RESET_TRIGGER_TYPE_POWERED_ON 0x01
-#define NCI2_0_RESET_TRIGGER_TYPE_CORE_RESET_CMD_RECEIVED 0x02
+#define NCI2_X_RESET_TRIGGER_TYPE_POWERED_ON 0x01
+#define NCI2_X_RESET_TRIGGER_TYPE_CORE_RESET_CMD_RECEIVED 0x02
 
 /* Status Codes */
 #define NCI_STATUS_OK 0x00
@@ -158,6 +158,7 @@
 #define NCI_STATUS_RF_TRANSMISSION_ERR 0xB0
 #define NCI_STATUS_RF_PROTOCOL_ERR 0xB1
 #define NCI_STATUS_TIMEOUT 0xB2
+#define NCI_STATUS_RF_UNEXPECTED_DATA 0xB3
 /* NFCEE Interface */
 #define NCI_STATUS_EE_INTF_ACTIVE_FAIL 0xC0
 #define NCI_STATUS_EE_TRANSMISSION_ERR 0xC1
@@ -209,6 +210,7 @@
 #define NCI_MSG_RF_EE_DISCOVERY_REQ 10
 #define NCI_MSG_RF_PARAMETER_UPDATE 11
 #define NCI_MSG_RF_ISO_DEP_NAK_PRESENCE 16
+#define NCI_MSG_WPT_START 21
 
 /**********************************************
  * NFCEE MANAGEMENT Group Opcode - 2
@@ -220,7 +222,25 @@
 /**********************************************
  * NCI Proprietary  Group       - F
  **********************************************/
+#define NCI_MSG_PROP_ANDROID 0x0C
 
+#define NCI_ANDROID_SIGNAL_STRENGTH_NTF 0x01
+#define NCI_ANDROID_FIELD_CHANGE_NTF 0x02
+#define NCI_ANDROID_POLLING_FRAME_NTF 0x03
+
+/* Android Opcodes */
+#define NCI_ANDROID_POWER_SAVING 0x1
+#define NCI_ANDROID_PASSIVE_OBSERVER 0x2
+
+/* Android Power Saving Params */
+#define NCI_ANDROID_POWER_SAVING_PARAM_SIZE 0x2
+#define NCI_ANDROID_POWER_SAVING_PARAM_DISABLE 0x0
+#define NCI_ANDROID_POWER_SAVING_PARAM_ENABLE 0x1
+
+/* Android Passive Observer Settings */
+#define NCI_ANDROID_PASSIVE_OBSERVER_PARAM_SIZE 0x2
+#define NCI_ANDROID_PASSIVE_OBSERVER_PARAM_DISABLE 0x0
+#define NCI_ANDROID_PASSIVE_OBSERVER_PARAM_ENABLE 0x1
 /**********************************************
  * NCI Core Group Params
  **********************************************/
@@ -231,9 +251,9 @@
  **********************************************/
 #define NCI_FEAT_HCI_NETWORK 0x00000008
 
-#define NCI_CORE_PARAM_SIZE_INIT(X) (((X) == NCI_VERSION_2_0) ? (0x02) : (0x00))
-#define NCI2_0_CORE_INIT_CMD_BYTE_0 0x00
-#define NCI2_0_CORE_INIT_CMD_BYTE_1 0x00
+#define NCI_CORE_PARAM_SIZE_INIT(X) (((X) >= NCI_VERSION_2_0) ? (0x02) : (0x00))
+#define NCI2_X_CORE_INIT_CMD_BYTE_0 0x00
+#define NCI2_X_CORE_INIT_CMD_BYTE_1 0x00
 
 /* Status (1 octet) and number of params */
 #define NCI_CORE_PARAM_SIZE_SET_POWER_SUB_STATE 0x01
@@ -257,7 +277,7 @@
 
 /* Discovery Action (1 octet) */
 #define NCI_PARAM_SIZE_DISCOVER_NFCEE(X) \
-  (((X) == NCI_VERSION_2_0) ? 0X00 : 0X01)
+  (((X) >= NCI_VERSION_2_0) ? 0X00 : 0X01)
 
 #define NCI_DISCOVER_ACTION_DISABLE 0
 #define NCI_DISCOVER_ACTION_ENABLE 1
@@ -315,6 +335,10 @@
 #define NCI_DEACTIVATE_REASON_NFCB_BAD_AFI 3 /* NFC-B Bad AFI    */
 /* DH Request Failed due to error */
 #define NCI_DEACTIVATE_REASON_DH_REQ_FAILED 4
+#define NCI_DEACTIVATE_REASON_RF_REMOTE_EP_REMOVED 5
+#define NCI_DEACTIVATE_REASON_RF_TIMEOUT_EXCEPTION 6
+#define NCI_DEACTIVATE_REASON_RF_PROTOCOL_EXCEPTION 7
+#define NCI_DEACTIVATE_REASON_FO_DETECTED 8
 
 /* The NFCEE status in NFCEE Status Notification */
 typedef uint8_t tNCI_EE_NTF_STATUS;
@@ -338,6 +362,11 @@ typedef uint8_t tNCI_NFCEE_PL_CONFIG;
 #define NCI_INTERFACE_EXTENSION_MAX 2
 #define NCI_INTERFACE_FIRST_VS 0x80
 typedef uint8_t tNCI_INTF_TYPE;
+
+/**********************************************
+ * NCI RF Interface Extensions Types
+ **********************************************/
+#define NCI_INTF_EXT_WLCP_SEMI_AUTO 0x03
 
 /**********************************************
  * NCI RF Management / DISCOVERY Group Params
@@ -402,13 +431,13 @@ typedef uint8_t tNCI_DISCOVERY_TYPE;
 #define NCI_ROUTE_PWR_STATE_BATT_OFF 0x04
 /* The device is screen off Unlock mode */
 #define NCI_ROUTE_PWR_STATE_SCREEN_OFF_UNLOCK() \
-  ((NFC_GetNCIVersion() == NCI_VERSION_2_0) ? 0x08 : 0x80)
+  ((NFC_GetNCIVersion() >= NCI_VERSION_2_0) ? 0x08 : 0x80)
 /* The device is screen on lock mode */
 #define NCI_ROUTE_PWR_STATE_SCREEN_ON_LOCK() \
-  ((NFC_GetNCIVersion() == NCI_VERSION_2_0) ? 0x10 : 0x40)
+  ((NFC_GetNCIVersion() >= NCI_VERSION_2_0) ? 0x10 : 0x40)
 /* The device is screen off lock mode */
 #define NCI_ROUTE_PWR_STATE_SCREEN_OFF_LOCK() \
-  ((NFC_GetNCIVersion() == NCI_VERSION_2_0) ? 0x20 : 0x00)
+  ((NFC_GetNCIVersion() >= NCI_VERSION_2_0) ? 0x20 : 0x00)
 
 /* Hardware / Registration Identification  */
 #define NCI_NFCEE_TAG_HW_ID 0x00
@@ -526,7 +555,7 @@ typedef uint8_t tNCI_DISCOVERY_TYPE;
 #define NCI_PARAM_LEN_LF_PROTOCOL 1
 #define NCI_PARAM_LEN_LF_T3T_FLAGS2 2
 #define NCI_PARAM_LEN_LF_T3T_PMM 8
-#define NCI_PARAM_LEN_LF_T3T_ID(X) (((X) == NCI_VERSION_2_0) ? (0x12) : (0x0A))
+#define NCI_PARAM_LEN_LF_T3T_ID(X) (((X) >= NCI_VERSION_2_0) ? (0x12) : (0x0A))
 #define NCI_PARAM_LEN_LF_CON_ADV_FEAT 1
 
 #define NCI_PARAM_LEN_LF_T3T_RD_ALLOWED 1  // Listen F NCI2.0 Parameter
@@ -690,5 +719,8 @@ typedef struct {
   uint8_t waiting_time;                     /* WT -> Response Waiting Time
                                                RWT = (256 x 16/fC) x 2WT    */
 } tNCI_RF_ACM_P_PARAMS;
+
+#define NCI_WPT_POWER_ADJ_REQ_TYPE 0x00
+#define NCI_WPT_TIME_INT_TYPE 0x01
 
 #endif /* NFC_NCI_DEFS_H */

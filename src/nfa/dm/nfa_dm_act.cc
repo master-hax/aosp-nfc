@@ -22,15 +22,13 @@
  *  machine.
  *
  ******************************************************************************/
-#include <string.h>
-
+#include <android-base/logging.h>
 #include <android-base/stringprintf.h>
-#include <base/logging.h>
+#include <string.h>
 
 #include "nci_hmsgs.h"
 #include "nfa_api.h"
 #include "nfa_ce_int.h"
-#include "nfa_p2p_int.h"
 #include "nfa_rw_api.h"
 #include "nfa_rw_int.h"
 
@@ -45,8 +43,6 @@
 #endif
 
 using android::base::StringPrintf;
-
-extern bool nfc_debug_enabled;
 
 /* This is the timeout value to guarantee disable is performed within reasonable
  * amount of time */
@@ -94,8 +90,7 @@ static void nfa_dm_module_init_cback(void) {
 static void nfa_dm_nfcc_power_mode_proc_complete_cback(void) {
   tNFA_DM_PWR_MODE_CHANGE power_mode_change;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nfcc_pwr_mode = 0x%x", nfa_dm_cb.nfcc_pwr_mode);
+  LOG(DEBUG) << StringPrintf("nfcc_pwr_mode = 0x%x", nfa_dm_cb.nfcc_pwr_mode);
 
   /* if NFCC power state is change to full power */
   if (nfa_dm_cb.nfcc_pwr_mode != NFA_DM_PWR_MODE_OFF_SLEEP) {
@@ -138,7 +133,7 @@ static void nfa_dm_set_init_nci_params(void) {
 
   /* set NCI default value if other than zero */
 
-  if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
+  if (NFC_GetNCIVersion() >= NCI_VERSION_2_0) {
     /* Default Values: For each identifier
      * Octet 0-1   = OxFF
      * Octet 2     = Ox02
@@ -185,7 +180,7 @@ static void nfa_dm_set_init_nci_params(void) {
   nfa_dm_cb.params.wt[0] = 14;
 
   /* Set CE default configuration */
-  if (p_nfa_dm_ce_cfg[0] && NFC_GetNCIVersion() != NCI_VERSION_2_0) {
+  if (p_nfa_dm_ce_cfg[0] && NFC_GetNCIVersion() < NCI_VERSION_2_0) {
     nfa_dm_check_set_config(p_nfa_dm_ce_cfg[0], &p_nfa_dm_ce_cfg[1], false);
   }
 
@@ -210,13 +205,12 @@ static void nfa_dm_set_init_nci_params(void) {
 **
 *******************************************************************************/
 void nfa_dm_proc_nfcc_power_mode(uint8_t nfcc_power_mode) {
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("nfcc_power_mode=%d", nfcc_power_mode);
+  LOG(DEBUG) << StringPrintf("nfcc_power_mode=%d", nfcc_power_mode);
 
   /* if NFCC power mode is change to full power */
   if (nfcc_power_mode == NFA_DM_PWR_MODE_FULL) {
     memset(&nfa_dm_cb.params, 0x00, sizeof(tNFA_DM_PARAMS));
-    DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf(
+    LOG(DEBUG) << StringPrintf(
         "setcfg_pending_mask=0x%x, setcfg_pending_num=%d",
         nfa_dm_cb.setcfg_pending_mask, nfa_dm_cb.setcfg_pending_num);
     nfa_dm_cb.setcfg_pending_mask = 0;
@@ -267,8 +261,8 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
   uint8_t dm_cback_evt;
   uint8_t max_ee = 0;
 
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("%s(0x%x)", nfa_dm_nfc_revt_2_str(event).c_str(), event);
+  LOG(DEBUG) << StringPrintf("%s(0x%x)", nfa_dm_nfc_revt_2_str(event).c_str(),
+                             event);
 
   switch (event) {
     case NFC_ENABLE_REVT: /* 0  Enable event */
@@ -395,8 +389,7 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
 
     case NFC_NFCC_TIMEOUT_REVT:
     case NFC_NFCC_TRANSPORT_ERR_REVT:
-      DLOG_IF(INFO, nfc_debug_enabled)
-          << StringPrintf("flags:0x%08x", nfa_dm_cb.flags);
+      LOG(DEBUG) << StringPrintf("flags:0x%08x", nfa_dm_cb.flags);
       dm_cback_evt = (event == NFC_NFCC_TIMEOUT_REVT)
                          ? NFA_DM_NFCC_TIMEOUT_EVT
                          : NFA_DM_NFCC_TRANSPORT_ERR_EVT;
@@ -433,7 +426,7 @@ static void nfa_dm_nfc_response_cback(tNFC_RESPONSE_EVT event,
 *******************************************************************************/
 bool nfa_dm_enable(tNFA_DM_MSG* p_data) {
   tNFA_DM_CBACK_DATA dm_cback_data;
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   /* Check if NFA is already enabled */
   if (!(nfa_dm_cb.flags & NFA_DM_FLAGS_DM_IS_ACTIVE)) {
@@ -468,8 +461,7 @@ bool nfa_dm_enable(tNFA_DM_MSG* p_data) {
 **
 *******************************************************************************/
 bool nfa_dm_disable(tNFA_DM_MSG* p_data) {
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("graceful:%d", p_data->disable.graceful);
+  LOG(DEBUG) << StringPrintf("graceful:%d", p_data->disable.graceful);
 
   if (p_data->disable.graceful) {
     /* if RF discovery is enabled */
@@ -518,11 +510,10 @@ bool nfa_dm_disable(tNFA_DM_MSG* p_data) {
 **
 *******************************************************************************/
 void nfa_dm_disable_complete(void) {
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   if ((nfa_dm_cb.flags & NFA_DM_FLAGS_DM_DISABLING_NFC) == 0) {
-    DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("proceeding with nfc core shutdown.");
+    LOG(DEBUG) << StringPrintf("proceeding with nfc core shutdown.");
 
     nfa_dm_cb.flags |= NFA_DM_FLAGS_DM_DISABLING_NFC;
 
@@ -598,12 +589,11 @@ bool nfa_dm_set_power_sub_state(tNFA_DM_MSG* p_data) {
   tNFC_STATUS status;
   tNFA_DM_CBACK_DATA dm_cback_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   nfa_dm_cb.power_state = p_data->set_power_state.screen_state;
   if (nfa_dm_cb.disc_cb.disc_state == NFA_DM_RFST_LISTEN_ACTIVE) {
-    DLOG_IF(INFO, nfc_debug_enabled)
-        << StringPrintf("NFA_DM_RFST_LISTEN_ACTIVE");
+    LOG(DEBUG) << StringPrintf("NFA_DM_RFST_LISTEN_ACTIVE");
     /* NFCC will give semantic error for power sub state command in Rf listen
      * active state */
     nfa_dm_cb.pending_power_state = nfa_dm_cb.power_state;
@@ -652,7 +642,7 @@ void nfa_dm_conn_cback_event_notify(uint8_t event, tNFA_CONN_EVT_DATA* p_data) {
 void nfa_dm_rel_excl_rf_control_and_notify(void) {
   tNFA_CONN_EVT_DATA conn_evt;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   /* Exclusive RF control stopped. Notify app */
   nfa_dm_cb.flags &= ~NFA_DM_FLAGS_EXCL_RF_ACTIVE;
@@ -680,7 +670,7 @@ void nfa_dm_rel_excl_rf_control_and_notify(void) {
 bool nfa_dm_act_request_excl_rf_ctrl(tNFA_DM_MSG* p_data) {
   tNFA_CONN_EVT_DATA conn_evt;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   if (!nfa_dm_cb.p_excl_conn_cback) {
     if (nfa_dm_cb.disc_cb.disc_state != NFA_DM_RFST_IDLE) {
@@ -722,7 +712,7 @@ bool nfa_dm_act_request_excl_rf_ctrl(tNFA_DM_MSG* p_data) {
 *******************************************************************************/
 bool nfa_dm_act_release_excl_rf_ctrl(__attribute__((unused))
                                      tNFA_DM_MSG* p_data) {
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   /* nfa_dm_rel_excl_rf_control_and_notify() is called when discovery state goes
    * IDLE */
@@ -755,7 +745,7 @@ bool nfa_dm_act_deactivate(tNFA_DM_MSG* p_data) {
   tNFA_CONN_EVT_DATA conn_evt;
   tNFA_DEACTIVATE_TYPE deact_type;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   /* Always allow deactivate to IDLE */
   /* Do not allow deactivate to SLEEP for T1T,NFCDEP, ISO15693 */
@@ -783,24 +773,11 @@ bool nfa_dm_act_deactivate(tNFA_DM_MSG* p_data) {
       deact_type = NFA_DEACTIVATE_TYPE_IDLE;
     }
 
-    if ((nfa_dm_cb.disc_cb.activated_protocol == NFA_PROTOCOL_NFC_DEP) &&
-        ((nfa_dm_cb.flags & NFA_DM_FLAGS_EXCL_RF_ACTIVE) == 0x00) &&
-        appl_dta_mode_flag != true) {
-      /* Exclusive RF control doesn't use NFA P2P */
-      /* NFA P2P will deactivate NFC link after deactivating LLCP link */
-      if (!(nfa_dm_cb.flags & NFA_DM_FLAGS_P2P_PAUSED)) {
-        nfa_p2p_deactivate_llcp();
-      } else {
-        nfa_dm_rf_deactivate(deact_type);
-      }
+    if (nfa_dm_rf_deactivate(deact_type) == NFA_STATUS_OK) {
+      if (nfa_dm_cb.disc_cb.kovio_tle.in_use)
+        nfa_sys_stop_timer(&nfa_dm_cb.disc_cb.kovio_tle);
+      nfa_rw_stop_presence_check_timer();
       return true;
-    } else {
-      if (nfa_dm_rf_deactivate(deact_type) == NFA_STATUS_OK) {
-        if (nfa_dm_cb.disc_cb.kovio_tle.in_use)
-          nfa_sys_stop_timer(&nfa_dm_cb.disc_cb.kovio_tle);
-        nfa_rw_stop_presence_check_timer();
-        return true;
-      }
     }
   }
 
@@ -823,7 +800,7 @@ bool nfa_dm_act_deactivate(tNFA_DM_MSG* p_data) {
 **
 *******************************************************************************/
 bool nfa_dm_act_power_off_sleep(tNFA_DM_MSG* p_data) {
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   NFC_SetPowerOffSleep((bool)(p_data->hdr.layer_specific));
 
@@ -908,7 +885,7 @@ tNFA_STATUS nfa_dm_start_polling(void) {
   tNFA_TECHNOLOGY_MASK poll_tech_mask;
   tNFA_DM_DISC_TECH_PROTO_MASK poll_disc_mask = 0;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   poll_tech_mask = nfa_dm_cb.poll_mask;
 
@@ -922,7 +899,7 @@ tNFA_STATUS nfa_dm_start_polling(void) {
       poll_disc_mask |= NFA_DM_DISC_MASK_P_LEGACY;
       poll_disc_mask |= NFA_DM_DISC_MASK_PA_MIFARE;
     }
-    if (NFC_GetNCIVersion() == NCI_VERSION_2_0) {
+    if (NFC_GetNCIVersion() >= NCI_VERSION_2_0) {
       if (poll_tech_mask & NFA_TECHNOLOGY_MASK_ACTIVE) {
         poll_disc_mask |= NFA_DM_DISC_MASK_PACM_NFC_DEP;
       }
@@ -985,7 +962,7 @@ tNFA_STATUS nfa_dm_start_polling(void) {
 bool nfa_dm_act_enable_polling(tNFA_DM_MSG* p_data) {
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   if ((!(nfa_dm_cb.flags & NFA_DM_FLAGS_POLLING_ENABLED)) &&
       (!(nfa_dm_cb.flags & NFA_DM_FLAGS_EXCL_RF_ACTIVE))) {
@@ -1019,19 +996,14 @@ bool nfa_dm_act_enable_polling(tNFA_DM_MSG* p_data) {
 **
 *******************************************************************************/
 static bool nfa_dm_deactivate_polling(void) {
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   if ((nfa_dm_cb.disc_cb.disc_state == NFA_DM_RFST_W4_ALL_DISCOVERIES) ||
       (nfa_dm_cb.disc_cb.disc_state == NFA_DM_RFST_W4_HOST_SELECT)) {
     nfa_dm_rf_deactivate(NFA_DEACTIVATE_TYPE_IDLE);
     return false;
   } else if (nfa_dm_cb.disc_cb.disc_state == NFA_DM_RFST_POLL_ACTIVE) {
-    if (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_NFC_DEP) {
-      /* NFA P2P will deactivate NFC link after deactivating LLCP link */
-      nfa_p2p_deactivate_llcp();
-    } else {
-      nfa_dm_rf_deactivate(NFA_DEACTIVATE_TYPE_IDLE);
-    }
+    nfa_dm_rf_deactivate(NFA_DEACTIVATE_TYPE_IDLE);
     return true;
   } else {
     return false;
@@ -1050,7 +1022,7 @@ static bool nfa_dm_deactivate_polling(void) {
 bool nfa_dm_act_disable_polling(__attribute__((unused)) tNFA_DM_MSG* p_data) {
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   if (nfa_dm_cb.poll_disc_handle != NFA_HANDLE_INVALID) {
     nfa_dm_cb.flags &= ~NFA_DM_FLAGS_POLLING_ENABLED;
@@ -1084,7 +1056,7 @@ bool nfa_dm_act_disable_polling(__attribute__((unused)) tNFA_DM_MSG* p_data) {
 bool nfa_dm_act_enable_listening(__attribute__((unused)) tNFA_DM_MSG* p_data) {
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   nfa_dm_cb.flags &= ~NFA_DM_FLAGS_LISTEN_DISABLED;
   evt_data.status = NFA_STATUS_OK;
@@ -1105,53 +1077,11 @@ bool nfa_dm_act_enable_listening(__attribute__((unused)) tNFA_DM_MSG* p_data) {
 bool nfa_dm_act_disable_listening(__attribute__((unused)) tNFA_DM_MSG* p_data) {
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   nfa_dm_cb.flags |= NFA_DM_FLAGS_LISTEN_DISABLED;
   evt_data.status = NFA_STATUS_OK;
   nfa_dm_conn_cback_event_notify(NFA_LISTEN_DISABLED_EVT, &evt_data);
-
-  return true;
-}
-
-/*******************************************************************************
-**
-** Function         nfa_dm_act_pause_p2p
-**
-** Description      Process Pause P2P command
-**
-** Returns          TRUE (message buffer to be freed by caller)
-**
-*******************************************************************************/
-bool nfa_dm_act_pause_p2p(__attribute__((unused)) tNFA_DM_MSG* p_data) {
-  tNFA_CONN_EVT_DATA evt_data;
-
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
-
-  nfa_dm_cb.flags |= NFA_DM_FLAGS_P2P_PAUSED;
-  evt_data.status = NFA_STATUS_OK;
-  nfa_dm_conn_cback_event_notify(NFA_P2P_PAUSED_EVT, &evt_data);
-
-  return true;
-}
-
-/*******************************************************************************
-**
-** Function         nfa_dm_act_resume_p2p
-**
-** Description      Process resume P2P command
-**
-** Returns          TRUE (message buffer to be freed by caller)
-**
-*******************************************************************************/
-bool nfa_dm_act_resume_p2p(__attribute__((unused)) tNFA_DM_MSG* p_data) {
-  tNFA_CONN_EVT_DATA evt_data;
-
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
-
-  nfa_dm_cb.flags &= ~NFA_DM_FLAGS_P2P_PAUSED;
-  evt_data.status = NFA_STATUS_OK;
-  nfa_dm_conn_cback_event_notify(NFA_P2P_RESUMED_EVT, &evt_data);
 
   return true;
 }
@@ -1168,7 +1098,7 @@ bool nfa_dm_act_resume_p2p(__attribute__((unused)) tNFA_DM_MSG* p_data) {
 bool nfa_dm_act_send_raw_frame(tNFA_DM_MSG* p_data) {
   tNFC_STATUS status = NFC_STATUS_FAILED;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   /* If NFC link is activated */
   if ((nfa_dm_cb.disc_cb.disc_state == NFA_DM_RFST_POLL_ACTIVE) ||
@@ -1208,25 +1138,6 @@ bool nfa_dm_act_send_raw_frame(tNFA_DM_MSG* p_data) {
 
 /*******************************************************************************
 **
-** Function         nfa_dm_set_p2p_listen_tech
-**
-** Description      Notify change of P2P listen technologies to NFA P2P
-**
-** Returns          TRUE (message buffer to be freed by caller)
-**
-*******************************************************************************/
-bool nfa_dm_set_p2p_listen_tech(tNFA_DM_MSG* p_data) {
-  DLOG_IF(INFO, nfc_debug_enabled)
-      << StringPrintf("tech_mask = %d", p_data->set_p2p_listen_tech.tech_mask);
-
-  nfa_p2p_update_listen_tech(p_data->set_p2p_listen_tech.tech_mask);
-  nfa_dm_conn_cback_event_notify(NFA_SET_P2P_LISTEN_TECH_EVT, nullptr);
-
-  return true;
-}
-
-/*******************************************************************************
-**
 ** Function         nfa_dm_act_start_rf_discovery
 **
 ** Description      Process start RF discovery command
@@ -1238,7 +1149,7 @@ bool nfa_dm_act_start_rf_discovery(__attribute__((unused))
                                    tNFA_DM_MSG* p_data) {
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   if (nfa_dm_cb.disc_cb.disc_flags & NFA_DM_DISC_FLAGS_ENABLED) {
     evt_data.status = NFA_STATUS_OK;
@@ -1267,7 +1178,7 @@ bool nfa_dm_act_start_rf_discovery(__attribute__((unused))
 bool nfa_dm_act_stop_rf_discovery(__attribute__((unused)) tNFA_DM_MSG* p_data) {
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   if (!(nfa_dm_cb.disc_cb.disc_flags & NFA_DM_DISC_FLAGS_ENABLED) ||
       (nfa_dm_cb.disc_cb.disc_state == NFA_DM_RFST_IDLE)) {
@@ -1330,7 +1241,7 @@ uint16_t nfa_dm_act_get_rf_disc_duration() {
 **
 *******************************************************************************/
 bool nfa_dm_act_select(tNFA_DM_MSG* p_data) {
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   nfa_dm_rf_discover_select(p_data->select.rf_disc_id, p_data->select.protocol,
                             p_data->select.rf_interface);
@@ -1349,7 +1260,7 @@ bool nfa_dm_act_select(tNFA_DM_MSG* p_data) {
 bool nfa_dm_act_update_rf_params(tNFA_DM_MSG* p_data) {
   tNFA_CONN_EVT_DATA conn_evt;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << __func__;
+  LOG(DEBUG) << __func__;
 
   if (NFC_UpdateRFCommParams(&p_data->update_rf_params.params) !=
       NFC_STATUS_OK) {
@@ -1386,7 +1297,7 @@ bool nfa_dm_act_disable_timeout(__attribute__((unused)) tNFA_DM_MSG* p_data) {
 **
 *******************************************************************************/
 void nfa_dm_act_conn_cback_notify(uint8_t event, tNFA_CONN_EVT_DATA* p_data) {
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event:0x%X", event);
+  LOG(DEBUG) << StringPrintf("event:0x%X", event);
 
   /* Notify event using appropriate CONN_CBACK */
   nfa_dm_conn_cback_event_notify(event, p_data);
@@ -1425,7 +1336,7 @@ static void nfa_dm_act_data_cback(__attribute__((unused)) uint8_t conn_id,
   NFC_HDR* p_msg;
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event = 0x%X", event);
+  LOG(DEBUG) << StringPrintf("event = 0x%X", event);
 
   if (event == NFC_DATA_CEVT) {
     p_msg = (NFC_HDR*)p_data->data.p_data;
@@ -1473,7 +1384,7 @@ static void nfa_dm_excl_disc_cback(tNFA_DM_RF_DISC_EVT event,
                                    tNFC_DISCOVER* p_data) {
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event:0x%02X", event);
+  LOG(DEBUG) << StringPrintf("event:0x%02X", event);
 
   switch (event) {
     case NFA_DM_RF_DISC_START_EVT:
@@ -1499,6 +1410,11 @@ static void nfa_dm_excl_disc_cback(tNFA_DM_RF_DISC_EVT event,
 
         nfa_dm_conn_cback_event_notify(NFA_ACTIVATED_EVT, &evt_data);
       } else {
+        //Free bufffer if it has not yet been done to avoid buffer leak
+        if (nfa_dm_cb.p_activate_ntf) {
+          GKI_freebuf(nfa_dm_cb.p_activate_ntf);
+          nfa_dm_cb.p_activate_ntf = nullptr;
+        }
         /* holding activation notification until sub-module is ready */
         nfa_dm_cb.p_activate_ntf =
             (uint8_t*)GKI_getbuf(sizeof(tNFC_ACTIVATE_DEVT));
@@ -1577,7 +1493,7 @@ static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
                                    tNFC_DISCOVER* p_data) {
   tNFA_CONN_EVT_DATA evt_data;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("event:0x%02X", event);
+  LOG(DEBUG) << StringPrintf("event:0x%02X", event);
 
   switch (event) {
     case NFA_DM_RF_DISC_START_EVT:
@@ -1591,6 +1507,12 @@ static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
             p_data->activate.rf_tech_param.param.pa.sel_rsp;
       }
 
+      //Free bufffer if it has not yet been done to avoid buffer leak
+      if (nfa_dm_cb.p_activate_ntf) {
+        GKI_freebuf(nfa_dm_cb.p_activate_ntf);
+        nfa_dm_cb.p_activate_ntf = nullptr;
+      }
+
       /* holding activation notification until sub-module is ready */
       nfa_dm_cb.p_activate_ntf =
           (uint8_t*)GKI_getbuf(sizeof(tNFC_ACTIVATE_DEVT));
@@ -1598,39 +1520,13 @@ static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
       if (nfa_dm_cb.p_activate_ntf) {
         memcpy(nfa_dm_cb.p_activate_ntf, &(p_data->activate),
                sizeof(tNFC_ACTIVATE_DEVT));
-        if ((nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_NFC_DEP) &&
-            (nfa_dm_cb.disc_cb.activated_rf_interface ==
-             NFC_INTERFACE_NFC_DEP)) {
-          /* For P2P mode(Default DTA mode) open Raw channel to bypass LLCP
-           * layer. For LLCP DTA mode activate LLCP */
-          if ((appl_dta_mode_flag == 1) &&
-              ((nfa_dm_cb.eDtaMode & 0x0F) == NFA_DTA_DEFAULT_MODE)) {
-            /* Open raw channel in case of p2p for DTA testing */
-            NFC_SetStaticRfCback(nfa_dm_act_data_cback);
-            nfa_dm_notify_activation_status(NFA_STATUS_OK, nullptr);
-          } else {
-            if (!(nfa_dm_cb.flags & NFA_DM_FLAGS_P2P_PAUSED)) {
-              /* activate LLCP */
-              nfa_p2p_activate_llcp(p_data);
-              if (nfa_dm_cb.p_activate_ntf) {
-                GKI_freebuf(nfa_dm_cb.p_activate_ntf);
-                nfa_dm_cb.p_activate_ntf = nullptr;
-              }
-            } else {
-              DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("P2P is paused");
-              nfa_dm_notify_activation_status(NFA_STATUS_OK, nullptr);
-            }
-          }
-        } else if ((nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T1T) ||
-                   (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T2T) ||
-                   (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T3T) ||
-                   (nfa_dm_cb.disc_cb.activated_protocol ==
-                    NFC_PROTOCOL_ISO_DEP) ||
-                   (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T5T) ||
-                   (nfa_dm_cb.disc_cb.activated_protocol ==
-                    NFC_PROTOCOL_KOVIO) ||
-                   (nfa_dm_cb.disc_cb.activated_protocol ==
-                    NFC_PROTOCOL_MIFARE)) {
+        if ((nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T1T) ||
+            (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T2T) ||
+            (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T3T) ||
+            (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_ISO_DEP) ||
+            (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_T5T) ||
+            (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_KOVIO) ||
+            (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_MIFARE)) {
           /* Notify NFA tag sub-system */
           nfa_rw_proc_disc_evt(NFA_DM_RF_DISC_ACTIVATED_EVT, p_data, true);
         } else /* if NFC-DEP/ISO-DEP with frame interface */
@@ -1654,17 +1550,8 @@ static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
         nfa_dm_cb.activated_nfcid_len = 0;
       }
 
-      if ((nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_NFC_DEP) &&
-          (nfa_dm_cb.disc_cb.activated_rf_interface == NFC_INTERFACE_NFC_DEP)) {
-        /*
-        ** If LLCP link is not deactivated yet,
-        ** LLCP will receive deactivation ntf through data callback.
-        ** NFA P2P will receive callback event from LLCP.
-        */
-      } else {
-        /* Notify NFA RW sub-systems */
-        nfa_rw_proc_disc_evt(NFA_DM_RF_DISC_DEACTIVATED_EVT, nullptr, true);
-      }
+      /* Notify NFA RW sub-systems */
+      nfa_rw_proc_disc_evt(NFA_DM_RF_DISC_DEACTIVATED_EVT, nullptr, true);
 
       /* if NFA sent NFA_ACTIVATED_EVT earlier */
       if (nfa_dm_cb.flags & NFA_DM_FLAGS_SEND_DEACTIVATED_EVT) {
@@ -1729,7 +1616,7 @@ void nfa_dm_notify_activation_status(tNFA_STATUS status,
   tNFC_RF_TECH_PARAMS* p_tech_params;
   uint8_t *p_nfcid = nullptr, nfcid_len;
 
-  DLOG_IF(INFO, nfc_debug_enabled) << StringPrintf("status:0x%X", status);
+  LOG(DEBUG) << StringPrintf("status:0x%X", status);
 
   if (!nfa_dm_cb.p_activate_ntf) {
     /* this is for NFA P2P listen */
@@ -1777,17 +1664,7 @@ void nfa_dm_notify_activation_status(tNFA_STATUS status,
       nfcid_len = 0;
     }
 
-    /*
-    ** If not in exlusive RF mode, and
-    **      P2P activation, then push default NDEF message through SNEP
-    **      TAG activation, then read NDEF message
-    */
-    if (nfa_dm_cb.disc_cb.activated_protocol == NFC_PROTOCOL_NFC_DEP) {
-      /*
-      ** Default NDEF message will be put to NFC Forum defualt SNEP server
-      ** after receiving NFA_LLCP_ACTIVATED_EVT.
-      */
-    } else if (!(nfa_dm_cb.flags & NFA_DM_FLAGS_EXCL_RF_ACTIVE)) {
+    if (!(nfa_dm_cb.flags & NFA_DM_FLAGS_EXCL_RF_ACTIVE)) {
       /*
       ** if the same tag is activated then do not perform auto NDEF
       ** detection. Application may put a tag into sleep mode and
@@ -1833,6 +1710,39 @@ void nfa_dm_notify_activation_status(tNFA_STATUS status,
 
   GKI_freebuf(nfa_dm_cb.p_activate_ntf);
   nfa_dm_cb.p_activate_ntf = nullptr;
+}
+
+/*******************************************************************************
+**
+** Function         nfa_dm_act_change_discovery_tech
+**
+** Description      Process change listening command
+**
+** Returns          TRUE (message buffer to be freed by caller)
+**
+*******************************************************************************/
+bool nfa_dm_act_change_discovery_tech(tNFA_DM_MSG* p_data) {
+  tNFA_CONN_EVT_DATA evt_data;
+
+  LOG(DEBUG) << StringPrintf("nfa_dm_act_change_discovery_tech ()");
+
+  if (p_data->change_discovery_tech.is_revert_poll)
+    nfa_dm_cb.flags &= ~NFA_DM_FLAGS_POLL_TECH_CHANGED;
+  else
+    nfa_dm_cb.flags |= NFA_DM_FLAGS_POLL_TECH_CHANGED;
+
+  if (p_data->change_discovery_tech.is_revert_listen)
+    nfa_dm_cb.flags &= ~NFA_DM_FLAGS_LISTEN_TECH_CHANGED;
+  else
+    nfa_dm_cb.flags |= NFA_DM_FLAGS_LISTEN_TECH_CHANGED;
+
+  nfa_dm_cb.change_poll_mask = p_data->change_discovery_tech.change_poll_mask;
+  nfa_dm_cb.change_listen_mask =
+      p_data->change_discovery_tech.change_listen_mask;
+  evt_data.status = NFA_STATUS_OK;
+  nfa_dm_conn_cback_event_notify(NFA_LISTEN_ENABLED_EVT, &evt_data);
+
+  return true;
 }
 
 /*******************************************************************************
