@@ -140,6 +140,7 @@ enum {
 
   RW_MFC_RAW_FRAME_EVT,  /* Response of raw frame sent               */
   RW_MFC_INTF_ERROR_EVT, /* RF Interface error event                 */
+  RW_MFC_PRES_CHECK_EVT, /* Response for MIFARE pres check alternative */
   RW_MFC_MAX_EVT,
   RW_CI_PRESENCE_CHECK_EVT = RW_CI_FIRST_EVT,
   RW_CI_INTF_ERROR_EVT,
