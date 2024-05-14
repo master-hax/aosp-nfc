@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41409ea5_1342b434",
+        "filename": "src/nfa/include/nfa_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-05-14T09:57:49Z",
+      "side": 0,
+      "message": "resolved.",
+      "parentUuid": "ee118490_1913e4c1",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 35
+      },
+      "revId": "c033e8fec7788de13b85d54bf37f37b16dae8b04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a5b2118_5d0cb689",
