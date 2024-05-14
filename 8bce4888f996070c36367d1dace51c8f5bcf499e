@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0ac788e_e4f40056",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-05-14T10:02:30Z",
+      "side": 1,
+      "message": "This is added for CVE (Common Vulnerabilities and Exposures), you don\u0027t need to add this android_errorWriteLog in your new updates.",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 51
+      },
+      "revId": "8bce4888f996070c36367d1dace51c8f5bcf499e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
