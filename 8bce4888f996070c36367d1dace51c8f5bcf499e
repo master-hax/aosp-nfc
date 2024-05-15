@@ -70,6 +70,30 @@
       },
       "revId": "8bce4888f996070c36367d1dace51c8f5bcf499e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06124342_9e5581bb",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2024-05-15T08:00:38Z",
+      "side": 1,
+      "message": "Sorry about that, corrected",
+      "parentUuid": "fae3e384_2c978180",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 51
+      },
+      "revId": "8bce4888f996070c36367d1dace51c8f5bcf499e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
