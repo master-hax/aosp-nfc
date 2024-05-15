@@ -34,6 +34,24 @@
       "parentUuid": "8d1a222a_609f5c80",
       "revId": "c5524dddfbe4e9b4844100d2e6c0f3b6e26b8836",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f26d2b4b_4f1c22d5",
+        "filename": "src/nfa/rw/nfa_rw_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1884477
+      },
+      "writtenOn": "2024-05-15T21:27:06Z",
+      "side": 1,
+      "message": "But this line has been removed; is it an omission ?\n```\nnfa_dm_rf_deactivate(NFA_DEACTIVATE_TYPE_DISCOVERY);\n```",
+      "parentUuid": "fe2c3a7a_6b99aa64",
+      "revId": "c5524dddfbe4e9b4844100d2e6c0f3b6e26b8836",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
