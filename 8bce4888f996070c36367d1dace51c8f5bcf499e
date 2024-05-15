@@ -46,6 +46,30 @@
       },
       "revId": "8bce4888f996070c36367d1dace51c8f5bcf499e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fae3e384_2c978180",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-05-15T07:49:54Z",
+      "side": 1,
+      "message": "You should remove line 145, but not line 2380.",
+      "parentUuid": "f5daa381_5655205e",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 51
+      },
+      "revId": "8bce4888f996070c36367d1dace51c8f5bcf499e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
