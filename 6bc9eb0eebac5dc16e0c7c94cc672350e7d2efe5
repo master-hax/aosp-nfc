@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19c90a65_effdc04d",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2047,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-05-23T15:37:31Z",
+      "side": 1,
+      "message": "Move this error message to Line 2065?",
+      "range": {
+        "startLine": 2044,
+        "startChar": 8,
+        "endLine": 2047,
+        "endChar": 55
+      },
+      "revId": "6bc9eb0eebac5dc16e0c7c94cc672350e7d2efe5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
