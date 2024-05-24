@@ -22,6 +22,30 @@
       },
       "revId": "6bc9eb0eebac5dc16e0c7c94cc672350e7d2efe5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dac2872_d8e037e2",
+        "filename": "src/nfc/tags/rw_t4t.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2047,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2024-05-24T09:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19c90a65_effdc04d",
+      "range": {
+        "startLine": 2044,
+        "startChar": 8,
+        "endLine": 2047,
+        "endChar": 55
+      },
+      "revId": "6bc9eb0eebac5dc16e0c7c94cc672350e7d2efe5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
