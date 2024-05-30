@@ -728,11 +728,11 @@ impl Controller {
     }
 
     async fn send_control(&self, packet: impl Into<nci::ControlPacket>) -> Result<()> {
-        self.nci_writer.write(&packet.into().to_vec()).await
+        self.nci_writer.write(&packet.into().encode_to_vec()?).await
     }
 
     async fn send_data(&self, packet: impl Into<nci::DataPacket>) -> Result<()> {
-        self.nci_writer.write(&packet.into().to_vec()).await
+        self.nci_writer.write(&packet.into().encode_to_vec()?).await
     }
 
     async fn send_rf(&self, packet: impl Into<rf::RfPacket>) -> Result<()> {
@@ -1681,14 +1681,14 @@ impl Controller {
                 id: cmd.get_sender(),
                 rf_protocol: *rf_protocol,
                 rf_technology: rf::Technology::NfcA,
-                rf_technology_specific_parameters: pdl_runtime::Packet::to_vec(
+                rf_technology_specific_parameters:
                     nci::NfcAPollModeTechnologySpecificParametersBuilder {
                         sens_res,
                         nfcid1: cmd.get_nfcid1().clone(),
                         sel_res,
                     }
-                    .build(),
-                ),
+                    .build()
+                    .encode_to_vec()?,
             })
         }
 
@@ -1760,7 +1760,7 @@ impl Controller {
                 param: cmd.get_param(),
             }
             .build()
-            .to_vec(),
+            .encode_to_vec()?,
         })
         .await?;
 
@@ -1822,12 +1822,11 @@ impl Controller {
             // TODO(hchataing) the activation parameters should be empty
             // when the RF frame interface is used, since the protocol
             // activation is managed by the DH.
-            activation_parameters: pdl_runtime::Packet::to_vec(
-                nci::NfcAIsoDepPollModeActivationParametersBuilder {
-                    rats_response: cmd.get_rats_response().clone(),
-                }
-                .build(),
-            ),
+            activation_parameters: nci::NfcAIsoDepPollModeActivationParametersBuilder {
+                rats_response: cmd.get_rats_response().clone(),
+            }
+            .build()
+            .encode_to_vec()?,
         })
         .await?;
 
