@@ -2510,8 +2510,22 @@ static void nfa_dm_disc_sm_listen_active(tNFA_DM_RF_DISC_SM_EVENT event,
       if (nfa_dm_cb.disc_cb.disc_flags & NFA_DM_DISC_FLAGS_W4_RSP) {
         /* it's race condition. received deactivate NTF before receiving RSP */
         /* notify deactivation after receiving deactivate RSP */
-        LOG(VERBOSE) << StringPrintf(
-            "Rx deactivate NTF while waiting for deactivate RSP");
+        LOG(DEBUG) << StringPrintf(
+            "%s; Rx deactivate NTF while waiting for deactivate RSP", __func__);
+        if ((p_data->nfc_discover.deactivate.type ==
+             NFC_DEACTIVATE_TYPE_SLEEP) ||
+            (p_data->nfc_discover.deactivate.type ==
+             NFC_DEACTIVATE_TYPE_SLEEP_AF)) {
+          nfa_dm_disc_new_state(NFA_DM_RFST_LISTEN_SLEEP);
+        } else if (p_data->nfc_discover.deactivate.type ==
+                   NFC_DEACTIVATE_TYPE_DISCOVERY) {
+          /* Discovery */
+          if (nfa_dm_cb.pending_power_state != SCREEN_STATE_INVALID) {
+            NFC_SetPowerSubState(nfa_dm_cb.pending_power_state);
+            nfa_dm_cb.pending_power_state = SCREEN_STATE_INVALID;
+          }
+          nfa_dm_disc_new_state(NFA_DM_RFST_DISCOVERY);
+        }
       } else {
         nfa_dm_disc_notify_deactivation(NFA_DM_RF_DEACTIVATE_NTF,
                                         &(p_data->nfc_discover));
