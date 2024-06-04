@@ -304,7 +304,7 @@ cc_fuzz {
 
 genrule {
     name: "NfcGeneratedPackets_rust",
-    defaults: ["pdl_rust_generator_defaults"],
+    defaults: ["pdl_rust_legacy_generator_defaults"],
     srcs: ["nci_packets.pdl"],
     out: ["nci_packets.rs"],
 }
