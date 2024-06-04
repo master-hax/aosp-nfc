@@ -2067,6 +2067,16 @@ static void nfa_dm_disc_sm_w4_host_select(tNFA_DM_RF_DISC_SM_EVENT event,
       break;
     case NFA_DM_RF_INTF_ACTIVATED_NTF:
       nfa_dm_disc_new_state(NFA_DM_RFST_POLL_ACTIVE);
+
+      if (nfa_dm_cb.disc_cb.disc_flags & NFA_DM_DISC_FLAGS_W4_RSP) {
+        // RF_DEACTIVATE_CMD was sent and INTF_ACTIVATED received before the
+        // RSP, RFST is changed to POLL_ACTIVE, hence a NTF must be waited too
+        LOG(DEBUG) << StringPrintf(
+            "%s; Adding NTF flag because activation was received before RSP",
+            __func__);
+        nfa_dm_cb.disc_cb.disc_flags |= NFA_DM_DISC_FLAGS_W4_NTF;
+      }
+
       /* always call nfa_dm_disc_notify_activation to update protocol/interface
        * information in NFA control blocks */
       status = nfa_dm_disc_notify_activation(&(p_data->nfc_discover));
