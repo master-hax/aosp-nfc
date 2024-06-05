@@ -2576,14 +2576,13 @@ static void nfa_dm_disc_sm_listen_sleep(tNFA_DM_RF_DISC_SM_EVENT event,
                                         tNFA_DM_RF_DISC_DATA* p_data) {
   switch (event) {
     case NFA_DM_RF_DEACTIVATE_CMD:
-      nfa_dm_send_deactivate_cmd(p_data->deactivate_type);
+      // When in LISTEN_SLEEP, according to NCI, only deactivate(idle)
+      // can be sent
+      nfa_dm_send_deactivate_cmd(NFC_DEACTIVATE_TYPE_IDLE);
 
-      /* if deactivate type is not discovery then NFCC will not sent
-       * deactivation NTF */
-      if (p_data->deactivate_type != NFA_DEACTIVATE_TYPE_DISCOVERY) {
-        nfa_dm_cb.disc_cb.disc_flags &= ~NFA_DM_DISC_FLAGS_W4_NTF;
-        nfa_sys_stop_timer(&nfa_dm_cb.disc_cb.tle);
-      }
+      /* NFCC will not sent deactivation NTF */
+      nfa_dm_cb.disc_cb.disc_flags &= ~NFA_DM_DISC_FLAGS_W4_NTF;
+      nfa_sys_stop_timer(&nfa_dm_cb.disc_cb.tle);
       break;
     case NFA_DM_RF_DEACTIVATE_RSP:
       nfa_dm_cb.disc_cb.disc_flags &= ~NFA_DM_DISC_FLAGS_W4_RSP;
