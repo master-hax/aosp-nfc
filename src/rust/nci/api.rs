@@ -25,6 +25,7 @@ use nfc_packets::nci::{DestParam, DestParamTypes, DestTypes};
 use nfc_packets::nci::{FeatureEnable, PacketBoundaryFlag, ResetType};
 use nfc_packets::nci::{InitCommandBuilder, ResetCommandBuilder};
 use nfc_packets::nci::{InitResponse, ResponseChild};
+use pdl_runtime::Packet;
 use tokio::sync::oneshot;
 
 type ConnCallback = fn(u8, u16, &[u8]);
@@ -207,7 +208,7 @@ impl NciApi {
     pub async fn nfc_set_config(&mut self, param_tlvs: &[u8]) -> Result<u8> {
         let pbf = PacketBoundaryFlag::CompleteOrFinal;
         if let Some(cmd) = self.commands.as_mut() {
-            let rp = cmd
+            let raw = cmd
                 .send(
                     CommandBuilder {
                         gid: 0,
@@ -217,8 +218,8 @@ impl NciApi {
                     }
                     .build(),
                 )
-                .await?;
-            let raw = Bytes::from(rp);
+                .await?
+                .encode_to_bytes()?;
             if let Some(cb) = self.callback {
                 cb(2, &raw[3..]);
             }
@@ -246,7 +247,7 @@ impl NciApi {
     pub async fn nfc_get_config(&mut self, param_tlvs: &[u8]) -> Result<u8> {
         let pbf = PacketBoundaryFlag::CompleteOrFinal;
         if let Some(cmd) = self.commands.as_mut() {
-            let rp = cmd
+            let raw = cmd
                 .send(
                     CommandBuilder {
                         gid: 0,
@@ -256,8 +257,8 @@ impl NciApi {
                     }
                     .build(),
                 )
-                .await?;
-            let raw = Bytes::from(rp);
+                .await?
+                .encode_to_bytes()?;
             if let Some(cb) = self.callback {
                 cb(3, &raw[3..]);
             }

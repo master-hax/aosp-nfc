@@ -119,7 +119,7 @@ where
     W: AsyncWriteExt + Unpin,
     P: Packet,
 {
-    let b = cmd.to_bytes();
+    let b = cmd.encode_to_bytes().unwrap();
     let mut data = BytesMut::with_capacity(b.len() + 2);
     data.put_u16(b.len().try_into().unwrap());
     data.extend(b);

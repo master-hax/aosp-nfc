@@ -265,7 +265,7 @@ impl LogicalConnectionsRegistry {
                 let mut buffer = BytesMut::with_capacity(cap);
                 buffer.put_u8(0u8); // status
                 let pkt = conn_params.recvq.pop_front().unwrap();
-                buffer.put(pkt.to_bytes());
+                buffer.put(pkt.encode_to_bytes().unwrap());
                 while !conn_params.recvq.is_empty() {
                     let pkt = conn_params.recvq.pop_front().unwrap();
                     if let Payload(p) = pkt.specialize() {
