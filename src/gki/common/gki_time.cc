@@ -726,6 +726,10 @@ uint32_t GKI_get_remaining_ticks(TIMER_LIST_Q* p_timer_listq,
       p_tle = p_tle->p_next;
     }
 
+    if (p_tle == nullptr) {
+      LOG(ERROR) << StringPrintf("%s; p_tle is null", __func__);
+      return (0);
+    }
     /* if found target entry */
     if (p_tle == p_target_tle) {
       rem_ticks += p_tle->ticks;

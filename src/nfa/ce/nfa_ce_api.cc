@@ -339,7 +339,14 @@ tNFA_STATUS NFA_CeRegisterAidOnDH(uint8_t aid[NFC_MAX_AID_LEN], uint8_t aid_len,
     p_msg->reg_listen.listen_type = NFA_CE_REG_TYPE_ISO_DEP;
 
     /* Listen info */
-    memcpy(p_msg->reg_listen.aid, aid, aid_len);
+    if ((aid_len == 0) && (aid != nullptr)) {
+      GKI_freebuf(p_msg);
+      return (NFA_STATUS_INVALID_PARAM);
+    }
+
+    if (aid_len != 0) {
+      memcpy(p_msg->reg_listen.aid, aid, aid_len);
+    }
     p_msg->reg_listen.aid_len = aid_len;
 
     nfa_sys_sendmsg(p_msg);
