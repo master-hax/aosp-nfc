@@ -310,9 +310,10 @@ tNFA_STATUS NFA_CeDeregisterFelicaSystemCodeOnDH(tNFA_HANDLE handle) {
 **                  The NFA_CE_REGISTERED_EVT reports the status of the
 **                  operation.
 **
-**                  If no AID is specified (aid_len=0), then p_conn_cback will
-**                  will get notifications for any AIDs routed to the DH. This
-**                  over-rides callbacks registered for specific AIDs.
+**                  If no AID is specified (aid_len=0), and the pointer to the AID
+**                  value is null then p_conn_cback will get notifications for any
+**                  AIDs routed to the DH. This over-rides callbacks registered for
+**                  specific AIDs.
 **
 ** Note:            If RF discovery is started,
 **                  NFA_StopRfDiscovery()/NFA_RF_DISCOVERY_STOPPED_EVT should
@@ -339,7 +340,14 @@ tNFA_STATUS NFA_CeRegisterAidOnDH(uint8_t aid[NFC_MAX_AID_LEN], uint8_t aid_len,
     p_msg->reg_listen.listen_type = NFA_CE_REG_TYPE_ISO_DEP;
 
     /* Listen info */
-    memcpy(p_msg->reg_listen.aid, aid, aid_len);
+    if ((aid_len == 0) && (aid != nullptr)) {
+      GKI_freebuf(p_msg);
+      return (NFA_STATUS_INVALID_PARAM);
+    }
+
+    if (aid_len != 0) {
+      memcpy(p_msg->reg_listen.aid, aid, aid_len);
+    }
     p_msg->reg_listen.aid_len = aid_len;
 
     nfa_sys_sendmsg(p_msg);
