@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d73c563_82a38120",
+        "filename": "src/nfc/nfc/nfc_ncif.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-06-10T10:11:24Z",
+      "side": 0,
+      "message": "T3T read failed due to this part.\nFix in aosp/3119393",
+      "range": {
+        "startLine": 763,
+        "startChar": 1,
+        "endLine": 795,
+        "endChar": 63
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7039dda9_54f5ec06",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfc/nfc/nfc_ncif.cc",
+              "range": {
+                "startLine": 764,
+                "startChar": 0,
+                "endLine": 776,
+                "endChar": 0
+              },
+              "replacement": "     if (plen \u003c 1) {\n       goto invalid_packet;\n     }\n     plen--;\n     u8 \u003d *p++;\n     if (u8) {\n       if (plen \u003c NCI_NFCID2_LEN) {\n         goto invalid_packet;\n       }\n       plen -\u003d NCI_NFCID2_LEN;\n       STREAM_TO_ARRAY(p_lf-\u003enfcid2, p, NCI_NFCID2_LEN);\n     }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "145b5dc8867c4db3b86d18093a799564a2f7e285",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
