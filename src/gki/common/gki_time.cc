@@ -727,7 +727,7 @@ uint32_t GKI_get_remaining_ticks(TIMER_LIST_Q* p_timer_listq,
     }
 
     /* if found target entry */
-    if (p_tle == p_target_tle) {
+    if ((p_tle != nullptr) && (p_tle == p_target_tle)) {
       rem_ticks += p_tle->ticks;
     } else {
       LOG(ERROR) << StringPrintf(
