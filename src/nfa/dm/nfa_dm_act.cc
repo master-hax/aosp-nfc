@@ -1464,7 +1464,7 @@ static void nfa_dm_excl_disc_cback(tNFA_DM_RF_DISC_EVT event,
           (p_data->deactivate.type == NFC_DEACTIVATE_TYPE_SLEEP_AF)) {
         evt_data.deactivated.type = NFA_DEACTIVATE_TYPE_SLEEP;
       } else {
-        evt_data.deactivated.type = NFA_DEACTIVATE_TYPE_IDLE;
+        evt_data.deactivated.type = p_data->deactivate.type;
       }
 
       /* notify deactivation to upper layer */
@@ -1562,7 +1562,7 @@ static void nfa_dm_poll_disc_cback(tNFA_DM_RF_DISC_EVT event,
             (p_data->deactivate.type == NFC_DEACTIVATE_TYPE_SLEEP_AF)) {
           evt_data.deactivated.type = NFA_DEACTIVATE_TYPE_SLEEP;
         } else {
-          evt_data.deactivated.type = NFA_DEACTIVATE_TYPE_IDLE;
+          evt_data.deactivated.type = p_data->deactivate.type;
         }
         /* notify deactivation to application */
         nfa_dm_conn_cback_event_notify(NFA_DEACTIVATED_EVT, &evt_data);
