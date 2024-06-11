@@ -138,6 +138,9 @@ void GKI_init(void) {
   p_os->no_timer_suspend = GKI_TIMER_TICK_RUN_COND;
   pthread_mutex_init(&p_os->gki_timer_mutex, nullptr);
   pthread_cond_init(&p_os->gki_timer_cond, nullptr);
+  pthread_mutex_init(&p_os->gki_end_mutex, nullptr);
+  pthread_cond_init(&p_os->gki_end_cond, nullptr);
+  p_os->end_flag = 0;
 }
 
 /*******************************************************************************
@@ -323,11 +326,6 @@ void GKI_shutdown(void) {
     }
   }
 
-  /* Destroy mutex and condition variable objects */
-  pthread_mutex_destroy(&gki_cb.os.GKI_mutex);
-/*    pthread_mutex_destroy(&GKI_sched_mutex); */
-/*    pthread_mutex_destroy(&thread_delay_mutex);
- pthread_cond_destroy (&thread_delay_cond); */
 #if (FALSE == GKI_PTHREAD_JOINABLE)
   i = 0;
 #endif
@@ -340,6 +338,16 @@ void GKI_shutdown(void) {
   if (oldCOnd == GKI_TIMER_TICK_STOP_COND ||
       oldCOnd == GKI_TIMER_TICK_EXIT_COND)
     pthread_cond_signal(&gki_cb.os.gki_timer_cond);
+
+  pthread_mutex_lock(&gki_cb.os.gki_end_mutex);
+  while (gki_cb.os.end_flag != 1) {
+    pthread_cond_wait(&gki_cb.os.gki_end_cond, &gki_cb.os.gki_end_mutex);
+  }
+  pthread_mutex_unlock(&gki_cb.os.gki_end_mutex);
+
+  pthread_mutex_destroy(&gki_cb.os.GKI_mutex);
+  pthread_mutex_destroy(&gki_cb.os.gki_end_mutex);
+  pthread_cond_destroy(&gki_cb.os.gki_end_cond);
 }
 
 /*******************************************************************************
@@ -493,6 +501,12 @@ void GKI_run(__attribute__((unused)) void* p_task_id) {
 #endif
   } /* for */
 #endif
+
+  pthread_mutex_lock(&gki_cb.os.gki_end_mutex);
+  gki_cb.os.end_flag = 1;
+  pthread_cond_signal(&gki_cb.os.gki_end_cond);
+  pthread_mutex_unlock(&gki_cb.os.gki_end_mutex);
+
   gki_cb.com.OSWaitEvt[BTU_TASK] = 0;
   LOG(VERBOSE) << StringPrintf("%s exit", __func__);
 }
