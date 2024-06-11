@@ -1833,7 +1833,9 @@ static void nfa_dm_disc_sm_idle(tNFA_DM_RF_DISC_SM_EVENT event,
           /* stop discovery */
           nfa_dm_cb.disc_cb.disc_flags |= NFA_DM_DISC_FLAGS_W4_RSP;
           NFC_Deactivate(NFA_DEACTIVATE_TYPE_IDLE);
-          break;
+          if (nfa_dm_cb.disc_cb.disc_flags & NFA_DM_DISC_FLAGS_DISABLING) {
+            break;
+          }
         }
 
         if (nfa_dm_cb.disc_cb.excl_disc_entry.in_use) {
