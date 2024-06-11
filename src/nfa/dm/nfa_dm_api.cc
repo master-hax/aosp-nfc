@@ -834,7 +834,7 @@ tNFA_STATUS NFA_SendRawFrame(uint8_t* p_raw_data, uint16_t data_len,
     p_msg->len = data_len;
 
     p = (uint8_t*)(p_msg + 1) + p_msg->offset;
-    if (p_raw_data != nullptr) {
+    if ((data_len != 0) && (p_raw_data != nullptr)) {
       memcpy(p, p_raw_data, data_len);
     }
 
