@@ -635,9 +635,9 @@ uint16_t GKI_wait(uint16_t flag, uint32_t timeout) {
       pthread_cond_timedwait(&gki_cb.os.thread_evt_cond[rtask],
                              &gki_cb.os.thread_evt_mutex[rtask], &abstime);
 
-    } else {
-      pthread_cond_wait(&gki_cb.os.thread_evt_cond[rtask],
-                        &gki_cb.os.thread_evt_mutex[rtask]);
+    } else if (gki_cb.com.OSRdyTbl[rtask] != TASK_DEAD) {
+        pthread_cond_wait(&gki_cb.os.thread_evt_cond[rtask],
+                          &gki_cb.os.thread_evt_mutex[rtask]);
     }
 
     /* TODO: check, this is probably neither not needed depending on
