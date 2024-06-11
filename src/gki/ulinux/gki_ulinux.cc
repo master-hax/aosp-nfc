@@ -82,8 +82,8 @@ gki_pthread_info_t gki_pthread_info[GKI_MAX_TASKS];
 void* gki_task_entry(void* params) {
   pthread_t thread_id = pthread_self();
   gki_pthread_info_t* p_pthread_info = (gki_pthread_info_t*)params;
-  LOG(VERBOSE) << StringPrintf(
-      "gki_task_entry task_id=%i, thread_id=%lx/%lx, pCond/pMutex=%p/%p",
+  LOG(DEBUG) << StringPrintf(
+      "%s; task_id=%i, thread_id=%lx/%lx, pCond/pMutex=%p/%p", __func__,
       p_pthread_info->task_id, gki_cb.os.thread_id[p_pthread_info->task_id],
       pthread_self(), p_pthread_info->pCond, p_pthread_info->pMutex);
 
@@ -91,9 +91,11 @@ void* gki_task_entry(void* params) {
   /* Call the actual thread entry point */
   (p_pthread_info->task_entry)(p_pthread_info->params);
 
-  LOG(WARNING) << StringPrintf("gki_task task_id=%i terminating",
+  LOG(WARNING) << StringPrintf("%s; task_id=%i terminating", __func__,
                                p_pthread_info->task_id);
+#if (FALSE == GKI_PTHREAD_JOINABLE)
   gki_cb.os.thread_id[p_pthread_info->task_id] = 0;
+#endif
 
   return nullptr;
 }
@@ -189,8 +191,8 @@ uint8_t GKI_create_task(TASKPTR task_entry, uint8_t task_id, int8_t* taskname,
 
   pthread_condattr_init(&attr);
   pthread_condattr_setclock(&attr, CLOCK_MONOTONIC);
-  LOG(VERBOSE) << StringPrintf(
-      "GKI_create_task func=0x%p  id=%d  name=%s  stack=0x%p  stackSize=%d",
+  LOG(DEBUG) << StringPrintf(
+      "%s; func=0x%p  id=%d  name=%s  stack=0x%p  stackSize=%d", __func__,
       task_entry, task_id, taskname, stack, stacksize);
 
   if (task_id >= GKI_MAX_TASKS) {
@@ -214,8 +216,9 @@ uint8_t GKI_create_task(TASKPTR task_entry, uint8_t task_id, int8_t* taskname,
 #if (FALSE == GKI_PTHREAD_JOINABLE)
   pthread_attr_setdetachstate(&attr1, PTHREAD_CREATE_DETACHED);
 
-  LOG(VERBOSE) << StringPrintf("GKI creating task %i, pCond/pMutex=%p/%p",
-                             task_id, pCondVar, pMutex);
+  LOG(DEBUG)
+      << StringPrintf("%s; GKI creating task %i, pCond/pMutex=%p/%p", __func__,
+                      task_id, pCondVar, pMutex);
 #else
   LOG(VERBOSE) << StringPrintf("GKI creating JOINABLE task %i", task_id);
 #endif
@@ -314,8 +317,8 @@ void GKI_shutdown(void) {
         }
       }
 #endif
-      LOG(VERBOSE) << StringPrintf("task %s dead",
-                                 gki_cb.com.OSTName[task_id - 1]);
+      LOG(DEBUG) << StringPrintf(
+          "%s; task %s dead", __func__, gki_cb.com.OSTName[task_id - 1]);
       GKI_exit_task(task_id - 1);
     }
   }
@@ -338,6 +341,14 @@ void GKI_shutdown(void) {
     pthread_cond_wait(&gki_cb.os.gki_end_cond, &gki_cb.os.gki_end_mutex);
   }
   pthread_mutex_unlock(&gki_cb.os.gki_end_mutex);
+
+#if (TRUE == GKI_PTHREAD_JOINABLE)
+  result = pthread_join(gki_cb.os.thread_id[BTU_TASK], NULL);
+  if (result < 0) {
+    LOG(DEBUG)
+        << StringPrintf("FAILED: result: %d", result);
+  }
+#endif
 
   pthread_mutex_destroy(&gki_cb.os.GKI_mutex);
   pthread_mutex_destroy(&gki_cb.os.gki_end_mutex);
@@ -426,7 +437,7 @@ void timer_thread(signed long id) {
 **                  should be empty.
 *******************************************************************************/
 void GKI_run(__attribute__((unused)) void* p_task_id) {
-  LOG(VERBOSE) << StringPrintf("%s enter", __func__);
+  LOG(DEBUG) << StringPrintf("%s; enter", __func__);
   struct timespec delay;
   int err = 0;
   volatile int* p_run_cond = &gki_cb.os.no_timer_suspend;
@@ -436,7 +447,8 @@ void GKI_run(__attribute__((unused)) void* p_task_id) {
    * timers are
    * in any GKI/BTA/BTU this should save power when BTLD is idle! */
   GKI_timer_queue_register_callback(gki_system_tick_start_stop_cback);
-  LOG(VERBOSE) << StringPrintf("Start/Stop GKI_timer_update_registered!");
+  LOG(DEBUG)
+      << StringPrintf("%s; Start/Stop GKI_timer_update_registered!", __func__);
 #endif
 
 #ifdef NO_GKI_RUN_RETURN
@@ -453,8 +465,8 @@ void GKI_run(__attribute__((unused)) void* p_task_id) {
     return GKI_FAILURE;
   }
 #else
-  LOG(VERBOSE) << StringPrintf("GKI_run, run_cond(%p)=%d ", p_run_cond,
-                             *p_run_cond);
+  LOG(DEBUG) << StringPrintf(
+      "%s; run_cond(%p)=%d ", __func__, p_run_cond, *p_run_cond);
   for (; GKI_TIMER_TICK_EXIT_COND != *p_run_cond;) {
     do {
       /* adjust hear bit tick in btld by changning TICKS_PER_SEC!!!!! this
@@ -647,7 +659,9 @@ uint16_t GKI_wait(uint16_t flag, uint32_t timeout) {
       LOG(WARNING) << StringPrintf("GKI TASK_DEAD received. exit thread %d...",
                                    rtask);
 
+#if (FALSE == GKI_PTHREAD_JOINABLE)
       gki_cb.os.thread_id[rtask] = 0;
+#endif
       return (EVENT_MASK(GKI_SHUTDOWN_EVT));
     }
   }
@@ -1091,7 +1105,8 @@ void GKI_exit_task(uint8_t task_id) {
 
   // GKI_send_event(task_id, EVENT_MASK(GKI_SHUTDOWN_EVT));
 
-  LOG(VERBOSE) << StringPrintf("GKI_exit_task %d done", task_id);
+  LOG(DEBUG)
+      << StringPrintf("%s; %d done", __func__, task_id);
   return;
 }
 
