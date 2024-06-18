@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3455fc8d_eb650a4b",
+        "filename": "src/include/vendor_cfg.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-06-18T02:23:47Z",
+      "side": 1,
+      "message": "Is it a proprietary value for ST chips only?",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4e69c31c_77c307b2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/include/vendor_cfg.h",
+              "range": {
+                "startLine": 66,
+                "startChar": 0,
+                "endLine": 67,
+                "endChar": 0
+              },
+              "replacement": "#define NCI_PROTOCOL_CI 0x84  // ST only\n"
+            }
+          ]
+        }
+      ],
+      "revId": "eb97b80ce085d629edfee8f9e71125ae1275f82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
