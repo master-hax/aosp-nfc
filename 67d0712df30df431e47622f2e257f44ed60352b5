@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "19716016_5689bd4c",
+        "filename": "src/nfa/ce/nfa_ce_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2024-06-20T09:17:07Z",
+      "side": 1,
+      "message": "When adding the default AID route in the JNI, we call this API this way:\n    nfaStat \u003d NFA_EeAddAidRouting(mDefaultEe, 0, NULL, powerState,\n                                  AID_ROUTE_QUAL_PREFIX);\nCalling this API with aid_len \u003d\u003d 0 and a non-null pointer for the AID value makes no sense. I will update the description. \nIf aid_len \u003d\u003d 0, then there is not aid value to copy.",
+      "parentUuid": "62ee26c3_a6793a2e",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 5
+      },
+      "revId": "67d0712df30df431e47622f2e257f44ed60352b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1b80d16e_30cba70c",
         "filename": "src/nfa/ee/nfa_ee_act.cc",
         "patchSetId": 2
