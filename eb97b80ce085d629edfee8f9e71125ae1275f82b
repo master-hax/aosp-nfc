@@ -40,6 +40,30 @@
       ],
       "revId": "eb97b80ce085d629edfee8f9e71125ae1275f82b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "140b7335_5ae6efcd",
+        "filename": "src/include/vendor_cfg.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2024-06-20T08:45:25Z",
+      "side": 1,
+      "message": "This is an arbitrary value; it does not come from the ST NFCC. The FW will return \"unknown protocol, frame RF, poll B\" if a Chinese Id card is detected. For simplification, we translate that to a dedicated protocol value. This value is only used inside this repository, the JNI will see \"unknown protocol, frame RF, type B\", and it is also what will be broadcasted.",
+      "parentUuid": "3455fc8d_eb650a4b",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "eb97b80ce085d629edfee8f9e71125ae1275f82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
