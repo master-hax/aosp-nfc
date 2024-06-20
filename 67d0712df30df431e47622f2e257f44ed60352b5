@@ -1,0 +1,91 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b490fa1_c43dd983",
+        "filename": "src/gki/common/gki_time.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-06-20T02:51:33Z",
+      "side": 1,
+      "message": "Could you combine these together?\n```suggestion\n    /* if found target entry */\n    if (p_tle !\u003d nullptr \u0026\u0026 p_tle \u003d\u003d p_target_tle) {\n```",
+      "range": {
+        "startLine": 729,
+        "startChar": 0,
+        "endLine": 734,
+        "endChar": 32
+      },
+      "revId": "67d0712df30df431e47622f2e257f44ed60352b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62ee26c3_a6793a2e",
+        "filename": "src/nfa/ce/nfa_ce_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-06-20T02:51:33Z",
+      "side": 1,
+      "message": "It\u0027s not aligned with the description.\n\n**                  If no AID is specified (aid_len\u003d0), then p_conn_cback will\n**                  will get notifications for any AIDs routed to the DH. This\n**                  over-rides callbacks registered for specific AIDs.",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "704aa9ce_fd2693c1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfa/ce/nfa_ce_api.cc",
+              "range": {
+                "startLine": 342,
+                "startChar": 0,
+                "endLine": 343,
+                "endChar": 0
+              },
+              "replacement": "    if ((aid_len \u003d\u003d 0) \u0026\u0026 (aid \u003d\u003d nullptr)) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "67d0712df30df431e47622f2e257f44ed60352b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b80d16e_30cba70c",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-06-20T02:51:33Z",
+      "side": 1,
+      "message": "```suggestion\n          LOG(ERROR) \u003c\u003c StringPrintf(\"%s; start_offset higher than 2\", __func__);\n```",
+      "range": {
+        "startLine": 524,
+        "startChar": 55,
+        "endLine": 524,
+        "endChar": 60
+      },
+      "revId": "67d0712df30df431e47622f2e257f44ed60352b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
