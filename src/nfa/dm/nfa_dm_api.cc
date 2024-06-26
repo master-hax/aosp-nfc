@@ -30,6 +30,7 @@
 #include "nfa_api.h"
 #include "nfa_ce_int.h"
 #include "nfa_wlc_int.h"
+#include "nfc_int.h"
 
 using android::base::StringPrintf;
 
@@ -40,6 +41,60 @@ using android::base::StringPrintf;
 /*****************************************************************************
 **  APIs
 *****************************************************************************/
+/*******************************************************************************
+**
+** Function         NFA_SetNfccMode
+**
+** Description      This function sets the different NFC controller modes.
+**
+**                  mode INIT_MODE_DEFAULT or INIT_MODE_TRANSPARENT
+**                  or INIT_MODE_EE
+**
+** Returns          none
+**
+*******************************************************************************/
+extern void NFA_SetNfccMode(uint8_t mode) {
+  LOG(DEBUG) << StringPrintf("%s: (%d) -> (%d)", __func__, nfc_cb.nfcc_mode,
+                             mode);
+  nfc_cb.nfcc_mode = mode;
+}
+
+/*******************************************************************************
+**
+** Function         NFA_Partial_Init
+**
+** Description      This function initializes control blocks for NFA based on
+**                  mode
+**
+**                  p_hal_entry_tbl points to a table of HAL entry points
+**                  mode INIT_MODE_DEFAULT or INIT_MODE_TRANSPARENT
+**                  or INIT_MODE_EE
+**
+**                  NOTE: the buffer that p_hal_entry_tbl points must be
+**                  persistent until NFA is disabled.
+**
+** Returns          none
+**
+*******************************************************************************/
+extern void NFA_Partial_Init(tHAL_NFC_ENTRY* p_hal_entry_tbl, uint8_t mode) {
+  LOG(DEBUG) << StringPrintf("%s:enter ", __func__);
+  if (mode == INIT_MODE_TRANSPARENT) {
+    nfa_sys_init();
+    nfa_dm_init();
+  } else if (mode == INIT_MODE_EE) {
+    nfa_sys_init();
+    nfa_dm_init();
+    nfa_ee_init();
+  } else {
+    LOG(DEBUG) << StringPrintf("Unknown Mode!");
+    return;
+  }
+  /* Initialize NFC module */
+  NFC_Init(p_hal_entry_tbl);
+  NFA_SetNfccMode(mode);
+  LOG(DEBUG) << StringPrintf("%s:exit ", __func__);
+}
+
 /*******************************************************************************
 **
 ** Function         NFA_Init

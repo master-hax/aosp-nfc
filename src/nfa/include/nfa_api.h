@@ -696,10 +696,27 @@ typedef void(tNFA_NDEF_CBACK)(tNFA_NDEF_EVT event, tNFA_NDEF_EVT_DATA* p_data);
 /* NFA VSC Callback */
 typedef void(tNFA_VSC_CBACK)(uint8_t event, uint16_t param_len,
                              uint8_t* p_param);
+/* INIT MODES */
+#define INIT_MODE_DEFAULT 0
+#define INIT_MODE_TRANSPARENT 1
+#define INIT_MODE_EE 2
 
 /*****************************************************************************
 **  External Function Declarations
 *****************************************************************************/
+/*******************************************************************************
+**
+** Function         NFA_SetNfccMode
+**
+** Description      This function sets the control blocks nfcc mode
+**
+**                  mode INIT_MODE_DEFAULT or INIT_MODE_TRANSPARENT
+**                  or INIT_MODE_EE
+**
+** Returns          none
+**
+*******************************************************************************/
+extern void NFA_SetNfccMode(uint8_t mode);
 
 /*******************************************************************************
 **
@@ -717,6 +734,26 @@ typedef void(tNFA_VSC_CBACK)(uint8_t event, uint16_t param_len,
 **
 *******************************************************************************/
 extern void NFA_Init(tHAL_NFC_ENTRY* p_hal_entry_tbl);
+
+/*******************************************************************************
+**
+** Function         NFA_Partial_Init
+**
+** Description      This function initializes control blocks for NFA based on
+**                  mode
+**
+**                  p_hal_entry_tbl points to a table of HAL entry points
+**                  mode INIT_MODE_DEFAULT or INIT_MODE_TRANSPARENT
+**                  or INIT_MODE_EE
+**
+**                  NOTE: the buffer that p_hal_entry_tbl points must be
+**                  persistent until NFA is disabled.
+**
+**
+** Returns          none
+**
+*******************************************************************************/
+extern void NFA_Partial_Init(tHAL_NFC_ENTRY* p_hal_entry_tbl, uint8_t mode);
 
 /*******************************************************************************
 **
