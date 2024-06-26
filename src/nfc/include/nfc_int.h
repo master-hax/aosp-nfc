@@ -216,6 +216,8 @@ typedef struct {
 
   TIMER_LIST_ENT nci_mode_set_ntf_timer; /*Mode set notification timer*/
 
+  uint8_t nfcc_mode; /* NFC controller modes */
+
 } tNFC_CB;
 
 /*****************************************************************************
