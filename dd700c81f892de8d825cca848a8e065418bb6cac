@@ -1,0 +1,160 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2676dcaa_bb19588b",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-01T14:25:29Z",
+      "side": 1,
+      "message": "It returns status.",
+      "range": {
+        "startLine": 651,
+        "startChar": 0,
+        "endLine": 651,
+        "endChar": 25
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b5280449_6e1b501b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfc/tags/rw_mfc.cc",
+              "range": {
+                "startLine": 651,
+                "startChar": 0,
+                "endLine": 652,
+                "endChar": 0
+              },
+              "replacement": " ** Returns          NFC_STATUS_OK, if presence check was started. Otherwise, error\n **                  status.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "dd700c81f892de8d825cca848a8e065418bb6cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35420095_fa150316",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-01T14:25:29Z",
+      "side": 1,
+      "message": "Could you update the log?",
+      "range": {
+        "startLine": 896,
+        "startChar": 26,
+        "endLine": 896,
+        "endChar": 41
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8ee6e483_dbce50b2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfc/tags/rw_mfc.cc",
+              "range": {
+                "startLine": 895,
+                "startChar": 0,
+                "endLine": 897,
+                "endChar": 0
+              },
+              "replacement": "    LOG(DEBUG) \u003c\u003c __func__ \u003c\u003c \"; rw_MfcLocateTlv state\u003d\" \u003c\u003c p_mfc-\u003estate;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "dd700c81f892de8d825cca848a8e065418bb6cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad3102e4_7dad4053",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-01T14:25:29Z",
+      "side": 1,
+      "message": "It\u0027s not a correct description.\nCould you fix it?",
+      "range": {
+        "startLine": 1368,
+        "startChar": 0,
+        "endLine": 1371,
+        "endChar": 56
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "abb28e14_a7c3fa66",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfc/tags/rw_mfc.cc",
+              "range": {
+                "startLine": 1368,
+                "startChar": 0,
+                "endLine": 1369,
+                "endChar": 0
+              },
+              "replacement": " ** Function         rw_nfc_StoreMad\n"
+            },
+            {
+              "path": "src/nfc/tags/rw_mfc.cc",
+              "range": {
+                "startLine": 1370,
+                "startChar": 0,
+                "endLine": 1372,
+                "endChar": 0
+              },
+              "replacement": " ** Description      Store the MAD data in the Mifare Classic tag\n"
+            }
+          ]
+        }
+      ],
+      "revId": "dd700c81f892de8d825cca848a8e065418bb6cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8606c4dc_2241f2aa",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-01T14:25:29Z",
+      "side": 1,
+      "message": "```suggestion\n  return true;\n```",
+      "range": {
+        "startLine": 1409,
+        "startChar": 9,
+        "endLine": 1409,
+        "endChar": 10
+      },
+      "revId": "dd700c81f892de8d825cca848a8e065418bb6cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
