@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49cd0b58_3b30fa5b",
+        "filename": "src/gki/common/gki_time.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-01T09:25:08Z",
+      "side": 1,
+      "message": "```suggestion\n    if ((p_tle !\u003d nullptr) \u0026\u0026 (p_tle \u003d\u003d p_target_tle)) {\n```",
+      "range": {
+        "startLine": 730,
+        "startChar": 0,
+        "endLine": 730,
+        "endChar": 56
+      },
+      "revId": "4009142ca7f815c026e26171d8678c61882aac9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
