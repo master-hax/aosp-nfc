@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f84320a_f056deb3",
+        "filename": "src/nfa/dm/nfa_dm_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-01T14:47:45Z",
+      "side": 1,
+      "message": "Please remove it directly, don\u0027t need to keep the comments.\nCould you merge this update to aosp/3128024?",
+      "range": {
+        "startLine": 818,
+        "startChar": 0,
+        "endLine": 821,
+        "endChar": 41
+      },
+      "revId": "6ba8387379386be9f96c843e4eed09a66edc58db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
