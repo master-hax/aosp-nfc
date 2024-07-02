@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb9fdc69_0c762530",
+        "filename": "src/nfa/ce/nfa_ce_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-02T15:12:14Z",
+      "side": 1,
+      "message": "```suggestion\n  if (p_conn_cback \u003d\u003d nullptr) return (NFA_STATUS_INVALID_PARAM);\n  if ((aid_len \u003d\u003d 0) \u0026\u0026 (aid !\u003d nullptr)) return (NFA_STATUS_INVALID_PARAM);\n  if ((aid_len !\u003d 0) \u0026\u0026 (aid \u003d\u003d nullptr)) return (NFA_STATUS_INVALID_PARAM);\n```",
+      "range": {
+        "startLine": 334,
+        "startChar": 2,
+        "endLine": 334,
+        "endChar": 65
+      },
+      "revId": "0a04c3206bab4c11fc941a7cdd06cc8d8e7a71a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4acad9d2_1a5a0e68",
+        "filename": "src/nfa/ce/nfa_ce_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-02T15:12:14Z",
+      "side": 1,
+      "message": "Move to line 335 then you don\u0027t need to freebuf.",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9f0ee773_3e75e493",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfa/ce/nfa_ce_api.cc",
+              "range": {
+                "startLine": 258,
+                "startChar": 0,
+                "endLine": 259,
+                "endChar": 0
+              },
+              "replacement": "  if ((p_conn_cback \u003d\u003d nullptr) || ((aid_len \u003d\u003d 0) \u0026\u0026 (aid !\u003d nullptr)))\n    return (NFA_STATUS_INVALID_PARAM);\n"
+            },
+            {
+              "path": "src/nfa/ce/nfa_ce_api.cc",
+              "range": {
+                "startLine": 343,
+                "startChar": 0,
+                "endLine": 348,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "0a04c3206bab4c11fc941a7cdd06cc8d8e7a71a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
