@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66d8181c_a11de028",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-03T09:24:00Z",
+      "side": 1,
+      "message": "Add cc to sai.shwethas@ and himanshusingh.kushwah@ for this is a extended for aosp/2940326",
+      "revId": "af0d69c7e20c64660ad7308d64e56b6db772223c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
