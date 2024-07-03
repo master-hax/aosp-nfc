@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14d24786_b4fefff1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-03T09:25:06Z",
+      "side": 1,
+      "message": "Let\u0027s update it in aosp/3083712",
+      "revId": "1d601e012b10f50d6aa9e1692d007ab545bf2ce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
