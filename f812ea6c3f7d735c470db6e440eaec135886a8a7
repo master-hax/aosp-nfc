@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a50f074_df720511",
+        "filename": "src/nfa/ce/nfa_ce_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-04T08:52:13Z",
+      "side": 1,
+      "message": "We need to block the case when aid_len !\u003d 0 and aid \u003d\u003d nullptr, too.\n\nif ((aid_len !\u003d 0) \u0026\u0026 (aid \u003d\u003d nullptr)) return (NFA_STATUS_INVALID_PARAM);",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 72
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e8909041_5281c85a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfa/ce/nfa_ce_api.cc",
+              "range": {
+                "startLine": 334,
+                "startChar": 0,
+                "endLine": 335,
+                "endChar": 0
+              },
+              "replacement": "  if ((p_conn_cback \u003d\u003d nullptr) || ((aid_len !\u003d 0) \u0026\u0026 (aid \u003d\u003d nullptr)))\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f812ea6c3f7d735c470db6e440eaec135886a8a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
