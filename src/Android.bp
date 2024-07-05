@@ -36,7 +36,7 @@ cc_library {
         "android.hardware.nfc@1.1",
         "android.hardware.nfc@1.2",
         // Add for AIDL
-        "android.hardware.nfc-V1-ndk",
+        "android.hardware.nfc-V2-ndk",
         "libnfcutils",
         "libstatslog_nfc",
         "libnfc-nci_flags",
