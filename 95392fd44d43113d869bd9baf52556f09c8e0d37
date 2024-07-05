@@ -16,6 +16,24 @@
       "message": "We are planning for some regression testing update the comments.",
       "revId": "95392fd44d43113d869bd9baf52556f09c8e0d37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "806263d7_1af6f1c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-05T08:37:23Z",
+      "side": 1,
+      "message": "OK, let me know if you have any concerns about it.",
+      "parentUuid": "5c917c6a_bdd1e080",
+      "revId": "95392fd44d43113d869bd9baf52556f09c8e0d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

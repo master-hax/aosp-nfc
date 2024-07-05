@@ -22,6 +22,30 @@
       },
       "revId": "4c28f7b2c8388ce8459f379c271938301ce971fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dff729e0_7cc700c5",
+        "filename": "src/nfa/dm/nfa_dm_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-05T08:37:23Z",
+      "side": 0,
+      "message": "From android point of view, we don\u0027t need to block this operation, as long as the chip or sw stack supports it.",
+      "parentUuid": "6345778c_c491a546",
+      "range": {
+        "startLine": 821,
+        "startChar": 49,
+        "endLine": 821,
+        "endChar": 65
+      },
+      "revId": "4c28f7b2c8388ce8459f379c271938301ce971fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
