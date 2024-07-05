@@ -361,10 +361,17 @@ void NfcAdaptation::GetVendorConfigs(
     configMap.emplace(
         NAME_DEFAULT_SYS_CODE_PWR_STATE,
         ConfigValue((uint8_t)aidlConfigValue.defaultSystemCodePowerState));
-    configMap.emplace(NAME_OFF_HOST_SIM_PIPE_ID,
-                      ConfigValue((uint8_t)aidlConfigValue.offHostSIMPipeId));
     configMap.emplace(NAME_OFF_HOST_ESE_PIPE_ID,
                       ConfigValue((uint8_t)aidlConfigValue.offHostESEPipeId));
+
+    if (aidlConfigValue.offHostSIMPipeIds.size() != 0) {
+      configMap.emplace(NAME_OFF_HOST_SIM_PIPE_IDS,
+                        ConfigValue(aidlConfigValue.offHostSIMPipeIds));
+    } else {
+      std::vector<uint8_t> simPipeIds;
+      simPipeIds.push_back(aidlConfigValue.offHostSIMPipeId);
+      configMap.emplace(NAME_OFF_HOST_SIM_PIPE_IDS, ConfigValue(simPipeIds));
+    }
 
     configMap.emplace(NAME_ISO_DEP_MAX_TRANSCEIVE,
                       ConfigValue(aidlConfigValue.maxIsoDepTransceiveLength));
@@ -417,8 +424,9 @@ void NfcAdaptation::GetVendorConfigs(
     configMap.emplace(
         NAME_DEFAULT_SYS_CODE_PWR_STATE,
         ConfigValue(configValue.v1_1.defaultSystemCodePowerState));
-    configMap.emplace(NAME_OFF_HOST_SIM_PIPE_ID,
-                      ConfigValue(configValue.v1_1.offHostSIMPipeId));
+    std::vector<uint8_t> simPipeIds;
+    simPipeIds.push_back(configValue.v1_1.offHostSIMPipeId);
+    configMap.emplace(NAME_OFF_HOST_SIM_PIPE_IDS, ConfigValue(simPipeIds));
     configMap.emplace(NAME_OFF_HOST_ESE_PIPE_ID,
                       ConfigValue(configValue.v1_1.offHostESEPipeId));
     configMap.emplace(NAME_ISO_DEP_MAX_TRANSCEIVE,
