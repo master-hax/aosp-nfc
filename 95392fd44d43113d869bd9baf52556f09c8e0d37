@@ -34,6 +34,23 @@
       "parentUuid": "5c917c6a_bdd1e080",
       "revId": "95392fd44d43113d869bd9baf52556f09c8e0d37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29754a2f_93469a80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-05T08:39:03Z",
+      "side": 1,
+      "message": "+1 and wait a while for the confirmation form Himanshu.",
+      "revId": "95392fd44d43113d869bd9baf52556f09c8e0d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
