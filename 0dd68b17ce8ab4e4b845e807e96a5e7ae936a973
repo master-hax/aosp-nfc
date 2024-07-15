@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c19d663_c2f1724a",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-07-15T10:14:10Z",
+      "side": 1,
+      "message": "Can this check be made generic for all proprietary poll/listen configurations:",
+      "range": {
+        "startLine": 233,
+        "startChar": 1,
+        "endLine": 274,
+        "endChar": 3
+      },
+      "revId": "0dd68b17ce8ab4e4b845e807e96a5e7ae936a973",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
