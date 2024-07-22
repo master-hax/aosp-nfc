@@ -82,7 +82,7 @@ static const tNFA_SYS_REG nfa_hci_sys_reg = {
 **
 *******************************************************************************/
 void nfa_hci_ee_info_cback(tNFA_EE_DISC_STS status) {
-  LOG(DEBUG) << StringPrintf("%d", status);
+  LOG(VERBOSE) << StringPrintf("%d", status);
 
   switch (status) {
     case NFA_EE_DISC_STS_ON:
@@ -185,7 +185,7 @@ void nfa_hci_ee_info_cback(tNFA_EE_DISC_STS status) {
 **
 *******************************************************************************/
 void nfa_hci_init(void) {
-  LOG(DEBUG) << __func__;
+  LOG(VERBOSE) << __func__;
 
   /* initialize control block */
   memset(&nfa_hci_cb, 0, sizeof(tNFA_HCI_CB));
@@ -234,7 +234,7 @@ bool nfa_hci_is_valid_cfg(void) {
                       &nfa_hci_cb.cfg.reg_app_names[yy][0],
                       strlen(nfa_hci_cb.cfg.reg_app_names[xx])))) {
           /* Two app cannot have the same name , NVRAM is corrupted */
-          LOG(DEBUG) << StringPrintf("nfa_hci_is_valid_cfg (%s)  Reusing: %u",
+          LOG(VERBOSE) << StringPrintf("nfa_hci_is_valid_cfg (%s)  Reusing: %u",
                                      &nfa_hci_cb.cfg.reg_app_names[xx][0], xx);
           return false;
         }
@@ -261,14 +261,14 @@ bool nfa_hci_is_valid_cfg(void) {
         if ((nfa_hci_cb.cfg.dyn_gates[yy].gate_id != 0) &&
             (nfa_hci_cb.cfg.dyn_gates[xx].gate_id ==
              nfa_hci_cb.cfg.dyn_gates[yy].gate_id)) {
-          LOG(DEBUG) << StringPrintf("nfa_hci_is_valid_cfg  Reusing: %u",
+          LOG(VERBOSE) << StringPrintf("nfa_hci_is_valid_cfg  Reusing: %u",
                                      nfa_hci_cb.cfg.dyn_gates[xx].gate_id);
           return false;
         }
       }
       if ((nfa_hci_cb.cfg.dyn_gates[xx].gate_owner & (~NFA_HANDLE_GROUP_HCI)) >=
           NFA_HCI_MAX_APP_CB) {
-        LOG(DEBUG) << StringPrintf(
+        LOG(VERBOSE) << StringPrintf(
             "nfa_hci_is_valid_cfg  Invalid Gate owner: %u",
             nfa_hci_cb.cfg.dyn_gates[xx].gate_owner);
         return false;
@@ -284,7 +284,7 @@ bool nfa_hci_is_valid_cfg(void) {
           if (nfa_hci_cb.cfg.dyn_gates[xx].gate_owner == reg_app[zz]) break;
         }
         if (zz == app_count) {
-          LOG(DEBUG) << StringPrintf(
+          LOG(VERBOSE) << StringPrintf(
               "nfa_hci_is_valid_cfg  Invalid Gate owner: %u",
               nfa_hci_cb.cfg.dyn_gates[xx].gate_owner);
           return false;
@@ -351,7 +351,7 @@ bool nfa_hci_is_valid_cfg(void) {
         if ((nfa_hci_cb.cfg.dyn_pipes[yy].pipe_id != 0) &&
             (nfa_hci_cb.cfg.dyn_pipes[xx].pipe_id ==
              nfa_hci_cb.cfg.dyn_pipes[yy].pipe_id)) {
-          LOG(DEBUG) << StringPrintf("nfa_hci_is_valid_cfg  Reusing: %u",
+          LOG(VERBOSE) << StringPrintf("nfa_hci_is_valid_cfg  Reusing: %u",
                                      nfa_hci_cb.cfg.dyn_pipes[xx].pipe_id);
           return false;
         }
@@ -361,7 +361,7 @@ bool nfa_hci_is_valid_cfg(void) {
         if (nfa_hci_cb.cfg.dyn_pipes[xx].local_gate == valid_gate[zz]) break;
       }
       if (zz == gate_count) {
-        LOG(DEBUG) << StringPrintf("nfa_hci_is_valid_cfg  Invalid Gate: %u",
+        LOG(VERBOSE) << StringPrintf("nfa_hci_is_valid_cfg  Invalid Gate: %u",
                                    nfa_hci_cb.cfg.dyn_pipes[xx].local_gate);
         return false;
       }
@@ -423,7 +423,7 @@ void nfa_hci_restore_default_config(uint8_t* p_session_id) {
 **
 *******************************************************************************/
 void nfa_hci_proc_nfcc_power_mode(uint8_t nfcc_power_mode) {
-  LOG(DEBUG) << StringPrintf("nfcc_power_mode=%d", nfcc_power_mode);
+  LOG(VERBOSE) << StringPrintf("nfcc_power_mode=%d", nfcc_power_mode);
 
   /* if NFCC power mode is change to full power */
   if (nfcc_power_mode == NFA_DM_PWR_MODE_FULL) {
@@ -502,7 +502,7 @@ void nfa_hci_dh_startup_complete(void) {
 void nfa_hci_startup_complete(tNFA_STATUS status) {
   tNFA_HCI_EVT_DATA evt_data;
 
-  LOG(DEBUG) << StringPrintf("Status: %u", status);
+  LOG(VERBOSE) << StringPrintf("Status: %u", status);
 
   nfa_sys_stop_timer(&nfa_hci_cb.timer);
 
@@ -537,7 +537,7 @@ void nfa_hci_enable_one_nfcee(void) {
   uint8_t xx;
   uint8_t nfceeid = 0;
 
-  LOG(DEBUG) << StringPrintf("%d", nfa_hci_cb.num_nfcee);
+  LOG(VERBOSE) << StringPrintf("%d", nfa_hci_cb.num_nfcee);
 
   for (xx = 0; xx < nfa_hci_cb.num_nfcee; xx++) {
     nfceeid = nfa_hci_cb.ee_info[xx].ee_handle & ~NFA_HANDLE_GROUP_EE;
@@ -635,7 +635,7 @@ void nfa_hci_startup(void) {
 **
 *******************************************************************************/
 static void nfa_hci_sys_enable(void) {
-  LOG(DEBUG) << __func__;
+  LOG(VERBOSE) << __func__;
   nfa_ee_reg_cback_enable_done(&nfa_hci_ee_info_cback);
 
   nfa_nv_co_read((uint8_t*)&nfa_hci_cb.cfg, sizeof(nfa_hci_cb.cfg),
@@ -693,7 +693,7 @@ static void nfa_hci_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
   uint16_t pkt_len;
   const uint8_t MAX_BUFF_SIZE = 100;
   char buff[MAX_BUFF_SIZE];
-  LOG(DEBUG) << StringPrintf("%s State: %u  Cmd: %u", __func__,
+  LOG(VERBOSE) << StringPrintf("%s State: %u  Cmd: %u", __func__,
                              nfa_hci_cb.hci_state, event);
   if (event == NFC_CONN_CREATE_CEVT) {
     nfa_hci_cb.conn_id = conn_id;
@@ -794,7 +794,7 @@ static void nfa_hci_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
     }
   }
 
-  LOG(DEBUG) << StringPrintf(
+  LOG(VERBOSE) << StringPrintf(
       "nfa_hci_conn_cback Recvd data pipe:%d  %s  chain:%d  assmbl:%d  len:%d",
       (uint8_t)pipe,
       nfa_hciu_get_type_inst_names(pipe, nfa_hci_cb.type, nfa_hci_cb.inst, buff,
@@ -906,7 +906,7 @@ void nfa_hci_rsp_timeout() {
   tNFA_HCI_EVT_DATA evt_data;
   uint8_t delete_pipe;
 
-  LOG(DEBUG) << StringPrintf("State: %u  Cmd: %u", nfa_hci_cb.hci_state,
+  LOG(VERBOSE) << StringPrintf("State: %u  Cmd: %u", nfa_hci_cb.hci_state,
                              nfa_hci_cb.cmd_sent);
 
   evt_data.status = NFA_STATUS_FAILED;
@@ -1059,7 +1059,7 @@ void nfa_hci_rsp_timeout() {
       break;
     case NFA_HCI_STATE_DISABLED:
     default:
-      LOG(DEBUG) << StringPrintf("Timeout in DISABLED/ Invalid state");
+      LOG(VERBOSE) << StringPrintf("Timeout in DISABLED/ Invalid state");
       break;
   }
   if (evt != 0) nfa_hciu_send_to_app(evt, &evt_data, nfa_hci_cb.app_in_use);
@@ -1124,7 +1124,7 @@ static void nfa_hci_assemble_msg(uint8_t* p_data, uint16_t data_len) {
 **
 *******************************************************************************/
 static bool nfa_hci_evt_hdlr(NFC_HDR* p_msg) {
-  LOG(DEBUG) << StringPrintf(
+  LOG(VERBOSE) << StringPrintf(
       "nfa_hci_evt_hdlr state: %s (%d) event: %s (0x%04x)",
       nfa_hciu_get_state_name(nfa_hci_cb.hci_state).c_str(),
       nfa_hci_cb.hci_state, nfa_hciu_get_event_name(p_msg->event).c_str(),
