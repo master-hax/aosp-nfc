@@ -58,7 +58,7 @@ using android::base::StringPrintf;
 tNFA_STATUS NFA_WlcEnable(tNFA_WLC_CBACK* p_wlc_cback) {
   tNFA_WLC_MSG* p_msg;
 
-  LOG(DEBUG) << __func__;
+  LOG(VERBOSE) << __func__;
 
   /* Validate parameters */
   if (!p_wlc_cback) {
@@ -101,7 +101,7 @@ tNFA_STATUS NFA_WlcEnable(tNFA_WLC_CBACK* p_wlc_cback) {
 tNFA_STATUS NFA_WlcStart(tNFA_WLC_MODE mode) {
   tNFA_WLC_MSG* p_msg;
 
-  LOG(DEBUG) << __func__;
+  LOG(VERBOSE) << __func__;
 
   if (mode) {
     LOG(ERROR) << StringPrintf("%s; Wireless Charging mode not supported",
@@ -151,7 +151,7 @@ tNFA_STATUS NFA_WlcStart(tNFA_WLC_MODE mode) {
 tNFA_STATUS NFA_WlcStartWPT(uint8_t power_adj_req, uint8_t wpt_time_int) {
   tNFA_WLC_MSG* p_msg;
 
-  LOG(DEBUG) << StringPrintf("%s; power_adj_req: %d, wpt_time_int: %d",
+  LOG(VERBOSE) << StringPrintf("%s; power_adj_req: %d, wpt_time_int: %d",
                              __func__, power_adj_req, wpt_time_int);
 
   /* POWER_ADJ_REQ is in the range [0x00..0x14] for request to increase power
