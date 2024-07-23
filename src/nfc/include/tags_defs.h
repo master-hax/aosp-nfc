@@ -696,7 +696,7 @@ typedef uint8_t tT3T_POLL_RC;
  */
 #define I93_IC_REF_STM_ST25DVHIK 0x26
 /* IC Reference for ST25TV04K: 00110101(b), blockSize: 4, numberBlocks: 0x0200
-  */
+ */
 #define I93_IC_REF_STM_ST25TV04K_E 0x35
 /* IC Reference for ST25TV16K: 01001000(b), blockSize: 4, numberBlocks: 0x1000
  * IC Reference for ST25TV64K: 01001000(b), blockSize: 4, numberBlocks: 0x4000
@@ -718,7 +718,7 @@ typedef uint8_t tT3T_POLL_RC;
 /* Product code family for M24LR64E_R */
 #define I93_PROD_CODE_STM_M24LR64E_R_MASK 0x5C
 /* Product code family for ST25DV04K/16K/64K */
-#define I93_PROD_CODE_STM_ST25DV_K_MASK   I93_IC_REF_STM_ST25DV04K
+#define I93_PROD_CODE_STM_ST25DV_K_MASK I93_IC_REF_STM_ST25DV04K
 
 /* ONS, product version (IC manufacturer code) */
 /* IC Reference for N36RW02:  00011010(b), blockSize: 4, numberBlocks: 0x40 */
