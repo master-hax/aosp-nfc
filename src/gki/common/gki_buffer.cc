@@ -278,7 +278,7 @@ void* GKI_getbuf(uint16_t size) {
   p_hdr = (BUFFER_HDR_T*)GKI_os_malloc(total_sz);
   if (!p_hdr) {
     LOG(ERROR) << StringPrintf("unable to allocate buffer!!!!!");
-    LOG(ERROR) << StringPrintf("total_sz:%d size:%d", total_sz, size);
+    LOG(ERROR) << StringPrintf("total_sz:%zu size:%d", total_sz, size);
     abort();
   }
 

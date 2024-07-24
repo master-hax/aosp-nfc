@@ -160,8 +160,8 @@ async fn dispatch_outgoing(
 ) {
     loop {
         select! {
-            Some(cmd) = out_cmd_rx.recv() => ffi::send_command(&cmd.to_bytes()),
-            Some(data) = out_data_rx.recv() => ffi::send_command(&data.to_bytes()),
+            Some(cmd) = out_cmd_rx.recv() => ffi::send_command(&cmd.encode_to_bytes().unwrap()),
+            Some(data) = out_data_rx.recv() => ffi::send_command(&data.encode_to_bytes().unwrap()),
             else => break,
         }
     }

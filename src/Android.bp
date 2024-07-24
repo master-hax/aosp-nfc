@@ -28,6 +28,9 @@ cc_library {
         "libstatssocket",
         "server_configurable_flags",
     ],
+    defaults: [
+        "aconfig_lib_cc_shared_link.defaults",
+    ],
     static_libs: [
         "android.hardware.nfc@1.0",
         "android.hardware.nfc@1.1",
@@ -60,6 +63,7 @@ cc_library {
         "nfa/hci/*.cc",
         "nfa/rw/*.cc",
         "nfa/sys/*.cc",
+        "nfa/wlc/*.cc",
         "nfc/nci/*.cc",
         "nfc/ndef/*.cc",
         "nfc/nfc/*.cc",
@@ -276,6 +280,7 @@ cc_fuzz {
         "nfa/hci/*.cc",
         "nfa/rw/*.cc",
         "nfa/sys/*.cc",
+        "nfa/wlc/*.cc",
         "nfc/nci/*.cc",
         "nfc/ndef/*.cc",
         "nfc/nfc/*.cc",
@@ -302,7 +307,7 @@ cc_fuzz {
 
 genrule {
     name: "NfcGeneratedPackets_rust",
-    defaults: ["pdl_rust_generator_defaults"],
+    defaults: ["pdl_rust_legacy_generator_defaults"],
     srcs: ["nci_packets.pdl"],
     out: ["nci_packets.rs"],
 }
