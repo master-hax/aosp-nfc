@@ -40,6 +40,30 @@
       ],
       "revId": "8df1f9f6548760ad8cc1aaf686126f05154319c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c393b7dd_d57aaa0e",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-07-26T04:59:45Z",
+      "side": 1,
+      "message": "This is not really part of config file. Hence it will not break the configuration update. below code is mapping with \"OFF_HOST_SIM_PIPE_IDS\" key value in map\n\n1) offHostSIMPipeId for old configuration\n2) offHostSIMPipeIds for new configuration\n\nhttps://android-review.googlesource.com/c/platform/system/nfc/+/3160705if (aidlConfigValue.offHostSIMPipeIds.size() !\u003d 0) {\n  configMap.emplace(NAME_OFF_HOST_SIM_PIPE_IDS,\n                    ConfigValue(aidlConfigValue.offHostSIMPipeIds));\n} else {\n  std::vector\u003cuint8_t\u003e simPipeIds;\n  simPipeIds.push_back(aidlConfigValue.offHostSIMPipeId);\n  configMap.emplace(NAME_OFF_HOST_SIM_PIPE_IDS, ConfigValue(simPipeIds));\n}",
+      "parentUuid": "f79aff90_5e87c1f3",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 58
+      },
+      "revId": "8df1f9f6548760ad8cc1aaf686126f05154319c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
