@@ -113,6 +113,7 @@ typedef struct {
   NFC_HDR hdr;
   bool is_revert_poll;
   bool is_revert_listen;
+  bool change_default_tech;
   tNFA_TECHNOLOGY_MASK change_listen_mask;
   tNFA_TECHNOLOGY_MASK change_poll_mask;
 } tNFA_DM_API_CHANGE_DISCOVERY_TECH;
@@ -464,6 +465,7 @@ typedef struct {
 /* NFA_ChangeDiscoveryTech() is called and engaged                      */
 #define NFA_DM_FLAGS_POLL_TECH_CHANGED 0x10000000
 #define NFA_DM_FLAGS_LISTEN_TECH_CHANGED 0x20000000
+#define NFA_DM_FLAGS_DEFAULT_TECH_CHANGED 0x40000000
 /* stored parameters */
 typedef struct {
   uint8_t total_duration[NCI_PARAM_LEN_TOTAL_DURATION];
@@ -686,6 +688,7 @@ tNFC_STATUS nfa_dm_disc_sleep_wakeup(void);
 tNFC_STATUS nfa_dm_disc_start_kovio_presence_check(void);
 bool nfa_dm_is_raw_frame_session(void);
 
+void nfa_dm_get_tech_route_block(uint8_t* listen_techmask, bool* enable);
 void nfa_dm_start_wireless_power_transfer(uint8_t power_adj_req,
                                           uint8_t wpt_time_int);
 bool nfa_dm_act_change_discovery_tech(tNFA_DM_MSG* p_data);
