@@ -46,6 +46,30 @@
       },
       "revId": "0dd68b17ce8ab4e4b845e807e96a5e7ae936a973",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43e37b11_0ec5ed5d",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-07-29T04:09:24Z",
+      "side": 1,
+      "message": "We just pushed internal version to the aosp, please take a look and comment in  b/351992305 if you found unsupported protocols applied to the discovery tech.",
+      "parentUuid": "529f8ad7_155c9975",
+      "range": {
+        "startLine": 233,
+        "startChar": 1,
+        "endLine": 274,
+        "endChar": 3
+      },
+      "revId": "0dd68b17ce8ab4e4b845e807e96a5e7ae936a973",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
