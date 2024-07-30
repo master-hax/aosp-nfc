@@ -64,6 +64,30 @@
       },
       "revId": "8df1f9f6548760ad8cc1aaf686126f05154319c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33b663c0_1c89f5ca",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2024-07-30T23:48:01Z",
+      "side": 1,
+      "message": "Unfortunately it is a part of the config file, please take a look at .../device/google/raviole/nfc/libnfc-hal-st.conf:81",
+      "parentUuid": "c393b7dd_d57aaa0e",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 58
+      },
+      "revId": "8df1f9f6548760ad8cc1aaf686126f05154319c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
