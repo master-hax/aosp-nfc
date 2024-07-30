@@ -295,20 +295,26 @@ static uint8_t nfa_dm_get_rf_discover_config(
 
   /* Check polling B' */
   if (dm_disc_mask & NFA_DM_DISC_MASK_P_B_PRIME) {
-    disc_params[num_params].type = NFC_DISCOVERY_TYPE_POLL_B_PRIME;
-    disc_params[num_params].frequency = p_nfa_dm_rf_disc_freq_cfg->pbp;
-    num_params++;
-
-    if (num_params >= max_params) return num_params;
+    if (NFC_DISCOVERY_TYPE_POLL_B_PRIME != NFA_PROTOCOL_INVALID) {
+      disc_params[num_params].type = NFC_DISCOVERY_TYPE_POLL_B_PRIME;
+      disc_params[num_params].frequency = p_nfa_dm_rf_disc_freq_cfg->pbp;
+      num_params++;
+      if (num_params >= max_params) return num_params;
+    } else {
+      LOG(ERROR) << StringPrintf("Unsupported type POLL_B_PRIME!");
+    }
   }
 
   /* Check polling KOVIO */
   if (dm_disc_mask & NFA_DM_DISC_MASK_P_KOVIO) {
-    disc_params[num_params].type = NFC_DISCOVERY_TYPE_POLL_KOVIO;
-    disc_params[num_params].frequency = p_nfa_dm_rf_disc_freq_cfg->pk;
-    num_params++;
-
-    if (num_params >= max_params) return num_params;
+    if (NFC_DISCOVERY_TYPE_POLL_KOVIO != NFA_PROTOCOL_INVALID) {
+      disc_params[num_params].type = NFC_DISCOVERY_TYPE_POLL_KOVIO;
+      disc_params[num_params].frequency = p_nfa_dm_rf_disc_freq_cfg->pk;
+      num_params++;
+      if (num_params >= max_params) return num_params;
+    } else {
+      LOG(ERROR) << StringPrintf("Unsupported type POLL_KOVIO!");
+    }
   }
 
   /* Check listening ISO 15693 */
@@ -322,11 +328,14 @@ static uint8_t nfa_dm_get_rf_discover_config(
 
   /* Check listening B' */
   if (dm_disc_mask & NFA_DM_DISC_MASK_L_B_PRIME) {
-    disc_params[num_params].type = NFC_DISCOVERY_TYPE_LISTEN_B_PRIME;
-    disc_params[num_params].frequency = 1;
-    num_params++;
-
-    if (num_params >= max_params) return num_params;
+    if (NFC_DISCOVERY_TYPE_LISTEN_B_PRIME != NFA_PROTOCOL_INVALID) {
+      disc_params[num_params].type = NFC_DISCOVERY_TYPE_LISTEN_B_PRIME;
+      disc_params[num_params].frequency = 1;
+      num_params++;
+      if (num_params >= max_params) return num_params;
+    } else {
+      LOG(ERROR) << StringPrintf("Unsupported type LISTEN_B_PRIME!");
+    }
   }
 
   return num_params;
