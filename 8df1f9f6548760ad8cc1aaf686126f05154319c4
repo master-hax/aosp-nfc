@@ -88,6 +88,30 @@
       },
       "revId": "8df1f9f6548760ad8cc1aaf686126f05154319c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7253e560_e74b9a0a",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-08-01T04:58:56Z",
+      "side": 1,
+      "message": "Understood. still current logic is backward compatible i.e.it works with either  one of them, but precedence is given to  \"OFF_HOST_SIM_PIPE_IDS\" if not available then fallback to \"OFF_HOST_SIM_PIPE_ID\".\n\nThe above code in my comment handles the fallback mechanism.",
+      "parentUuid": "33b663c0_1c89f5ca",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 58
+      },
+      "revId": "8df1f9f6548760ad8cc1aaf686126f05154319c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
