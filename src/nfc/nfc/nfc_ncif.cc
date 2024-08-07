@@ -61,8 +61,6 @@ extern std::string nfc_storage_path;
 static struct timeval timer_start;
 static struct timeval timer_end;
 
-#define DEFAULT_CRASH_NFCSNOOP_PATH "/data/misc/nfc/logs/native_crash_logs"
-
 /*******************************************************************************
 **
 ** Function         nfc_ncif_update_window
