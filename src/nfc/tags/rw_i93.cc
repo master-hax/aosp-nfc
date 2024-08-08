@@ -4337,7 +4337,6 @@ bool RW_I93CheckLegacyProduct(uint8_t ic_manuf, uint8_t pdt_code) {
     switch (pdt_code_family) {
       case I93_IC_REF_STM_LRI1K:
       case I93_PROD_CODE_STM_M24LR04E_R_MASK:
-      case I93_PROD_CODE_STM_LRI2K_MASK:
       case I93_PROD_CODE_STM_LRIS2K_MASK:
       case I93_PROD_CODE_STM_LRIS64K_MASK:
       case I93_PROD_CODE_STM_M24LR16E_R_MASK:
@@ -4356,8 +4355,15 @@ bool RW_I93CheckLegacyProduct(uint8_t ic_manuf, uint8_t pdt_code) {
 
   if ((ic_manuf == I93_UID_IC_MFG_CODE_TI) ||
       (ic_manuf == I93_UID_IC_MFG_CODE_ONS)) {
-    LOG(VERBOSE) << StringPrintf("%s - I93 legacy product detected", __func__);
-    return true;
+    if (pdt_code == TI_PRO_NEW) {
+      LOG(VERBOSE) << StringPrintf("%s - I93 TI NFC Forum product detected",
+                                   __func__);
+      return false;
+    } else {
+      LOG(VERBOSE) << StringPrintf("%s - I93 legacy product detected",
+                                   __func__);
+      return true;
+    }
   }
 
   LOG(VERBOSE) << StringPrintf("%s - T5T NFC Forum product detected", __func__);

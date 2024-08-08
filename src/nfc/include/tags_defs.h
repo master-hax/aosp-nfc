@@ -653,6 +653,7 @@ typedef uint8_t tT3T_POLL_RC;
 #define I93_UID_TAG_IT_HF_I_STD_CHIP_INLAY 0xC0
 /* Tag-it HF-I Pro Chip/Inlyas      */
 #define I93_UID_TAG_IT_HF_I_PRO_CHIP_INLAY 0xC4
+#define TI_PRO_NEW 0x1D
 
 #define I93_TAG_IT_HF_I_STD_CHIP_INLAY_NUM_TOTAL_BLK 11
 #define I93_TAG_IT_HF_I_PRO_CHIP_INLAY_NUM_TOTAL_BLK 12
@@ -703,8 +704,6 @@ typedef uint8_t tT3T_POLL_RC;
  */
 #define I93_IC_REF_STM_ST25TV16K_64K 0x48
 
-/* Product code family for LRI2K */
-#define I93_PROD_CODE_STM_LRI2K_MASK I93_IC_REF_STM_LRI2K /* 0x20 */
 /* Product code family for LRIS2K */
 #define I93_PROD_CODE_STM_LRIS2K_MASK I93_IC_REF_STM_LRIS2K /* 0x28 */
 /* Product code family for LRIS64K */
