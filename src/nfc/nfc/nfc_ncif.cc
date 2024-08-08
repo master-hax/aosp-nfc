@@ -61,9 +61,6 @@ extern std::string nfc_storage_path;
 static struct timeval timer_start;
 static struct timeval timer_end;
 
-#define DEFAULT_CRASH_NFCSNOOP_PATH "/data/misc/nfc/logs/native_crash_logs"
-static const off_t NATIVE_CRASH_FILE_SIZE = (1024 * 1024);
-
 /*******************************************************************************
 **
 ** Function         nfc_ncif_update_window
@@ -677,9 +674,6 @@ uint8_t* nfc_ncif_decode_rf_params(tNFC_RF_TECH_PARAMS* p_param, uint8_t* p) {
   tNFC_RF_LF_PARAMS* p_lf;
   tNFC_RF_PF_PARAMS* p_pf;
   tNFC_RF_PISO15693_PARAMS* p_i93;
-  tNFC_RF_ACM_P_PARAMS* acm_p;
-  uint8_t mpl_idx = 0;
-  uint8_t gb_idx = 0, mpl;
   uint8_t plen;
   plen = len = *p++;
   p_start = p;
