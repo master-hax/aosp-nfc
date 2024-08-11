@@ -100,7 +100,7 @@
 
 /* parse byte0 of NCI packet */
 #define NCI_MSG_PRS_HDR0(p, mt, pbf, gid)       \
-  mt = (*(p)&NCI_MT_MASK) >> NCI_MT_SHIFT;      \
+  (mt) = (*(p)&NCI_MT_MASK) >> NCI_MT_SHIFT;    \
   (pbf) = (*(p)&NCI_PBF_MASK) >> NCI_PBF_SHIFT; \
   (gid) = *(p)++ & NCI_GID_MASK;
 
