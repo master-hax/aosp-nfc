@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f05d88e4_d753ad3f",
+        "filename": "src/nfc/include/tags_defs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2024-08-13T13:13:41Z",
+      "side": 0,
+      "message": "This mask can not be removed otherwise LRI2K product will not be read anymore. This tag must be first accessed with GetSystemInfo as a legacy ISO tag.",
+      "range": {
+        "startLine": 705,
+        "startChar": 0,
+        "endLine": 707,
+        "endChar": 68
+      },
+      "revId": "464340b12f0d50523e7c0cb477e0afa5d5abd237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04582383_1865f8bb",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4340,
+      "author": {
+        "id": 1045863
+      },
+      "writtenOn": "2024-08-13T13:13:41Z",
+      "side": 0,
+      "message": "This mask can not be removed otherwise LRI2K product will not be read anymore. This tag must be first accessed with GetSystemInfo as a legacy ISO tag.",
+      "range": {
+        "startLine": 4340,
+        "startChar": 4,
+        "endLine": 4340,
+        "endChar": 40
+      },
+      "revId": "464340b12f0d50523e7c0cb477e0afa5d5abd237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
