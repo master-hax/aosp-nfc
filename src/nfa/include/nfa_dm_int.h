@@ -509,6 +509,8 @@ typedef struct {
   uint8_t atr_res_gen_bytes_len;
 
   uint8_t pf_rc[NCI_PARAM_LEN_PF_RC];
+  uint8_t rf_field_info[NCI_PARAM_LEN_RF_FIELD_INFO];
+  uint8_t rf_field_info_len;
 } tNFA_DM_PARAMS;
 
 /*

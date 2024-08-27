@@ -305,6 +305,11 @@ tNFA_STATUS nfa_dm_check_set_config(uint8_t tlv_list_len, uint8_t* p_tlv_list,
         max_len = NCI_PARAM_LEN_LB_ADC_FO;
         p_cur_len = &nfa_dm_cb.params.lb_adc_fo_len;
         break;
+      case NFC_PMID_RF_FIELD_INFO:
+        p_stored = nfa_dm_cb.params.rf_field_info;
+        max_len = NCI_PARAM_LEN_RF_FIELD_INFO;
+        p_cur_len = &nfa_dm_cb.params.rf_field_info_len;
+        break;
       case NFC_PMID_LB_H_INFO:
         p_stored = nfa_dm_cb.params.lb_h_info;
         max_len = NCI_MAX_ATTRIB_LEN;
