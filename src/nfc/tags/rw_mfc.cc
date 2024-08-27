@@ -22,6 +22,7 @@
  ******************************************************************************/
 #include <android-base/logging.h>
 #include <android-base/stringprintf.h>
+#include <com_android_nfc_nci_flags.h>
 #include <log/log.h>
 #include <string.h>
 
@@ -33,6 +34,8 @@
 #include "rw_api.h"
 #include "rw_int.h"
 #include "tags_int.h"
+
+using com::android::nfc::nci::flags::mfc_read_mad;
 
 #define MFC_KeyA 0x60
 #define MFC_KeyB 0x61
@@ -196,8 +199,14 @@ static tNFC_STATUS rw_mfc_formatBlock(int block) {
   UINT8_TO_BE_STREAM(p, MFC_Write);
   UINT8_TO_BE_STREAM(p, block);
 
-  if ((block == 1) || (block == 64)) {
+  if (block == 1) {
     ARRAY_TO_BE_STREAM(p, MAD_B1, 16);
+  } else if (block == 64) {
+    if (mfc_read_mad()) {
+      ARRAY_TO_BE_STREAM(p, MAD_B1, 16);
+    } else {
+      ARRAY_TO_BE_STREAM(p, MAD_B64, 16);
+    }
   } else if ((block == 2) || (block == 65) || (block == 66)) {
     ARRAY_TO_BE_STREAM(p, MAD_B2, 16);
   } else if ((block == 3) || (block == 67)) {
@@ -239,7 +248,9 @@ static void rw_mfc_handle_format_rsp(uint8_t* p_data) {
         p_mfc->next_block.auth = true;
         p_mfc->last_block_accessed.auth = true;
 
-        if (p_mfc->current_block < 127) {
+        if (mfc_read_mad() && p_mfc->current_block < 127) {
+          p_mfc->sector_authentified = p_mfc->next_block.block / 4;
+        } else if (!mfc_read_mad() && p_mfc->next_block.block < 128) {
           p_mfc->sector_authentified = p_mfc->next_block.block / 4;
         } else {
           p_mfc->sector_authentified =
@@ -331,27 +342,32 @@ tNFC_STATUS RW_MfcWriteNDef(uint16_t buf_len, uint8_t* p_buffer) {
 
   p_mfc->state = RW_MFC_STATE_UPDATE_NDEF;
   p_mfc->substate = RW_MFC_SUBSTATE_NONE;
-  for (i = 0; i < MFC_MAX_SECTOR_NUMBER; i++) {
-    // Search the 1st NDEF sector
-
-    if (p_mfc->mifare_ndefsector[i] == true) {
-      break;
+  if (mfc_read_mad()) {
+    for (i = 0; i < MFC_MAX_SECTOR_NUMBER; i++) {
+      // Search the 1st NDEF sector
+      if (p_mfc->mifare_ndefsector[i] == true) {
+        break;
+      }
     }
-  }
-  if (i < MFC_LAST_4BLOCK_SECTOR) {
-    // Block of the 1st NDEF sector, if in the 4-blocks sector area
-    p_mfc->last_block_accessed.block = i * 4;  // 4 blocks per sector
-    p_mfc->next_block.block = i * 4;           // 4 blocks per sector
+    if (i < MFC_LAST_4BLOCK_SECTOR) {
+      // Block of the 1st NDEF sector, if in the 4-blocks sector area
+      p_mfc->last_block_accessed.block = i * 4;  // 4 blocks per sector
+      p_mfc->next_block.block = i * 4;           // 4 blocks per sector
+    } else {
+      // block is in the 16blocks per sector area:
+      //  - skip the 4blocks * MFC_LAST_4BLOCK_SECTOR ( = 128 )
+      //  - then add 16 blocks for each additional sector
+      p_mfc->last_block_accessed.block =
+          (4 * MFC_LAST_4BLOCK_SECTOR) + (i - MFC_LAST_4BLOCK_SECTOR) * 16;
+      p_mfc->next_block.block =
+          (4 * MFC_LAST_4BLOCK_SECTOR) + (i - MFC_LAST_4BLOCK_SECTOR) * 16;
+    }
+    LOG(DEBUG) << __func__
+               << "; first ndef block : " << p_mfc->next_block.block;
   } else {
-    // block is in the 16blocks per sector area:
-    //  - skip the 4blocks * MFC_LAST_4BLOCK_SECTOR ( = 128 )
-    //  - then add 16 blocks for each additional sector
-    p_mfc->last_block_accessed.block =
-        (4 * MFC_LAST_4BLOCK_SECTOR) + (i - MFC_LAST_4BLOCK_SECTOR) * 16;
-    p_mfc->next_block.block =
-        (4 * MFC_LAST_4BLOCK_SECTOR) + (i - MFC_LAST_4BLOCK_SECTOR) * 16;
+    p_mfc->last_block_accessed.block = 4;
+    p_mfc->next_block.block = 4;
   }
-  LOG(DEBUG) << __func__ << "; first ndef block : " << p_mfc->next_block.block;
 
   p_mfc->p_ndef_buffer = p_buffer;
   p_mfc->ndef_length = buf_len;
@@ -411,7 +427,9 @@ static tNFC_STATUS rw_mfc_writeBlock(int block) {
   int index = 0;
   while (index < RW_MFC_1K_BLOCK_SIZE) {
     if (p_mfc->work_offset == 0) {
-      if (p_mfc->ndef_length <= 0xFE) {
+      uint8_t max = 0xFF;
+      if (mfc_read_mad()) max = 0xFE;
+      if (p_mfc->ndef_length <= max) {
         UINT8_TO_BE_STREAM(p, 0x03);
         UINT8_TO_BE_STREAM(p, p_mfc->ndef_length);
         index = index + 2;
@@ -462,7 +480,9 @@ static void rw_mfc_handle_write_rsp(uint8_t* p_data) {
         p_mfc->next_block.auth = true;
         p_mfc->last_block_accessed.auth = true;
 
-        if (p_mfc->current_block < 128) {
+        if (mfc_read_mad() && p_mfc->current_block < 128) {
+          p_mfc->sector_authentified = p_mfc->next_block.block / 4;
+        } else if (!mfc_read_mad() && p_mfc->next_block.block < 128) {
           p_mfc->sector_authentified = p_mfc->next_block.block / 4;
         } else {
           p_mfc->sector_authentified =
@@ -549,7 +569,11 @@ static void rw_mfc_handle_write_op() {
  *****************************************************************************/
 tNFC_STATUS RW_MfcDetectNDef(void) {
   LOG(DEBUG) << __func__;
-  return rw_MfcCheckMad();
+  if (mfc_read_mad()) {
+    return rw_MfcCheckMad();
+  } else {
+    return rw_MfcLocateTlv(TAG_NDEF_TLV);
+  }
 }
 
 /*******************************************************************************
@@ -581,14 +605,20 @@ tNFC_STATUS rw_mfc_select(uint8_t selres, uint8_t uid[MFC_UID_LEN]) {
   p_mfc->selres = selres;
   memcpy(p_mfc->uid, uid, MFC_UID_LEN);
 
-  memset(p_mfc->mifare_ndefsector, 0, 40);
+  if (mfc_read_mad()) {
+    memset(p_mfc->mifare_ndefsector, 0, 40);
+  }
   NFC_SetStaticRfCback(rw_mfc_conn_cback);
 
   p_mfc->state = RW_MFC_STATE_IDLE;
   p_mfc->substate = RW_MFC_SUBSTATE_IDLE;
   p_mfc->last_block_accessed.block = -1;
   p_mfc->last_block_accessed.auth = false;
-  p_mfc->next_block.block = 1;
+  if (mfc_read_mad()) {
+    p_mfc->next_block.block = 1;
+  } else {
+    p_mfc->next_block.block = 4;
+  }
   p_mfc->next_block.auth = false;
   p_mfc->sector_authentified = -1;
 
@@ -763,7 +793,11 @@ static void rw_mfc_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
 
       p_mfc->state = RW_MFC_STATE_NOT_ACTIVATED;
       NFC_SetStaticRfCback(NULL);
-      return;
+      if (mfc_read_mad()) {
+        return;
+      } else {
+        break;
+      }
 
     case NFC_DATA_CEVT:
       if ((p_data != NULL) && (p_data->data.status == NFC_STATUS_OK)) {
@@ -773,13 +807,14 @@ static void rw_mfc_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
       /* Data event with error status...fall through to NFC_ERROR_CEVT case */
       FALLTHROUGH_INTENDED;
     case NFC_ERROR_CEVT:
-
-      if ((p_mfc->state == RW_MFC_STATE_PRESENCE_CHECK) &&
-          (event == NFC_ERROR_CEVT)) {
-        p_mfc->state = RW_MFC_STATE_IDLE;
-        evt_data.status = (tNFC_STATUS)(*(uint8_t*)p_data);
-        (*(rw_cb.p_cback))(RW_MFC_PRES_CHECK_EVT, (tRW_DATA*)&evt_data);
-        return;
+      if (mfc_read_mad()) {
+        if ((p_mfc->state == RW_MFC_STATE_PRESENCE_CHECK) &&
+            (event == NFC_ERROR_CEVT)) {
+          p_mfc->state = RW_MFC_STATE_IDLE;
+          evt_data.status = (tNFC_STATUS)(*(uint8_t*)p_data);
+          (*(rw_cb.p_cback))(RW_MFC_PRES_CHECK_EVT, (tRW_DATA*)&evt_data);
+          return;
+        }
       }
       if ((p_mfc->state == RW_MFC_STATE_NOT_ACTIVATED) ||
           (p_mfc->state == RW_MFC_STATE_IDLE)) {
@@ -820,13 +855,17 @@ static void rw_mfc_conn_cback(uint8_t conn_id, tNFC_CONN_EVT event,
       }
       break;
     case RW_MFC_STATE_PRESENCE_CHECK:
-      rw_mfc_handle_pres_check_rsp((uint8_t*)mfc_data);
-      GKI_freebuf(mfc_data);
+      if (mfc_read_mad()) {
+        rw_mfc_handle_pres_check_rsp((uint8_t*)mfc_data);
+        GKI_freebuf(mfc_data);
+      }
       break;
 
     case RW_MFC_STATE_DETECT_MAD:
-      rw_mfc_handle_mad_detect_rsp((uint8_t*)mfc_data);
-      GKI_freebuf(mfc_data);
+      if (mfc_read_mad()) {
+        rw_mfc_handle_mad_detect_rsp((uint8_t*)mfc_data);
+        GKI_freebuf(mfc_data);
+      }
       break;
     case RW_MFC_STATE_DETECT_TLV:
       rw_mfc_handle_tlv_detect_rsp((uint8_t*)mfc_data);
@@ -914,13 +953,22 @@ static tNFC_STATUS rw_MfcLocateTlv(uint8_t tlv_type) {
 
   tRW_MFC_CB* p_mfc = &rw_cb.tcb.mfc;
   tNFC_STATUS success = NFC_STATUS_OK;
+  if (mfc_read_mad()) {
+    if (p_mfc->state != RW_MFC_STATE_DETECT_MAD) {
+      LOG(ERROR) << StringPrintf(
+          "%s Mifare Classic tag not activated or Busy - State:%d", __func__,
+          p_mfc->state);
 
-  if (p_mfc->state != RW_MFC_STATE_DETECT_MAD) {
-    LOG(ERROR) << StringPrintf(
-        "%s Mifare Classic tag not activated or Busy - State:%d", __func__,
-        p_mfc->state);
+      return NFC_STATUS_BUSY;
+    }
+  } else {
+    if (p_mfc->state != RW_MFC_STATE_IDLE) {
+      LOG(ERROR) << StringPrintf(
+          "%s Mifare Classic tag not activated or Busy - State:%d", __func__,
+          p_mfc->state);
 
-    return NFC_STATUS_BUSY;
+      return NFC_STATUS_BUSY;
+    }
   }
 
   if ((tlv_type != TAG_LOCK_CTRL_TLV) && (tlv_type != TAG_MEM_CTRL_TLV) &&
@@ -936,11 +984,12 @@ static tNFC_STATUS rw_MfcLocateTlv(uint8_t tlv_type) {
     p_mfc->work_offset = 0;
     p_mfc->ndef_status = MFC_NDEF_NOT_DETECTED;
   }
-
-  for (int i = 0; i < 40; i++) {
-    if (p_mfc->mifare_ndefsector[i] == true) {
-      p_mfc->next_block.block = 4 * i;
-      break;
+  if (mfc_read_mad()) {
+    for (int i = 0; i < 40; i++) {
+      if (p_mfc->mifare_ndefsector[i] == true) {
+        p_mfc->next_block.block = 4 * i;
+        break;
+      }
     }
   }
   p_mfc->substate = RW_MFC_SUBSTATE_READ_BLOCK;
@@ -1001,11 +1050,19 @@ static bool rw_mfc_authenticate(int block, bool KeyA) {
   if (p_mfc->state == RW_MFC_STATE_NDEF_FORMAT)
     KeyToUse = KeyDefault;
   else {
-    // support large memory size mapping
-    if ((block >= 0 && block < 4) || (block >= 64 && block < 68)) {
-      KeyToUse = KeyMAD;
+    if (mfc_read_mad()) {
+      // support large memory size mapping
+      if ((block >= 0 && block < 4) || (block >= 64 && block < 68)) {
+        KeyToUse = KeyMAD;
+      } else {
+        KeyToUse = KeyNDEF;
+      }
     } else {
-      KeyToUse = KeyNDEF;
+      if ((block >= 0 && block < 4)) {
+        KeyToUse = KeyMAD;
+      } else {
+        KeyToUse = KeyNDEF;
+      }
     }
   }
   ARRAY_TO_BE_STREAM(p, KeyToUse, 6);
@@ -1119,7 +1176,7 @@ static void rw_mfc_handle_mad_detect_rsp(uint8_t* p_data) {
         p_mfc->next_block.block += 1;
         p_mfc->next_block.auth = false;
         rw_mfc_handle_read_op((uint8_t*)mfc_data);
-      } else {
+      } else if (mfc_read_mad()) {
         LOG(DEBUG) << __func__ << "; inval len status=" << p[0];
         nfc_stop_quick_timer(&p_mfc->timer);
         rw_mfc_process_error();
@@ -1172,7 +1229,7 @@ static void rw_mfc_handle_tlv_detect_rsp(uint8_t* p_data) {
         p_mfc->next_block.block += 1;
         p_mfc->next_block.auth = false;
         rw_mfc_handle_read_op((uint8_t*)mfc_data);
-      } else {
+      } else if (mfc_read_mad()) {
         LOG(DEBUG) << __func__ << "; inval len status=" << p[0];
         nfc_stop_quick_timer(&p_mfc->timer);
         rw_mfc_process_error();
@@ -1248,6 +1305,9 @@ static void rw_mfc_handle_read_op(uint8_t* data) {
 
   switch (p_mfc->state) {
     case RW_MFC_STATE_DETECT_MAD:
+      if (!mfc_read_mad()) {
+        break;
+      }
       rw_nfc_StoreMad(data);
       if (p_mfc->current_block == 1 || p_mfc->current_block == 64 ||
           p_mfc->current_block ==
@@ -1288,7 +1348,7 @@ static void rw_mfc_handle_read_op(uint8_t* data) {
         p_mfc->ndef_status = MFC_NDEF_DETECTED;
         p_mfc->ndef_first_block = p_mfc->last_block_accessed.block;
         rw_mfc_ntf_tlv_detect_complete(NFC_STATUS_OK);
-      } else {
+      } else if (mfc_read_mad()) {
         tRW_DETECT_NDEF_DATA ndef_data;
         ndef_data.status = NFC_STATUS_FAILED;
         ndef_data.protocol = NFC_PROTOCOL_MIFARE;
@@ -1480,10 +1540,11 @@ static void rw_mfc_ntf_tlv_detect_complete(tNFC_STATUS status) {
 
     // TODO - calculate max size based on MAD sectr NFC_AID condition
     // Set max size as format condition
-    if (p_mfc->selres & RW_MFC_4K_Support)
-      ndef_data.max_size = 3360;
-    else
+    if (p_mfc->selres & RW_MFC_4K_Support) {
+      ndef_data.max_size = mfc_read_mad() ? 3360 : 3356;
+    } else {
       ndef_data.max_size = 716;
+    }
 
     rw_mfc_handle_op_complete();
     (*rw_cb.p_cback)(RW_MFC_NDEF_DETECT_EVT, (tRW_DATA*)&ndef_data);
@@ -1619,9 +1680,11 @@ static void rw_mfc_handle_ndef_read_rsp(uint8_t* p_data) {
       } else {
         p_mfc->next_block.auth = false;
         p_mfc->last_block_accessed.auth = false;
-        LOG(DEBUG) << __func__ << "; status=" << p[0];
-        nfc_stop_quick_timer(&p_mfc->timer);
-        rw_mfc_process_error();
+        if (mfc_read_mad()) {
+          LOG(DEBUG) << __func__ << "; status=" << p[0];
+          nfc_stop_quick_timer(&p_mfc->timer);
+          rw_mfc_process_error();
+        }
       }
       break;
 
@@ -1653,7 +1716,7 @@ static void rw_mfc_handle_ndef_read_rsp(uint8_t* p_data) {
 
         p_mfc->next_block.auth = false;
         rw_mfc_handle_read_op((uint8_t*)mfc_data);
-      } else {
+      } else if (mfc_read_mad()) {
         LOG(DEBUG) << __func__ << "; inval len status=" << p[0];
         nfc_stop_quick_timer(&p_mfc->timer);
         rw_mfc_process_error();
