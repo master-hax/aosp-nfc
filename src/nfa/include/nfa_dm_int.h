@@ -567,6 +567,7 @@ typedef struct {
 
   tNFC_DEACT_TYPE listen_deact_cmd_type;
   bool is_already_disc;
+  bool is_nfc_secure;
   uint8_t deactivate_cmd_retry_count; /*number of times the deactivation cmd
                                          sent in case of error scenerio */
 
@@ -693,6 +694,7 @@ tNFC_STATUS nfa_dm_disc_sleep_wakeup(void);
 tNFC_STATUS nfa_dm_disc_start_kovio_presence_check(void);
 bool nfa_dm_is_raw_frame_session(void);
 
+bool nfa_dm_get_nfc_secure();
 void nfa_dm_get_tech_route_block(uint8_t* listen_techmask, bool* enable);
 void nfa_dm_start_wireless_power_transfer(uint8_t power_adj_req,
                                           uint8_t wpt_time_int);

@@ -3148,3 +3148,18 @@ void nfa_dm_get_tech_route_block(uint8_t* listen_techmask, bool* enable) {
                                  *listen_techmask);
   }
 }
+
+/*******************************************************************************
+**
+** Function         nfa_dm_get_nfc_secure
+**
+** Description      Retrieves NFC secure information
+**
+** Returns
+**
+*******************************************************************************/
+bool nfa_dm_get_nfc_secure() {
+  LOG(INFO)
+      << StringPrintf("%s; status: %d", __func__, nfa_dm_cb.is_nfc_secure);
+  return nfa_dm_cb.is_nfc_secure;
+}

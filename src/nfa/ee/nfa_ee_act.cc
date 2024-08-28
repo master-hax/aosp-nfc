@@ -353,8 +353,12 @@ static void nfa_ee_add_tech_route_to_ecb(tNFA_EE_ECB* p_cb, uint8_t* pp,
               &pp, nfa_ee_cb.route_block_control | NFC_ROUTE_TAG_TECH,
               0x00 /* DH */, 0x00 /* no power states */, nfa_ee_tech_list[xx]);
         } else {
-          add_route_tech_proto_tlv(&pp, NFC_ROUTE_TAG_TECH, p_cb->nfcee_id,
-                                   power_cfg, nfa_ee_tech_list[xx]);
+          add_route_tech_proto_tlv(
+              &pp,
+              nfa_dm_get_nfc_secure()
+                  ? nfa_ee_cb.route_block_control | NFC_ROUTE_TAG_TECH
+                  : NFC_ROUTE_TAG_TECH,
+              p_cb->nfcee_id, power_cfg, nfa_ee_tech_list[xx]);
         }
       }
       num_tlv++;

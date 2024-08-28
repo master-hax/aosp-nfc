@@ -1198,6 +1198,20 @@ void NFA_DisableDtamode(void) {
 
 /*******************************************************************************
 **
+** Function:        NFA_SetNfcSecure
+**
+** Description:     Prooagtes NFC secure settings to NFC TASK
+**
+** Returns:         none:
+**
+*******************************************************************************/
+void NFA_SetNfcSecure(bool status) {
+  LOG(DEBUG) << StringPrintf("%s; status: %d", __func__, status);
+  nfa_dm_cb.is_nfc_secure = status;
+}
+
+/*******************************************************************************
+**
 ** Function         NFA_ChangeDiscoveryTech
 **
 ** Description      Change RF discoverying technologies specified by

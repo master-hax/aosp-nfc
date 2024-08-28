@@ -1264,6 +1264,18 @@ extern tNFA_STATUS NFA_SendRawVsCommand(uint8_t cmd_params_len,
 *******************************************************************************/
 extern void NFA_EnableDtamode(tNFA_eDtaModes eDtaMode);
 
+
+/*******************************************************************************
+**
+** Function:        NFA_SetNfcSecure
+**
+** Description:     Set NFC secure flag
+**
+** Returns:         none:
+**
+*******************************************************************************/
+extern void NFA_SetNfcSecure(bool status);
+
 /*******************************************************************************
 **
 ** Function:        NFA_DisableDtamode
