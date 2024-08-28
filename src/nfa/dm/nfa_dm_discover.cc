@@ -2000,6 +2000,10 @@ static void nfa_dm_disc_sm_discovery(tNFA_DM_RF_DISC_SM_EVENT event,
         /* do not notify deactivated to idle in RF discovery state
         ** because it is internal or stopping RF discovery
         */
+        if (nfa_dm_cb.is_already_disc) {
+          nfa_dm_cb.is_already_disc = false;
+          break;
+        }
 
         /* there was no activation while waiting for deactivation RSP */
         nfa_dm_disc_new_state(NFA_DM_RFST_IDLE);
@@ -2520,6 +2524,7 @@ static void nfa_dm_disc_sm_listen_active(tNFA_DM_RF_DISC_SM_EVENT event,
   switch (event) {
     case NFA_DM_RF_DEACTIVATE_CMD:
       nfa_dm_send_deactivate_cmd(p_data->deactivate_type);
+      nfa_dm_cb.listen_deact_cmd_type = p_data->deactivate_type;
       break;
     case NFA_DM_RF_DEACTIVATE_RSP:
       nfa_dm_cb.disc_cb.disc_flags &= ~NFA_DM_DISC_FLAGS_W4_RSP;
@@ -2562,6 +2567,16 @@ static void nfa_dm_disc_sm_listen_active(tNFA_DM_RF_DISC_SM_EVENT event,
             nfa_dm_cb.pending_power_state = SCREEN_STATE_INVALID;
           }
           nfa_dm_disc_new_state(NFA_DM_RFST_DISCOVERY);
+
+          // sent RF_DEACTIVATE_CMD(discovery)
+          if (nfa_dm_cb.listen_deact_cmd_type ==
+              NFC_DEACTIVATE_TYPE_DISCOVERY) {
+            LOG(DEBUG) << StringPrintf(
+                "%s; Already in RFST_DISCOVERY, should receive RSP status KO",
+                __func__);
+            // Do nothing as we already are in the correct state
+            nfa_dm_cb.is_already_disc = true;
+          }
         }
       } else {
         nfa_dm_disc_notify_deactivation(NFA_DM_RF_DEACTIVATE_NTF,
