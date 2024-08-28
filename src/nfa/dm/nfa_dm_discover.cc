@@ -2382,6 +2382,16 @@ static void nfa_dm_disc_sm_poll_active(tNFA_DM_RF_DISC_SM_EVENT event,
             nfa_dm_send_deactivate_cmd(p_data->nfc_discover.deactivate.type);
           }
         }
+        if ((nfa_dm_cb.disc_cb.disc_flags & NFA_DM_DISC_FLAGS_STOPPING) &&
+            (!old_sleep_wakeup_flag)) {
+          LOG(DEBUG) << StringPrintf(
+              "%s; Rx deactivate NTF to SLEEP while stopping, resending "
+              "deactivate "
+              "to IDLE now",
+              __func__);
+          /* stop discovery */
+          NFC_Deactivate(NFA_DEACTIVATE_TYPE_IDLE);
+        }
       } else if (p_data->nfc_discover.deactivate.type ==
                  NFC_DEACTIVATE_TYPE_IDLE) {
         nfa_dm_disc_new_state(NFA_DM_RFST_IDLE);
