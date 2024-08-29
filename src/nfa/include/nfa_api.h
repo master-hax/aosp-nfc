@@ -259,6 +259,7 @@ typedef void(tNFA_DM_CBACK)(uint8_t event, tNFA_DM_CBACK_DATA* p_data);
 
 /* NFA Enable DTA Type Mode */
 typedef enum {
+  NFA_DTA_APPL_MODE = 0x00000000,
   NFA_DTA_DEFAULT_MODE = 0x00000001,
   NFA_DTA_LLCP_MODE = 0x00000002,
   NFA_DTA_HCEF_MODE = 0x00000004,
@@ -1256,6 +1257,17 @@ extern tNFA_STATUS NFA_SendRawVsCommand(uint8_t cmd_params_len,
 **
 *******************************************************************************/
 extern void NFA_EnableDtamode(tNFA_eDtaModes eDtaMode);
+
+/*******************************************************************************
+**
+** Function:        NFA_DisableDtamode
+**
+** Description:     Disable DTA Mode
+**
+** Returns:         none:
+**
+*******************************************************************************/
+extern void NFA_DisableDtamode(void);
 
 /*******************************************************************************
 ** Function         NFA_GetNCIVersion
