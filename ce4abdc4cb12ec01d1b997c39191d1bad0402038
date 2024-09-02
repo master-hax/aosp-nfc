@@ -66,6 +66,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7c7a5a9_96fdc7b3",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-09-02T13:58:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87694540_d31b5296",
+      "range": {
+        "startLine": 644,
+        "startChar": 0,
+        "endLine": 654,
+        "endChar": 54
+      },
+      "revId": "ce4abdc4cb12ec01d1b997c39191d1bad0402038",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af81d60e_cb66ac35",
