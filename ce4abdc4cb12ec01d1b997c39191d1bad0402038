@@ -44,6 +44,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "87694540_d31b5296",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2024-09-02T13:57:21Z",
+      "side": 1,
+      "message": "Yes this was part of another patch, I removed the associated code",
+      "parentUuid": "28feb8b4_382dcd28",
+      "range": {
+        "startLine": 644,
+        "startChar": 0,
+        "endLine": 654,
+        "endChar": 54
+      },
+      "revId": "ce4abdc4cb12ec01d1b997c39191d1bad0402038",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af81d60e_cb66ac35",
         "filename": "src/nfc/tags/rw_mfc.cc",
         "patchSetId": 12
@@ -79,6 +103,30 @@
           ]
         }
       ],
+      "revId": "ce4abdc4cb12ec01d1b997c39191d1bad0402038",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "409aaec8_3a821503",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2024-09-02T13:57:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af81d60e_cb66ac35",
+      "range": {
+        "startLine": 777,
+        "startChar": 0,
+        "endLine": 777,
+        "endChar": 58
+      },
       "revId": "ce4abdc4cb12ec01d1b997c39191d1bad0402038",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -130,6 +178,30 @@
           ]
         }
       ],
+      "revId": "ce4abdc4cb12ec01d1b997c39191d1bad0402038",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eabe3c5_833ebae7",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2024-09-02T13:57:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da61ba16_b1427d7c",
+      "range": {
+        "startLine": 822,
+        "startChar": 9,
+        "endLine": 822,
+        "endChar": 36
+      },
       "revId": "ce4abdc4cb12ec01d1b997c39191d1bad0402038",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
