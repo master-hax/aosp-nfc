@@ -136,6 +136,30 @@
       },
       "revId": "8df1f9f6548760ad8cc1aaf686126f05154319c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e1373fe_2105e756",
+        "filename": "src/include/nfc_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-09-02T12:22:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7effc6c0_ba72b531",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 58
+      },
+      "revId": "8df1f9f6548760ad8cc1aaf686126f05154319c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
