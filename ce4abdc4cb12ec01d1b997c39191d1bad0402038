@@ -1,0 +1,137 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28feb8b4_382dcd28",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-09-02T13:03:59Z",
+      "side": 1,
+      "message": "I can\u0027t find where it is used?\nCould you check if you also need to update system/nfc/src/nfa/rw/nfa_rw_act.cc ?\nOr we can remove unrelated changes?",
+      "range": {
+        "startLine": 644,
+        "startChar": 0,
+        "endLine": 654,
+        "endChar": 54
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "dce448ff_014d5cec",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfc/tags/rw_mfc.cc",
+              "range": {
+                "startLine": 644,
+                "startChar": 0,
+                "endLine": 687,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "ce4abdc4cb12ec01d1b997c39191d1bad0402038",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af81d60e_cb66ac35",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-09-02T13:03:59Z",
+      "side": 1,
+      "message": "Could you check if this is unrelated changes?",
+      "range": {
+        "startLine": 777,
+        "startChar": 0,
+        "endLine": 777,
+        "endChar": 58
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "83cdc807_639a8d30",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfc/tags/rw_mfc.cc",
+              "range": {
+                "startLine": 777,
+                "startChar": 0,
+                "endLine": 784,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "ce4abdc4cb12ec01d1b997c39191d1bad0402038",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da61ba16_b1427d7c",
+        "filename": "src/nfc/tags/rw_mfc.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-09-02T13:03:59Z",
+      "side": 1,
+      "message": "Could you check if this is unrelated changes?",
+      "range": {
+        "startLine": 822,
+        "startChar": 9,
+        "endLine": 822,
+        "endChar": 36
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9c0592bf_67c76d4e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfc/tags/rw_mfc.cc",
+              "range": {
+                "startLine": 827,
+                "startChar": 0,
+                "endLine": 831,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/nfc/tags/rw_mfc.cc",
+              "range": {
+                "startLine": 840,
+                "startChar": 0,
+                "endLine": 840,
+                "endChar": 0
+              },
+              "replacement": "    case RW_MFC_STATE_DETECT_MAD:\n      rw_mfc_handle_mad_detect_rsp((uint8_t*)mfc_data);\n      GKI_freebuf(mfc_data);\n      break;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ce4abdc4cb12ec01d1b997c39191d1bad0402038",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
