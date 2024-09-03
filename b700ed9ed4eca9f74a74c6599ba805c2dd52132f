@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b38aa42_24b12abc",
+        "filename": "src/nfa/dm/nfa_dm_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-03T22:34:17Z",
+      "side": 1,
+      "message": "Is this needed? This function does not compile.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 1
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1a175927_067c501f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfa/dm/nfa_dm_api.cc",
+              "range": {
+                "startLine": 43,
+                "startChar": 0,
+                "endLine": 55,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "b700ed9ed4eca9f74a74c6599ba805c2dd52132f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
