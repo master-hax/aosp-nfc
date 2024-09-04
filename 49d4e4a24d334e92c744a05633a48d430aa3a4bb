@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c96f41a_fe91fb13",
+        "filename": "src/gki/ulinux/gki_ulinux.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2024-09-04T10:28:31Z",
+      "side": 1,
+      "message": "could you share how keeping the reference helps on memory release? isn\u0027t it handled by pthread_join?",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8c377ab6_5fc7078b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/gki/ulinux/gki_ulinux.cc",
+              "range": {
+                "startLine": 97,
+                "startChar": 0,
+                "endLine": 97,
+                "endChar": 0
+              },
+              "replacement": "  // pthread_join() is not called, so we need to set the thread_id to 0\n  // to avoid memory leak\n"
+            }
+          ]
+        }
+      ],
+      "revId": "49d4e4a24d334e92c744a05633a48d430aa3a4bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
