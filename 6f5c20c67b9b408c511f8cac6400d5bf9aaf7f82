@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23636ee8_44ce8700",
+        "filename": "src/nfa/dm/nfa_dm_act.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-09-04T09:10:34Z",
+      "side": 1,
+      "message": "Is it the same problem here?",
+      "range": {
+        "startLine": 1472,
+        "startChar": 0,
+        "endLine": 1472,
+        "endChar": 61
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9cdc7b5e_c5941db7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfa/dm/nfa_dm_act.cc",
+              "range": {
+                "startLine": 1471,
+                "startChar": 0,
+                "endLine": 1474,
+                "endChar": 0
+              },
+              "replacement": "       }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6f5c20c67b9b408c511f8cac6400d5bf9aaf7f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
