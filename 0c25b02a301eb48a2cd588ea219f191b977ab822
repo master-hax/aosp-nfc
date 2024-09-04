@@ -1,0 +1,86 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05f792a8_3c4eafef",
+        "filename": "src/gki/ulinux/gki_ulinux.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2024-09-04T09:37:04Z",
+      "side": 1,
+      "message": "error?",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e34ff81e_713cafe3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/gki/ulinux/gki_ulinux.cc",
+              "range": {
+                "startLine": 195,
+                "startChar": 0,
+                "endLine": 196,
+                "endChar": 0
+              },
+              "replacement": "    LOG(ERROR) \u003c\u003c StringPrintf(\"%s; Error! task ID \u003e max task allowed\",\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0c25b02a301eb48a2cd588ea219f191b977ab822",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b988eff8_199145bb",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2024-09-04T09:37:04Z",
+      "side": 1,
+      "message": "this log msg seems to be unclear.",
+      "range": {
+        "startLine": 788,
+        "startChar": 61,
+        "endLine": 788,
+        "endChar": 62
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "509cd4dc_3ab5ce65",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/nfa/ee/nfa_ee_act.cc",
+              "range": {
+                "startLine": 788,
+                "startChar": 0,
+                "endLine": 791,
+                "endChar": 0
+              },
+              "replacement": "           LOG(ERROR) \u003c\u003c StringPrintf(\"%s; offset higher than 4\", __func__);\n           return nullptr;\n         }\n           LOG(ERROR) \u003c\u003c StringPrintf(\"%s; offset higher than 4\", __func__);\n           return nullptr;\n         }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0c25b02a301eb48a2cd588ea219f191b977ab822",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
