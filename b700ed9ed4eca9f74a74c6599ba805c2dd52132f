@@ -40,6 +40,30 @@
       ],
       "revId": "b700ed9ed4eca9f74a74c6599ba805c2dd52132f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20a9312a_f4809c25",
+        "filename": "src/nfa/dm/nfa_dm_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-09-04T10:28:15Z",
+      "side": 1,
+      "message": "yes it is required to set the mode to control block, missed the header file inclusion.\nnow included the header file. It should compile now.",
+      "parentUuid": "9b38aa42_24b12abc",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 1
+      },
+      "revId": "b700ed9ed4eca9f74a74c6599ba805c2dd52132f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
