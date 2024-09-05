@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f27a6d37_558339f9",
+        "filename": "src/gki/ulinux/gki_ulinux.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2024-09-05T17:03:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f792a8_3c4eafef",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 13
+      },
+      "revId": "0c25b02a301eb48a2cd588ea219f191b977ab822",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b988eff8_199145bb",
@@ -79,6 +103,30 @@
           ]
         }
       ],
+      "revId": "0c25b02a301eb48a2cd588ea219f191b977ab822",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2735458f_fdb993e5",
+        "filename": "src/nfa/ee/nfa_ee_act.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1153044
+      },
+      "writtenOn": "2024-09-05T17:03:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b988eff8_199145bb",
+      "range": {
+        "startLine": 788,
+        "startChar": 61,
+        "endLine": 788,
+        "endChar": 62
+      },
       "revId": "0c25b02a301eb48a2cd588ea219f191b977ab822",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
