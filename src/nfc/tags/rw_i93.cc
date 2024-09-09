@@ -30,6 +30,7 @@
 
 #include "bt_types.h"
 #include "nfc_api.h"
+#include "nfc_config.h"
 #include "nfc_int.h"
 #include "nfc_target.h"
 #include "rw_api.h"
@@ -39,6 +40,7 @@ using android::base::StringPrintf;
 using com::android::nfc::nci::flags::t5t_no_getsysinfo;
 
 extern unsigned char appl_dta_mode_flag;
+extern unsigned int t5t_mute_legacy;
 
 /* Response timeout     */
 #define RW_I93_TOUT_RESP 1000
@@ -4312,6 +4314,7 @@ tNFC_STATUS RW_I93PresenceCheck(void) {
 **
 *****************************************************************************/
 bool RW_I93CheckLegacyProduct(uint8_t ic_manuf, uint8_t pdt_code) {
+  if (mute_legacy) return false;
   if (appl_dta_mode_flag) return false;
   if (!t5t_no_getsysinfo()) return true;
   LOG(VERBOSE) << StringPrintf("%s - IC manufacturer:0x%x, Product code:0x%x",
