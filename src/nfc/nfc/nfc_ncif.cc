@@ -933,11 +933,6 @@ void nfc_ncif_proc_activate(uint8_t* p, uint8_t len) {
   tNFC_INTF_PA_ISO_DEP* p_pa_iso;
   tNFC_INTF_LB_ISO_DEP* p_lb_iso;
   tNFC_INTF_PB_ISO_DEP* p_pb_iso;
-#if (NFC_RW_ONLY == FALSE)
-  tNFC_INTF_PA_NFC_DEP* p_pa_nfc;
-  int mpl_idx = 0;
-  uint8_t gb_idx = 0, mpl;
-#endif
   uint8_t t0;
   tNCI_DISCOVERY_TYPE mode;
   tNFC_CONN_CB* p_cb = &nfc_cb.conn_cb[NFC_RF_CONN_ID];
@@ -1162,71 +1157,6 @@ void nfc_ncif_proc_activate(uint8_t* p, uint8_t len) {
     }
 
   }
-#if (NFC_RW_ONLY == FALSE)
-  else if (evt_data.activate.intf_param.type == NCI_INTERFACE_NFC_DEP) {
-    /* Make max payload of NCI aligned to max payload of NFC-DEP for better
-     * performance */
-    if (buff_size > NCI_NFC_DEP_MAX_DATA) buff_size = NCI_NFC_DEP_MAX_DATA;
-
-    p_pa_nfc = &p_intf->intf_param.pa_nfc;
-
-    if (plen < 1) {
-      evt_data.status = NCI_STATUS_FAILED;
-      goto invalid_packet;
-    }
-    plen--;
-    p_pa_nfc->atr_res_len = *p++;
-
-    if (p_pa_nfc->atr_res_len > 0) {
-      if (p_pa_nfc->atr_res_len > NFC_MAX_ATS_LEN)
-        p_pa_nfc->atr_res_len = NFC_MAX_ATS_LEN;
-
-      if (plen < p_pa_nfc->atr_res_len) {
-        evt_data.status = NCI_STATUS_FAILED;
-        goto invalid_packet;
-      }
-      plen -= p_pa_nfc->atr_res_len;
-      STREAM_TO_ARRAY(p_pa_nfc->atr_res, p, p_pa_nfc->atr_res_len);
-
-      if ((mode == NCI_DISCOVERY_TYPE_POLL_A) ||
-          (mode == NCI_DISCOVERY_TYPE_POLL_F)) {
-        /* ATR_RES
-        Byte 3~12 Byte 13 Byte 14 Byte 15 Byte 16 Byte 17 Byte 18~18+n
-        NFCID3T   DIDT    BST     BRT     TO      PPT     [GT0 ... GTn] */
-        mpl_idx = 14;
-        gb_idx = NCI_P_GEN_BYTE_INDEX;
-
-        if (p_pa_nfc->atr_res_len < NCI_L_NFC_DEP_TO_INDEX + 1) {
-          evt_data.status = NCI_STATUS_FAILED;
-          goto invalid_packet;
-        }
-        p_pa_nfc->waiting_time =
-            p_pa_nfc->atr_res[NCI_L_NFC_DEP_TO_INDEX] & 0x0F;
-      } else if ((mode == NCI_DISCOVERY_TYPE_LISTEN_A) ||
-                 (mode == NCI_DISCOVERY_TYPE_LISTEN_F)) {
-        /* ATR_REQ
-        Byte 3~12 Byte 13 Byte 14 Byte 15 Byte 16 Byte 17~17+n
-        NFCID3I   DIDI    BSI     BRI     PPI     [GI0 ... GIn] */
-        mpl_idx = 13;
-        gb_idx = NCI_L_GEN_BYTE_INDEX;
-      }
-
-      if (p_pa_nfc->atr_res_len < mpl_idx + 1) {
-        evt_data.status = NCI_STATUS_FAILED;
-        goto invalid_packet;
-      }
-      mpl = ((p_pa_nfc->atr_res[mpl_idx]) >> 4) & 0x03;
-      p_pa_nfc->max_payload_size = nfc_mpl_code_to_size[mpl];
-      if (p_pa_nfc->atr_res_len > gb_idx) {
-        p_pa_nfc->gen_bytes_len = p_pa_nfc->atr_res_len - gb_idx;
-        if (p_pa_nfc->gen_bytes_len > NFC_MAX_GEN_BYTES_LEN)
-          p_pa_nfc->gen_bytes_len = NFC_MAX_GEN_BYTES_LEN;
-        memcpy(p_pa_nfc->gen_bytes, &p_pa_nfc->atr_res[gb_idx],
-               p_pa_nfc->gen_bytes_len);
-      }
-    }
-  }
-#endif
   else if ((evt_data.activate.intf_param.type == NCI_INTERFACE_FRAME) &&
            (evt_data.activate.protocol == NCI_PROTOCOL_T1T)) {
     p_pa = &evt_data.activate.rf_tech_param.param.pa;
