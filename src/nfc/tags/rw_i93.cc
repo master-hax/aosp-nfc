@@ -30,6 +30,7 @@
 
 #include "bt_types.h"
 #include "nfc_api.h"
+#include "nfc_config.h"
 #include "nfc_int.h"
 #include "nfc_target.h"
 #include "rw_api.h"
@@ -4312,6 +4313,12 @@ tNFC_STATUS RW_I93PresenceCheck(void) {
 **
 *****************************************************************************/
 bool RW_I93CheckLegacyProduct(uint8_t ic_manuf, uint8_t pdt_code) {
+  if (NfcConfig::hasKey(NAME_ISO15693_SKIP_GET_SYS_INFO_CMD)) {
+    int mute_legacy =
+        NfcConfig::getUnsigned(NAME_ISO15693_SKIP_GET_SYS_INFO_CMD);
+    if (mute_legacy) return false;
+  }
+
   if (appl_dta_mode_flag) return false;
   if (!t5t_no_getsysinfo()) return true;
   LOG(VERBOSE) << StringPrintf("%s - IC manufacturer:0x%x, Product code:0x%x",
