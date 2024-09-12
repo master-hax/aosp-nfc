@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48e1cdef_435a8c22",
+        "filename": "src/nfa/dm/nfa_dm_discover.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2391,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2024-09-12T08:24:06Z",
+      "side": 1,
+      "message": "Could you reduce it to 2 lines?",
+      "range": {
+        "startLine": 2388,
+        "startChar": 0,
+        "endLine": 2391,
+        "endChar": 24
+      },
+      "revId": "0680933021ed764c3749d801214ad4d53c1a8d99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
