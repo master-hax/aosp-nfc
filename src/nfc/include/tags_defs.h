@@ -409,6 +409,8 @@ typedef uint8_t tT3T_POLL_RC;
 #define T4T_RSP_WRONG_LENGTH 0x6700
 #define T4T_RSP_INSTR_NOT_SUPPORTED 0x6D00
 #define T4T_RSP_CMD_NOT_ALLOWED 0x6986
+#define T4T_RSP_WARNING_PARAMS_CHECK(X) \
+  ((X == 0x63 || X == 0x62 || X == 0x61) ? true : false)
 
 /* V1.0 Type 4 Tag Applicaiton ID length */
 #define T4T_V10_NDEF_TAG_AID_LEN 0x07

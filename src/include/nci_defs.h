@@ -90,6 +90,7 @@
 #define NCI_DEST_TYPE_NFCC 1   /* NFCC - loopback */
 #define NCI_DEST_TYPE_REMOTE 2 /* Remote NFC Endpoint */
 #define NCI_DEST_TYPE_NFCEE 3  /* NFCEE */
+#define NCI_DEST_TYPE_T4T_NFCEE 5 /* T4T NFCEE */
 
 /* builds byte0 of NCI Command and Notification packet */
 #define NCI_MSG_BLD_HDR0(p, mt, gid) \
@@ -164,6 +165,8 @@
 #define NCI_STATUS_EE_TRANSMISSION_ERR 0xC1
 #define NCI_STATUS_EE_PROTOCOL_ERR 0xC2
 #define NCI_STATUS_EE_TIMEOUT 0xC3
+#define NFA_STATUS_READ_ONLY NCI_STATUS_READ_ONLY
+#define NCI_STATUS_READ_ONLY 0xC4
 
 /* RF Technologies */
 #define NCI_RF_TECHNOLOGY_A 0x00
