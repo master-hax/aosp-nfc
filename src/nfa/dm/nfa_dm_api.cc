@@ -29,6 +29,7 @@
 #include "ndef_utils.h"
 #include "nfa_api.h"
 #include "nfa_ce_int.h"
+#include "nfa_nfcee_int.h"
 #include "nfa_wlc_int.h"
 
 using android::base::StringPrintf;
@@ -63,6 +64,7 @@ void NFA_Init(tHAL_NFC_ENTRY* p_hal_entry_tbl) {
   nfa_ee_init();
   if (nfa_ee_max_ee_cfg != 0) {
     nfa_dm_cb.get_max_ee = p_hal_entry_tbl->get_max_ee;
+    nfa_t4tnfcee_init();
     nfa_hci_init();
   }
   nfa_wlc_init();

@@ -391,6 +391,8 @@ void NfcAdaptation::GetVendorConfigs(
                       ConfigValue((uint8_t)aidlConfigValue.offHostSIMPipeId));
     configMap.emplace(NAME_OFF_HOST_ESE_PIPE_ID,
                       ConfigValue((uint8_t)aidlConfigValue.offHostESEPipeId));
+    configMap.emplace(NAME_T4T_NFCEE_ENABLE,
+                      ConfigValue((uint8_t)aidlConfigValue.t4tNfceeEnable));
 
     configMap.emplace(NAME_ISO_DEP_MAX_TRANSCEIVE,
                       ConfigValue(aidlConfigValue.maxIsoDepTransceiveLength));

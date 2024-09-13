@@ -1,4 +1,6 @@
 #include "fuzz_cmn.h"
+#include "nfa_api.h"
+#include "nfa_nfcee_int.h"
 
 // These are the functions implemented elsewhere in the NFC code. Our fuzzing
 // doesn't need them. To avoid pulling into more source code we simply stub
@@ -32,6 +34,12 @@ tNFC_STATUS NFC_SendData(uint8_t conn_id, NFC_HDR* p_data) {
   GKI_freebuf(p_data);
   return NFC_STATUS_OK;
 }
+
+void NFC_SetStaticT4tNfceeCback(tNFC_CONN_CBACK*, uint8_t) {}
+
+bool NFA_T4tNfcEeIsProcessing() { return NFC_STATUS_OK; }
+
+tNFA_T4TNFCEE_CB nfa_t4tnfcee_cb;
 
 uint8_t nci_snd_t3t_polling(uint16_t system_code, uint8_t rc, uint8_t tsn) {
   FUZZLOG("sc=%04X, rc=%02X, tsn=%02X", system_code, rc, tsn);

@@ -36,6 +36,7 @@
 #include "nfa_ee_int.h"
 #endif
 
+#include "nfa_nfcee_int.h"
 #include "nfc_int.h"
 
 #if (NFA_SNEP_INCLUDED == TRUE)
@@ -487,6 +488,7 @@ bool nfa_dm_disable(tNFA_DM_MSG* p_data) {
     nfa_sys_start_timer(&nfa_dm_cb.tle, NFA_DM_TIMEOUT_DISABLE_EVT,
                         NFA_DM_DISABLE_TIMEOUT_VAL);
   }
+  nfa_t4tnfcee_deinit();
 
   /* Disable all subsystems other than DM (DM will be disabled after all  */
   /* the other subsystem have been disabled)                              */

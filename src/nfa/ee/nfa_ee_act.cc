@@ -32,6 +32,7 @@
 #include "nfa_dm_int.h"
 #include "nfa_ee_int.h"
 #include "nfa_hci_int.h"
+#include "nfa_nfcee_int.h"
 #include "nfc_int.h"
 
 using android::base::StringPrintf;
@@ -61,6 +62,9 @@ const uint8_t nfa_ee_tech_list[NFA_EE_NUM_TECH] = {
 #define NFA_EE_NUM_PROTO 5
 
 extern uint8_t mute_tech_route_option;
+
+#define NFCEE_TYPE_NDEF 0x04  // indicates that the NFCEE supports NDEF storage
+#define NFCEE_TAG_INDEX 0
 
 static void add_route_tech_proto_tlv(uint8_t** pp, uint8_t tlv_type,
                                      uint8_t nfcee_id, uint8_t pwr_cfg,
@@ -2039,6 +2043,14 @@ void nfa_ee_nci_disc_ntf(tNFA_EE_MSG* p_data) {
       }
     }
 
+    if (p_cb->ee_tlv[NFCEE_TAG_INDEX].tag == NFCEE_TYPE_NDEF) {
+      nfa_t4tnfcee_set_ee_cback(p_cb);
+      p_info = &evt_data.new_ee;
+      p_info->ee_handle = (tNFA_HANDLE)p_cb->nfcee_id;
+      p_info->ee_status = p_cb->ee_status;
+      nfa_ee_report_event(p_cb->p_ee_cback, NFA_EE_DISCOVER_EVT, &evt_data);
+    }
+
     if ((nfa_ee_cb.p_ee_disc_cback == nullptr) && (notify_new_ee == true)) {
       if (nfa_dm_is_active() && (p_cb->ee_status != NFA_EE_STATUS_REMOVED)) {
         /* report this NFA_EE_NEW_EE_EVT only after NFA_DM_ENABLE_EVT is
@@ -2518,6 +2530,11 @@ void nfa_ee_nci_disc_req_ntf(tNFA_EE_MSG* p_data) {
       } else if (p_cbk->info[xx].tech_n_mode ==
                  NFC_DISCOVERY_TYPE_LISTEN_B_PRIME) {
         p_cb->lbp_protocol = p_cbk->info[xx].protocol;
+      }
+      if (p_cb->ee_tlv[NFCEE_TAG_INDEX].tag == NFCEE_TYPE_NDEF) {
+        tNFA_EE_CBACK_DATA nfa_ee_cback_data = {0};
+        nfa_ee_report_event(p_cb->p_ee_cback, NFA_EE_DISCOVER_REQ_EVT,
+                            &nfa_ee_cback_data);
       }
       LOG(VERBOSE) << StringPrintf(
           "nfcee_id=0x%x ee_status=0x%x ecb_flags=0x%x la_protocol=0x%x "
