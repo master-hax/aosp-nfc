@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "deebd128_f375b0b4",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1986260
+      },
+      "writtenOn": "2024-09-13T05:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc7376bf_3d4cbeed",
+      "revId": "64342ece958a21448e115567389a39882d02e23e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "787c9db4_760498b2",
@@ -54,6 +72,54 @@
       "writtenOn": "2024-09-10T12:27:24Z",
       "side": 1,
       "message": "Use extern t5t_mute_legacy;",
+      "range": {
+        "startLine": 4319,
+        "startChar": 8,
+        "endLine": 4319,
+        "endChar": 19
+      },
+      "revId": "64342ece958a21448e115567389a39882d02e23e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92fbbc0c_e0354a15",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4319,
+      "author": {
+        "id": 1986260
+      },
+      "writtenOn": "2024-09-13T05:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "787c9db4_760498b2",
+      "range": {
+        "startLine": 4316,
+        "startChar": 0,
+        "endLine": 4319,
+        "endChar": 0
+      },
+      "revId": "64342ece958a21448e115567389a39882d02e23e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e40e94b7_90acf210",
+        "filename": "src/nfc/tags/rw_i93.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4319,
+      "author": {
+        "id": 1986260
+      },
+      "writtenOn": "2024-09-13T05:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21fb9199_d79ececd",
       "range": {
         "startLine": 4319,
         "startChar": 8,
